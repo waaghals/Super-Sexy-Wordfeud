@@ -1,20 +1,17 @@
 package nl.avans.min04sob.scrabble.testcase;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import nl.avans.min04sob.scrabble.core.CoreView;
+import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.testcase.ScoreboardModel.Boardline;
 
-public class ScoreboardView extends CoreView {
+public class ScoreboardView extends CoreWindow {
 
 	JButton generatorButton;
 	JTable table;
