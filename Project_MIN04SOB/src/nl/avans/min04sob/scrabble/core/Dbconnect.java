@@ -1,4 +1,4 @@
-package nl.avans.min04sob;
+package nl.avans.min04sob.scrabble.core;
 
 import java.sql.*;
 
