@@ -12,12 +12,12 @@ import nl.avans.min04sob.scrabble.testcase.ScoreboardModel.Boardline;
 public class ScoreboardController extends CoreController {
 	
 	ScoreboardModel sbModel;
-	ScoreboardView sbView;
+	ScoreboardWindow sbView;
 	Random r;
 
 	public ScoreboardController() {
 		sbModel = new ScoreboardModel();
-		sbView = new ScoreboardView();
+		sbView = new ScoreboardWindow();
 		
 		sbView.setTitle("test");
 		sbView.setVisible(true);

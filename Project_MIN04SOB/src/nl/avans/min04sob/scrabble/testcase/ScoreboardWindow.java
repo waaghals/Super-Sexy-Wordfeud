@@ -11,13 +11,13 @@ import javax.swing.JTable;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.testcase.ScoreboardModel.Boardline;
 
-public class ScoreboardView extends CoreWindow {
+public class ScoreboardWindow extends CoreWindow {
 
 	JButton generatorButton;
 	JTable table;
 	JPanel panel;
 
-	public ScoreboardView() {
+	public ScoreboardWindow() {
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(250,200));
 		generatorButton = new JButton();
