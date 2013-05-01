@@ -7,12 +7,8 @@ import javax.swing.table.TableModel;
 
 public abstract class CoreTableModel extends CoreModel implements TableModel {
 
-	private ArrayList<ArrayList<Object>> datalist = new ArrayList<ArrayList<Object>>();
-	private ArrayList<Column> columns;
-
-	public void setColumns(ArrayList<Column> columns) {
-		this.columns = columns;
-	}
+	private ArrayList<Object> datalist = new ArrayList<Object>();
+	ArrayList<Column> columns = new ArrayList<Column>();
 
 	@Override
 	public int getRowCount() {
@@ -21,16 +17,7 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 
 	@Override
 	public int getColumnCount() {
-		if (columns != null) {
-			return columns.size();
-		}
-
-		if (getRowCount() > 0) {
-			ArrayList<Object> v = datalist.get(0);
-			return v.size();
-		}
-
-		return 0;
+		return columns.size();
 	}
 
 	@Override
@@ -42,63 +29,27 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 	public abstract boolean isCellEditable(int rowIndex, int columnIndex);
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-
-		if (columnIndex > getColumnCount()) {
-			return null;
-		}
-
-		ArrayList<Object> row = getRow(rowIndex);
-		if (row != null) {
-			try {
-				return row.get(columnIndex);
-			} catch (IndexOutOfBoundsException e) {
-				return null;
-			}
-		}
-		return null;
-	}
+	public abstract Object getValueAt(int rowIndex, int columnIndex);
 
 	@Override
-	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
-		if ((rowIndex < 0) || (columnIndex < 0)) {
-			throw new IllegalArgumentException("Invalid row/column setting");
-		}
+	public abstract void setValueAt(Object newValue, int rowIndex,
+			int columnIndex);
 
-		ArrayList<Object> row = getRow(rowIndex);
-		if (row != null) {
-			try {
-				row.remove(columnIndex);
-			} catch (IndexOutOfBoundsException e) {
-			}
-			row.add(columnIndex, newValue);
-		} else {
-			row = new ArrayList<Object>();
-			row.add(columnIndex, newValue);
-			datalist.add(row);
-		}
-
-	}
-
-	private ArrayList<Object> getRow(int rowIndex) {
-		if (getRowCount() == 0) {
-			return null;
-		}
-
+	protected Object getRow(int rowIndex) {
+		// Check out of bounds
 		if (rowIndex + 1 > getRowCount()) {
 			return null;
 		}
 		return datalist.get(rowIndex);
 	}
+	
+	protected void addRow(Object newRow){
+		datalist.add(newRow);
+	}
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		if (columns != null) {
-			return columns.get(columnIndex).getClassType();
-		}
-
-		// Fallback to string
-		return String.class;
+		return columns.get(columnIndex).getClassType();
 	}
 
 	@Override
@@ -109,5 +60,26 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
 		// Handled by CoreModel
+	}
+
+	public String[] getColumnNames() {
+		String[] returnArray = new String[columns.size()];
+		for (int i = 0; i < columns.size(); i++) {
+			returnArray[i] = columns.get(i).getName();
+		}
+		return returnArray;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Class[] getColumnClass() {
+		Class[] returnArray = new Class[columns.size()];
+		for (int i = 0; i < columns.size(); i++) {
+			returnArray[i] = columns.get(i).getClassType();
+		}
+		return returnArray;
+	}
+
+	protected void addColumn(Column column) {
+		columns.add(column);
 	}
 }

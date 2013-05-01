@@ -28,5 +28,4 @@ public class ScoreboardTable extends JTable implements CoreView {
 	public ScoreboardTable(TableModel dm) {
 		super(dm);
 	}
-
 }
