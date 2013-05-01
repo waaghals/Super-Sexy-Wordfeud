@@ -1,37 +1,44 @@
-package nl.avans.min04sob.scrabble.testcase;
+package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.testcase.ScoreboardModel.Boardline;
+import nl.avans.min04sob.scrabble.models.ScoreboardTableModel;
+import nl.avans.min04sob.scrabble.views.ScoreboardTable;
+import nl.avans.min04sob.scrabble.views.ScoreboardWindow;
 
 public class ScoreboardController extends CoreController {
 	
-	ScoreboardModel sbModel;
-	ScoreboardWindow sbView;
+	ScoreboardTableModel sbModel;
+	ScoreboardWindow sbWindow;
+	ScoreboardTable sbTable;
 	Random r;
 
 	public ScoreboardController() {
-		sbModel = new ScoreboardModel();
-		sbView = new ScoreboardWindow();
+		sbModel = new ScoreboardTableModel();
+		sbWindow = new ScoreboardWindow();
+		sbTable = new ScoreboardTable(sbModel);
+		sbWindow.add(new JScrollPane(sbTable));
 		
-		sbView.setTitle("test");
-		sbView.setVisible(true);
-		sbView.getGeneratorButton().addActionListener(new ActionListener() {
+		sbWindow.setTitle("Scoreboard");
+		sbWindow.setVisible(true);
+		sbWindow.getGeneratorButton().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addRandomScore();
 			}
 		});
-		sbView.pack();
 		
+		sbWindow.pack();
 		addModel(sbModel);
-		addView(sbView);
+		addView(sbWindow);
+		addView(sbTable);
 		
 		r = new Random();
 		Timer timer = new Timer(5000, new ActionListener() {
@@ -50,7 +57,7 @@ public class ScoreboardController extends CoreController {
 		String[] names = {"Patrick", "Joep", "Thomas", "Aaron", "Alexander"};
 		String randomName = names[r.nextInt(names.length)];
 		int randomScore = r.nextInt(10000);
-		sbModel.addScore(sbModel.new Boardline(randomName, randomScore));
+		sbModel.addScore(randomName, randomScore);
 	}
 	
 

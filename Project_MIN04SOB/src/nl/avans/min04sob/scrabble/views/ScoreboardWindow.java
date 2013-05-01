@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.testcase;
+package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -9,45 +9,36 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import nl.avans.min04sob.scrabble.core.CoreWindow;
-import nl.avans.min04sob.scrabble.testcase.ScoreboardModel.Boardline;
+import nl.avans.min04sob.scrabble.models.ScoreboardTableModel;
+import nl.avans.min04sob.scrabble.models.ScoreboardModel.Boardline;
 
 public class ScoreboardWindow extends CoreWindow {
 
 	JButton generatorButton;
-	JTable table;
-	JPanel panel;
+	//JPanel panel;
 
 	public ScoreboardWindow() {
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(250,200));
+		//panel = new JPanel();
+		//panel.setPreferredSize(new Dimension(250,200));
 		generatorButton = new JButton();
 		generatorButton.setText("Add random");
 		add(generatorButton);
-		add(panel);
+		//add(panel);
 	}
 
 	public JButton getGeneratorButton() {
 		return generatorButton;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-		case "scoreboard":
-			updateTable((ArrayList<Boardline>) evt.getNewValue());
+		case "scoreboardtable":
+			repaint();
 			break;
 
 		default:
 			break;
 		}
-	}
-
-	private void updateTable(ArrayList<Boardline> tableData) {
-		table = new JTable(new ScoreboardTableModel(tableData));
-		panel.removeAll();
-		panel.add(table);
-		panel.revalidate();
-		revalidate();
 	}
 }

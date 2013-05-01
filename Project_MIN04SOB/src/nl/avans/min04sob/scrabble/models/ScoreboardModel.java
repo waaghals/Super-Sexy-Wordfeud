@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.testcase;
+package nl.avans.min04sob.scrabble.models;
 
 import java.util.ArrayList;
 import java.util.Collections;

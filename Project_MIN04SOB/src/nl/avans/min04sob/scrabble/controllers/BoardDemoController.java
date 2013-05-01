@@ -1,6 +1,8 @@
-package nl.avans.min04sob.scrabble.testcase;
+package nl.avans.min04sob.scrabble.controllers;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.models.MainWindow;
+import nl.avans.min04sob.scrabble.testcase.BoardPanel;
 
 public class BoardDemoController extends CoreController {
 
