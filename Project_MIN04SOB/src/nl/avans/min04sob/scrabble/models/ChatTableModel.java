@@ -5,8 +5,6 @@ import java.util.Date;
 import nl.avans.min04sob.scrabble.core.Column;
 import nl.avans.min04sob.scrabble.core.CoreTableModel;
 
-import org.ocpsoft.prettytime.PrettyTime;
-
 public class ChatTableModel extends CoreTableModel {
 
 	private String name;
@@ -19,7 +17,7 @@ public class ChatTableModel extends CoreTableModel {
 	public ChatTableModel() {
 		addColumn(new Column("Naam", String.class, NAME_COLUMN));
 		addColumn(new Column("Bericht", String.class, MESSAGE_COLUMN));
-		addColumn(new Column("Tijd", String.class, TIME_COLUMN));
+		addColumn(new Column("Tijd", Date.class, TIME_COLUMN));
 	}
 
 	@Override
@@ -97,12 +95,8 @@ public class ChatTableModel extends CoreTableModel {
 		return message;
 	}
 	
-	public String getTime() {
-		if(time != null){
-			PrettyTime p = new PrettyTime();
-			return p.format(time);
-		}
-		return "Onbekend";
+	public Date getTime() {
+		return time;
 	}
 
 	public void setName(String name) {
