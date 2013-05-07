@@ -8,21 +8,21 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.models.ChatTableModel;
-import nl.avans.min04sob.scrabble.views.ChatTable;
+import nl.avans.min04sob.scrabble.models.ChatTableModelPATRICKVOORBEEELD;
+import nl.avans.min04sob.scrabble.views.ChatTablePATRICKVOORBEEELD;
 import nl.avans.min04sob.scrabble.views.ScoreboardWindow;
 
-public class ChatController extends CoreController {
+public class ChatControllerPATRICKVOORBEELD extends CoreController {
 	
-	ChatTableModel chatModel;
+	ChatTableModelPATRICKVOORBEEELD chatModel;
 	ScoreboardWindow sbWindow;
-	ChatTable chatTable;
+	ChatTablePATRICKVOORBEEELD chatTable;
 	Random r;
 
-	public ChatController() {
-		chatModel = new ChatTableModel();
+	public ChatControllerPATRICKVOORBEELD() {
+		chatModel = new ChatTableModelPATRICKVOORBEEELD();
 		sbWindow = new ScoreboardWindow();
-		chatTable = new ChatTable(chatModel);
+		chatTable = new ChatTablePATRICKVOORBEEELD(chatModel);
 		sbWindow.add(new JScrollPane(chatTable));
 		
 		sbWindow.setTitle("Chat");

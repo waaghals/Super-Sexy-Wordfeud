@@ -7,7 +7,7 @@ import javax.swing.table.TableModel;
 
 import nl.avans.min04sob.scrabble.core.CoreView;
 
-public class ChatTable extends JTable implements CoreView {
+public class ChatTablePATRICKVOORBEEELD extends JTable implements CoreView {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
@@ -21,11 +21,11 @@ public class ChatTable extends JTable implements CoreView {
 		}
 	}
 
-	public ChatTable() {
+	public ChatTablePATRICKVOORBEEELD() {
 		super();
 	}
 
-	public ChatTable(TableModel dm) {
+	public ChatTablePATRICKVOORBEEELD(TableModel dm) {
 		super(dm);
 	}
 }
