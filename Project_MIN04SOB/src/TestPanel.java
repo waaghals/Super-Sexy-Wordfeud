@@ -7,7 +7,7 @@ import javax.swing.JTabbedPane;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
-
+import nl.avans.min04sob.scrabble.views.LoginPanel;
 
 public class TestPanel extends CorePanel {
 	private JPasswordField pwdWachtwoordVeld;
@@ -17,12 +17,15 @@ public class TestPanel extends CorePanel {
 	 */
 	public TestPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 0, 0};
-		gridBagLayout.rowHeights = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.columnWidths = new int[] { 30, 30, 30, 30, 30, 30, 30,
+				30, 30, 30, 30, 30, 30, 30, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 30, 30, 30, 30, 30, 30, 30, 30,
+				30, 30, 30, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, 0.0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 		setLayout(gridBagLayout);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.gridwidth = 16;
@@ -35,7 +38,5 @@ public class TestPanel extends CorePanel {
 		tabbedPane.addTab("Game 1", new BoardPanel());
 		tabbedPane.addTab("Game 2", new LoginPanel());
 	}
-
-
 
 }
