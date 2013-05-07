@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import nl.avans.min04sob.scrabble.core.Dbconnect;
+
 public class LoginGui extends JFrame{
 
 	private JPanel loginscreen, registerscreen;

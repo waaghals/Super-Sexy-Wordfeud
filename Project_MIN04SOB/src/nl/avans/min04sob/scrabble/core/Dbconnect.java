@@ -18,7 +18,7 @@ public class Dbconnect {
 
 		try {
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-			dbconnect.conn = DriverManager.getConnection ("jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2","tjmbrouw","8THMJ2S4");
+			dbconnect.conn = DriverManager.getConnection ("jdbc:mysql://atlas.waaghals.me:3306/scrable","min04sob","auJN9YFGEbx8rLBs");
 			return true;
 
 		} catch (Exception e) {
