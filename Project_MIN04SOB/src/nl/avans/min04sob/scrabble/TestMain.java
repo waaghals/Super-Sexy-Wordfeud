@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.testcase;
+package nl.avans.min04sob.scrabble;
 
 import nl.avans.min04sob.scrabble.controllers.BoardDemoController;
 import nl.avans.min04sob.scrabble.controllers.ChatController;

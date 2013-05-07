@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.testcase;
+package nl.avans.min04sob.scrabble.views;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
