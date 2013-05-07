@@ -102,11 +102,11 @@ public class LoginGui extends JFrame{
 				showLogin();
 				revalidate();
 				repaint();
+				pack();
 			}
 		});
 		register.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				ResultSet check = Dbconnect.getInstance().select("SELECT * FROM account WHERE username='"+usernameField.getText()+"';");
 				try{
 					if(validateRegister()){
 						Dbconnect.getInstance().query("INSERT INTO account(username, account.password) VALUES('"+usernameField.getText()+"','"+passwordField1.getText()+"');");
@@ -114,6 +114,7 @@ public class LoginGui extends JFrame{
 						showLogin();
 						revalidate();
 						repaint();
+						pack();
 								
 								}
 				}catch(Exception ex){}
