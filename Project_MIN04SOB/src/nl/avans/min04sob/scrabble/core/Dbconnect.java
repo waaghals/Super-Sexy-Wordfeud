@@ -5,20 +5,27 @@ import java.sql.*;
 public class Dbconnect {
 
 	private static Connection conn = null;
-	private static Dbconnect dbconnect = new Dbconnect();
+	private static Dbconnect dbconnect;
 
-	private Dbconnect(){	
+	private Dbconnect() {
 	}
-	
+
 	public static Dbconnect getInstance() {
+		if (dbconnect == null) {
+			dbconnect = new Dbconnect();
+			dbconnect.connect();
+			return dbconnect;
+		}
 		return dbconnect;
 	}
 
 	private boolean connect() {
 
 		try {
-			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-			dbconnect.conn = DriverManager.getConnection ("jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2","tjmbrouw","8THMJ2S4");
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			dbconnect.conn = DriverManager.getConnection(
+					"jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2",
+					"tjmbrouw", "8THMJ2S4");
 			return true;
 
 		} catch (Exception e) {
@@ -38,34 +45,18 @@ public class Dbconnect {
 		}
 	}
 
-	protected ResultSet select(String query) {
+	public ResultSet select(String query) throws SQLException {
 		ResultSet result = null;
-		if(dbconnect.conn==null){
-			dbconnect.connect();
-		}
-		try {
-			Statement s = dbconnect.conn.createStatement();
-			result = s.executeQuery(query);
-		} catch (Exception e) {
-			System.out.println("selectfail :" + e);
-		}
 		
-		return result;
+		Statement s = dbconnect.conn.createStatement();
+		result = s.executeQuery(query);
 
+		return result;
 	}
 
-	protected boolean query(String query) {
-		if(dbconnect.conn==null){
-			dbconnect.connect();
-		}
-		try {
-			Statement s = dbconnect.conn.createStatement();
-			int result = s.executeUpdate(query);
-			return true;
-		} catch (Exception ex) {
-			System.out.println("insertfail" + ex);
-			return false;
-			
-		}
+	public void query(String query) throws SQLException {
+		Statement s = dbconnect.conn.createStatement();
+		s.executeUpdate(query);
+
 	}
 }
