@@ -3,6 +3,7 @@ package nl.avans.min04sob.scrabble;
 import nl.avans.min04sob.scrabble.controllers.BoardDemoController;
 import nl.avans.min04sob.scrabble.controllers.ChatControllerPATRICKVOORBEELD;
 import nl.avans.min04sob.scrabble.controllers.ScoreboardController;
+import nl.avans.min04sob.scrabble.views.MainWindow;
 
 public class TestMain {
 
@@ -10,9 +11,10 @@ public class TestMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new BoardDemoController();
-		new ScoreboardController();
-		new ChatControllerPATRICKVOORBEELD();
+		MainWindow gameScreen = new MainWindow();
+		new BoardDemoController(gameScreen);
+		new ScoreboardController(gameScreen);
+		new ChatControllerPATRICKVOORBEELD(gameScreen);
+		gameScreen.pack();
 	}
-
 }
