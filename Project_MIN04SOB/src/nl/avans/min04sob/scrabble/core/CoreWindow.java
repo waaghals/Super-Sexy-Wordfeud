@@ -1,7 +1,6 @@
 package nl.avans.min04sob.scrabble.core;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 
@@ -19,6 +18,6 @@ public abstract class CoreWindow extends JFrame implements CoreView {
 	public void init() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
-		pack();
+		setLayout(new GridBagLayout());
 	}
 }

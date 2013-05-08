@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.models;
+package nl.avans.min04sob.scrabble.views;
 
 import java.beans.PropertyChangeEvent;
 
@@ -13,8 +13,8 @@ public class MainWindow extends CoreWindow {
 	}
 	
 	public MainWindow(){
-		super("Hoofd venster");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Hoofdscherm");
 	}
 
 }

@@ -26,7 +26,6 @@ public class ScoreboardController extends CoreController {
 		sbWindow.add(new JScrollPane(sbTable));
 		
 		sbWindow.setTitle("Scoreboard");
-		sbWindow.setVisible(true);
 		sbWindow.getGeneratorButton().addActionListener(new ActionListener() {
 			
 			@Override
