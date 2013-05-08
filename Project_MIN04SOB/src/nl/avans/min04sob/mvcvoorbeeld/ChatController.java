@@ -10,15 +10,15 @@ import nl.avans.min04sob.scrabble.core.CoreConstraint;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 
-public class ChatControllerPATRICKVOORBEELD extends CoreController {
+public class ChatController extends CoreController {
 
 	ChatPanel sbPanel;
-	ChatTableModelPATRICKVOORBEEELD chatModel;
+	ChatTableModel chatModel;
 
 	Random r;
 
-	public ChatControllerPATRICKVOORBEELD(CoreWindow window) {
-		chatModel = new ChatTableModelPATRICKVOORBEEELD();
+	public ChatController(CoreWindow window) {
+		chatModel = new ChatTableModel();
 		sbPanel = new ChatPanel();
 		sbPanel.setChatTableModel(chatModel);
 

@@ -10,7 +10,7 @@ public class VoorbeeldMain {
 		MainWindow gameScreen = new MainWindow();
 		new BoardDemoController(gameScreen);
 		new ScoreboardController(gameScreen);
-		new ChatControllerPATRICKVOORBEELD(gameScreen);
+		new ChatController(gameScreen);
 		gameScreen.pack();
 	}
 }

@@ -36,7 +36,7 @@ public class ChatPanel extends CorePanel {
 		generatorButton.setText(text);
 	}
 	
-	public void setChatTableModel(ChatTableModelPATRICKVOORBEEELD model){
+	public void setChatTableModel(ChatTableModel model){
 		chatTable.setModel(model);
 	}
 
