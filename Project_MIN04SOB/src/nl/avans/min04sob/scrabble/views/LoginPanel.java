@@ -74,7 +74,7 @@ public class LoginPanel extends CorePanel {
 		GridBagConstraints g = new GridBagConstraints();
 		g.fill = GridBagConstraints.HORIZONTAL;
 		g.gridwidth = 4;
-		g.insets = new Insets(0, 0, 0, 5);
+		g.insets = new Insets(0, 5, 0, 0);
 		loginButton = new JButton("Login");
 		g.gridx = 0;
 		g.gridy = 2;
