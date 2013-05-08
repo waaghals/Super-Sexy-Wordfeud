@@ -1,6 +1,7 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
@@ -37,6 +38,12 @@ public class TestPanel extends CorePanel {
 		add(tabbedPane, gbc_tabbedPane);
 		tabbedPane.addTab("Game 1", new BoardPanel());
 		tabbedPane.addTab("Game 2", new LoginPanel());
+	}
+
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Automatisch gegenereerde methodestub
+		
 	}
 
 }
