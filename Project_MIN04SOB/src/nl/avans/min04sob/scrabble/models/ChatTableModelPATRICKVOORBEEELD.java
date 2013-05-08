@@ -5,7 +5,7 @@ import java.util.Date;
 import nl.avans.min04sob.scrabble.core.Column;
 import nl.avans.min04sob.scrabble.core.CoreTableModel;
 
-public class ChatTableModel extends CoreTableModel {
+public class ChatTableModelPATRICKVOORBEEELD extends CoreTableModel {
 
 	private String name;
 	private String message;
@@ -14,7 +14,7 @@ public class ChatTableModel extends CoreTableModel {
 	public static final int MESSAGE_COLUMN = 1;
 	public static final int TIME_COLUMN = 2;
 	
-	public ChatTableModel() {
+	public ChatTableModelPATRICKVOORBEEELD() {
 		addColumn(new Column("Naam", String.class, NAME_COLUMN));
 		addColumn(new Column("Bericht", String.class, MESSAGE_COLUMN));
 		addColumn(new Column("Tijd", Date.class, TIME_COLUMN));
@@ -36,10 +36,10 @@ public class ChatTableModel extends CoreTableModel {
 	@Override
 	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
 		Object oldValue = getValueAt(rowIndex, columnIndex);
-		ChatTableModel row = (ChatTableModel) getRow(rowIndex);
+		ChatTableModelPATRICKVOORBEEELD row = (ChatTableModelPATRICKVOORBEEELD) getRow(rowIndex);
 		boolean newRow = false;
 		if (row == null) {
-			row = new ChatTableModel();
+			row = new ChatTableModelPATRICKVOORBEEELD();
 			newRow = true;
 		}
 
@@ -73,7 +73,7 @@ public class ChatTableModel extends CoreTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ChatTableModel row = (ChatTableModel) getRow(rowIndex);
+		ChatTableModelPATRICKVOORBEEELD row = (ChatTableModelPATRICKVOORBEEELD) getRow(rowIndex);
 		if (row != null) {
 			switch (columnIndex) {
 			case NAME_COLUMN:
