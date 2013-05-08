@@ -121,4 +121,15 @@ public class LoginPanel extends CorePanel {
 			passwordField.setBackground(Color.RED);
 		}
 	}
+	
+	public void clearFields(){
+		usernameField.setText("");
+		setUsernameMistake(true);
+		passwordField.setText("");
+		setPasswordMistake(true);
+	}
+	
+	public void setUsernameField(String username){
+		usernameField.setText(username);
+	}
 }

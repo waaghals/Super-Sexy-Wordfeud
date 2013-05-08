@@ -13,119 +13,160 @@ import nl.avans.min04sob.scrabble.views.LoginPanel;
 import nl.avans.min04sob.scrabble.views.RegisterPanel;
 
 public class LoginController extends CoreController {
-	
+
 	private LoginPanel loginPanel;
 	private RegisterPanel registerPanel;
 	private AccountModel accountModel;
 	private JFrame frame;
-	private final int maxpasslength, minpasslength,maxuserlength, minuserlength;
-	
-	public LoginController(){
-		
-		maxpasslength = 11;
-		minpasslength = 5;
-		maxuserlength = 11;
-		minuserlength = 5;
+	private final int maxpass_userLength, minpass_userLength;
+
+	public LoginController() {
+
+		maxpass_userLength = 11;
+		minpass_userLength = 5;
+
 		frame = new JFrame();
-		
+
 		loginPanel = new LoginPanel();
 		accountModel = new AccountModel();
 		registerPanel = new RegisterPanel();
-		
+
 		frame.add(loginPanel);
-		
+
 		addView(registerPanel);
 		addView(loginPanel);
 		addModel(accountModel);
-		
-		
-		
-		loginPanel.addActionListenerLogin(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		loginPanel.addActionListenerLogin(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				checkLogin();
 			}
 		});
-		
-		loginPanel.addActionListenerRegister(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		loginPanel.addActionListenerRegister(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				loginToRegister();
 			}
 		});
-		
-		registerPanel.addActionListenerCancel(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		registerPanel.addActionListenerCancel(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				registerToLogin();
 			}
 		});
-		
-		registerPanel.addActionListenerRegister(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		registerPanel.addActionListenerRegister(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				tryToRegister();
 			}
 		});
+		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
+
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
-		if(accountModel.getUsername() != null){
-			
-		}else{
+		if (accountModel.getUsername() != null) {
+			loginPanel.setUsernameMistake(true);
+			loginPanel.setPasswordMistake(true);
+		} else {
 			loginPanel.setPasswordMistake(false);
-			if(accountModel.checkUsernameAvailable(loginPanel.getUsername())){
+			if (accountModel.checkUsernameAvailable(loginPanel.getUsername())) {
 				loginPanel.setUsernameMistake(false);
-			}
-		}
-	}
-	
-	private void tryToRegister(){
-		if(registerPanel.getUsername().length() < minuserlength){
-			registerPanel.setResult("Username is to short");
-			return;
-		}else if(registerPanel.getUsername().length() > maxuserlength){
-			registerPanel.setResult("Username is to long");
-			return;
-		}else{
-			if(accountModel.checkUsernameAvailable(registerPanel.getUsername())){
-				if(registerPanel.getPassword1().length < minpasslength){
-					registerPanel.setResult("Password is to short");
-					return;
-				}else if(registerPanel.getPassword1().length > maxpasslength){
-					registerPanel.setResult("Password is to long");
-					return;
-				}else{
-					if(Arrays.equals(registerPanel.getPassword1(), registerPanel.getPassword2())){
-						accountModel.registerAccount(registerPanel.getUsername(), registerPanel.getPassword1());
-						registerPanel.setResult("");
-						System.out.println("true");//TODO
-						return;
-					}else{
-						registerPanel.setResult("Passwords don't match");
-						return;
-					}
-				}
 			}else{
-				registerPanel.setResult("Username already used");
-				return;
+				loginPanel.setUsernameMistake(true);
 			}
 		}
 	}
-	
-	private void loginToRegister(){
+
+	private void tryToRegister() {
+		boolean username = validateUsername();
+		boolean pass1 = validatePassword1();
+		boolean pass2 = validatePassword2();
+		
+		if (username && pass1 && pass2) {
+			accountModel.registerAccount(registerPanel.getUsername(),
+					registerPanel.getPassword1());
+			System.out.println("works!!!!");
+		}
+
+	}
+
+	private int validateLength(int length) {
+		if (length < minpass_userLength) {
+			return -1;
+		} else if (length > maxpass_userLength) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	private boolean validateUsername() {
+		if (validateLength(registerPanel.getUsername().length()) == -1) {
+			registerPanel.setUsernameMistake(false, "To short");
+			return false;
+		} else if (validateLength(registerPanel.getUsername().length()) == 1) {
+			registerPanel.setUsernameMistake(false, "To long");
+			return false;
+		} else {
+			if (accountModel.checkUsernameAvailable(registerPanel.getUsername())) {
+				registerPanel.setUsernameMistake(true, "");
+				return true;
+			} else {
+				registerPanel.setUsernameMistake(false, "Already used");
+				return false;
+			}
+		}
+
+	}
+
+	private boolean validatePassword1() {
+		if (validateLength(registerPanel.getPassword1().length) == -1) {
+			registerPanel.setPassword1Mistake(false, "To short");
+			return false;
+		} else if (validateLength(registerPanel.getPassword1().length) == 1) {
+			registerPanel.setPassword1Mistake(false, "To long");
+			return false;
+		} else {
+			registerPanel.setPassword1Mistake(true, "");
+			return true;
+		}
+	}
+
+	private boolean validatePassword2() {
+		if (validateLength(registerPanel.getPassword2().length) == -1) {
+			registerPanel.setPassword2Mistake(false, "To short");
+			return false;
+		} else if (validateLength(registerPanel.getPassword2().length) == 1) {
+			registerPanel.setPassword2Mistake(false, "To long");
+			return false;
+		} else {
+			if (Arrays.equals(registerPanel.getPassword1(),
+					registerPanel.getPassword2())) {
+				registerPanel.setPassword2Mistake(true, "");
+				return true;
+			} else {
+				registerPanel.setPassword2Mistake(false, "doesn't match");
+				return false;
+			}
+		}
+	}
+
+	private void loginToRegister() {
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
-		registerPanel.setResult("");
+		registerPanel.clearFields();
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
 	}
-	
-	private void registerToLogin(){
+
+	private void registerToLogin() {
 		frame.remove(registerPanel);
-		loginPanel.setUsernameMistake(true);
-		loginPanel.setPasswordMistake(true);
+		loginPanel.clearFields();
 		frame.add(loginPanel);
 		frame.revalidate();
 		frame.repaint();
