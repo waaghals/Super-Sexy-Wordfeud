@@ -6,8 +6,8 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 
+import nl.avans.min04sob.mvcvoorbeeld.BoardPanel;
 import nl.avans.min04sob.scrabble.core.CorePanel;
-import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.LoginPanel;
 
 public class TestPanel extends CorePanel {
