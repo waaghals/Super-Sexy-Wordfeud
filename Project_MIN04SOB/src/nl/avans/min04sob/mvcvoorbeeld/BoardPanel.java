@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.views;
+package nl.avans.min04sob.mvcvoorbeeld;
 
 import java.beans.PropertyChangeEvent;
 

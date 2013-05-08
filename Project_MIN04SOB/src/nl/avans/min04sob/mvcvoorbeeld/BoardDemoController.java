@@ -1,9 +1,8 @@
-package nl.avans.min04sob.scrabble.controllers;
+package nl.avans.min04sob.mvcvoorbeeld;
 
 import nl.avans.min04sob.scrabble.core.CoreConstraint;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
-import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class BoardDemoController extends CoreController {
 

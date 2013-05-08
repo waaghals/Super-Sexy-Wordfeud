@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.controllers;
+package nl.avans.min04sob.mvcvoorbeeld;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +9,6 @@ import javax.swing.Timer;
 import nl.avans.min04sob.scrabble.core.CoreConstraint;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
-import nl.avans.min04sob.scrabble.models.ScoreboardTableModel;
-import nl.avans.min04sob.scrabble.views.ScoreboardPanel;
 
 public class ScoreboardController extends CoreController {
 

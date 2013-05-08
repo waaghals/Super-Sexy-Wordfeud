@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.models;
+package nl.avans.min04sob.mvcvoorbeeld;
 
 import nl.avans.min04sob.scrabble.core.Column;
 import nl.avans.min04sob.scrabble.core.CoreTableModel;

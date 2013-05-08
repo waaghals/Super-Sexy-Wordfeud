@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.views;
+package nl.avans.min04sob.mvcvoorbeeld;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -9,7 +9,6 @@ import javax.swing.JTable;
 
 import nl.avans.min04sob.scrabble.core.CoreConstraint;
 import nl.avans.min04sob.scrabble.core.CorePanel;
-import nl.avans.min04sob.scrabble.models.ScoreboardTableModel;
 
 public class ScoreboardPanel extends CorePanel {
 
