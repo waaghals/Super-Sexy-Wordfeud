@@ -19,8 +19,6 @@ public abstract class CoreWindow extends JFrame implements CoreView {
 	public void init() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
-		setLayout(new FlowLayout());
-		setPreferredSize(new Dimension(500, 600));
 		pack();
 	}
 }
