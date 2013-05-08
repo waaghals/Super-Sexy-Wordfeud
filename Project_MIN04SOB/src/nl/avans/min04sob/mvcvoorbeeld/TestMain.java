@@ -1,9 +1,5 @@
-package nl.avans.min04sob.scrabble;
+package nl.avans.min04sob.mvcvoorbeeld;
 
-import nl.avans.min04sob.mvcvoorbeeld.BoardDemoController;
-import nl.avans.min04sob.mvcvoorbeeld.ChatControllerPATRICKVOORBEELD;
-import nl.avans.min04sob.mvcvoorbeeld.MainWindow;
-import nl.avans.min04sob.mvcvoorbeeld.ScoreboardController;
 
 public class TestMain {
 
