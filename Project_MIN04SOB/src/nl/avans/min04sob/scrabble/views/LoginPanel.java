@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -54,7 +55,6 @@ public class LoginPanel extends CorePanel {
 
 		GridBagConstraints e = new GridBagConstraints();
 		e.gridwidth = 3;
-		e.fill = GridBagConstraints.HORIZONTAL;
 		e.insets = new Insets(0, 0, 5, 5);
 		passwordLabel = new JLabel("Password :");
 		e.gridx = 0;
@@ -74,7 +74,7 @@ public class LoginPanel extends CorePanel {
 		GridBagConstraints g = new GridBagConstraints();
 		g.fill = GridBagConstraints.HORIZONTAL;
 		g.gridwidth = 4;
-		g.insets = new Insets(0, 0, 0, 5);
+		g.insets = new Insets(0, 5, 0, 0);
 		loginButton = new JButton("Login");
 		g.gridx = 0;
 		g.gridy = 2;
@@ -88,10 +88,6 @@ public class LoginPanel extends CorePanel {
 		h.gridx = 4;
 		h.gridy = 2;
 		add(registerButton, h);
-	}
-
-	public void setResult(String text) {
-		//result.setText(text);
 	}
 
 	public String getUsername() {
@@ -108,5 +104,21 @@ public class LoginPanel extends CorePanel {
 
 	public void addActionListenerRegister(ActionListener listener) {
 		registerButton.addActionListener(listener);
+	}
+	
+	public void setUsernameMistake(boolean good){
+		if(good){
+			usernameField.setBackground(Color.WHITE);
+		}else{
+			usernameField.setBackground(Color.RED);
+		}
+	}
+	
+	public void setPasswordMistake(boolean good){
+		if(good){
+			passwordField.setBackground(Color.WHITE);
+		}else{
+			passwordField.setBackground(Color.RED);
+		}
 	}
 }

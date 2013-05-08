@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public abstract class CoreWindow extends JFrame implements CoreView {
 
-	public CoreWindow(){
+	public CoreWindow() {
 		init();
 	}
 
@@ -12,7 +12,7 @@ public abstract class CoreWindow extends JFrame implements CoreView {
 		super(title);
 		init();
 	}
-	
+
 	public void init() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);

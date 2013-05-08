@@ -2,6 +2,7 @@ package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -71,30 +72,42 @@ public class LoginController extends CoreController {
 		if(accountModel.getUsername() != null){
 			
 		}else{
-			loginPanel.setResult("Wrong username/password");
+			loginPanel.setPasswordMistake(false);
+			if(accountModel.checkUsernameAvailable(loginPanel.getUsername())){
+				loginPanel.setUsernameMistake(false);
+			}
 		}
 	}
 	
 	private void tryToRegister(){
 		if(registerPanel.getUsername().length() < minuserlength){
 			registerPanel.setResult("Username is to short");
+			return;
 		}else if(registerPanel.getUsername().length() > maxuserlength){
 			registerPanel.setResult("Username is to long");
+			return;
 		}else{
 			if(accountModel.checkUsernameAvailable(registerPanel.getUsername())){
 				if(registerPanel.getPassword1().length < minpasslength){
 					registerPanel.setResult("Password is to short");
+					return;
 				}else if(registerPanel.getPassword1().length > maxpasslength){
 					registerPanel.setResult("Password is to long");
+					return;
 				}else{
-					if(registerPanel.getPassword1().equals(registerPanel.getPassword2())){
-						accountModel.createAccount(registerPanel.getUsername(), registerPanel.getPassword1());
+					if(Arrays.equals(registerPanel.getPassword1(), registerPanel.getPassword2())){
+						accountModel.registerAccount(registerPanel.getUsername(), registerPanel.getPassword1());
+						registerPanel.setResult("");
+						System.out.println("true");//TODO
+						return;
 					}else{
 						registerPanel.setResult("Passwords don't match");
+						return;
 					}
 				}
 			}else{
 				registerPanel.setResult("Username already used");
+				return;
 			}
 		}
 	}
@@ -102,6 +115,7 @@ public class LoginController extends CoreController {
 	private void loginToRegister(){
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
+		registerPanel.setResult("");
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
@@ -109,6 +123,8 @@ public class LoginController extends CoreController {
 	
 	private void registerToLogin(){
 		frame.remove(registerPanel);
+		loginPanel.setUsernameMistake(true);
+		loginPanel.setPasswordMistake(true);
 		frame.add(loginPanel);
 		frame.revalidate();
 		frame.repaint();
