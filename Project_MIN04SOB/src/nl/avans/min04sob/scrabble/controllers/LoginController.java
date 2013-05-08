@@ -73,7 +73,10 @@ public class LoginController extends CoreController {
 		if(accountModel.getUsername() != null){
 			
 		}else{
-			loginPanel.setResult("Wrong username/password");
+			loginPanel.setPasswordMistake(false);
+			if(accountModel.checkUsernameAvailable(loginPanel.getUsername())){
+				loginPanel.setUsernameMistake(false);
+			}
 		}
 	}
 	
@@ -113,6 +116,7 @@ public class LoginController extends CoreController {
 	private void loginToRegister(){
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
+		registerPanel.setResult("");
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
@@ -120,6 +124,8 @@ public class LoginController extends CoreController {
 	
 	private void registerToLogin(){
 		frame.remove(registerPanel);
+		loginPanel.setUsernameMistake(true);
+		loginPanel.setPasswordMistake(true);
 		frame.add(loginPanel);
 		frame.revalidate();
 		frame.repaint();

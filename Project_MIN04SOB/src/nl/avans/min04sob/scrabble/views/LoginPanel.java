@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -89,10 +90,6 @@ public class LoginPanel extends CorePanel {
 		add(registerButton, h);
 	}
 
-	public void setResult(String text) {
-		//result.setText(text);
-	}
-
 	public String getUsername() {
 		return usernameField.getText();
 	}
@@ -107,5 +104,21 @@ public class LoginPanel extends CorePanel {
 
 	public void addActionListenerRegister(ActionListener listener) {
 		registerButton.addActionListener(listener);
+	}
+	
+	public void setUsernameMistake(boolean good){
+		if(good){
+			usernameField.setBackground(Color.WHITE);
+		}else{
+			usernameField.setBackground(Color.RED);
+		}
+	}
+	
+	public void setPasswordMistake(boolean good){
+		if(good){
+			passwordField.setBackground(Color.WHITE);
+		}else{
+			passwordField.setBackground(Color.RED);
+		}
 	}
 }
