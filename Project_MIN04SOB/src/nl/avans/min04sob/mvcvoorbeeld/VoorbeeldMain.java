@@ -1,7 +1,7 @@
 package nl.avans.min04sob.mvcvoorbeeld;
 
 
-public class TestMain {
+public class VoorbeeldMain {
 
 	/**
 	 * @param args
