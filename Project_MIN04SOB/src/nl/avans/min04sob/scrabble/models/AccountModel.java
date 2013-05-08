@@ -16,19 +16,24 @@ public class AccountModel extends CoreModel {
 	}
 	
 	public void registerAccount(String username, char[] password){
-		//Dbconnect.getInstance().query("");
+		try{
+			Dbconnect.getInstance().query("INSERT INTO account('username','password') VALUES('"+username+"','"+password+"');");
+		}catch(SQLException sql){
+			
+		}
 	}
 	
 	public void login(String username, char[] password){
 		//TODO query aanpassen
 		try{
 			ResultSet pass = Dbconnect.getInstance().select("SELECT password FROM account WHERE username ="+username+";");
-			pass.next();
-			if(pass.getArray(1).equals(password)){
-				this.username = username;
+			if(pass.next()){
+				if(pass.getArray(1).equals(password)){
+					this.username = username;
+				}
 			}
 		}catch(SQLException sql){
-			
+				
 		}
 	}
 	
@@ -37,9 +42,8 @@ public class AccountModel extends CoreModel {
 	}
 	
 	public boolean checkUsernameAvailable(String username){
-		//TODO query aanpassen
 		try{
-			ResultSet check = Dbconnect.getInstance().select("SELECT * FROM account WHERE username ="+username+";");
+			ResultSet check = Dbconnect.getInstance().select("SELECT * FROM player WHERE username ='"+username+"';");
 			if(check.next()){
 				return false;
 			}else{
@@ -48,10 +52,5 @@ public class AccountModel extends CoreModel {
 		}catch(SQLException sql){
 			return false;
 		}
-	}
-	
-	public void createAccount(String username, char[] password){
-		//TODO query opstellen
-		//Dbconnect.getInstance().query("INSERT INTO account(username,pa")
 	}
 }
