@@ -16,8 +16,11 @@ public class AccountModel extends CoreModel {
 	}
 	
 	public void registerAccount(String username, char[] password){
+		int newplayerid = 0;
 		try{
-			Dbconnect.getInstance().query("INSERT INTO account('username','password') VALUES('"+username+"','"+password+"');");
+			ResultSet highestplayer_id = Dbconnect.getInstance().select("SELECT max(player_id) FROM player");
+			newplayerid = highestplayer_id.getInt(1) +1;
+			Dbconnect.getInstance().query("INSERT INTO account('username','password','player_id') VALUES('"+username+"','"+password+"','"+newplayerid+"');");
 		}catch(SQLException sql){
 			
 		}

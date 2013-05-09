@@ -61,7 +61,7 @@ private String timelastmessage;
 			return returnnewmessages;			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "error no connection to database.";
+			return "error no connection to database.\n";
 		}		
 	
 	}

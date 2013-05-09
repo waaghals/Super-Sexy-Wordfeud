@@ -18,14 +18,16 @@ public class ChatController extends CoreController{
 private ChatPanel chatpanel;
 private ChatModel chatmodel;
 private JFrame frame;
-private final int xsizechat, ysizechat , checkmessagestimer;
+private final int xsizechat, ysizechat , checkmessagestimer , game_id, player_id;
 
-	public ChatController(){
-		xsizechat = 150;
-		ysizechat = 250;
+	public ChatController(int game_id , int player_id){
+		this.game_id = game_id;
+		this.player_id = player_id;
+		xsizechat = 260;
+		ysizechat = 300;
 		checkmessagestimer = 10;
-	chatpanel = new ChatPanel(xsizechat,ysizechat);
-	chatmodel = new ChatModel(1,2);
+	chatpanel = new ChatPanel(ysizechat,xsizechat);
+	chatmodel = new ChatModel(game_id,player_id);
 	frame = new JFrame();
 	frame.add(chatpanel);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

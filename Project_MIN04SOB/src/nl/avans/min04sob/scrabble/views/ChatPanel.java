@@ -48,6 +48,7 @@ public class ChatPanel extends CorePanel {
 		chatslider.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		chatslider.setPreferredSize(new Dimension(xchatsize,ychatsize));
 		
+		
 
 		this.setLayout(new BorderLayout());
 		this.add(chatslider, BorderLayout.NORTH);
