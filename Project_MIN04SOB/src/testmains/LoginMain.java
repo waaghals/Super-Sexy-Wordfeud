@@ -1,11 +1,12 @@
-package nl.avans.min04sob.scrabble;
+package testmains;
+
 
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.controllers.LoginController;
 import nl.avans.min04sob.scrabble.views.LoginPanel;
 
-public class LoginTestMain {
+public class LoginMain {
 
 	/**
 	 * @param args
