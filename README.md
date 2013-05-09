@@ -13,7 +13,7 @@
 
 
 ##Database gegevens handmatig toevoegen
-1. Ga naar (http://databases.aii.avans.nl/)[PhpMyAdmin]
+1. Ga naar [PhpMyAdmin](http://databases.aii.avans.nl/)
 2. Inlog gegevens zijn:
 	User: tjmbrouw
 	Pass: 8THMJ2S4
