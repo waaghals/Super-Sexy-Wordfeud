@@ -1,4 +1,9 @@
-package nl.avans.min04sob.mvcvoorbeeld;
+
+
+import nl.avans.min04sob.mvcvoorbeeld.BoardDemoController;
+import nl.avans.min04sob.mvcvoorbeeld.ChatController;
+import nl.avans.min04sob.mvcvoorbeeld.MainWindow;
+import nl.avans.min04sob.mvcvoorbeeld.ScoreboardController;
 
 
 public class VoorbeeldMain {

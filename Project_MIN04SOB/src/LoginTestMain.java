@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble;
+
 
 import javax.swing.JFrame;
 
