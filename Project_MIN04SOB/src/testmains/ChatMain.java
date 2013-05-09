@@ -1,9 +1,10 @@
+package testmains;
 import nl.avans.min04sob.scrabble.controllers.ChatController;
 
 
 
 
-public class TestChat {
+public class ChatMain {
 
 	/**
 	 * @param args

@@ -1,3 +1,4 @@
+package testmains;
 
 
 import nl.avans.min04sob.mvcvoorbeeld.BoardDemoController;
@@ -6,7 +7,7 @@ import nl.avans.min04sob.mvcvoorbeeld.MainWindow;
 import nl.avans.min04sob.mvcvoorbeeld.ScoreboardController;
 
 
-public class VoorbeeldMain {
+public class hoofdschermMain {
 
 	/**
 	 * @param args
