@@ -61,9 +61,10 @@ public class BoardPanel extends CorePanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 		add(scrollPane, new CoreConstraint(10, 10, 0, 0));
 		
-		JTextField textField = new JTextField();
-		textField.setText("A B Q E H E F");
-		add(textField, new CoreConstraint(8, 1, 0, 11));
+		Object[][] playerTiles = new Character[][] {{ 'K', 'Z', 'V', 'Q', 'N' }};
+		Character[] blaat = new Character[] { ' ', ' ', ' ', ' ', ' ' };
+		JTable playerTilesField = new JTable(playerTiles, blaat);
+		add(playerTilesField, new CoreConstraint(8, 1, 0, 11));
 		
 		JButton button = new JButton();
 		button.setText("Kut");
