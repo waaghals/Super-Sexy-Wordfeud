@@ -28,6 +28,8 @@ private final int xsizechat, ysizechat , checkmessagestimer;
 	chatmodel = new ChatModel(1,1);
 	frame = new JFrame();
 	frame.add(chatpanel);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.pack();
 	frame.setVisible(true);
 	
 	addView(chatpanel);
