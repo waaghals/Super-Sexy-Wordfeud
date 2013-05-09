@@ -11,3 +11,10 @@
 7. ??????????
 8. PROFIT
 
+
+##Database gegevens handmatig toevoegen
+1. Ga naar (http://databases.aii.avans.nl/)[PhpMyAdmin]
+2. Inlog gegevens zijn:
+	User: tjmbrouw
+	Pass: 8THMJ2S4
+3. Selecteer de database tjmbrouw_db2 (onder de kop __tjmbrouw__)
