@@ -25,7 +25,7 @@ private final int xsizechat, ysizechat , checkmessagestimer;
 		ysizechat = 250;
 		checkmessagestimer = 10;
 	chatpanel = new ChatPanel(xsizechat,ysizechat);
-	chatmodel = new ChatModel(1,1);
+	chatmodel = new ChatModel(1,2);
 	frame = new JFrame();
 	frame.add(chatpanel);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +79,7 @@ private final int xsizechat, ysizechat , checkmessagestimer;
 	public void send(){
 if (!chatpanel.getChatfieldsend().getText().equals("") && !chatpanel.getChatfieldsend().getText().equals(" ")) {
 			
+	chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() + "you: " + chatpanel.getChatfieldsend().getText() + "\n");
 			chatmodel.send(chatpanel.getChatfieldsend().getText());
 			chatpanel.getChatfieldsend().setText("");
 		}
