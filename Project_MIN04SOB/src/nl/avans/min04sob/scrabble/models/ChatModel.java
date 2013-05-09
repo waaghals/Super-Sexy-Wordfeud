@@ -45,4 +45,24 @@ private String timelastmessage;
 			return "error no connection to database.";
 		}		
 	}
+	public String allmessagesforstart(){
+
+		String returnnewmessages = "";
+		try {
+			ResultSet newmessages = Dbconnect.getInstance().select("SELECT player_id, message, send_at FROM chat WHERE game_id = "+this.game_id+" AND send_at > '"+this.timelastmessage+"' ORDER BY send_at ASC");
+			while(newmessages.next()){	
+				if(newmessages.getInt(1) == this.player_id){
+					returnnewmessages = returnnewmessages + "you : " + newmessages.getString(2)+"\n";
+				}else{
+					returnnewmessages = returnnewmessages + "oppenent : " + newmessages.getString(2)+"\n";
+				}
+				timelastmessage = newmessages.getString(3);
+			}
+			return returnnewmessages;			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "error no connection to database.";
+		}		
+	
+	}
 }

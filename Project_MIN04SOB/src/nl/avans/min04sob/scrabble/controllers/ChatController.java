@@ -33,6 +33,7 @@ private final int xsizechat, ysizechat , checkmessagestimer;
 	frame.setVisible(true);
 	
 	addView(chatpanel);
+	chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() +chatmodel.allmessagesforstart());
 	this.startcheckingmessages();
 	
 	
