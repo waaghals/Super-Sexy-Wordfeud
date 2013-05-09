@@ -20,17 +20,12 @@ private ChatModel chatmodel;
 private JFrame frame;
 private final int xsizechat, ysizechat , checkmessagestimer;
 
-	public ChatController(){
+	public ChatController(int playerid){
 		xsizechat = 150;
 		ysizechat = 250;
 		checkmessagestimer = 10;
 	chatpanel = new ChatPanel(xsizechat,ysizechat);
-	chatmodel = new ChatModel(1,2);
-	frame = new JFrame();
-	frame.add(chatpanel);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.pack();
-	frame.setVisible(true);
+	chatmodel = new ChatModel(1,playerid);
 	
 	addView(chatpanel);
 	chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() +chatmodel.allmessagesforstart());
@@ -93,5 +88,9 @@ if (!chatpanel.getChatfieldsend().getText().equals("") && !chatpanel.getChatfiel
 		    chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() +chatmodel.newmessages());
 		  }
 		}, 0, this.checkmessagestimer, TimeUnit.SECONDS);
+	}
+
+	public ChatPanel getchatpanel(){
+		return chatpanel;
 	}
 }
