@@ -81,5 +81,9 @@ public class ChatPanel extends CorePanel {
 	public void setChatFieldSend(JTextField chatfieldsend) {
 		this.chatFieldSend = chatfieldsend;
 	}
+	
+	public void addMessageToChatField(String message){
+		
+	}
 
 }

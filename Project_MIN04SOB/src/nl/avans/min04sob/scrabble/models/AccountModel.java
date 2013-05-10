@@ -55,4 +55,8 @@ public class AccountModel extends CoreModel {
 		}
 	}
 	
+	public void update(){
+		
+	}
+	
 }
