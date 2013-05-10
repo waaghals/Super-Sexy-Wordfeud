@@ -14,87 +14,90 @@ import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 
-public class ChatController extends CoreController{
-private ChatPanel chatpanel;
-private ChatModel chatmodel;
-private JFrame frame;	
-private final int xsizechat, ysizechat , checkmessagestimer , player_id ,game_id;
+public class ChatController extends CoreController {
+	private ChatPanel chatPanel;
+	private ChatModel chatModel;
+	private JFrame frame;
+	private final int xSizeChat, ySizeChat, checkMessagesTimer, playerId,
+			gameId;
 
-	public ChatController(int playerid,int gameid){
-		xsizechat = 150;
-		ysizechat = 250;
-		checkmessagestimer = 10;
-	
-		this.player_id = playerid;
-		this.game_id = gameid;
-		
-		chatpanel = new ChatPanel(xsizechat,ysizechat);	
-		chatmodel = new ChatModel(game_id,playerid);
-	
-	addView(chatpanel);
-	chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() +chatmodel.allmessagesforstart());
-	this.startcheckingmessages();
-	
-	
-	
-	
-	
-	
-	chatpanel.addlistenerchatfield(new KeyListener(){
+	public ChatController(int playerId, int gameId) {
+		xSizeChat = 150;
+		ySizeChat = 250;
+		checkMessagesTimer = 10;
 
-		@Override
-		public void keyPressed(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
+		this.playerId = playerId;
+		this.gameId = gameId;
 
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+		chatPanel = new ChatPanel(xSizeChat, ySizeChat);
+		chatModel = new ChatModel(gameId, playerId);
+
+		addView(chatPanel);
+		chatPanel.getChatField().setText(
+				chatPanel.getChatField().getText()
+						+ chatModel.allmessagesforstart());
+		this.startcheckingmessages();
+
+		chatPanel.addListenerChatField(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					send();
+
+				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+		chatPanel.addListenerChatSendButton(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
 				send();
-				
-			}
-		}
-
-		@Override
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	});
-	chatpanel.addlistenerchatsendbutton(new ActionListener(){
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			send();
-			
 
 			}
-			
-		
-		
-	});
-}
-	public void send(){
-if (!chatpanel.getChatfieldsend().getText().equals("") && !chatpanel.getChatfieldsend().getText().equals(" ")) {
-			
-	chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() + "you: " + chatpanel.getChatfieldsend().getText() + "\n");
-			chatmodel.send(chatpanel.getChatfieldsend().getText());
-			chatpanel.getChatfieldsend().setText("");
+
+		});
+	}
+
+	public void send() {
+		if (!chatPanel.getChatFieldSend().getText().equals("")
+				&& !chatPanel.getChatFieldSend().getText().equals(" ")) {
+
+			chatPanel.getChatField().setText(
+					chatPanel.getChatField().getText() + "you: "
+							+ chatPanel.getChatFieldSend().getText() + "\n");
+			chatModel.send(chatPanel.getChatFieldSend().getText());
+			chatPanel.getChatFieldSend().setText("");
 		}
 	}
-	public void startcheckingmessages(){
-		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+
+	public void startcheckingmessages() {
+		ScheduledExecutorService exec = Executors
+				.newSingleThreadScheduledExecutor();
 		exec.scheduleAtFixedRate(new Runnable() {
-		  @Override
-		  public void run() {
-		    chatpanel.getChatfield().setText(chatpanel.getChatfield().getText() +chatmodel.newmessages());
-		  }
-		}, 0, this.checkmessagestimer, TimeUnit.SECONDS);
+			@Override
+			public void run() {
+				chatPanel.getChatField().setText(
+						chatPanel.getChatField().getText()
+								+ chatModel.newmessages());
+			}
+		}, 0, this.checkMessagesTimer, TimeUnit.SECONDS);
 	}
 
-	public ChatPanel getchatpanel(){
-		return chatpanel;
+	public ChatPanel getchatpanel() {
+		return chatPanel;
 	}
 }
