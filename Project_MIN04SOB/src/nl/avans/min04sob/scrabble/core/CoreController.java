@@ -17,7 +17,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 	public CoreController() {
 		registeredViews = new ArrayList<CoreView>();
 		registeredModels = new ArrayList<CoreModel>();
-		updateInterval = 10;
+		updateInterval = 1;
 		startTimer();
 	}
 
