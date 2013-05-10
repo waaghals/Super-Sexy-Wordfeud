@@ -12,19 +12,18 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 
 	private ArrayList<CoreView> registeredViews;
 	private ArrayList<CoreModel> registeredModels;
-	private int updateInterval;
+	private final static int INTERVAL = 1;//Second
 
 	public CoreController() {
 		registeredViews = new ArrayList<CoreView>();
 		registeredModels = new ArrayList<CoreModel>();
-		updateInterval = 1;
 		startTimer();
 	}
 
 	private void startTimer() {
 		ScheduledExecutorService exec = Executors
 				.newSingleThreadScheduledExecutor();
-		exec.scheduleAtFixedRate(this, 0, updateInterval, TimeUnit.SECONDS);
+		exec.scheduleAtFixedRate(this, 0, INTERVAL, TimeUnit.SECONDS);
 	}
 
 	//Update all the registered models
