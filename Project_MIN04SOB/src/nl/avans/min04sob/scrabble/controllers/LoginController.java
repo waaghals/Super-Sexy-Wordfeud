@@ -62,7 +62,7 @@ public class LoginController extends CoreController {
 				tryToRegister();
 			}
 		});
-		
+
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -70,31 +70,21 @@ public class LoginController extends CoreController {
 
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
-		if (accountModel.getUsername() != null) {
+		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(true);
 			loginPanel.setPasswordMistake(true);
-			try{
-				ResultSet login = Dbconnect.getInstance().select("SELECT username, player_id, administrator FROM player WHERE username ='"+loginPanel.getUsername()+"'");
-				login.next();
-				
-			}catch(SQLException sql){
-				
-			}
 		} else {
-			loginPanel.setPasswordMistake(false);
-			if (accountModel.checkUsernameAvailable(loginPanel.getUsername())) {
-				loginPanel.setUsernameMistake(false);
-			}else{
-				loginPanel.setUsernameMistake(true);
-			}
+			frame.dispose();
+			frame = null;
 		}
+
 	}
 
 	private void tryToRegister() {
 		boolean username = validateUsername();
 		boolean pass1 = validatePassword1();
 		boolean pass2 = validatePassword2();
-		
+
 		if (username && pass1 && pass2) {
 			accountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1());
@@ -120,7 +110,8 @@ public class LoginController extends CoreController {
 			registerPanel.setUsernameMistake(false, "To long");
 			return false;
 		} else {
-			if (accountModel.checkUsernameAvailable(registerPanel.getUsername())) {
+			if (accountModel
+					.checkUsernameAvailable(registerPanel.getUsername())) {
 				registerPanel.setUsernameMistake(true, "");
 				return true;
 			} else {

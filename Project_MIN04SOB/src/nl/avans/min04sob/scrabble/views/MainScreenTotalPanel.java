@@ -25,9 +25,6 @@ public class MainScreenTotalPanel extends CorePanel{
 		add(panel, BorderLayout.EAST);
 	}
 	
-	
-	
-	
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
 	

@@ -33,21 +33,21 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		}
 	}
 
-	protected void addModel(CoreModel model) {
+	public void addModel(CoreModel model) {
 		registeredModels.add(model);
 		model.addPropertyChangeListener(this);
 	}
 
-	protected void removeModel(CoreModel model) {
+	public void removeModel(CoreModel model) {
 		registeredModels.remove(model);
 		model.removePropertyChangeListener(this);
 	}
 
-	protected void addView(CoreView view) {
+	public void addView(CoreView view) {
 		registeredViews.add(view);
 	}
 
-	protected void removeView(CoreView view) {
+	public void removeView(CoreView view) {
 		registeredViews.remove(view);
 	}
 
@@ -55,12 +55,9 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 	// and propagate them on to all the views.
 	public void propertyChange(PropertyChangeEvent evt) {
 		for (CoreView view : registeredViews) {
+			System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + ". Message: " + evt.getPropertyName());
 			view.modelPropertyChange(evt);
 		}
-	}
-
-	public void setUpdateInterval(int newUpdateInterval) {
-		updateInterval = newUpdateInterval;
 	}
 
 }

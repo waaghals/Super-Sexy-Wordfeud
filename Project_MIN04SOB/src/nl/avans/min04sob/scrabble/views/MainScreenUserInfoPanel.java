@@ -8,13 +8,10 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
-import nl.avans.min04sob.scrabble.controllers.ChatController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.models.AccountModel;
 
 public class MainScreenUserInfoPanel extends CorePanel{
 	
@@ -94,5 +91,15 @@ public class MainScreenUserInfoPanel extends CorePanel{
 	}
 	
 	public void modelPropertyChange(PropertyChangeEvent evt) {
+		switch (evt.getPropertyName()) {
+		case "login":
+			AccountModel user = (AccountModel) evt.getNewValue();
+			usernameLabel.setText(user.getUsername());
+			break;
+
+		default:
+			break;
+		}
+		revalidate();
 	}
 }
