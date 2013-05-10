@@ -10,7 +10,7 @@ public class ChatandGamePanel extends JPanel{
 
 	public ChatandGamePanel(int playerid){
 		setPreferredSize(new Dimension(210, 300));
-		ChatController chat = new ChatController(playerid);
+		ChatController chat = new ChatController(playerid, 1);
 		add(chat.getchatpanel());
 	}
 }
