@@ -2,11 +2,14 @@ package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.core.Dbconnect;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.views.LoginPanel;
 import nl.avans.min04sob.scrabble.views.RegisterPanel;
@@ -61,7 +64,7 @@ public class LoginController extends CoreController {
 		});
 		
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 
@@ -70,6 +73,13 @@ public class LoginController extends CoreController {
 		if (accountModel.getUsername() != null) {
 			loginPanel.setUsernameMistake(true);
 			loginPanel.setPasswordMistake(true);
+			try{
+				ResultSet login = Dbconnect.getInstance().select("SELECT username, player_id, administrator FROM player WHERE username ='"+loginPanel.getUsername()+"'");
+				login.next();
+				
+			}catch(SQLException sql){
+				
+			}
 		} else {
 			loginPanel.setPasswordMistake(false);
 			if (accountModel.checkUsernameAvailable(loginPanel.getUsername())) {

@@ -18,7 +18,7 @@ public class AccountModel extends CoreModel {
 	public void registerAccount(String username, char[] password){
 		try{
 			
-			Dbconnect.getInstance().query("INSERT INTO account('username','password') VALUES('"+username+"','"+password+"');");
+			Dbconnect.getInstance().query("INSERT INTO account('username','password', moderator) VALUES('"+username+"','"+password+"',0);");
 		}catch(SQLException sql){
 			
 		}
