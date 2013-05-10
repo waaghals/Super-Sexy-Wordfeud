@@ -5,10 +5,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -53,8 +53,20 @@ public class ChatPanel extends CorePanel {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		if(evt.getPropertyName().equals("chat")){
+
+			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
+			chatField.setText("");
+			for (String string : messages) {
+				chatField.append(string);
+			}
+			
+			//Scroll To bottom
+			JScrollBar vertical = chatSlider.getVerticalScrollBar();
+			vertical.setValue( vertical.getMaximum() );
+		}
 
 	}
 
@@ -82,8 +94,23 @@ public class ChatPanel extends CorePanel {
 		this.chatFieldSend = chatfieldsend;
 	}
 	
-	public void addMessageToChatField(String message){
-		
+	public void addToChatField(String message){
+		chatField.append(message);
 	}
 
+	public void setChatFieldText(String text) {
+		chatField.setText(text);
+	}
+
+	public String getChatFieldText() {
+		return chatField.getText();
+	}
+
+	public String getChatFieldSendText() {
+		return chatFieldSend.getText();
+	}
+	
+	public void setChatFieldSendText(String message) {
+		chatFieldSend.setText(message);
+	}
 }

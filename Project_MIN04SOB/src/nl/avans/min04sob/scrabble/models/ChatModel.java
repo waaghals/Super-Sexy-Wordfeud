@@ -1,10 +1,10 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
@@ -13,11 +13,14 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 public class ChatModel extends CoreModel {
 	private final int gameId, playerId;
 	private String timeLastMessage;
+	private ArrayList<String> messages;
 
 	public ChatModel(int gameId, int playerId) {
+		messages = new ArrayList<String>();
 		this.gameId = gameId;
 		this.playerId = playerId;
 		timeLastMessage = "2000-1-1 00:00:00";
+		getAllMessages();
 	}
 
 	public void send(String newmessage) {
@@ -35,8 +38,8 @@ public class ChatModel extends CoreModel {
 		}
 	}
 
-	public String newmessages() {
-		String newMessages = "";
+	private void getNewMessages() {
+
 		try {
 			ResultSet dbResult = Dbconnect.getInstance().select(
 					"SELECT player_id, message, send_at FROM chat WHERE game_id = "
@@ -44,21 +47,16 @@ public class ChatModel extends CoreModel {
 							+ this.timeLastMessage + "' ORDER BY send_at ASC");
 			while (dbResult.next()) {
 				if (!(dbResult.getInt(1) == this.playerId)) {
-					newMessages = newMessages + "oppenent : "
-							+ dbResult.getString(2) + "\n";
+					messages.add("oppenent : " + dbResult.getString(2) + "\n");
 				}
 				timeLastMessage = dbResult.getString(3);
 			}
-			return newMessages;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "error no connection to database.";
 		}
 	}
 
-	public String allMessagesFromStart() {
-
-		String newMessages = "";
+	private void getAllMessages() {
 		try {
 			ResultSet dbResult = Dbconnect.getInstance().select(
 					"SELECT player_id, message, send_at FROM chat WHERE game_id = "
@@ -66,25 +64,26 @@ public class ChatModel extends CoreModel {
 							+ this.timeLastMessage + "' ORDER BY send_at ASC");
 			while (dbResult.next()) {
 				if (dbResult.getInt(1) == this.playerId) {
-					newMessages = newMessages + "you : "
-							+ dbResult.getString(2) + "\n";
+					messages.add("you : " + dbResult.getString(2) + "\n");
 				} else {
-					newMessages = newMessages + "oppenent : "
-							+ dbResult.getString(2) + "\n";
+					messages.add("oppenent : " + dbResult.getString(2) + "\n");
 				}
 				timeLastMessage = dbResult.getString(3);
 			}
-			return newMessages;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "error no connection to database.\n";
 		}
-
+	}
+	
+	public ArrayList<String> getMessages(){
+		return messages;
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void update() {
-		// TODO Automatisch gegenereerde methodestub
-
+		ArrayList<String> oldMessages = (ArrayList<String>) messages.clone();
+		getNewMessages();
+		firePropertyChange("chat", oldMessages, messages);
 	}
 }

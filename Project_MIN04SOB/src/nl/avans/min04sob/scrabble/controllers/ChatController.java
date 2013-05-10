@@ -17,13 +17,11 @@ import nl.avans.min04sob.scrabble.views.ChatPanel;
 public class ChatController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
-	private final int xSizeChat, ySizeChat, checkMessagesTimer, playerId,
-			gameId;
+	private final int xSizeChat, ySizeChat, playerId, gameId;
 
 	public ChatController(int playerId, int gameId) {
 		xSizeChat = 150;
 		ySizeChat = 250;
-		checkMessagesTimer = 10;
 
 		this.playerId = playerId;
 		this.gameId = gameId;
@@ -32,36 +30,28 @@ public class ChatController extends CoreController {
 		chatModel = new ChatModel(gameId, playerId);
 
 		addView(chatPanel);
-		chatPanel.getChatField().setText(
-				chatPanel.getChatField().getText()
-						+ chatModel.allMessagesFromStart());
-		this.startcheckingmessages();
+		addModel(chatModel);
+
+		// Add the old messages first.
+		for (String message : chatModel.getMessages()) {
+			chatPanel.addToChatField(message);
+		}
+
+		// Register the listeners
 		setListeners();
 	}
 
 	public void send() {
-		if (!chatPanel.getChatFieldSend().getText().equals("")
-				&& !chatPanel.getChatFieldSend().getText().equals(" ")) {
+		String message = chatPanel.getChatFieldSendText();
 
-			chatPanel.getChatField().setText(
-					chatPanel.getChatField().getText() + "you: "
-							+ chatPanel.getChatFieldSend().getText() + "\n");
-			chatModel.send(chatPanel.getChatFieldSend().getText());
-			chatPanel.getChatFieldSend().setText("");
+		if (!message.equals("") && !message.equals(" ")) {
+			chatPanel.addToChatField("you: " + message + "\n");
+
+			chatModel.send(message);
+
+			// Empty the chat message box
+			chatPanel.setChatFieldSendText("");
 		}
-	}
-
-	public void startcheckingmessages() {
-		ScheduledExecutorService exec = Executors
-				.newSingleThreadScheduledExecutor();
-		exec.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				chatPanel.getChatField().setText(
-						chatPanel.getChatField().getText()
-								+ chatModel.newmessages());
-			}
-		}, 0, this.checkMessagesTimer, TimeUnit.SECONDS);
 	}
 
 	public ChatPanel getchatpanel() {
