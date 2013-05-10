@@ -111,4 +111,10 @@ public class ChatTableModel extends CoreTableModel {
 		this.time = time;
 	}
 
+	@Override
+	public void update() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
 }

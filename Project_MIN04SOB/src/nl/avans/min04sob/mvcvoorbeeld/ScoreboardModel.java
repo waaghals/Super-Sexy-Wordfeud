@@ -68,4 +68,10 @@ public class ScoreboardModel extends CoreModel {
 			return name;
 		}
 	}
+
+	@Override
+	public void update() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
 }

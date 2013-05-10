@@ -91,4 +91,10 @@ public class ScoreboardTableModel extends CoreTableModel {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
+
+	@Override
+	public void update() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
 }
