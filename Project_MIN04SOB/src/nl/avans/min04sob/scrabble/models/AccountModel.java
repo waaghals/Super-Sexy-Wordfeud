@@ -23,7 +23,7 @@ public class AccountModel extends CoreModel {
 		String query = "INSERT INTO `player` (`username`, `password`, `moderator`) VALUES ('"
 				+ username + "','" + getHash(password) + "', 0);";
 		try {
-			Dbconnect.getInstance().query(query);
+			Dbconnect.query(query);
 		} catch (SQLException sql) {
 			System.out.println(query);
 			sql.printStackTrace();
@@ -33,7 +33,7 @@ public class AccountModel extends CoreModel {
 	public void login(String username, char[] password) {
 
 		try {
-			ResultSet result = Dbconnect.getInstance().select(
+			ResultSet result = Dbconnect.select(
 					"SELECT `username` FROM `player` WHERE `username` = '" + username
 							+ "' AND `password` = '" + getHash(password) + "';");
 			result.last();
@@ -69,7 +69,7 @@ public class AccountModel extends CoreModel {
 
 	public boolean checkUsernameAvailable(String username) {
 		try {
-			ResultSet check = Dbconnect.getInstance().select(
+			ResultSet check = Dbconnect.select(
 					"SELECT * FROM player WHERE username ='" + username + "';");
 			if (check.next()) {
 				return false;

@@ -29,7 +29,7 @@ public class ChatModel extends CoreModel {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			String currentdate = dateFormat.format(date);
-			Dbconnect.getInstance().query(
+			Dbconnect.query(
 					"INSERT INTO chat(game_id,player_id,message,send_at) VALUES('"
 							+ this.gameId + "','" + this.playerId + "','"
 							+ newmessage + "','" + currentdate + "');");
@@ -41,7 +41,7 @@ public class ChatModel extends CoreModel {
 	private ArrayList<String> getNewMessages() {
 
 		try {
-			ResultSet dbResult = Dbconnect.getInstance().select(
+			ResultSet dbResult = Dbconnect.select(
 					"SELECT player_id, message, send_at FROM chat WHERE game_id = "
 							+ this.gameId + " AND send_at > '"
 							+ this.timeLastMessage + "' ORDER BY send_at ASC");
