@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Dbconnect {
 
-	private static Connection conn = null;
+	private Connection conn = null;
 	private static Dbconnect instance;
 
 	private Dbconnect() {
