@@ -17,7 +17,6 @@ import nl.avans.min04sob.scrabble.views.ChatPanel;
 public class ChatController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
-	private JFrame frame;
 	private final int xSizeChat, ySizeChat, checkMessagesTimer, playerId,
 			gameId;
 
@@ -35,41 +34,9 @@ public class ChatController extends CoreController {
 		addView(chatPanel);
 		chatPanel.getChatField().setText(
 				chatPanel.getChatField().getText()
-						+ chatModel.allmessagesforstart());
+						+ chatModel.allMessagesFromStart());
 		this.startcheckingmessages();
-
-		chatPanel.addListenerChatField(new KeyListener() {
-
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					send();
-
-				}
-			}
-
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
-		chatPanel.addListenerChatSendButton(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				send();
-
-			}
-
-		});
+		setListeners();
 	}
 
 	public void send() {
@@ -99,5 +66,33 @@ public class ChatController extends CoreController {
 
 	public ChatPanel getchatpanel() {
 		return chatPanel;
+	}
+
+	public void setListeners() {
+		chatPanel.addListenerChatField(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					send();
+				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+
+		});
+		chatPanel.addListenerChatSendButton(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				send();
+			}
+		});
 	}
 }
