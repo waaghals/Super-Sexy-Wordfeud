@@ -60,12 +60,8 @@ public class ChatPanel extends CorePanel {
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
 			chatField.setText("");
 			for (String string : messages) {
-				chatField.append(string);
+				addToChatField(string);
 			}
-			
-			//Scroll To bottom
-			JScrollBar vertical = chatSlider.getVerticalScrollBar();
-			vertical.setValue( vertical.getMaximum() );
 		}
 
 	}
@@ -96,6 +92,7 @@ public class ChatPanel extends CorePanel {
 	
 	public void addToChatField(String message){
 		chatField.append(message);
+		chatField.setCaretPosition(chatField.getDocument().getLength());
 	}
 
 	public void setChatFieldText(String text) {
