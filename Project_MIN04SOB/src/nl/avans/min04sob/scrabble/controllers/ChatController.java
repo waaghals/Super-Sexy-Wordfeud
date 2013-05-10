@@ -45,9 +45,8 @@ public class ChatController extends CoreController {
 		String message = chatPanel.getChatFieldSendText();
 
 		if (!message.equals("") && !message.equals(" ")) {
-			chatPanel.addToChatField("you: " + message + "\n");
-
 			chatModel.send(message);
+			chatModel.update();
 
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");

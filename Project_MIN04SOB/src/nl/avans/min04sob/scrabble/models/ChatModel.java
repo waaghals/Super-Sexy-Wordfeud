@@ -20,7 +20,7 @@ public class ChatModel extends CoreModel {
 		this.gameId = gameId;
 		this.playerId = playerId;
 		timeLastMessage = "2000-1-1 00:00:00";
-		getAllMessages();
+		getNewMessages();
 	}
 
 	public void send(String newmessage) {
@@ -38,7 +38,7 @@ public class ChatModel extends CoreModel {
 		}
 	}
 
-	private void getNewMessages() {
+	private ArrayList<String> getNewMessages() {
 
 		try {
 			ResultSet dbResult = Dbconnect.getInstance().select(
@@ -48,31 +48,15 @@ public class ChatModel extends CoreModel {
 			while (dbResult.next()) {
 				if (!(dbResult.getInt(1) == this.playerId)) {
 					messages.add("oppenent : " + dbResult.getString(2) + "\n");
-				}
-				timeLastMessage = dbResult.getString(3);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void getAllMessages() {
-		try {
-			ResultSet dbResult = Dbconnect.getInstance().select(
-					"SELECT player_id, message, send_at FROM chat WHERE game_id = "
-							+ this.gameId + " AND send_at > '"
-							+ this.timeLastMessage + "' ORDER BY send_at ASC");
-			while (dbResult.next()) {
-				if (dbResult.getInt(1) == this.playerId) {
-					messages.add("you : " + dbResult.getString(2) + "\n");
 				} else {
-					messages.add("oppenent : " + dbResult.getString(2) + "\n");
+					messages.add("you : " + dbResult.getString(2) + "\n");
 				}
 				timeLastMessage = dbResult.getString(3);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return messages;
 	}
 	
 	public ArrayList<String> getMessages(){
@@ -83,7 +67,11 @@ public class ChatModel extends CoreModel {
 	@SuppressWarnings("unchecked")
 	public void update() {
 		ArrayList<String> oldMessages = (ArrayList<String>) messages.clone();
-		getNewMessages();
-		firePropertyChange("chat", oldMessages, messages);
+		ArrayList<String> newMessages = getNewMessages();
+		
+		//Only keep the new messages
+		newMessages.removeAll(oldMessages);
+		
+		firePropertyChange("chatupdate", null, newMessages);
 	}
 }
