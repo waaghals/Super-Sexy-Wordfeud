@@ -1,5 +1,7 @@
 package testmains;
 
+import javax.swing.JFrame;
+
 import nl.avans.min04sob.scrabble.controllers.ChatController;
 
 public class ChatMain {
@@ -11,6 +13,11 @@ public class ChatMain {
 
 		ChatController cc = new ChatController(1, 10);
 
+		JFrame jf = new JFrame();
+		jf.add(cc.getchatpanel());
+		jf.setVisible(true);
+		jf.pack();
+	
 	}
 
 }
