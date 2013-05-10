@@ -25,6 +25,6 @@ public abstract class CoreModel {
 				newValue);
 	}
 	
-	abstract void update();
+	abstract public void update();
 
 }
