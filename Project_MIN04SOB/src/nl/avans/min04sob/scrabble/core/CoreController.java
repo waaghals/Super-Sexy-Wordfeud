@@ -4,15 +4,39 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public abstract class CoreController implements PropertyChangeListener {
 
 	private ArrayList<CoreView> registeredViews;
 	private ArrayList<CoreModel> registeredModels;
+	private int updateInterval;
 
 	public CoreController() {
 		registeredViews = new ArrayList<CoreView>();
 		registeredModels = new ArrayList<CoreModel>();
+		
+		startTimer();
+	}
+
+	private void startTimer() {
+		ScheduledExecutorService exec = Executors
+				.newSingleThreadScheduledExecutor();
+		exec.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				updateModels();
+			}
+
+		}, 0, updateInterval, TimeUnit.SECONDS);
+	}
+	
+	private void updateModels(){
+		for (CoreModel model : registeredModels) {
+			model.update();
+		}
 	}
 
 	protected void addModel(CoreModel model) {
@@ -50,7 +74,7 @@ public abstract class CoreController implements PropertyChangeListener {
 	 * which the method ignores.
 	 * 
 	 * @param propertyName
-	 *            = The name of the property.
+	 *            =update The name of the property.
 	 * @param newValue
 	 *            = An object that represents the new value of the property.
 	 */
@@ -70,6 +94,10 @@ public abstract class CoreController implements PropertyChangeListener {
 				// Handle exception.
 			}
 		}
+	}
+	
+	public void setUpdateInterval(int newUpdateInterval){
+		updateInterval = newUpdateInterval;
 	}
 
 }

@@ -24,5 +24,7 @@ public abstract class CoreModel {
 		propertyChangeSupport.firePropertyChange(propertyName, oldValue,
 				newValue);
 	}
+	
+	abstract void update();
 
 }
