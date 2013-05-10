@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
@@ -15,23 +16,18 @@ import javax.swing.JTabbedPane;
 import nl.avans.min04sob.scrabble.controllers.ChatController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 
-public class MainScreenUserVersion extends CorePanel{
+public class MainScreenUserInfoPanel extends CorePanel{
 	
-	private final String username;
-	private final boolean admin;
-	private final int playerid;
 	private JLabel usernameRow, usernameLabel;
 	private JButton logout, changePass, adminButton;
 	
-	public MainScreenUserVersion(String username, final int  playerid, boolean admin){
-		this.username = username;
-		this.admin = admin;
-		this.playerid = playerid;
+	public MainScreenUserInfoPanel(){
 		
 		GridBagLayout gbl = new GridBagLayout();
-		setPreferredSize(new Dimension(650,450));
+		setPreferredSize(new Dimension(630,30));
+		gbl.columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gbl.columnWidths = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
-		gbl.rowHeights = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
+		gbl.rowHeights = new int[] {30};
 		setLayout(gbl);
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -43,29 +39,18 @@ public class MainScreenUserVersion extends CorePanel{
 		add(usernameRow, c);
 		
 		c = new GridBagConstraints();
-		usernameLabel = new JLabel(username);
+		usernameLabel = new JLabel("");
 		c.gridwidth = 2;
 		c.gridx = 4;
 		c.gridy = 0;
 		c.insets = new Insets(0, 0, 0, 0);
 		add(usernameLabel, c);
 		
-		if(this.admin){
-			c = new GridBagConstraints();
-			adminButton = new JButton("To admin");
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 3;
-			c.gridx = 15;
-			c.gridy = 0;
-			c.insets = new Insets(0, 0, 0, 5);
-			add(adminButton, c);
-		}
-		
 		c = new GridBagConstraints();
 		logout = new JButton("Logout");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 3;
-		c.gridx = 18;
+		c.gridwidth = 4;
+		c.gridx = 17;
 		c.gridy = 0;
 		c.insets = new Insets(0, 0, 0, 5);
 		add(logout, c);
@@ -73,16 +58,40 @@ public class MainScreenUserVersion extends CorePanel{
 		c = new GridBagConstraints();
 		changePass = new JButton("Changepass");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 3;		
-		c.gridx = 18;
-		c.gridy = 1;
+		c.gridwidth = 4;		
+		c.gridx = 13;
+		c.gridy = 0;
 		c.insets = new Insets(0, 0, 0, 5);
 		add(changePass, c);
 		
 	}
 	
+	public void setUsername(String username){
+		usernameLabel.setText(username);
+	}
 	
+	public void setAdmin(){
+		GridBagConstraints c = new GridBagConstraints();
+		adminButton = new JButton("To adminpanel");
+		c.gridwidth = 4;
+		c.gridx = 9;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 0, 5);
+		add(adminButton, c);
+				
+	}
 	
+	public void addActionListenerLogout(ActionListener listener){
+		logout.addActionListener(listener);
+	}
+	
+	public void addActionListenerChangePass(ActionListener listener){
+		changePass.addActionListener(listener);
+	}
+	
+	public void addActionListenerAdmin(ActionListener listener){
+		adminButton.addActionListener(listener);
+	}
 	
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
