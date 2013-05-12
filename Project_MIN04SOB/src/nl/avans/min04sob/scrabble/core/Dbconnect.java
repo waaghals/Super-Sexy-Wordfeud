@@ -29,7 +29,7 @@ public class Dbconnect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			instance.conn = DriverManager.getConnection(
-					"jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2",
+					"jdbc:mysql://databases.aii.avans.nl:3306/wordfeud",
 					"tjmbrouw", "8THMJ2S4");
 
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class Dbconnect {
 
 		Statement s = connection.createStatement();
 		result = s.executeQuery(query);
-
+		System.out.println("Running query: " + query);
 		return result;
 	}
 

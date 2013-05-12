@@ -19,9 +19,11 @@ public class AccountModel extends CoreModel {
 	}
 
 	public void registerAccount(String username, char[] password) {
-
-		String query = "INSERT INTO `player` (`username`, `password`, `moderator`) VALUES ('"
-				+ username + "','" + getHash(password) + "', 0);";
+		
+		
+		String query = "INSERT INTO `account` (`naam`, `wachtwoord`) VALUES ('"
+				+ username + "','" + new String(password) + "');";
+		//"INSERT INTO `account` (`naam`, `wachtwoord`) VALUES ('" + username + "','" + getHash(password) + "');";
 		try {
 			Dbconnect.query(query);
 		} catch (SQLException sql) {
@@ -34,8 +36,8 @@ public class AccountModel extends CoreModel {
 
 		try {
 			ResultSet result = Dbconnect.select(
-					"SELECT `username` FROM `player` WHERE `username` = '" + username
-							+ "' AND `password` = '" + getHash(password) + "';");
+					"SELECT `naam` FROM `account` WHERE `naam` = '" + username
+							+ "' AND `wachtwoord` = '" + new String(password) + "';");
 			result.last();
 			if (result.getRow() != 0) {
 				// Correct username and pass
@@ -45,10 +47,6 @@ public class AccountModel extends CoreModel {
 				firePropertyChange("login", null, this);
 			}
 		} catch (SQLException sql) {
-			System.out
-					.println("SELECT username FROM account WHERE username = "
-							+ username + " AND password = "
-							+ password.toString() + ";");
 			sql.printStackTrace();
 		}
 	}
@@ -70,7 +68,7 @@ public class AccountModel extends CoreModel {
 	public boolean checkUsernameAvailable(String username) {
 		try {
 			ResultSet check = Dbconnect.select(
-					"SELECT * FROM player WHERE username ='" + username + "';");
+					"SELECT * FROM account WHERE naam ='" + username + "';");
 			if (check.next()) {
 				return false;
 			} else {
