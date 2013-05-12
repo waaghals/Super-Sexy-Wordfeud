@@ -4,73 +4,71 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import nl.avans.min04sob.mvcvoorbeeld.BoardPanel;
 import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
+import nl.avans.min04sob.scrabble.views.GamesPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
-import nl.avans.min04sob.scrabble.views.TotalPanel;
 import nl.avans.min04sob.scrabble.views.UserInfoPanel;
 
 public class MainController extends CoreController {
 
-	private TotalPanel mstp;
-	private UserInfoPanel msuip;
-	private ChangePassPanel mscp;
-	private JFrame frame;
+	private UserInfoPanel userInfoPanel;
+	private ChangePassPanel changePassPanel;
+	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
+	private GamesPanel gamesPanel;
+	private BoardPanel currGamePanel;
 
-	public MainController(String username, int playerid, int moderator) {
+	public MainController() {
 		
-		
-		msuip.setUsername(username);
-		if (moderator == 1) {
-			msuip.setAdmin();
-		}
-
-		
+		userInfoPanel.setUsername(account.getUsername());
+	
 		addView(menu);
+		addView(gamesPanel);
 		addModel(account);
 		
 		frame.setJMenuBar(menu);
-
-		mstp.addTopPanel(msuip);
-
-		frame.add(mstp);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-
+		frame.addTopPanel(userInfoPanel);
+		frame.addRightPanel(gamesPanel);
+		frame.addCenterPanel(currGamePanel);
 	}
 	
 	@Override
 	public void initialize() {
-		mstp = new TotalPanel();
-		msuip = new UserInfoPanel();
-		mscp = new ChangePassPanel();
+		frame = new CoreWindow("Wordfeud" ,JFrame.EXIT_ON_CLOSE);
+		userInfoPanel = new UserInfoPanel();
+		changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		account = new AccountModel();
-
-		frame = new JFrame();
 		
+		gamesPanel = new GamesPanel();
+		gamesPanel.addGames(account.getOpenGames());
+		
+		currGamePanel = new BoardPanel();
 	}
 
 	@Override
 	public void addListeners() {
-		msuip.addActionListenerLogout(new ActionListener() {
+		userInfoPanel.addActionListenerLogout(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
 			}
 		});
 
-		msuip.addActionListenerChangePass(new ActionListener() {
+		userInfoPanel.addActionListenerChangePass(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePass();
 			}
 		});
 
-		msuip.addActionListenerAdmin(new ActionListener() {
+		userInfoPanel.addActionListenerAdmin(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -93,10 +91,19 @@ public class MainController extends CoreController {
 				account.logout();
 			}
 		});
+		
+		gamesPanel.addGameListListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Automatisch gegenereerde methodestub
+				gamesPanel.getSelectedValue();
+			}
+		});
 	}
 
 	private void changePass() {
-		mstp.addCenterPanel(mscp);
+		frame.addCenterPanel(changePassPanel);
 	}
 
 	

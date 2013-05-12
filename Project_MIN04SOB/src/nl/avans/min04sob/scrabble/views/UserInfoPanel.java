@@ -61,21 +61,18 @@ public class UserInfoPanel extends CorePanel{
 		c.insets = new Insets(0, 0, 0, 5);
 		add(changePass, c);
 		
-	}
-	
-	public void setUsername(String username){
-		usernameLabel.setText(username);
-	}
-	
-	public void setAdmin(){
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 		adminButton = new JButton("To adminpanel");
 		c.gridwidth = 4;
 		c.gridx = 9;
 		c.gridy = 0;
 		c.insets = new Insets(0, 0, 0, 5);
 		add(adminButton, c);
-				
+		
+	}
+	
+	public void setUsername(String username){
+		usernameLabel.setText(username);
 	}
 	
 	public void addActionListenerLogout(ActionListener listener){

@@ -12,18 +12,18 @@ public class AccountModel extends CoreModel {
 
 	private String username;
 	private boolean isLoggedIn;
-	
-	public AccountModel(){
+
+	public AccountModel() {
 		username = "Anoniem";
 		isLoggedIn = false;
 	}
 
 	public void registerAccount(String username, char[] password) {
-		
-		
+
 		String query = "INSERT INTO `account` (`naam`, `wachtwoord`) VALUES ('"
 				+ username + "','" + new String(password) + "');";
-		//"INSERT INTO `account` (`naam`, `wachtwoord`) VALUES ('" + username + "','" + getHash(password) + "');";
+		// "INSERT INTO `account` (`naam`, `wachtwoord`) VALUES ('" + username +
+		// "','" + getHash(password) + "');";
 		try {
 			Dbconnect.query(query);
 		} catch (SQLException sql) {
@@ -35,9 +35,10 @@ public class AccountModel extends CoreModel {
 	public void login(String username, char[] password) {
 
 		try {
-			ResultSet result = Dbconnect.select(
-					"SELECT `naam` FROM `account` WHERE `naam` = '" + username
-							+ "' AND `wachtwoord` = '" + new String(password) + "';");
+			ResultSet result = Dbconnect
+					.select("SELECT `naam` FROM `account` WHERE `naam` = '"
+							+ username + "' AND `wachtwoord` = '"
+							+ new String(password) + "';");
 			result.last();
 			if (result.getRow() != 0) {
 				// Correct username and pass
@@ -67,8 +68,9 @@ public class AccountModel extends CoreModel {
 
 	public boolean checkUsernameAvailable(String username) {
 		try {
-			ResultSet check = Dbconnect.select(
-					"SELECT * FROM account WHERE naam ='" + username + "';");
+			ResultSet check = Dbconnect
+					.select("SELECT * FROM account WHERE naam ='" + username
+							+ "';");
 			if (check.next()) {
 				return false;
 			} else {
@@ -105,6 +107,15 @@ public class AccountModel extends CoreModel {
 
 		// Convert the byte hash to hex
 		return new java.math.BigInteger(1, sha1.digest()).toString(16);
+	}
+
+	public GameModel[] getOpenGames() {
+		GameModel[] array = new GameModel[3];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = new GameModel(this, new CompetitionModel());
+		}
+		return array;
+
 	}
 
 }
