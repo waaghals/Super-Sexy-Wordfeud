@@ -58,4 +58,16 @@ public class ChatController extends CoreController {
 
 	}
 
+	@Override
+	public void initialize() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
 }

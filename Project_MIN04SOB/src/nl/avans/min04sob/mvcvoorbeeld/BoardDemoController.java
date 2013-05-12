@@ -20,4 +20,16 @@ public class BoardDemoController extends CoreController {
 		window.pack();
 		//addView(playBoard);
 	}
+
+	@Override
+	public void initialize() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
 }

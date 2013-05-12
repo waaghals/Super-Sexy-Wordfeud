@@ -55,4 +55,16 @@ public class ScoreboardController extends CoreController {
 		sbModel.addScore(randomName, randomScore);
 	}
 
+	@Override
+	public void initialize() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
 }
