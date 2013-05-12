@@ -1,21 +1,54 @@
 package nl.avans.min04sob.scrabble.core;
 
-import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
 
-public abstract class CoreWindow extends JFrame implements CoreView {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class CoreWindow extends JFrame implements CoreView {
 
 	public CoreWindow() {
-		init();
+		initialize();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	public CoreWindow(String title) {
 		super(title);
-		init();
+		initialize();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
-	public void init() {
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	public CoreWindow(String title, int closeAction) {
+		super(title);
+		initialize();
+		setDefaultCloseOperation(closeAction);
+	}
+
+	public CoreWindow(int closeAction) {
+		initialize();
+		setDefaultCloseOperation(closeAction);
+	}
+
+	public void initialize() {
 		setVisible(true);
-		setLayout(new CoreLayout(15, 15));
+		setLayout(new BorderLayout());
+	}
+
+	public void addTopPanel(JPanel panel){
+		add(panel, BorderLayout.NORTH);
+	}
+	
+	public void addCenterPanel(JPanel panel){
+		add(panel, BorderLayout.CENTER);
+	}
+	
+	public void addRightPanel(JPanel panel){
+		add(panel, BorderLayout.EAST);
+	}
+
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Automatisch gegenereerde methodestub
 	}
 }
