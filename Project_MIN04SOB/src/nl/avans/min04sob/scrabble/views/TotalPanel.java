@@ -7,9 +7,9 @@ import javax.swing.JPanel;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
 
-public class MainScreenTotalPanel extends CorePanel{
+public class TotalPanel extends CorePanel{
 	
-	public MainScreenTotalPanel(){
+	public TotalPanel(){
 		setLayout(new BorderLayout());
 	}
 	

@@ -7,36 +7,57 @@ import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
-import nl.avans.min04sob.scrabble.models.MainScreenUserModel;
-import nl.avans.min04sob.scrabble.views.MainScreenChangePass;
-import nl.avans.min04sob.scrabble.views.MainScreenTotalPanel;
-import nl.avans.min04sob.scrabble.views.MainScreenUserInfoPanel;
+import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
+import nl.avans.min04sob.scrabble.views.TotalPanel;
+import nl.avans.min04sob.scrabble.views.UserInfoPanel;
 
-public class MainScreenUserController extends CoreController {
+public class MainController extends CoreController {
 
-	private MainScreenUserModel msum;
-	private MainScreenTotalPanel mstp;
-	private MainScreenUserInfoPanel msuip;
-	private MainScreenChangePass mscp;
+	private TotalPanel mstp;
+	private UserInfoPanel msuip;
+	private ChangePassPanel mscp;
 	private JFrame frame;
 	private MenuView menu;
 	private AccountModel account;
 
-	public MainScreenUserController(String username, int playerid, int moderator) {
-		msum = new MainScreenUserModel(username, playerid, moderator);
-		mstp = new MainScreenTotalPanel();
-		msuip = new MainScreenUserInfoPanel();
-		mscp = new MainScreenChangePass();
-		menu = new MenuView();
-		account = new AccountModel();
-
-		frame = new JFrame();
+	public MainController(String username, int playerid, int moderator) {
+		
+		
 		msuip.setUsername(username);
 		if (moderator == 1) {
 			msuip.setAdmin();
 		}
 
+		
+		addView(menu);
+		addModel(account);
+		
+		frame.setJMenuBar(menu);
+
+		mstp.addTopPanel(msuip);
+
+		frame.add(mstp);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+
+	}
+	
+	@Override
+	public void initialize() {
+		mstp = new TotalPanel();
+		msuip = new UserInfoPanel();
+		mscp = new ChangePassPanel();
+		menu = new MenuView();
+		account = new AccountModel();
+
+		frame = new JFrame();
+		
+	}
+
+	@Override
+	public void addListeners() {
 		msuip.addActionListenerLogout(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
@@ -72,21 +93,11 @@ public class MainScreenUserController extends CoreController {
 				account.logout();
 			}
 		});
-		addView(menu);
-		addModel(account);
-		
-		frame.setJMenuBar(menu);
-
-		mstp.addTopPanel(msuip);
-
-		frame.add(mstp);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-
 	}
 
 	private void changePass() {
 		mstp.addCenterPanel(mscp);
 	}
+
+	
 }

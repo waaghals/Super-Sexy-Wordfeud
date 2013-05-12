@@ -171,4 +171,16 @@ public class LoginController extends CoreController {
 		frame.repaint();
 		frame.pack();
 	}
+
+	@Override
+	public void initialize() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Automatisch gegenereerde methodestub
+		
+	}
 }

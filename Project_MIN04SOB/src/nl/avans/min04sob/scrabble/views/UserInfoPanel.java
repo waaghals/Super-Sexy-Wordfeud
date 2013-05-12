@@ -13,12 +13,12 @@ import javax.swing.JLabel;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 
-public class MainScreenUserInfoPanel extends CorePanel{
+public class UserInfoPanel extends CorePanel{
 	
 	private JLabel usernameRow, usernameLabel;
 	private JButton logout, changePass, adminButton;
 	
-	public MainScreenUserInfoPanel(){
+	public UserInfoPanel(){
 		
 		GridBagLayout gbl = new GridBagLayout();
 		setPreferredSize(new Dimension(630,30));

@@ -10,12 +10,12 @@ import javax.swing.JPasswordField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
 
-public class MainScreenChangePass extends CorePanel{
+public class ChangePassPanel extends CorePanel{
 	
 	private JLabel oldPassLabel, newPass1Label, newPass2Label, oldPassResult, newPass1Result, newPass2Result;
 	private JPasswordField oldPass, newPass1, newPass2; 
 	
-	public MainScreenChangePass(){
+	public ChangePassPanel(){
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWeights = new double[] {0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0};
 		gbl.columnWidths = new int[] {30, 30, 30, 30, 30, 30, 30, 30};

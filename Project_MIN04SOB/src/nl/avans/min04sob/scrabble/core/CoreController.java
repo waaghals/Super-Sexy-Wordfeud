@@ -18,6 +18,8 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		registeredViews = new ArrayList<CoreView>();
 		registeredModels = new ArrayList<CoreModel>();
 		startTimer();
+		initialize();
+		addListeners();
 	}
 
 	private void startTimer() {
@@ -59,5 +61,9 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 			view.modelPropertyChange(evt);
 		}
 	}
+	
+	//Cleanlyness methods
+	abstract public void initialize(); 	//Init all variables
+	abstract public void addListeners(); //Add the listeners for the buttons etc..
 
 }
