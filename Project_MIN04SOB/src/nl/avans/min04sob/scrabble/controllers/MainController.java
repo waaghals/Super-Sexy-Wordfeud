@@ -7,11 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import nl.avans.min04sob.mvcvoorbeeld.BoardPanel;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
+import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.GamesPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
@@ -28,6 +28,8 @@ public class MainController extends CoreController {
 	private BoardPanel currGamePanel;
 
 	public MainController() {
+		initialize();
+		addListeners();
 		
 		userInfoPanel.setUsername(account.getUsername());
 	
@@ -40,6 +42,8 @@ public class MainController extends CoreController {
 		frame.addRightPanel(gamesPanel);
 		frame.addCenterPanel(currGamePanel);
 		frame.pack();
+		
+		
 	}
 	
 	@Override

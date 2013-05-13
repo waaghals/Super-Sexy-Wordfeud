@@ -1,61 +1,43 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 
+import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 
 public class ChatPanel extends CorePanel {
 
-	private JScrollPane chatSlider;
-	private JTextArea chatField;
 	private JTextField chatFieldSend;
 	private JButton chatSendButton;
+	private JTextArea chatField;
+	private JScrollPane chatScroll;
 
 	public ChatPanel(int xchatsize, int ychatsize) {
+		setLayout(new MigLayout("", "[100px:1000px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:1000px][100px:150px:200px][100px:150px:200px][30px:30px]"));
 		chatField = new JTextArea();
-		chatFieldSend = new JTextField();
+		chatScroll = new JScrollPane(chatField);
+
 		chatSendButton = new JButton();
-		chatSlider = new JScrollPane(chatField);
+		chatSendButton.setText("Verstuur");
 
-		chatSendButton.setText("Send");
-		chatSendButton.setPreferredSize(new Dimension(75, 25));
-		chatSendButton.setMaximumSize(chatSendButton.getPreferredSize());
-
-		chatFieldSend.setPreferredSize(new Dimension(125, 25));
-		chatFieldSend.setMaximumSize(chatFieldSend.getPreferredSize());
-
-		chatField.setWrapStyleWord(true);
-		chatField.setLineWrap(true);
-		chatField.setEditable(false);
-
-		chatSlider
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		chatSlider
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		chatSlider.setPreferredSize(new Dimension(xchatsize, ychatsize));
-
-		this.setLayout(new BorderLayout());
-		this.add(chatSlider, BorderLayout.NORTH);
-		this.add(chatFieldSend, BorderLayout.CENTER);
-		this.add(chatSendButton, BorderLayout.EAST);
+		add(chatScroll, "cell 0 0 4 3,grow");
+		chatFieldSend = new JTextField();
+		add(chatFieldSend, "cell 0 3 3 1,grow");
+		add(chatSendButton, "cell 3 3,grow");
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		if(evt.getPropertyName().equals("chatupdate")){
+		if (evt.getPropertyName().equals("chatupdate")) {
 
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
 			for (String string : messages) {
@@ -87,8 +69,8 @@ public class ChatPanel extends CorePanel {
 	public void setChatFieldSend(JTextField chatfieldsend) {
 		this.chatFieldSend = chatfieldsend;
 	}
-	
-	public void addToChatField(String message){
+
+	public void addToChatField(String message) {
 		chatField.append(message);
 		chatField.setCaretPosition(chatField.getDocument().getLength());
 	}
@@ -104,7 +86,7 @@ public class ChatPanel extends CorePanel {
 	public String getChatFieldSendText() {
 		return chatFieldSend.getText();
 	}
-	
+
 	public void setChatFieldSendText(String message) {
 		chatFieldSend.setText(message);
 	}

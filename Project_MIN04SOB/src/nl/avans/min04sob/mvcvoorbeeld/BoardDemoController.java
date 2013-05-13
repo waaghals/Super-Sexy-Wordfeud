@@ -5,6 +5,7 @@ import javax.swing.JTabbedPane;
 import nl.avans.min04sob.scrabble.core.CoreConstraint;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
+import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class BoardDemoController extends CoreController {
 
