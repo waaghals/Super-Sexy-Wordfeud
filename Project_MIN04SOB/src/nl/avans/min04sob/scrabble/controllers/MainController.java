@@ -39,6 +39,7 @@ public class MainController extends CoreController {
 		frame.addTopPanel(userInfoPanel);
 		frame.addRightPanel(gamesPanel);
 		frame.addCenterPanel(currGamePanel);
+		frame.pack();
 	}
 	
 	@Override
@@ -50,7 +51,6 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 		
 		gamesPanel = new GamesPanel();
-		gamesPanel.addGames(account.getOpenGames());
 		
 		currGamePanel = new BoardPanel();
 	}
@@ -82,7 +82,7 @@ public class MainController extends CoreController {
 		
 		menu.addLoginItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginController loginC = new LoginController();
+				LoginController loginC = new LoginController(account);
 				loginC.addView(menu);
 			}
 		});

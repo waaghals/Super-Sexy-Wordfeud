@@ -15,23 +15,27 @@ public class AccountModel extends CoreModel {
 	private boolean isLoggedIn;
 
 	public AccountModel() {
-		username = "Anoniem";
-		isLoggedIn = false;
+		initialize();
 	}
 
 	public AccountModel(String username) {
-		String query = "SELECT `naam` FROM `account` WHERE `naam` = '"
-				+ username + "';";
-		try {
-			ResultSet dbResult = Dbconnect.select(query);
-
-			this.username = dbResult.getString(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		initialize();
+		if (checkUsernameAvailable(username)) {
+			this.username = username;
 		}
 	}
 
 	public AccountModel(String username, char[] password) {
+		initialize();
+		login(username, password);
+	}
+
+	public void initialize() {
+		username = "Onbekend";
+		isLoggedIn = false;
+	}
+
+	public void login(String username, char[] password) {
 		String query = "SELECT `naam` FROM `account` WHERE `naam` = '"
 				+ username + "' AND `wachtwoord` = '" + new String(password)
 				+ "';";
@@ -41,8 +45,9 @@ public class AccountModel extends CoreModel {
 			result.last();
 			if (result.getRow() != 0) {
 				// Correct username and pass
-				username = result.getString(1);
+				this.username = result.getString(1);
 				isLoggedIn = true;
+
 				firePropertyChange("login", null, this);
 			} else {
 				firePropertyChange("loginFailure", null, this);
@@ -84,11 +89,7 @@ public class AccountModel extends CoreModel {
 			ResultSet check = Dbconnect
 					.select("SELECT * FROM account WHERE naam ='" + username
 							+ "';");
-			if (check.next()) {
-				return false;
-			} else {
-				return true;
-			}
+			return check.first(); // If a first row exists, return true.
 		} catch (SQLException sql) {
 			return false;
 		}
@@ -124,11 +125,11 @@ public class AccountModel extends CoreModel {
 
 	public ArrayList<GameModel> getOpenGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT `ID` FROM `spel` WHERE `Account_naam_uitdager` = '"
+		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = '"
 				+ username
 				+ "' OR `Account_naam_tegenstander` = '"
 				+ username
-				+ "' AND `Toestand_type` = '" + GameModel.STATE_PLAYING + "'";
+				+ "' ) AND `Toestand_type` = '" + GameModel.STATE_PLAYING + "'";
 		try {
 			ResultSet dbResult = Dbconnect.select(query);
 			while (dbResult.next()) {
@@ -140,6 +141,10 @@ public class AccountModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return games;
+	}
+
+	public String toString() {
+		return username;
 	}
 
 }

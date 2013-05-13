@@ -19,7 +19,7 @@ public class LoginController extends CoreController {
 	private JFrame frame;
 	private final int maxpass_userLength, minpass_userLength;
 
-	public LoginController() {
+	public LoginController(AccountModel account) {
 
 		maxpass_userLength = 11;
 		minpass_userLength = 5;
@@ -27,7 +27,7 @@ public class LoginController extends CoreController {
 		frame = new JFrame();
 
 		loginPanel = new LoginPanel();
-		accountModel = new AccountModel();
+		accountModel = account;
 		registerPanel = new RegisterPanel();
 
 		frame.add(loginPanel);
@@ -66,7 +66,7 @@ public class LoginController extends CoreController {
 	}
 
 	private void checkLogin() {
-		accountModel = new AccountModel(loginPanel.getUsername(), loginPanel.getPassword());
+		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(true);
 			loginPanel.setPasswordMistake(true);

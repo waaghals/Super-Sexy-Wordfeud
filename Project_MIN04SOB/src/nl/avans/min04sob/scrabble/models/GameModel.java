@@ -26,22 +26,25 @@ public class GameModel extends CoreModel {
 		try {
 			ResultSet dbResult = Dbconnect.select(query);
 
-			this.gameId = gameId;
-			competition = new CompetitionModel(dbResult.getInt(2));
-			state = dbResult.getString(3);
-			String challengerName = dbResult.getString(4);
-			String challengeeName = dbResult.getString(5);
-			
-			boardName = dbResult.getString(9);
-			letterSet = dbResult.getString(10);
+			if (dbResult.first()) {
+				this.gameId = gameId;
+				competition = new CompetitionModel(dbResult.getInt(2));
+				state = dbResult.getString(3);
+				String challengerName = dbResult.getString(4);
+				String challengeeName = dbResult.getString(5);
 
-			if (challengerName.equals(currentUser.getUsername())) {
-				opponent = new AccountModel(challengeeName);
-				challenger = currentUser;
-			} else {
-				opponent = new AccountModel(challengerName);
-				challenger = opponent;
+				boardName = dbResult.getString(9);
+				letterSet = dbResult.getString(10);
+
+				if (challengerName.equals(currentUser.getUsername())) {
+					opponent = new AccountModel(challengeeName);
+					challenger = currentUser;
+				} else {
+					opponent = new AccountModel(challengerName);
+					challenger = opponent;
+				}
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -49,11 +52,11 @@ public class GameModel extends CoreModel {
 
 	@Override
 	public void update() {
-		//TODO fire property change for new games and changed game states
+		// TODO fire property change for new games and changed game states
 	}
 
 	public String toString() {
-		return competition.getName() + " " + opponent.getUsername();
+		return competition.getName() + " - " + opponent.getUsername();
 	}
 
 	public CompetitionModel getCompetition() {
@@ -79,13 +82,14 @@ public class GameModel extends CoreModel {
 	public String getLetterSet() {
 		return letterSet;
 	}
-	
-	public AccountModel getChallenger(){
+
+	public AccountModel getChallenger() {
 		return challenger;
 	}
-	
-	public int getScore(){
-		String query = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = '" + gameId + "' AND `Account_Naam` != " + opponent.getUsername();
+
+	public int getScore() {
+		String query = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = '"
+				+ gameId + "' AND `Account_Naam` != " + opponent.getUsername();
 		try {
 			ResultSet dbResult = Dbconnect.select(query);
 
