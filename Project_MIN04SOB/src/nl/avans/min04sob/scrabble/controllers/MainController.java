@@ -11,6 +11,7 @@ import nl.avans.min04sob.mvcvoorbeeld.BoardPanel;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
+import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.GamesPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
@@ -96,10 +97,15 @@ public class MainController extends CoreController {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				// TODO Automatisch gegenereerde methodestub
-				gamesPanel.getSelectedValue();
+				GameModel selectedGame = gamesPanel.getSelectedValue();
+				openGame(selectedGame.getGameId());
 			}
 		});
+	}
+
+	protected void openGame(int gameId) {
+		// TODO Open chat for gameId and open gameBoard for gameId
+		
 	}
 
 	private void changePass() {
