@@ -2,14 +2,11 @@ package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.core.Dbconnect;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.views.LoginPanel;
 import nl.avans.min04sob.scrabble.views.RegisterPanel;
@@ -69,7 +66,7 @@ public class LoginController extends CoreController {
 	}
 
 	private void checkLogin() {
-		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
+		accountModel = new AccountModel(loginPanel.getUsername(), loginPanel.getPassword());
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(true);
 			loginPanel.setPasswordMistake(true);
@@ -86,7 +83,7 @@ public class LoginController extends CoreController {
 		boolean pass2 = validatePassword2();
 
 		if (username && pass1 && pass2) {
-			accountModel.registerAccount(registerPanel.getUsername(),
+			AccountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1());
 		}
 
@@ -110,8 +107,7 @@ public class LoginController extends CoreController {
 			registerPanel.setUsernameMistake(false, "To long");
 			return false;
 		} else {
-			if (accountModel
-					.checkUsernameAvailable(registerPanel.getUsername())) {
+			if (AccountModel.checkUsernameAvailable(registerPanel.getUsername())) {
 				registerPanel.setUsernameMistake(true, "");
 				return true;
 			} else {
