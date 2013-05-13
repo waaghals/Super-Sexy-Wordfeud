@@ -49,18 +49,16 @@ public class Dbconnect {
 	}
 
 	public static ResultSet select(String query) throws SQLException {
+		System.out.println("Running query: " + query);
 		Connection connection = getInstance();
 		ResultSet result = null;
 
 		Statement s = connection.createStatement();
 		result = s.executeQuery(query);
-		System.out.println("Running query: " + query);
 		return result;
 	}
 
 	public static void query(String query) throws SQLException {
-		Connection connection = getInstance();
-		Statement s = connection.createStatement();
-		s.executeUpdate(query);
+		select(query);
 	}
 }
