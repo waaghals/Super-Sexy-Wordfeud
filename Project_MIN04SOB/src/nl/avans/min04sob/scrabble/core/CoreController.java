@@ -18,8 +18,6 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		registeredViews = new ArrayList<CoreView>();
 		registeredModels = new ArrayList<CoreModel>();
 		startTimer();
-		initialize();
-		addListeners();
 	}
 
 	private void startTimer() {
@@ -57,7 +55,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 	// and propagate them on to all the views.
 	public void propertyChange(PropertyChangeEvent evt) {
 		for (CoreView view : registeredViews) {
-			System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + ". Message: " + evt.getPropertyName());
+			//System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + ". Message: " + evt.getPropertyName());
 			view.modelPropertyChange(evt);
 		}
 	}
