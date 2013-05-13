@@ -4,11 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.ChatModel;
@@ -17,17 +12,19 @@ import nl.avans.min04sob.scrabble.views.ChatPanel;
 public class ChatController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
-	private final int xSizeChat, ySizeChat, playerId, gameId;
+	private int xSizeChat, ySizeChat, gameId;
+	private String username;
 
-	public ChatController(int playerId, int gameId) {
+	public ChatController(int gameId, String username) {
+		this.gameId = gameId;
+		System.out.println("ChatController" + this.gameId);
+		this.username = username;
+		
 		xSizeChat = 150;
 		ySizeChat = 250;
 
-		this.playerId = playerId;
-		this.gameId = gameId;
-
 		chatPanel = new ChatPanel(xSizeChat, ySizeChat);
-		chatModel = new ChatModel(gameId, playerId);
+		chatModel = new ChatModel(gameId, username);
 
 		addView(chatPanel);
 		addModel(chatModel);
@@ -36,9 +33,8 @@ public class ChatController extends CoreController {
 		for (String message : chatModel.getMessages()) {
 			chatPanel.addToChatField(message);
 		}
-
-		// Register the listeners
-		setListeners();
+		
+		addListeners();
 	}
 
 	public void send() {
@@ -57,7 +53,13 @@ public class ChatController extends CoreController {
 		return chatPanel;
 	}
 
-	public void setListeners() {
+	@Override
+	public void initialize() {
+		
+	}
+
+	@Override
+	public void addListeners() {
 		chatPanel.addListenerChatField(new KeyListener() {
 
 			@Override
@@ -83,17 +85,5 @@ public class ChatController extends CoreController {
 				send();
 			}
 		});
-	}
-
-	@Override
-	public void initialize() {
-		// TODO Automatisch gegenereerde methodestub
-		
-	}
-
-	@Override
-	public void addListeners() {
-		// TODO Automatisch gegenereerde methodestub
-		
 	}
 }

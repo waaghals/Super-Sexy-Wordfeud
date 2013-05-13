@@ -11,7 +11,7 @@ public class ChatMain {
 	 */
 	public static void main(String[] args) {
 
-		ChatController cc = new ChatController(1, 10);
+		ChatController cc = new ChatController(511, "jager684");
 
 		JFrame jf = new JFrame();
 		jf.add(cc.getchatpanel());
