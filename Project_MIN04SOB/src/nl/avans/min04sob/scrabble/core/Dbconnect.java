@@ -29,7 +29,7 @@ public class Dbconnect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			instance.conn = DriverManager.getConnection(
-					"jdbc:mysql://databases.aii.avans.nl:3306/wordfeud",
+					"jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2",
 					"tjmbrouw", "8THMJ2S4");
 
 		} catch (Exception e) {
