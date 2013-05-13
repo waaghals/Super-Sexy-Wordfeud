@@ -59,6 +59,9 @@ public class Dbconnect {
 	}
 
 	public static void query(String query) throws SQLException {
-		select(query);
+		Connection connection = getInstance();
+
+		Statement s = connection.createStatement();
+		s.execute(query);
 	}
 }
