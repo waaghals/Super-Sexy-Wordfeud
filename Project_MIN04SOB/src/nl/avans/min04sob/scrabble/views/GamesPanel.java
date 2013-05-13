@@ -1,6 +1,7 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -9,6 +10,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 
 public class GamesPanel extends CorePanel {
@@ -47,11 +49,12 @@ public class GamesPanel extends CorePanel {
 		listModel.addElement(game);
 	}
 	
-	public void addGames(GameModel[] games){
-		if(games == null){
+	public void addGames(ArrayList<GameModel> arrayList){
+		if(arrayList == null){
 			return;
 		}
-		for (GameModel game : games) {
+		listModel.clear();
+		for (GameModel game : arrayList) {
 			listModel.addElement(game);
 		}
 	}
@@ -60,6 +63,10 @@ public class GamesPanel extends CorePanel {
 		switch (evt.getPropertyName()) {
 		case "newGame":
 			gameList.repaint();
+			break;
+		case "login":
+			AccountModel account = (AccountModel) evt.getNewValue();
+			addGames(account.getOpenGames());
 			break;
 
 		default:

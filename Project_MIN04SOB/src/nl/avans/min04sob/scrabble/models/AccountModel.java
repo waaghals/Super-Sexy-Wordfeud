@@ -31,7 +31,7 @@ public class AccountModel extends CoreModel {
 		}
 	}
 
-	public AccountModel(String username, String password) {
+	public AccountModel(String username, char[] password) {
 		String query = "SELECT `naam` FROM `account` WHERE `naam` = '"
 				+ username + "' AND `wachtwoord` = '" + new String(password)
 				+ "';";
@@ -122,7 +122,8 @@ public class AccountModel extends CoreModel {
 		return new java.math.BigInteger(1, sha1.digest()).toString(16);
 	}
 
-	public GameModel[] getOpenGames() {
+	public ArrayList<GameModel> getOpenGames() {
+		ArrayList<GameModel> games = new ArrayList<GameModel>();
 		String query = "SELECT `ID` FROM `spel` WHERE `Account_naam_uitdager` = '"
 				+ username
 				+ "' OR `Account_naam_tegenstander` = '"
@@ -130,16 +131,15 @@ public class AccountModel extends CoreModel {
 				+ "' AND `Toestand_type` = '" + GameModel.STATE_PLAYING + "'";
 		try {
 			ResultSet dbResult = Dbconnect.select(query);
-			ArrayList<GameModel> games = new ArrayList<GameModel>();
 			while (dbResult.next()) {
 				games.add(new GameModel(dbResult.getInt(1), this));
 				// Add a new game with the gameId for this account
 			}
-			return (GameModel[]) games.toArray();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return games;
 	}
 
 }
