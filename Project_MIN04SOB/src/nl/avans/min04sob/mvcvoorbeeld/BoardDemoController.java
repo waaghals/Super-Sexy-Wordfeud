@@ -11,7 +11,7 @@ public class BoardDemoController extends CoreController {
 
 	public BoardDemoController(CoreWindow window) {
 		//BoardPanel playBoard = new BoardPanel();
-		//test
+		
 		JTabbedPane testTabs = new JTabbedPane();
 		testTabs.add("Game 1", new BoardPanel());
 		testTabs.add("Game 2", new BoardPanel());
