@@ -20,7 +20,7 @@ public class ChatPanel extends CorePanel {
 	private JTextArea chatField;
 	private JScrollPane chatScroll;
 
-	public ChatPanel(int xchatsize, int ychatsize) {
+	public ChatPanel() {
 		setLayout(new MigLayout("", "[100px:1000px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:1000px][100px:150px:200px][100px:150px:200px][30px:30px]"));
 		chatField = new JTextArea();
 		chatScroll = new JScrollPane(chatField);
@@ -33,6 +33,7 @@ public class ChatPanel extends CorePanel {
 		add(chatFieldSend, "cell 0 3 3 1,grow");
 		add(chatSendButton, "cell 3 3,grow");
 	}
+
 
 	@Override
 	@SuppressWarnings("unchecked")

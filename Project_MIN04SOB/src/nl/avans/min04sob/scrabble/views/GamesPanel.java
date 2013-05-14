@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
+import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
@@ -21,7 +23,7 @@ public class GamesPanel extends CorePanel {
 	
 	public GamesPanel(){
 		initialize();
-		addComponents();
+		
 	}
 	
 	public void initialize(){
@@ -30,12 +32,11 @@ public class GamesPanel extends CorePanel {
 		gameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		gameList.setLayoutOrientation(JList.VERTICAL);
 		gameList.setVisibleRowCount(-1);
-	}
+		
+		setLayout(new MigLayout("", "[100px][100px]", "[100px][100px]"));
 	
-	private void addComponents(){
 		JScrollPane pane = new JScrollPane(gameList);
-		pane.setPreferredSize(getPreferredSize());
-		add(pane);
+		add(pane, "cell 0 0 2 2,grow");
 	}
 	
 	public void addGameListListener(ListSelectionListener listenener){
