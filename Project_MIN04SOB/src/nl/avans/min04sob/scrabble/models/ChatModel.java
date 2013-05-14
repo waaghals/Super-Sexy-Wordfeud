@@ -81,6 +81,9 @@ public class ChatModel extends CoreModel {
 		// Only keep the new messages
 		newMessages.removeAll(oldMessages);
 
-		firePropertyChange("chatupdate", null, newMessages);
+		if(newMessages.size() > 0){
+			firePropertyChange("chatupdate", null, newMessages);
+		}
+		
 	}
 }
