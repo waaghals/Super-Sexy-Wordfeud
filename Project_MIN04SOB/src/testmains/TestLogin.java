@@ -9,8 +9,7 @@ public class TestLogin {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		LoginController lc = new LoginController(new AccountModel());
-
+		new LoginController(new AccountModel());
 	}
 
 }
