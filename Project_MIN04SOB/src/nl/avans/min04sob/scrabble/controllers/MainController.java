@@ -19,7 +19,6 @@ import nl.avans.min04sob.scrabble.views.UserInfoPanel;
 
 public class MainController extends CoreController {
 
-	private UserInfoPanel userInfoPanel;
 	private ChangePassPanel changePassPanel;
 	private CoreWindow frame;
 	private MenuView menu;
@@ -30,15 +29,12 @@ public class MainController extends CoreController {
 	public MainController() {
 		initialize();
 		addListeners();
-		
-		userInfoPanel.setUsername(account.getUsername());
 	
 		addView(menu);
 		addView(gamesPanel);
 		addModel(account);
 		
 		frame.setJMenuBar(menu);
-		frame.addTopPanel(userInfoPanel);
 		frame.addRightPanel(gamesPanel);
 		frame.addCenterPanel(currGamePanel);
 		frame.pack();
@@ -49,7 +45,6 @@ public class MainController extends CoreController {
 	@Override
 	public void initialize() {
 		frame = new CoreWindow("Wordfeud" ,JFrame.EXIT_ON_CLOSE);
-		userInfoPanel = new UserInfoPanel();
 		changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		account = new AccountModel();
@@ -61,22 +56,6 @@ public class MainController extends CoreController {
 
 	@Override
 	public void addListeners() {
-		userInfoPanel.addActionListenerLogout(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				account.logout();
-			}
-		});
-
-		userInfoPanel.addActionListenerChangePass(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changePass();
-			}
-		});
-
-		userInfoPanel.addActionListenerAdmin(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
 		menu.addChangePassItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
