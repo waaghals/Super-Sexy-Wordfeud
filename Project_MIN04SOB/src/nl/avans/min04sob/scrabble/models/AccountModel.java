@@ -89,7 +89,7 @@ public class AccountModel extends CoreModel {
 			ResultSet check = Dbconnect
 					.select("SELECT * FROM account WHERE naam ='" + username
 							+ "';");
-			return check.first(); // If a first row exists, return true.
+			return !check.first(); // If a first row exists, return true.
 		} catch (SQLException sql) {
 			return false;
 		}

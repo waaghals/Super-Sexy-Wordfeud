@@ -57,6 +57,7 @@ public class LoginController extends CoreController {
 		registerPanel.addActionListenerRegister(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tryToRegister();
+				registerToLogin();
 			}
 		});
 
