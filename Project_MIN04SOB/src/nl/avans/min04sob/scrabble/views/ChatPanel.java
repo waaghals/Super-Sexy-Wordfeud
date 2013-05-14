@@ -21,7 +21,7 @@ public class ChatPanel extends CorePanel {
 	private JScrollPane chatScroll;
 
 	public ChatPanel() {
-		setLayout(new MigLayout("", "[100px:1000px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:1000px][100px:150px:200px][100px:150px:200px][30px:30px]"));
+		setLayout(new MigLayout("", "[100px:1000px:200px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:200px:200px][100px:150px:200px][100px:150px:200px][30px:30px]"));
 		chatField = new JTextArea();
 		chatScroll = new JScrollPane(chatField);
 
