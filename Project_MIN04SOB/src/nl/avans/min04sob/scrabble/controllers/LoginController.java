@@ -68,8 +68,8 @@ public class LoginController extends CoreController {
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
 		if (!accountModel.isLoggedIn()) {
-			loginPanel.setUsernameMistake(true);
-			loginPanel.setPasswordMistake(true);
+			loginPanel.setUsernameMistake(false);
+			loginPanel.setPasswordMistake(false);
 		} else {
 			frame.dispose();
 			frame = null;
