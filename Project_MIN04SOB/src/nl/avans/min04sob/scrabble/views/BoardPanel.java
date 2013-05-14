@@ -12,6 +12,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.BevelBorder;
 
 public class BoardPanel extends CorePanel {
 	
@@ -48,7 +51,7 @@ public class BoardPanel extends CorePanel {
 				{ "12", "DL", "", "", "DW", "", "", "", "DL", "", "", "", "DW",
 						"", "", "DL" },
 				{ "13", "", "", "DW", "", "", "", "DL", "", "DL", "", "", "",
-						"DW", "14", "" },
+						"DW", "", "" },
 				{ "14", "", "DW", "", "", "", "TL", "", "", "", "TL", "", "",
 						"", "DW", "" },
 				{ "15", "TW", "", "", "DL", "", "", "", "TW", "", "", "", "DL",
@@ -67,6 +70,7 @@ public class BoardPanel extends CorePanel {
 		
 		// Create a new table instance
 		JTable table = new JTable(dataValues, columnNames);
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setPreferredSize(new Dimension(0, 0));
 		table.setPreferredScrollableViewportSize(new Dimension(0, 0));
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -79,35 +83,37 @@ public class BoardPanel extends CorePanel {
 		/*for (Character character : columnNames) {
 			table.getColumn(character).setCellRenderer(renderer);
 		}*/
-		setLayout(new MigLayout("", "[64px][5px][60px][5px][73px][5px][292px][430px]", "[475px][35px][30px][25px]"));
+		setLayout(new MigLayout("", "[-15.00px][][47.00px][60px][5px][73px][100px:400px][55.00px][292px][:430px:430px]", "[475px:475px][35px][:30px:30px][25px]"));
 
 		// Add the table to a scrolling pane
 		JScrollPane scrollPane = new JScrollPane(table);
-		add(scrollPane, "cell 0 0 7 1,grow");
+		add(scrollPane, "cell 0 0 9 1,grow");
 		
 		
 		ChatPanel chat = new ChatPanel(150, 150);
-		add(chat, "cell 7 0 1 3,grow");
+		chat.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		add(chat, "cell 9 0 1 3,grow");
 		JTable playerTilesField = new JTable(playerTiles, blaat);
+		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
-		add(playerTilesField, "cell 0 2 7 1,growx,aligny top");
+		add(playerTilesField, "cell 0 2 9 1,growx,aligny top");
 				
 						JButton play = new JButton();
 						play.setText("Play");
-						add(play, "cell 0 3,alignx left,aligny center");
+						add(play, "cell 1 3,alignx left,aligny center");
 				
 				JButton pass = new JButton();
 				pass.setText("Pas");
-				add(pass, "cell 2 3,grow");
+				add(pass, "cell 3 3,grow");
 				
 				JButton swap = new JButton();
 				swap.setText("Swap");
-				add(swap, "cell 4 3,grow");
+				add(swap, "cell 5 3,grow");
 				
 				JButton resign = new JButton();
 				resign.setText("Resign");
-				add(resign, "cell 6 3,alignx center,growy");
+				add(resign, "cell 8 3,alignx center,growy");
 
 
 	}
