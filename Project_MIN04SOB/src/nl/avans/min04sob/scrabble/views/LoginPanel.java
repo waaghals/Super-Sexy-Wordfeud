@@ -107,7 +107,7 @@ public class LoginPanel extends CorePanel {
 	}
 	
 	public void setUsernameMistake(boolean mistake){
-		if(!mistake){
+		if(mistake){
 			usernameField.setBackground(Color.WHITE);
 		}else{
 			usernameField.setBackground(Color.RED);
@@ -115,7 +115,7 @@ public class LoginPanel extends CorePanel {
 	}
 	
 	public void setPasswordMistake(boolean mistake){
-		if(!mistake){
+		if(mistake){
 			passwordField.setBackground(Color.WHITE);
 		}else{
 			passwordField.setBackground(Color.RED);
