@@ -11,6 +11,16 @@
 7. ??????????
 8. PROFIT
 
+###MIGLayout
+1. RMK op project.
+2. Klik op properties
+3. Klik op build path (of java-buildpath oid)
+4. Selecteer het tabblad libraries
+5. Klik op add Jar
+6. Selecteer het bestand MIGLayout-swing.jar uit de map dependencies.
+7. ??????????
+8. PROFIT
+
 
 ##Database gegevens handmatig toevoegen
 1. Ga naar [PhpMyAdmin](http://databases.aii.avans.nl/)
