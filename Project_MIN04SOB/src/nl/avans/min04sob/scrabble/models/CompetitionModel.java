@@ -18,4 +18,12 @@ public class CompetitionModel extends CoreModel {
 		return "CompName";
 	}
 
+	
+	public void getLeaderBoard() {
+		
+	}
+	
+	public void join() {
+		
+	}
 }
