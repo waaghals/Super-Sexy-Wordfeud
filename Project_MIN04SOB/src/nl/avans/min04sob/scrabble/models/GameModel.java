@@ -6,6 +6,21 @@ import java.sql.SQLException;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Dbconnect;
 
+import java.awt.Dimension;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import nl.avans.min04sob.scrabble.Playerstash;
+import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Dbconnect;
+import nl.avans.min04sob.scrabble.views.BoardPanel;
+
 public class GameModel extends CoreModel {
 
 	private CompetitionModel competition;
@@ -15,11 +30,59 @@ public class GameModel extends CoreModel {
 	private String state;
 	private String boardName;
 	private String letterSet;
+	
+	private JLabel player;
+	private JLabel enemy;
+	private JLabel score;
+	private JLabel aantalLettersOver;
+
+	private JPanel myPanel = new JPanel();
+	private JPanel myPanel2 = new JPanel();
+	private JFrame myFrame = new JFrame();
+
+	private Playerstash playerStash = new Playerstash();
+	private BoardPanel boardPanel = new BoardPanel();
+
+	private JButton vorigScherm;
+	private JButton speelWoord;
+	private JButton swapLetters;
+	private JButton resign;
+
+	private boolean isSpace;
+	private String legLetter;
+
 
 	public static final String STATE_FINISHED = "Finished";
 	public static final String STATE_PLAYING = "Playing";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_RESIGNED = "Resigned";
+	
+	public GameModel() {
+
+		boardPanel.setPreferredSize(new Dimension(300, 300));
+		vorigScherm = new JButton("vorig scherm");
+		speelWoord = new JButton("speel woord");
+		swapLetters = new JButton("swap letters");
+		resign = new JButton("resign");
+
+		player = new JLabel();
+		enemy = new JLabel();
+		score = new JLabel();
+		aantalLettersOver = new JLabel();
+
+		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
+		myPanel.add(player);
+		myPanel.add(boardPanel);
+		//myPanel.add(playerStash);
+
+		myPanel2.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
+		myPanel2.add(vorigScherm);
+		myPanel2.add(score);
+		myPanel2.add(aantalLettersOver);
+		myPanel2.add(speelWoord);
+		myPanel2.add(swapLetters);
+		myPanel2.add(resign);
+	}
 
 	public GameModel(int gameId, AccountModel currentUser) {
 		String query = "SELECT * FROM `spel` WHERE `ID` = " + gameId;
@@ -48,6 +111,20 @@ public class GameModel extends CoreModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void isSpace() {
+		if (legLetter == null) {
+			isSpace = true;
+			legLetter();
+		} else {
+			isSpace = false;
+			System.out.println("er ligt al een letter");
+		}
+	}
+
+	public void legLetter() {
+		
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class AccountModel extends CoreModel {
 			ResultSet check = Dbconnect
 					.select("SELECT * FROM account WHERE naam ='" + username
 							+ "';");
-			return check.first(); // If a first row exists, return true.
+			return !check.first(); // If a first row exists, return true.
 		} catch (SQLException sql) {
 			return false;
 		}
@@ -100,8 +100,19 @@ public class AccountModel extends CoreModel {
 	}
 
 	public boolean isModerator() {
-		// TODO Automatisch gegenereerde methodestub
-		return true;
+		String query = "SELECT Rol_type FROM accountrol WHERE Account_naam ='"+username+"'";
+		try{
+			ResultSet rs = Dbconnect.select(query);
+			while(rs.next()){
+				if(rs.getString(1).equals("Moderator")){
+					return true;
+				}
+			}
+			return false;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	private String getHash(char[] array) {
