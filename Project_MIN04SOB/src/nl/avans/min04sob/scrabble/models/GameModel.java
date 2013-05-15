@@ -51,6 +51,7 @@ public class GameModel extends CoreModel {
 	private boolean isSpace;
 	private String legLetter;
 	private Object[][] boardData;
+	private int lastTurn;
 
 	public static final String STATE_FINISHED = "Finished";
 	public static final String STATE_PLAYING = "Playing";
@@ -60,6 +61,8 @@ public class GameModel extends CoreModel {
 	public GameModel() {
 
 		boardPanel.setPreferredSize(new Dimension(300, 300));
+		lastTurn= 0 ;
+		boardData = new Object[15][15];
 		//vorigScherm = new JButton("vorig scherm");
 		//speelWoord = new JButton("speel woord");
 		//swapLetters = new JButton("swap letters");
@@ -177,14 +180,14 @@ public class GameModel extends CoreModel {
 		return 0;
 	}
 
-	public void fillBoardData(int gameId){
-		boardData = new Object[15][15];
-		String query ="SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter FROM gelegdeletter WHERE gelegdeletter.Letter_Spel_ID ='"+gameId+"' AND gelegdeletter.Letter_ID = letter.ID ORDER BY beurt_ID ASC;";
+	public void updateBoardData(int gameId){
+		String query ="SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID ='"+gameId+"' AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > '"+lastTurn+"' ORDER BY beurt_ID ASC;";
 		try{
 			ResultSet letters = Dbconnect.select(query);
 			while(letters.next()){
 				int x = letters.getInt(2) - 1;//x
 				int y = letters.getInt(3) - 1;//y
+				lastTurn = letters.getInt(5);
 				if(letters.getString(1).equals("?")){
 					boardData[y][x] = letters.getString(4);
 				}else{
