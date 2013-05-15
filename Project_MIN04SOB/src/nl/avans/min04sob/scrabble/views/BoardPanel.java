@@ -12,12 +12,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.models.TileModel;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.border.BevelBorder;
 
 public class BoardPanel extends CorePanel {
-	
+	 TileModel tl = new TileModel(null);
+		TileModel[] tilearray = new TileModel[16];
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
@@ -25,8 +31,12 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public BoardPanel() {
+		
+
+		
+		
 		String dataValues[][] = {
-				{ "1", "TW", "", "", "DL", "", "", "", "TW", "", "", "", "",
+				{ "1", "", "", "", "DL", "", "", "", "TW", "", "", "", "",
 						"", "", "TW" },
 				{ "2", "", "DW", "", "", "", "TL", "", "", "", "TL", "", "",
 						"", "DW", "" },
@@ -113,6 +123,8 @@ public class BoardPanel extends CorePanel {
 				
 				JButton resign = new JButton();
 				resign.setText("Resign");
+				
+			
 				add(resign, "cell 8 3,alignx center,growy");
 
 
