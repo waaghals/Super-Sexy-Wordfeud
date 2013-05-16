@@ -79,5 +79,4 @@ public class GamesPanel extends CorePanel {
 	public GameModel getSelectedValue() {
 		return gameList.getSelectedValue();
 	}
-
 }

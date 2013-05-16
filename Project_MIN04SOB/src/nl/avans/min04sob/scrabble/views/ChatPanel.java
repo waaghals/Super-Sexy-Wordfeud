@@ -39,7 +39,6 @@ public class ChatPanel extends CorePanel {
 	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("chatupdate")) {
-
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
 			for (String string : messages) {
 				addToChatField(string);

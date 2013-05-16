@@ -13,14 +13,14 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 public class ChatModel extends CoreModel {
 	private final int gameId;
 	private String timeLastMessage;
-	private String username;
+	private AccountModel account;
 	private ArrayList<String> messages;
 
-	public ChatModel(int gameId, String currentUsername) {
+	public ChatModel(int gameId, AccountModel user) {
 		messages = new ArrayList<String>();
 		this.gameId = gameId;
 		System.out.println("ChatModel" + this.gameId);
-		username = currentUsername;
+		account = user;
 		timeLastMessage = "2000-1-1 00:00:00";
 		getNewMessages();
 	}
@@ -33,7 +33,7 @@ public class ChatModel extends CoreModel {
 			String currentdate = dateFormat.format(date);
 			Dbconnect
 					.query("INSERT INTO `chatregel` (`Account_naam`,`Spel_ID`, `datetime`, `bericht`) VALUES('"
-							+ this.username
+							+ this.account.getUsername()
 							+ "','"
 							+ this.gameId
 							+ "','"
@@ -54,7 +54,7 @@ public class ChatModel extends CoreModel {
 							+ "' ORDER BY `datetime` ASC");
 			while (dbResult.next()) {
 				String senderName = dbResult.getString(1);
-				if (!(senderName.equals(username))) {
+				if (!(senderName.equals(account.getUsername()))) {
 					messages.add(senderName + " : " + dbResult.getString(3)
 							+ "\n");
 				} else {

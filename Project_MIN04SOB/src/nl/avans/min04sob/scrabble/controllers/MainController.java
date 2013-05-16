@@ -66,7 +66,7 @@ public class MainController extends CoreController {
 
 		currGamePanel = new BoardPanel();
 		chatPanel = new ChatPanel();
-		chatModel = new ChatModel(511, account.getUsername());
+		chatModel = new ChatModel(511, account);
 	}
 
 	@Override
