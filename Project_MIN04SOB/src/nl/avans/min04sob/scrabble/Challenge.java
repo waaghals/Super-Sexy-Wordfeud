@@ -26,7 +26,7 @@ package nl.avans.min04sob.scrabble;
 			this.setTitle("Challenge");
 			setVisible(true);
 			showChallenge();
-		
+			setResizable(false);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			pack();
 		}
