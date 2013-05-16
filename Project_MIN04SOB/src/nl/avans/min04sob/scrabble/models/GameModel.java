@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.models;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -223,5 +224,20 @@ public class GameModel extends CoreModel {
 			System.out.println(query);
 			sql.printStackTrace();
 		}
+	}
+	
+	public Array getRequestedWords() {
+		Array words = null;
+		String query = "SELECT `woord` FROM `nieuwwoord`";
+		
+		try { 
+			ResultSet dbResult = Dbconnect.select(query);
+			words = dbResult.getArray("woord");
+		}
+		catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		
+		return words;
 	}
 }
