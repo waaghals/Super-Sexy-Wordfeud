@@ -6,6 +6,8 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import nl.avans.min04sob.scrabble.views.ChatPanel;
+
 public class CoreWindow extends JFrame implements CoreView {
 
 	public CoreWindow() {
@@ -50,5 +52,9 @@ public class CoreWindow extends JFrame implements CoreView {
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Automatisch gegenereerde methodestub
+	}
+
+	public void addLeftPanel(JPanel panel){
+		add(panel, BorderLayout.WEST);
 	}
 }

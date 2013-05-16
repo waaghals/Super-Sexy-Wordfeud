@@ -20,8 +20,8 @@ public class ChatPanel extends CorePanel {
 	private JTextArea chatField;
 	private JScrollPane chatScroll;
 
-	public ChatPanel(int xchatsize, int ychatsize) {
-		setLayout(new MigLayout("", "[100px:1000px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:1000px][100px:150px:200px][100px:150px:200px][30px:30px]"));
+	public ChatPanel() {
+		setLayout(new MigLayout("", "[100px:1000px:200px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:200px:200px][100px:150px:200px][100px:150px:200px][30px:30px]"));
 		chatField = new JTextArea();
 		chatScroll = new JScrollPane(chatField);
 
@@ -34,11 +34,11 @@ public class ChatPanel extends CorePanel {
 		add(chatSendButton, "cell 3 3,grow");
 	}
 
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("chatupdate")) {
-
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
 			for (String string : messages) {
 				addToChatField(string);

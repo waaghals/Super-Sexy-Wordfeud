@@ -9,6 +9,9 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -116,20 +119,24 @@ public class GameModel extends CoreModel {
 		}
 	}
 	
-	public void isSpace() {
-		if (legLetter == null) {
-			isSpace = true;
-			legLetter();
-		} else {
-			isSpace = false;
-			System.out.println("er ligt al een letter");
+
+	public boolean isFree( int x, int y) {
+		String query = "SELECT * FROM gelegdeletter WHERE Tegel_Y ='"+(y+1)+"' AND Tegel_X ='"+x+"'";
+		boolean isFree = false;
+		try{
+			ResultSet checkfree = Dbconnect.select(query);
+			if(checkfree.next()){
+				isFree = false;
+			}else{
+				isFree = true;
+			}
+		}catch(SQLException sql){
+			sql.printStackTrace();
 		}
+		return isFree;	
 	}
-
-	public void legLetter() {
-		
-	}
-
+	
+	
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
@@ -180,7 +187,7 @@ public class GameModel extends CoreModel {
 		return 0;
 	}
 
-	public void updateBoardData(int gameId){
+	public void getBoardFromDatabase(){
 		String query ="SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID ='"+gameId+"' AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > '"+lastTurn+"' ORDER BY beurt_ID ASC;";
 		try{
 			ResultSet letters = Dbconnect.select(query);
@@ -196,6 +203,24 @@ public class GameModel extends CoreModel {
 			}
 			
 		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+	}
+	
+	public void requestWord(String word, int gameId) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		String currentdate = dateFormat.format(date);
+		
+		String query = "INSERT INTO `nieuwwoord` (`woord`, `moment_ontstaan`, `spel_id`) VALUES ('"
+				+ word + "', '" 
+				+ currentdate + "','" 
+				+ gameId + "');";
+		
+		try {
+			Dbconnect.query(query);
+		} catch (SQLException sql) {
+			System.out.println(query);
 			sql.printStackTrace();
 		}
 	}

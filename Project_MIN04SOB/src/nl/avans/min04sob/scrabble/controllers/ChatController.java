@@ -23,7 +23,7 @@ public class ChatController extends CoreController {
 		xSizeChat = 150;
 		ySizeChat = 250;
 
-		chatPanel = new ChatPanel(xSizeChat, ySizeChat);
+		chatPanel = new ChatPanel();
 		chatModel = new ChatModel(gameId, username);
 
 		addView(chatPanel);
