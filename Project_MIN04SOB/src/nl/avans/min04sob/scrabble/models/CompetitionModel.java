@@ -49,8 +49,9 @@ public class CompetitionModel extends CoreModel {
 	}
 	
 	public void join(int competitionID, String username) {
-		String query = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`) VALUES ('" 
-				+ competitionID + "','" + username + "');"; 
+		int ranking = 0;
+		String query = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES ('" 
+				+ competitionID + "','" + username + "','" + ranking + "');"; 
 	
 		try {
 			Dbconnect.query(query);
