@@ -1,54 +1,140 @@
 package nl.avans.min04sob.scrabble.models;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Dbconnect;
 
-public class ChallengeModel extends CoreModel {
-/*/
+public class ChallengeModel extends CoreModel  {
+ 
 	public static final String STATE_ACCEPTED = "Accepted";
 	public static final String STATE_REJECTED = "Rejected";
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
-	public int index;
+	public int spelid;
+	  
+	public Timer timer = new Timer();
+	TimerTask tt;
 	@Override
 	public void update() 
 	{
-		// TODO Automatisch gegenereerde methodestub
+		// TODO WTF is dit
 	}
 	
-	public void toChallenge(String Challengername)
+	public void toChallenge(String Challengername)  // uitdager
 	{
-  
-					String query = //+ int id  //"INSERT INTO `Spel` (//dbindex//`Toestand_type`,`Account_naam_uitdager`,`Reactie_type`) VALUES (//inddex//'" + STATE_REQUEST +    Challengername + STATE_UNKNOWN + "');";
-					try {
-						       Dbconnect.query(query);
-					} 
+		int spelid=0;// of 1
+		while(1<2)
+		{
+			String query = "SELECT `INT ID` FROM `Spel`;";
+			try {
+				ResultSet dbResult = Dbconnect.select(query);
+				if(dbResult.getArray(spelid) == null)
+				{
+					break;
+				}
+			}
+			catch (SQLException sql) {
+				sql.printStackTrace();
+			}
+			spelid++;
+		} 		
+		String query =     "INSERT INTO `Spel` (`spelid`,`Toestand_type`,`Account_naam_uitdager`,`Reactie_type`) VALUES ( '" +spelid+ STATE_REQUEST +    Challengername + STATE_UNKNOWN + "')  ;";
+			try 
+			{
+				Dbconnect.query(query);   
+			} 
+			catch (SQLException sql) 
+			{
+				System.out.println(query);
+				sql.printStackTrace();
+			} 
+		final int sspelid=spelid;
+		final Timer timer = new Timer();
+		timer.schedule(new TimerTask() {		  
+			public void run() {
+				String query = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
+				try 
+				{
+					ResultSet dbResult = Dbconnect.select(query);
+					if(dbResult.getString(sspelid) == "Accepted")
+					{
+						acceptChallenge();
+						timer.cancel();
+					}
+					if(dbResult.getString(sspelid) == "Rejected")
+					{
+						timer.cancel();
+					}
+				}
 					catch (SQLException sql) 
 					{
 							   System.out.println(query);
 						       sql.printStackTrace();
+					} 
+				////rage 
+			} },  0,10000 );
+	}
+	public void receiveChallenge()   /// tegenstander
+	{
+		final int sspelid=spelid;
+		final Timer timer = new Timer();
+		timer.schedule(new TimerTask() {		  
+			public void run() {
+				int index = 0;
+					while(index<10)// of meer   wiv
+					{
+					String query = "SELECT `Reaktie_type` FROM `Spel`; where(INT ID) values(index)";
+					try {
+						ResultSet dbResult = Dbconnect.select(query);
+						if(dbResult.getString(index) == "getplayer name-_-") ///// ????
+						{
+							// open gui
+							
+							
+							//acceptatie
+							acceptChallenge();
+							break;
+						}
 					}
+					catch (SQLException sql) 
+					{
+						System.out.println(query);
+						sql.printStackTrace();
+					} 
+				index++;
+				}
+				////rage 
+			} },  0,10000 );
 	}
 	
-	public void AcceptChallenge(String Challengedname)
+	public void acceptChallenge()  // uitdager
 	{
-		//time event
-		//pseudo where = dbindex=index ///
-		//iets met select ofzo
-		String query = "INSERT INTO `Spel` (`Toestand_type`,`Account_naam_tegenstander`,`Reactie_type`) VALUES ('" + STATE_PLAYING + Challengedname + STATE_ACCEPTED +" ');";
-	
-		try {
-			       Dbconnect.query(query);
-			} 
+		String query = "INSERT INTO `Spel` (`Toestand_type`) VALUES ('" + STATE_PLAYING + " ') where(ID INT) VALUES ('"+spelid+ "') ;";  // insert or remove
+		try
+		{
+			      Dbconnect.query(query);
+		} 
 		catch (SQLException sql) 
 		{
-					System.out.println(query);
-					sql.printStackTrace();
+				System.out.println(query);
+				sql.printStackTrace();
 		}
 	}
 	
-}
 	/*/
+	 *  pseudo code
+	 *  action    accept
+	 *  
+	 *  
+	 *  action reject
+	 *  
+	 *  
+	 *  /*/
+	
+}
+	 

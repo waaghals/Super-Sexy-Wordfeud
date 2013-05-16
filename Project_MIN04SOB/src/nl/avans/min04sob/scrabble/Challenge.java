@@ -39,6 +39,7 @@ package nl.avans.min04sob.scrabble;
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					dispose();
 					// TODO Auto-generated method stub
 					
 				}});
@@ -57,7 +58,7 @@ package nl.avans.min04sob.scrabble;
 
 			accept.setFont(new Font("Serif", Font.ITALIC, 14));
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
-}
+		}
 	}
 	
 	// test
