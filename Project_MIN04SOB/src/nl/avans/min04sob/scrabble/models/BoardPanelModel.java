@@ -37,7 +37,7 @@ public BoardPanelModel() {
 		 tileData = new TileModel[][] { 
 				{ 
 					// 1
-					new TileModel("row1"),
+				
 					new TileTL(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileTW(), new TileModel(""),
 					new TileModel(""), new TileDL(), new TileModel(""), 
@@ -46,7 +46,7 @@ public BoardPanelModel() {
 				},
 				{
 					//2
-					new TileModel("row2"),
+				
 					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -56,7 +56,7 @@ public BoardPanelModel() {
 				
 				{
 					//3
-					new TileModel("row3"),
+				
 					new TileModel(""), new TileModel(""), new TileDW(),
 					new TileModel(""), new TileModel(""), new TileModel(""),
 					new TileDL(), new TileModel(""), new TileDL(), 
@@ -67,7 +67,7 @@ public BoardPanelModel() {
 				{
 					
 					//4
-					new TileModel("row4"),
+				
 					new TileModel(""), new TileModel(""), new TileModel(""),
 					new TileTL(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileDW(), new TileModel(""), 
@@ -77,7 +77,7 @@ public BoardPanelModel() {
 				
 				{
 					//5
-					new TileModel("row5"),
+				
 					new TileTW(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileDW(), new TileModel(""),
 					new TileDL(), new TileModel(""), new TileDL(), 
@@ -87,7 +87,7 @@ public BoardPanelModel() {
 				
 				{
 					//6
-					new TileModel("row6"),
+				
 					new TileModel(""), new TileTL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -97,7 +97,7 @@ public BoardPanelModel() {
 				
 				{ 
 					//7
-					new TileModel("row7"),
+				
 					new TileModel(""), new TileModel(""), new TileDL(),
 					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -107,7 +107,7 @@ public BoardPanelModel() {
 				
 				{
 					//8 
-					new TileModel("row8"),
+				
 					new TileDL(), new TileModel(""), new TileModel(""),
 					new TileDW(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileStart(), new TileModel(""), 
@@ -117,7 +117,7 @@ public BoardPanelModel() {
 				
 				{
 					//9
-					new TileModel("row9"),
+				
 					new TileModel(""), new TileModel(""), new TileDL(),
 					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -127,7 +127,6 @@ public BoardPanelModel() {
 				
 				{
 					//10
-					new TileModel("row10"),
 					new TileModel(""), new TileTL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -137,7 +136,7 @@ public BoardPanelModel() {
 				
 				{
 					//11
-					new TileModel("row11"),
+				
 					new TileTW(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileDW(), new TileModel(""),
 					new TileDL(), new TileModel(""), new TileDL(), 
@@ -146,7 +145,7 @@ public BoardPanelModel() {
 				},
 				{
 					//12
-					new TileModel("row12"),
+				
 					new TileModel(""), new TileModel(""), new TileModel(""),
 					new TileTL(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileDW(), new TileModel(""), 
@@ -155,7 +154,7 @@ public BoardPanelModel() {
 				},
 				{
 					//13
-					new TileModel("row13"),
+				
 					new TileModel(""), new TileModel(""), new TileDW(),
 					new TileModel(""), new TileModel(""), new TileModel(""),
 					new TileDL(), new TileModel(""), new TileDL(), 
@@ -164,7 +163,7 @@ public BoardPanelModel() {
 				},
 				{
 					//14
-					new TileModel("row14"),
+				
 					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -173,7 +172,7 @@ public BoardPanelModel() {
 				},
 				{
 					//15
-					new TileModel("row15"),
+				
 					new TileTL(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileTW(), new TileModel(""),
 					new TileModel(""), new TileDL(), new TileModel(""), 
@@ -183,8 +182,8 @@ public BoardPanelModel() {
 		};
 	}
 	public String[][] getDataValues(){
-		String[][] dataValues = new String[tileData.length][tileData[1].length];
-		for(int y = 0;tileData.length > y; y++){
+		String[][] dataValues = new String[tileData.length ][tileData[1].length ];
+		for(int y = 0;tileData.length  > y; y++){
 			for(int x = 0;tileData[y].length > x;x++){
 				dataValues[y][x] = tileData[y][x].getLetter();
 						
