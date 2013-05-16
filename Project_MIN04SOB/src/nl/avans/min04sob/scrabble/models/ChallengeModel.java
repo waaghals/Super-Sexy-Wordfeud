@@ -6,12 +6,13 @@ import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Dbconnect;
 
 public class ChallengeModel extends CoreModel {
-
+/*/
 	public static final String STATE_ACCEPTED = "Accepted";
 	public static final String STATE_REJECTED = "Rejected";
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
+	public int index;
 	@Override
 	public void update() 
 	{
@@ -20,39 +21,34 @@ public class ChallengeModel extends CoreModel {
 	
 	public void toChallenge(String Challengername)
 	{
-		String query = "INSERT INTO `Spel` (`Toestand_type`) VALUES ('" + STATE_REQUEST + " ');"; 
-		String query2 =  "INSERT INTO `Spel` (`Account_naam_uitdager`) VALUES ('" + Challengername + " ');"; 
-		String query3 = "INSERT INTO `Spel` (`Reactie_type`) VALUES ('" + STATE_UNKNOWN + " ');"; 
-		try {
-			       Dbconnect.query(query);
-			       Dbconnect.query(query2);
-			       Dbconnect.query(query3);
-		} 
-		catch (SQLException sql) 
-		{
-				   System.out.println(query);
-			       System.out.println(query2);
-			       System.out.println(query3);
-			       sql.printStackTrace();
-		}
+  
+					String query = //+ int id  //"INSERT INTO `Spel` (//dbindex//`Toestand_type`,`Account_naam_uitdager`,`Reactie_type`) VALUES (//inddex//'" + STATE_REQUEST +    Challengername + STATE_UNKNOWN + "');";
+					try {
+						       Dbconnect.query(query);
+					} 
+					catch (SQLException sql) 
+					{
+							   System.out.println(query);
+						       sql.printStackTrace();
+					}
 	}
 	
 	public void AcceptChallenge(String Challengedname)
 	{
-		String query = "INSERT INTO `Spel` (`Toestand_type`) VALUES ('" + STATE_PLAYING + " ');"; 
-		String query2 =  "INSERT INTO `Spel` (`Account_naam_tegenstander`) VALUES ('" + Challengedname + " ');"; 
-		String query3 = "INSERT INTO `Spel` (`Reactie_type`) VALUES ('" + STATE_ACCEPTED + " ');"; 
+		//time event
+		//pseudo where = dbindex=index ///
+		//iets met select ofzo
+		String query = "INSERT INTO `Spel` (`Toestand_type`,`Account_naam_tegenstander`,`Reactie_type`) VALUES ('" + STATE_PLAYING + Challengedname + STATE_ACCEPTED +" ');";
+	
 		try {
 			       Dbconnect.query(query);
-			       Dbconnect.query(query2);
-			       Dbconnect.query(query3);
 			} 
-		catch (SQLException sql) {
+		catch (SQLException sql) 
+		{
 					System.out.println(query);
-			       System.out.println(query2);
-			       System.out.println(query3);
-			       sql.printStackTrace();
-		 }
+					sql.printStackTrace();
+		}
 	}
-
+	
 }
+	/*/

@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="Project_MIN04SOB/dependencies/mysql-connector-java-5.1.25-bin.jar"/>
 	<classpathentry kind="lib" path="Project_MIN04SOB/dependencies/miglayout-4.0-swing.jar"/>
+	<classpathentry kind="lib" path="Project_MIN04SOB/miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
