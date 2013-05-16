@@ -54,7 +54,7 @@ public class GameModel extends CoreModel {
 
 	private boolean isSpace;
 	private String legLetter;
-	private Object[][] boardData;
+	private String[][] boardData;
 	private int lastTurn;
 
 	public static final String STATE_FINISHED = "Finished";
@@ -66,7 +66,7 @@ public class GameModel extends CoreModel {
 
 		boardPanel.setPreferredSize(new Dimension(300, 300));
 		lastTurn= 0 ;
-		boardData = new Object[15][15];
+		boardData = new String[15][15];
 		//vorigScherm = new JButton("vorig scherm");
 		//speelWoord = new JButton("speel woord");
 		//swapLetters = new JButton("swap letters");
@@ -122,7 +122,7 @@ public class GameModel extends CoreModel {
 	
 
 	public boolean isFree( int x, int y) {
-		String query = "SELECT * FROM gelegdeletter WHERE Tegel_Y ='"+(y+1)+"' AND Tegel_X ='"+x+"'";
+		String query = "SELECT * FROM gelegdeletter WHERE Tegel_Y ='"+(y+1)+"' AND Tegel_X ='"+x+"' AND Letter_Spel_ID ='"+gameId+"'";
 		boolean isFree = false;
 		try{
 			ResultSet checkfree = Dbconnect.select(query);
@@ -136,6 +136,44 @@ public class GameModel extends CoreModel {
 		}
 		return isFree;	
 	}
+	
+	public String[][] compareArrays(String[][]bord, String[][] database){
+		String[][] returns = new String[7][3];
+		int counter = 0;
+		for(int y=0;y<15;y++){
+			for(int x=0;x<15;x++){
+				if(bord[y][x].equals(database[y][x])){
+				}else{
+					returns[counter][0] = bord[y][x];
+					returns[counter][1] = new String(x+"");
+					returns[counter][2] = new String(y+"");
+				}	
+			}
+		}
+		return returns;
+	}
+	
+	public void legWoord(){
+		getBoardFromDatabase();
+		String[][] compared = compareArrays(compared, boardData);
+		String oldnumberx = compared[0][1];
+		boolean verticalLine = true;
+		for(String[] s:compared){
+			if(oldnumberx.equals(s[1])){
+			}else{
+				verticalLine = false;
+			}
+		}
+		String oldnumbery = compared[0][2];
+		boolean horizontalLine = true;
+		for(String[] s:compared){
+			if(oldnumberx.equals(s[1])){
+			}else{
+				horizontalLine = false;
+			}
+		}
+	}
+	
 	
 	
 	@Override
