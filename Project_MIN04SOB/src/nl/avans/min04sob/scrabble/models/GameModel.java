@@ -9,6 +9,9 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -237,6 +240,24 @@ public class GameModel extends CoreModel {
 			}
 			
 		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+	}
+	
+	public void requestWord(String word, int gameId) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		String currentdate = dateFormat.format(date);
+		
+		String query = "INSERT INTO `nieuwwoord` (`woord`, `moment_ontstaan`, `spel_id`) VALUES ('"
+				+ word + "', '" 
+				+ currentdate + "','" 
+				+ gameId + "');";
+		
+		try {
+			Dbconnect.query(query);
+		} catch (SQLException sql) {
+			System.out.println(query);
 			sql.printStackTrace();
 		}
 	}
