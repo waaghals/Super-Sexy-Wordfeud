@@ -1,6 +1,7 @@
 package nl.avans.min04sob.scrabble.core;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class Dbconnect {
 
@@ -8,12 +9,13 @@ public class Dbconnect {
 	private static Dbconnect instance;
 
 	private Dbconnect() {
+		connect();
 	}
 
 	public static Connection getInstance() {
 		if (instance == null) {
 			instance = new Dbconnect();
-			instance.connect();
+
 			return instance.conn;
 		}
 
@@ -26,15 +28,22 @@ public class Dbconnect {
 
 	private void connect() {
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			instance.conn = DriverManager.getConnection(
-					"jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2",
-					"tjmbrouw", "8THMJ2S4");
+		new Thread(new Runnable() {
+			public void run() {
+				try {
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+					Class.forName("com.mysql.jdbc.Driver").newInstance();
+					instance.conn = DriverManager
+							.getConnection(
+									"jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2",
+									"tjmbrouw", "8THMJ2S4");
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		}).start();
 
 	}
 
@@ -46,23 +55,5 @@ public class Dbconnect {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static ResultSet select(String query) throws SQLException {
-		System.out.println("Running query: " + query);
-		Connection connection = getInstance();
-		ResultSet result = null;
-
-		Statement s = connection.createStatement();
-		result = s.executeQuery(query);
-		return result;
-	}
-
-	public static void query(String query) throws SQLException {
-		System.out.println("Running query: " + query);
-		Connection connection = getInstance();
-
-		Statement s = connection.createStatement();
-		s.execute(query);
 	}
 }
