@@ -59,3 +59,5 @@ package nl.avans.min04sob.scrabble;
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
 }
 	}
+	
+	// test
