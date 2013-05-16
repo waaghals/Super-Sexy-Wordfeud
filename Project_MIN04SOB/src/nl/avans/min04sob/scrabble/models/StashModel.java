@@ -28,7 +28,21 @@ public class StashModel extends CoreModel {
 		return letters;
 	}
 	
-	
+	public char getPlayerLetter(char letter, AccountModel user) {
+		Array inhoud;
+		String query = "SELECT `inhoud`, `account_naam` FROM `plankje` WHERE account_naam = '" 
+				+ user.getUsername() 
+				+ "'";
+		try { 
+			ResultSet dbResult = Dbconnect.select(query);
+			inhoud = dbResult.getArray("inhoud");
+			
+		}
+		catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return letter;
+	}
 	
 	/*
 	 * weet niet precies hoe dit moet
