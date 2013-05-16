@@ -22,12 +22,11 @@ import java.awt.event.ActionListener;
 import javax.swing.border.BevelBorder;
 
 public class BoardPanel extends CorePanel {
-//<<<<<<< HEAD
 
-//=======
 	 TileModel tl = new TileModel(null);
 		TileModel[] tilearray = new TileModel[16];
-//>>>>>>> refs/remotes/origin/master
+		
+
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
