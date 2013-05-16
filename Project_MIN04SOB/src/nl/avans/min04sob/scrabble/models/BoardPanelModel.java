@@ -13,22 +13,22 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 
 public class BoardPanelModel extends CoreModel {
 	TileModel[][] tileData;
-	TileModel[][] playerTile;
-	Point coordinates;
+	TileModel[][] playerTile;	
+	HashMap<Point,String> tilesHM = new HashMap<Point,String>(); 
 public BoardPanelModel() {
-	coordinates = new Point();
 	
 	try {
 		ResultSet dbResult = Dbconnect
 				.select("SELECT `X`, `Y`, `TegelType_soort` FROM `tegel` WHERE 'TegelType_soort' <> '--'" );
+		while (dbResult.next()) {
+            tilesHM.put(new Point(dbResult.getInt("X"),dbResult.getInt("y")),
+            		dbResult.getString("TegelType_soort"));
+        }
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-
-		
-
-		
+	
 		//System.out.println(tl.isEmpty());
 		playerTile = new TileModel[][]{ {new TileModel("T"),new TileModel("T"),new TileModel("T"),
 									new TileModel("T"),new TileModel("T"),new TileModel("T")
@@ -252,6 +252,18 @@ public BoardPanelModel() {
 	}
 	public TileModel getPlayerTile(int x,int y){
 		return playerTile[y][x];
+	}
+	
+	public void getMultiplier(Point coord){
+		if(tilesHM.containsKey(coord)){
+			switch(tilesHM.get(coord)){
+			case "DW": 
+			case "TW": 
+			case "DL": //letter opvragen en *2
+			case "TL": //letter opvragen en *3
+			}
+		}
+		
 	}
 
 
