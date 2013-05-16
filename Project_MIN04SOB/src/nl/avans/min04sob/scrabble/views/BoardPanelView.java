@@ -24,7 +24,7 @@ public class BoardPanelView extends CorePanel {
 	JTable playerTilesField;
 	public BoardPanelView(String[][] dataValues,String[][] playertilesdata) {
 		Character columnNames[] = { '*', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O' };
+				'H', 'I', 'J', 'K', 'L', 'M', 'N' };
 		table = new JTable(dataValues, columnNames);
 
 
@@ -44,11 +44,14 @@ public class BoardPanelView extends CorePanel {
 		table.setPreferredSize(new Dimension(0, 0));
 		table.setPreferredScrollableViewportSize(new Dimension(0, 0));
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		table.setRowSelectionAllowed(false);
+		
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFillsViewportHeight(true);
-		table.setCellSelectionEnabled(true);
+		
 		table.setRowHeight(30);
+		
+		table.setEnabled(true);
+	
 		
 		table.validate();
 
@@ -99,19 +102,18 @@ public class BoardPanelView extends CorePanel {
 		
 	}
 	public void updatetable(String[][] newDataValues){
-		//table.setEditingRow(0) = newDataValues[0];
-		for(int y = 0;newDataValues.length > y+1; y++){
-			for(int x = 0;newDataValues[y].length > x+1;x++){
+		for(int y = 0;newDataValues.length > y; y++){
+			for(int x = 0;newDataValues[y].length > x;x++){
 				table.setValueAt(newDataValues[y][x], y, x);
-			
+				
 				
 			}
 		}		
 	}
 	public String[][] gettabledata(){
 		String[][] gettabledata = new String[table.getRowCount()+1][table.getColumnCount()+1];
-		for(int y = 0;table.getRowCount() > y+1; y++){
-			for(int x = 0;table.getColumnCount() > x+1;x++){
+		for(int y = 0;table.getRowCount() > y; y++){
+			for(int x = 0;table.getColumnCount() > x;x++){
 				gettabledata[y][x] = table.getValueAt(y, x).toString();
 			
 			}
