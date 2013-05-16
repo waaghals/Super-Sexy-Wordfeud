@@ -12,6 +12,7 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 public class CompetitionModel extends CoreModel {
 
 	private int cID; // competitie ID
+	private int ranking = 0;
 	
 	
 	public CompetitionModel(int int1) {
@@ -49,7 +50,6 @@ public class CompetitionModel extends CoreModel {
 	}
 	
 	public void join(int competitionID, String username) {
-		int ranking = 0;
 		String query = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES ('" 
 				+ competitionID + "','" + username + "','" + ranking + "');"; 
 	
