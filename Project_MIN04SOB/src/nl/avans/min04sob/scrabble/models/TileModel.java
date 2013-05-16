@@ -8,17 +8,18 @@ import javax.swing.JTextField;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 
 public class TileModel {
-private String letter;
-private boolean empty = false;
-	public TileModel(String letter){
-		if(letter == null){
+	private String letter;
+	private boolean empty = false;
+
+	public TileModel(String letter) {
+		if (letter == null) {
 			this.empty = true;
-		}else{
-		this.letter = letter;	
-		}	
-		
-        
-    }
+		} else {
+			this.letter = letter;
+		}
+
+	}
+
 	public String getLetter() {
 		return letter;
 	}

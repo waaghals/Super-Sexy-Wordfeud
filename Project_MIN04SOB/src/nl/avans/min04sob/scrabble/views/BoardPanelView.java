@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.controllers.ChatController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.TileModel;
 
@@ -35,7 +36,7 @@ public class BoardPanelView extends CorePanel {
 		
 
 	
-		Character[] blaat = new Character[] { ' ', ' ', ' ', ' ', ' ' };
+		Character[] blaat = new Character[] { ' ', ' ', ' ', ' ', ' ',' ',' ' };
 		
 		// Create a new table instance
 		
@@ -60,10 +61,12 @@ public class BoardPanelView extends CorePanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 		add(scrollPane, "cell 0 0 9 1,grow");
 		
+		/*
+		ChatController chat = new ChatController(150, "player");
+		chat.getchatpanel().setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
+		*/
 		
-		ChatPanel chat = new ChatPanel(150, 150);
-		chat.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		add(chat, "cell 9 0 1 3,grow");
 		playerTilesField = new JTable(playertilesdata, blaat);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
@@ -104,6 +107,17 @@ public class BoardPanelView extends CorePanel {
 				
 			}
 		}		
+	}
+	public String[][] gettabledata(){
+		String[][] gettabledata = new String[table.getRowCount()+1][table.getColumnCount()+1];
+		for(int y = 0;table.getRowCount() > y+1; y++){
+			for(int x = 0;table.getColumnCount() > x+1;x++){
+				gettabledata[y][x] = table.getValueAt(y, x).toString();
+			
+			}
+		}
+		return gettabledata;
+		
 	}
 	public void updatePlayerTiles(String[][] newPlayerDataValues){
 		for(int y = 0; newPlayerDataValues[0].length > y+1;y++){
