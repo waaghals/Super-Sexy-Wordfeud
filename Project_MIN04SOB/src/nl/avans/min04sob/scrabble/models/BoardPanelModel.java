@@ -15,12 +15,15 @@ public class BoardPanelModel extends CoreModel {
 	TileModel[][] tileData;
 	TileModel[][] playerTile;
 	Point coordinates;
+	HashMap<Point,String> tilesHM = new HashMap<Point,String>();
 public BoardPanelModel() {
 	coordinates = new Point();
 	
 	try {
 		ResultSet dbResult = Dbconnect
 				.select("SELECT `X`, `Y`, `TegelType_soort` FROM `tegel` WHERE 'TegelType_soort' <> '--'" );
+		tilesHM.put(new Point(dbResult.getInt("X"),dbResult.getInt("y")),
+        		dbResult.getString("TegelType_soort"));
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -212,6 +215,22 @@ public BoardPanelModel() {
 	public TileModel getPlayerTile(int x,int y){
 		return playerTile[y][x];
 	}
+	
+	public int getMultiplier(Point coord){
+		if(tilesHM.containsKey(coord)){
+			switch(tilesHM.get(coord)){
+			case "DW": return 4; // 4 moet dus voor DW staan
+			case "TW": return 5; // 5 moet dus voor TW staan
+			case "DL": return 2;
+			case "TL": return 3;
+			default: return 1; // is de begintegel
+			}
+		}
+		else{
+			return 1; // gewoon vakje
+		}	
+	}
+	
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
