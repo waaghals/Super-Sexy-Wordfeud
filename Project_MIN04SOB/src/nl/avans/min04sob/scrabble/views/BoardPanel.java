@@ -26,6 +26,7 @@ public class BoardPanel extends CorePanel {
 	 TileModel tl = new TileModel(null);
 		TileModel[] tilearray = new TileModel[16];
 		
+
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
