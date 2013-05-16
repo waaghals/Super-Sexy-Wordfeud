@@ -153,7 +153,8 @@ public class GameModel extends CoreModel {
 	}
 	
 	public void legWoord(){
-		String[][] compared = compareArrays();
+		getBoardFromDatabase();
+		String[][] compared = compareArrays(compared, boardData);
 		String oldnumberx = compared[0][1];
 		boolean verticalLine = true;
 		for(String[] s:compared){
