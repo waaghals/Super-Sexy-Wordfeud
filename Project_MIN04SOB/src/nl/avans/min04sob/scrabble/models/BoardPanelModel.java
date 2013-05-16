@@ -2,13 +2,30 @@ package nl.avans.min04sob.scrabble.models;
 
 
 
+import java.awt.Point;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Dbconnect;
 
 
 public class BoardPanelModel extends CoreModel {
 	TileModel[][] tileData;
 	TileModel[][] playerTile;
+	Point coordinates;
 public BoardPanelModel() {
+	coordinates = new Point();
+	
+	try {
+		ResultSet dbResult = Dbconnect
+				.select("SELECT `X`, `Y`, `TegelType_soort` FROM `tegel` WHERE 'TegelType_soort' <> '--'" );
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 		
 
 		
