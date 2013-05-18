@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.models;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,6 +10,9 @@ import nl.avans.min04sob.scrabble.core.Dbconnect;
 import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -50,7 +54,7 @@ public class GameModel extends CoreModel {
 
 	private boolean isSpace;
 	private String legLetter;
-	private Object[][] boardData;
+	private String[][] boardData;
 	private int lastTurn;
 
 	public static final String STATE_FINISHED = "Finished";
@@ -62,7 +66,7 @@ public class GameModel extends CoreModel {
 
 		boardPanel.setPreferredSize(new Dimension(300, 300));
 		lastTurn= 0 ;
-		boardData = new Object[15][15];
+		boardData = new String[15][15];
 		//vorigScherm = new JButton("vorig scherm");
 		//speelWoord = new JButton("speel woord");
 		//swapLetters = new JButton("swap letters");
@@ -116,20 +120,62 @@ public class GameModel extends CoreModel {
 		}
 	}
 	
-	public void isSpace() {
-		if (legLetter == null) {
-			isSpace = true;
-			legLetter();
-		} else {
-			isSpace = false;
-			System.out.println("er ligt al een letter");
+
+	public boolean isFree( int x, int y) {
+		String query = "SELECT * FROM gelegdeletter WHERE Tegel_Y ='"+(y+1)+"' AND Tegel_X ='"+x+"' AND Letter_Spel_ID ='"+gameId+"'";
+		boolean isFree = false;
+		try{
+			ResultSet checkfree = Dbconnect.select(query);
+			if(checkfree.next()){
+				isFree = false;
+			}else{
+				isFree = true;
+			}
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+		return isFree;	
+	}
+	
+	public String[][] compareArrays(String[][]bord, String[][] database){
+		String[][] returns = new String[7][3];
+		int counter = 0;
+		for(int y=0;y<15;y++){
+			for(int x=0;x<15;x++){
+				if(bord[y][x].equals(database[y][x])){
+				}else{
+					returns[counter][0] = bord[y][x];
+					returns[counter][1] = new String(x+"");
+					returns[counter][2] = new String(y+"");
+				}	
+			}
+		}
+		return returns;
+	}
+	
+	public void legWoord(){
+		getBoardFromDatabase();
+		String[][] compared = compareArrays(compared, boardData);
+		String oldnumberx = compared[0][1];
+		boolean verticalLine = true;
+		for(String[] s:compared){
+			if(oldnumberx.equals(s[1])){
+			}else{
+				verticalLine = false;
+			}
+		}
+		String oldnumbery = compared[0][2];
+		boolean horizontalLine = true;
+		for(String[] s:compared){
+			if(oldnumberx.equals(s[1])){
+			}else{
+				horizontalLine = false;
+			}
 		}
 	}
-
-	public void legLetter() {
-		
-	}
-
+	
+	
+	
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
@@ -180,7 +226,7 @@ public class GameModel extends CoreModel {
 		return 0;
 	}
 
-	public void updateBoardData(int gameId){
+	public void getBoardFromDatabase(){
 		String query ="SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID ='"+gameId+"' AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > '"+lastTurn+"' ORDER BY beurt_ID ASC;";
 		try{
 			ResultSet letters = Dbconnect.select(query);
@@ -198,5 +244,38 @@ public class GameModel extends CoreModel {
 		}catch(SQLException sql){
 			sql.printStackTrace();
 		}
+	}
+	
+	public void requestWord(String word, int gameId) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		String currentdate = dateFormat.format(date);
+		
+		String query = "INSERT INTO `nieuwwoord` (`woord`, `moment_ontstaan`, `spel_id`) VALUES ('"
+				+ word + "', '" 
+				+ currentdate + "','" 
+				+ gameId + "');";
+		
+		try {
+			Dbconnect.query(query);
+		} catch (SQLException sql) {
+			System.out.println(query);
+			sql.printStackTrace();
+		}
+	}
+	
+	public Array getRequestedWords() {
+		Array words = null;
+		String query = "SELECT `woord` FROM `nieuwwoord`";
+		
+		try { 
+			ResultSet dbResult = Dbconnect.select(query);
+			words = dbResult.getArray("woord");
+		}
+		catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		
+		return words;
 	}
 }

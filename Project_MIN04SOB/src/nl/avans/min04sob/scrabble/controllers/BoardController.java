@@ -11,12 +11,10 @@ private BoardPanelModel bpm;
 	public BoardController(){
 		bpm = new BoardPanelModel();
 		bpv = new BoardPanelView(bpm.getDataValues(),bpm.getPlayerDataValues());
-		bpm.setTile(15, 14, new TileModel("het werkt"));
-		
+		bpm.setTile(14, 14, new TileModel("het werkt"));
 		this.updateBoard();
 		
 		bpm.setPlayetTile(3, new TileModel("P"));
-		
 		this.updatePlayerTiles();
 	
 		this.addView(bpv);
@@ -40,6 +38,7 @@ private BoardPanelModel bpm;
 	public void updatePlayerTiles(){
 		bpv.updatePlayerTiles(bpm.getPlayerDataValues());
 	}
+	
 	
 	public BoardPanelView getBpv() {
 		return bpv;

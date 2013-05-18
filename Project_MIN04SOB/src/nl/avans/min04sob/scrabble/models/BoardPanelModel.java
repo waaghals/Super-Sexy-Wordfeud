@@ -2,44 +2,64 @@ package nl.avans.min04sob.scrabble.models;
 
 
 
+import java.awt.Point;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Dbconnect;
 
 
 public class BoardPanelModel extends CoreModel {
 	TileModel[][] tileData;
 	TileModel[][] playerTile;
+	Point coordinates;
+	HashMap<Point,String> tilesHM = new HashMap<Point,String>();
 public BoardPanelModel() {
+	coordinates = new Point();
+	
+	try {
+		ResultSet dbResult = Dbconnect
+				.select("SELECT `X`, `Y`, `TegelType_soort` FROM `tegel` WHERE 'TegelType_soort' <> '--'" );
+		tilesHM.put(new Point(dbResult.getInt("X"),dbResult.getInt("y")),
+        		dbResult.getString("TegelType_soort"));
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 		
 
 		
 		//System.out.println(tl.isEmpty());
-		playerTile = new TileModel[][]{ {new TileModel("T"),new TileModel("T"),new TileModel("T"),
-									new TileModel("T"),new TileModel("T"),new TileModel("T")
-		}		
+		playerTile = new TileModel[][]{ {new TileModel("A"),new TileModel("B"),new TileModel("C"),
+									new TileModel("D"),new TileModel("E"),new TileModel("F"),new TileModel("G")
+		}				
 		};
 		 tileData = new TileModel[][] { 
 				{ 
 					// 1
-					new TileModel("row1"),
-					new TileTW(), new TileModel(""), new TileModel(""),
-					new TileDL(), new TileModel(""), new TileModel(""),
+				
+					new TileTL(), new TileModel(""), new TileModel(""),
+					new TileModel(""), new TileTW(), new TileModel(""),
+					new TileModel(""), new TileDL(), new TileModel(""), 
 					new TileModel(""), new TileTW(), new TileModel(""), 
-					new TileModel(""), new TileModel(""), new TileDL(), 
-					new TileModel(""), new TileModel(""), new TileTW()
+					new TileModel(""), new TileModel(""), new TileTL()
 				},
 				{
 					//2
-					new TileModel("row2"),
-					new TileModel(""), new TileDW(), new TileModel(""),
+				
+					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
 					new TileTL(), new TileModel(""), new TileModel(""), 
-					new TileModel(""), new TileDW(), new TileModel(""), 
+					new TileModel(""), new TileDL(), new TileModel(""), 
 				},
 				
 				{
 					//3
-					new TileModel("row3"),
+				
 					new TileModel(""), new TileModel(""), new TileDW(),
 					new TileModel(""), new TileModel(""), new TileModel(""),
 					new TileDL(), new TileModel(""), new TileDL(), 
@@ -50,27 +70,27 @@ public BoardPanelModel() {
 				{
 					
 					//4
-					new TileModel("row4"),
-					new TileDL(), new TileModel(""), new TileModel(""),
-					new TileDW(), new TileModel(""), new TileModel(""),
-					new TileModel(""), new TileDL(), new TileModel(""), 
-					new TileModel(""), new TileModel(""), new TileDW(), 
-					new TileModel(""), new TileModel(""), new TileDL(), 
+				
+					new TileModel(""), new TileModel(""), new TileModel(""),
+					new TileTL(), new TileModel(""), new TileModel(""),
+					new TileModel(""), new TileDW(), new TileModel(""), 
+					new TileModel(""), new TileModel(""), new TileTL(), 
+					new TileModel(""), new TileModel(""), new TileModel(""), 
 				},
 				
 				{
 					//5
-					new TileModel("row5"),
-					new TileModel(""), new TileModel(""), new TileModel(""),
+				
+					new TileTW(), new TileModel(""), new TileModel(""),
 					new TileModel(""), new TileDW(), new TileModel(""),
-					new TileModel(""), new TileModel(""), new TileModel(""), 
-					new TileModel(""), new TileDL(), new TileModel(""), 
-					new TileModel(""), new TileModel(""), new TileModel(""), 
+					new TileDL(), new TileModel(""), new TileDL(), 
+					new TileModel(""), new TileDW(), new TileModel(""), 
+					new TileModel(""), new TileModel(""), new TileTW(), 
 				},
 				
 				{
 					//6
-					new TileModel("row6"),
+				
 					new TileModel(""), new TileTL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
@@ -80,67 +100,64 @@ public BoardPanelModel() {
 				
 				{ 
 					//7
-					new TileModel("row7"),
+				
 					new TileModel(""), new TileModel(""), new TileDL(),
-					new TileModel(""), new TileModel(""), new TileModel(""),
-					new TileDL(), new TileModel(""), new TileDL(), 
+					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
+					new TileModel(""), new TileDL(), new TileModel(""), 
 					new TileDL(), new TileModel(""), new TileModel(""), 
 				},
 				
 				{
 					//8 
-					new TileModel("row8"),
-					new TileTW(), new TileModel(""), new TileModel(""),
-					new TileDL(), new TileModel(""), new TileModel(""),
-					new TileModel(""), new TileStart(), new TileModel(""), 
-					new TileModel(""), new TileModel(""), new TileDL(), 
-					new TileModel(""), new TileModel(""), new TileTW(), 
-				},
 				
-				{
-					//9
-					new TileModel("row9"),
-					new TileModel(""), new TileModel(""), new TileDL(),
-					new TileModel(""), new TileModel(""), new TileModel(""),
-					new TileDL(), new TileModel(""), new TileDL(), 
-					new TileModel(""), new TileModel(""), new TileModel(""), 
-					new TileDL(), new TileModel(""), new TileModel(""), 
-				},
-				
-				{
-					//10
-					new TileModel("row10"),
-					new TileModel(""), new TileTL(), new TileModel(""),
-					new TileModel(""), new TileModel(""), new TileTL(),
-					new TileModel(""), new TileModel(""), new TileModel(""), 
-					new TileTL(), new TileModel(""), new TileModel(""), 
-					new TileModel(""), new TileTL(), new TileModel(""), 
-				},
-				
-				{
-					//11
-					new TileModel("row11"),
-					new TileModel(""), new TileModel(""), new TileModel(""),
-					new TileModel(""), new TileDW(), new TileModel(""),
-					new TileModel(""), new TileModel(""), new TileModel(""), 
-					new TileModel(""), new TileDL(), new TileModel(""), 
-					new TileModel(""), new TileModel(""), new TileModel(""), 
-				},
-				
-				{
-					//12
-					new TileModel("row12"),
 					new TileDL(), new TileModel(""), new TileModel(""),
 					new TileDW(), new TileModel(""), new TileModel(""),
-					new TileModel(""), new TileDL(), new TileModel(""), 
+					new TileModel(""), new TileStart(), new TileModel(""), 
 					new TileModel(""), new TileModel(""), new TileDW(), 
 					new TileModel(""), new TileModel(""), new TileDL(), 
 				},
 				
 				{
+					//9
+				
+					new TileModel(""), new TileModel(""), new TileDL(),
+					new TileModel(""), new TileDL(), new TileModel(""),
+					new TileModel(""), new TileModel(""), new TileModel(""), 
+					new TileModel(""), new TileDL(), new TileModel(""), 
+					new TileDL(), new TileModel(""), new TileModel(""), 
+				},
+				
+				{
+					//10
+					new TileModel(""), new TileTL(), new TileModel(""),
+					new TileModel(""), new TileModel(""), new TileTL(),
+					new TileModel(""), new TileModel(""), new TileModel(""), 
+					new TileTL(), new TileModel(""), new TileModel(""), 
+					new TileModel(""), new TileTL(), new TileModel(""),  
+				},
+				
+				{
+					//11
+				
+					new TileTW(), new TileModel(""), new TileModel(""),
+					new TileModel(""), new TileDW(), new TileModel(""),
+					new TileDL(), new TileModel(""), new TileDL(), 
+					new TileModel(""), new TileDW(), new TileModel(""), 
+					new TileModel(""), new TileModel(""), new TileTW(), 
+				},
+				{
+					//12
+				
+					new TileModel(""), new TileModel(""), new TileModel(""),
+					new TileTL(), new TileModel(""), new TileModel(""),
+					new TileModel(""), new TileDW(), new TileModel(""), 
+					new TileModel(""), new TileModel(""), new TileTL(), 
+					new TileModel(""), new TileModel(""), new TileModel(""),
+				},
+				{
 					//13
-					new TileModel("row13"),
+				
 					new TileModel(""), new TileModel(""), new TileDW(),
 					new TileModel(""), new TileModel(""), new TileModel(""),
 					new TileDL(), new TileModel(""), new TileDL(), 
@@ -149,71 +166,33 @@ public BoardPanelModel() {
 				},
 				{
 					//14
-					new TileModel("row14"),
-					new TileModel(""), new TileDW(), new TileModel(""),
+				
+					new TileModel(""), new TileDL(), new TileModel(""),
 					new TileModel(""), new TileModel(""), new TileTL(),
 					new TileModel(""), new TileModel(""), new TileModel(""), 
 					new TileTL(), new TileModel(""), new TileModel(""), 
-					new TileModel(""), new TileDW(), new TileModel(""),  
+					new TileModel(""), new TileDL(), new TileModel(""),   
 				},
 				{
 					//15
-					new TileModel("row15"),
-					new TileTW(), new TileModel(""), new TileModel(""),
-					new TileDL(), new TileModel(""), new TileModel(""),
+				
+					new TileTL(), new TileModel(""), new TileModel(""),
+					new TileModel(""), new TileTW(), new TileModel(""),
+					new TileModel(""), new TileDL(), new TileModel(""), 
 					new TileModel(""), new TileTW(), new TileModel(""), 
-					new TileModel(""), new TileModel(""), new TileDL(), 
-					new TileModel(""), new TileModel(""), new TileTW() 
-				}
-				
-				
+					new TileModel(""), new TileModel(""), new TileTL()
+				}		
 		};
-		 
-		 
-		 
-		/*
-		String dataValues[][] = {
-				{ "", tl.getLetter(), tl.getLetter(), "", "DL", "", "", "", "TW", "", "", "", "",
-						"", "", "TW" },
-				{ "2", "", "DW", "", "", "", "TL", "", "", "", "TL", "", "",
-						"", "DW", "" },
-				{ "3", "", "", "DW", "", "", "", "DL", "", "DL", "", "", "",
-						"DW", "", "" },
-				{ "4", "DL", "", "", "DW", "", "", "", "DL", "", "", "", "DW",
-						"", "", "DL" },
-				{ "5", "", "", "", "", "DW", "", "", "", "", "", "DW", "", "",
-						"", "" },
-				{ "6", "", "TL", "", "", "", "TL", "", "", "", "TL", "", "",
-						"", "TL", "" },
-				{ "7", "", "", "DL", "", "", "", "DL", "", "DL", "", "", "",
-						"DL", "", "" },
-				{ "8", "TW", "", "", "DL", "", "", "", "*", "", "", "", "DL",
-						"", "", "TW" },
-				{ "9", "", "", "DL", "", "", "", "DL", "", "DL", "", "", "",
-						"DL", "", "" },
-				{ "10", "", "TL", "", "", "", "TL", "", "", "", "TL", "", "",
-						"", "TL", "" },
-				{ "11", "", "", "", "", "DW", "", "", "", "", "", "DW", "", "",
-						"", "" },
-				{ "12", "DL", "", "", "DW", "", "", "", "DL", "", "", "", "DW",
-						"", "", "DL" },
-				{ "13", "", "", "DW", "", "", "", "DL", "", "DL", "", "", "",
-						"DW", "", "" },
-				{ "14", "", "DW", "", "", "", "TL", "", "", "", "TL", "", "",
-						"", "DW", "" },
-				{ "15", "TW", "", "", "DL", "", "", "", "TW", "", "", "", "DL",
-						"", "", "TW" } };
-			*/
-
 	}
 	public String[][] getDataValues(){
-		String[][] dataValues = new String[tileData.length+1][tileData[1].length+1];
-		for(int y = 0;tileData.length > y; y++){
+		String[][] dataValues = new String[tileData.length ][tileData[1].length ];
+		for(int y = 0;tileData.length  > y; y++){
 			for(int x = 0;tileData[y].length > x;x++){
 				dataValues[y][x] = tileData[y][x].getLetter();
-			
+						
 			}
 		}
+		
 		return dataValues;
 	}
 	public String[][] getPlayerDataValues(){
@@ -236,17 +215,24 @@ public BoardPanelModel() {
 	public TileModel getPlayerTile(int x,int y){
 		return playerTile[y][x];
 	}
-
-
-
-
-
-
-
+	
+	public int getMultiplier(Point coord){
+		if(tilesHM.containsKey(coord)){
+			switch(tilesHM.get(coord)){
+			case "DW": return 4; // 4 moet dus voor DW staan
+			case "TW": return 5; // 5 moet dus voor TW staan
+			case "DL": return 2;
+			case "TL": return 3;
+			default: return 1; // is de begintegel
+			}
+		}
+		else{
+			return 1; // gewoon vakje
+		}	
+	}
+	
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
 	}
-
 }
