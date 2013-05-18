@@ -32,17 +32,30 @@ public class ChatPanel extends CorePanel {
 		chatFieldSend = new JTextField();
 		add(chatFieldSend, "cell 0 3 3 1,grow");
 		add(chatSendButton, "cell 3 3,grow");
+		chatFieldSend.setEnabled(false);
 	}
 
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("chatupdate")) {
+		
+		switch (evt.getPropertyName()) {
+		case "chatupdate":
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
 			for (String string : messages) {
 				addToChatField(string);
 			}
+			break;
+		case "login":
+			chatFieldSend.setEnabled(true);
+			break;
+		case "logout":
+			chatFieldSend.setEnabled(false);
+			break;
+
+		default:
+			break;
 		}
 	}
 

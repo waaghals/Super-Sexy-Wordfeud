@@ -1,46 +1,111 @@
 package nl.avans.min04sob.scrabble.core;
 
+import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Time;
 
 public class Query {
 
-	private String query;
-	private Statement statement;
+	private PreparedStatement statement;
 	private ResultSet result;
+	private int index;
+	private DatabasePool pool;
+	private Connection conn;
 
-	public Query(String query) {
-		this.query = query;
-		Connection conn = Dbconnect.getInstance();
-		try {
-			statement = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public Query(String q) throws SQLException {
+		pool = DatabasePool.getInstance();
+		conn = pool.checkOut();
 		result = null;
+		index = 1;
+
+		statement = conn.prepareStatement(q);
+	}
+
+	public Query set(String value) throws SQLException {
+		statement.setString(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(int value) throws SQLException {
+		statement.setInt(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(Date value) throws SQLException {
+		statement.setDate(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(boolean value) throws SQLException {
+		statement.setBoolean(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(Time value) throws SQLException {
+		statement.setTime(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(char value) throws SQLException {
+		statement.setString(index, value + ""); // Cast to string
+		index++;
+		return this;
+	}
+
+	public Query set(Blob value) throws SQLException {
+		statement.setBlob(index, value); // Cast to string
+		index++;
+		return this;
+	}
+
+	public Query set(char[] value) throws SQLException {
+		statement.setString(index, new String(value)); // Cast to string
+		index++;
+		return this;
 	}
 
 	public ResultSet select() {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					result = statement.executeQuery(query);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
 
-		return result;
-	}
-
-	public void execute() {
 		try {
-			statement.execute(query);
+			System.out.println("Using conn" + statement.getConnection());
+			result = statement.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		pool.checkIn(conn); // Release the connection back to the pool
+		return result;
+	}
+
+	public void exec() {
+
+		try {
+			System.out.println("Using conn" + statement.getConnection());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		pool.checkIn(conn); // Release the connection back to the pool
+	}
+
+	public static int getNumRows(ResultSet res) {
+		int numRows = 0;
+		try {
+			res.last();
+			numRows = res.getRow();
+			res.beforeFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return numRows;
 	}
 }

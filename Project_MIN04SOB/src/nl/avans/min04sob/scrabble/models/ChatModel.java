@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Dbconnect;
+import nl.avans.min04sob.scrabble.core.Query;
 
 public class ChatModel extends CoreModel {
 	private final int gameId;
 	private String timeLastMessage;
 	private AccountModel account;
 	private ArrayList<String> messages;
+	private final String insertQuery = "INSERT INTO `chatregel` (`Account_naam`,`Spel_ID`, `datetime`, `bericht`) VALUES(?, ?, ?, ?)";
+	private final String selectQuery = "SELECT `Account_naam`, `datetime`, `bericht` FROM `chatregel` WHERE `Spel_ID` = ? AND datetime > ? ORDER BY `datetime` ASC";
 
 	public ChatModel(int gameId, AccountModel user) {
 		messages = new ArrayList<String>();
@@ -23,21 +25,16 @@ public class ChatModel extends CoreModel {
 		account = user;
 		timeLastMessage = "2000-1-1 00:00:00";
 		getNewMessages();
+
 	}
 
 	public void send(String newMessage) {
-
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			String currentdate = dateFormat.format(date);
-			Dbconnect
-					.query("INSERT INTO `chatregel` (`Account_naam`,`Spel_ID`, `datetime`, `bericht`) VALUES('"
-							+ this.account.getUsername()
-							+ "','"
-							+ this.gameId
-							+ "','"
-							+ currentdate + "','" + newMessage + "');");
+			new Query(insertQuery).set(account.getUsername()).set(gameId)
+					.set(currentdate).set(newMessage).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -46,24 +43,21 @@ public class ChatModel extends CoreModel {
 	private ArrayList<String> getNewMessages() {
 
 		try {
-			ResultSet dbResult = Dbconnect
-					.select("SELECT `Account_naam`, `datetime`, `bericht` FROM `chatregel` WHERE `Spel_ID` = "
-							+ gameId
-							+ " AND datetime > '"
-							+ timeLastMessage
-							+ "' ORDER BY `datetime` ASC");
-			while (dbResult.next()) {
-				String senderName = dbResult.getString(1);
+			ResultSet rs = new Query(selectQuery).set(gameId)
+					.set(timeLastMessage).select();
+			while (rs.next()) {
+				String senderName = rs.getString(1);
 				if (!(senderName.equals(account.getUsername()))) {
-					messages.add(senderName + " : " + dbResult.getString(3)
-							+ "\n");
+					messages.add(senderName + " : " + rs.getString(3) + "\n");
 				} else {
-					messages.add("you : " + dbResult.getString(3) + "\n");
+					messages.add("you : " + rs.getString(3) + "\n");
 				}
-				timeLastMessage = dbResult.getString(2);
+				timeLastMessage = rs.getString(2);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException n){
+			n.printStackTrace();
 		}
 		return messages;
 	}
@@ -81,9 +75,9 @@ public class ChatModel extends CoreModel {
 		// Only keep the new messages
 		newMessages.removeAll(oldMessages);
 
-		if(newMessages.size() > 0){
+		if (newMessages.size() > 0) {
 			firePropertyChange("chatupdate", null, newMessages);
 		}
-		
+
 	}
 }

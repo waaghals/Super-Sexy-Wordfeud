@@ -1,13 +1,7 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.sql.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Dbconnect;
-
 import java.awt.Dimension;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -15,14 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import nl.avans.min04sob.scrabble.Playerstash;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Dbconnect;
+import nl.avans.min04sob.scrabble.core.Query;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
@@ -34,26 +27,10 @@ public class GameModel extends CoreModel {
 	private String state;
 	private String boardName;
 	private String letterSet;
-	
-	//private JLabel player;
-	//private JLabel enemy;
-	//private JLabel score;
-	//private JLabel aantalLettersOver;
-
-	private JPanel myPanel = new JPanel();
-	private JPanel myPanel2 = new JPanel();
-	private JFrame myFrame = new JFrame();
 
 	private Playerstash playerStash = new Playerstash();
 	private BoardPanel boardPanel = new BoardPanel();
 
-	//private JButton vorigScherm;
-	//private JButton speelWoord;
-	//private JButton swapLetters;
-	//private JButton resign;
-
-	private boolean isSpace;
-	private String legLetter;
 	private String[][] boardData;
 	private int lastTurn;
 
@@ -61,42 +38,24 @@ public class GameModel extends CoreModel {
 	public static final String STATE_PLAYING = "Playing";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_RESIGNED = "Resigned";
-	
+
+	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
+	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
+	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
+	private final String getBoardQuery = "SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
+
 	public GameModel() {
-
 		boardPanel.setPreferredSize(new Dimension(300, 300));
-		lastTurn= 0 ;
+		lastTurn = 0;
 		boardData = new String[15][15];
-		//vorigScherm = new JButton("vorig scherm");
-		//speelWoord = new JButton("speel woord");
-		//swapLetters = new JButton("swap letters");
-		//resign = new JButton("resign");
-
-		//player = new JLabel();
-		//enemy = new JLabel();
-		//score = new JLabel();
-		//aantalLettersOver = new JLabel();
-
-		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
-		//myPanel.add(player);
-		myPanel.add(boardPanel);
-		//myPanel.add(playerStash);
-
-		//myPanel2.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
-		//myPanel2.add(vorigScherm);
-		//myPanel2.add(score);
-		//myPanel2.add(aantalLettersOver);
-		//myPanel2.add(speelWoord);
-		//myPanel2.add(swapLetters);
-		//myPanel2.add(resign);
 	}
 
 	public GameModel(int gameId, AccountModel currentUser) {
-		String query = "SELECT * FROM `spel` WHERE `ID` = " + gameId;
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
+			ResultSet dbResult = new Query(getGameQuery).set(gameId).select();
 
-			if (dbResult.first()) {
+			if (Query.getNumRows(dbResult) == 1) {
+				dbResult.next();
 				this.gameId = gameId;
 				competition = new CompetitionModel(dbResult.getInt(2));
 				state = dbResult.getString(3);
@@ -119,63 +78,57 @@ public class GameModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-	
 
-	public boolean isFree( int x, int y) {
-		String query = "SELECT * FROM gelegdeletter WHERE Tegel_Y ='"+(y+1)+"' AND Tegel_X ='"+x+"' AND Letter_Spel_ID ='"+gameId+"'";
-		boolean isFree = false;
-		try{
-			ResultSet checkfree = Dbconnect.select(query);
-			if(checkfree.next()){
-				isFree = false;
-			}else{
-				isFree = true;
+	public boolean isFree(int x, int y) {
+		try {
+			ResultSet rs = new Query(getOpenQuery).set(y + 1).set(x)
+					.set(gameId).select();
+			if (Query.getNumRows(rs) == 0) {
+				return true;
 			}
-		}catch(SQLException sql){
+		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-		return isFree;	
+		return false;
 	}
-	
-	public String[][] compareArrays(String[][]bord, String[][] database){
+
+	public String[][] compareArrays(String[][] bord, String[][] database) {
 		String[][] returns = new String[7][3];
 		int counter = 0;
-		for(int y=0;y<15;y++){
-			for(int x=0;x<15;x++){
-				if(bord[y][x].equals(database[y][x])){
-				}else{
+		for (int y = 0; y < 15; y++) {
+			for (int x = 0; x < 15; x++) {
+				if (bord[y][x].equals(database[y][x])) {
+				} else {
 					returns[counter][0] = bord[y][x];
-					returns[counter][1] = new String(x+"");
-					returns[counter][2] = new String(y+"");
-				}	
+					returns[counter][1] = new String(x + "");
+					returns[counter][2] = new String(y + "");
+				}
 			}
 		}
 		return returns;
 	}
-	
-	public void legWoord(){
+
+	public void legWoord() {
 		getBoardFromDatabase();
 		String[][] compared = compareArrays(compared, boardData);
 		String oldnumberx = compared[0][1];
 		boolean verticalLine = true;
-		for(String[] s:compared){
-			if(oldnumberx.equals(s[1])){
-			}else{
+		for (String[] s : compared) {
+			if (oldnumberx.equals(s[1])) {
+			} else {
 				verticalLine = false;
 			}
 		}
 		String oldnumbery = compared[0][2];
 		boolean horizontalLine = true;
-		for(String[] s:compared){
-			if(oldnumberx.equals(s[1])){
-			}else{
+		for (String[] s : compared) {
+			if (oldnumberx.equals(s[1])) {
+			} else {
 				horizontalLine = false;
 			}
 		}
 	}
-	
-	
-	
+
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
@@ -214,48 +167,46 @@ public class GameModel extends CoreModel {
 	}
 
 	public int getScore() {
-		String query = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = '"
-				+ gameId + "' AND `Account_Naam` != " + opponent.getUsername();
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
+			ResultSet rs = new Query(getScoreQuery).set(gameId)
+					.set(opponent.getUsername()).select();
 
-			return dbResult.getInt(1);
+			return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
 
-	public void getBoardFromDatabase(){
-		String query ="SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID ='"+gameId+"' AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > '"+lastTurn+"' ORDER BY beurt_ID ASC;";
-		try{
-			ResultSet letters = Dbconnect.select(query);
-			while(letters.next()){
-				int x = letters.getInt(2) - 1;//x
-				int y = letters.getInt(3) - 1;//y
-				lastTurn = letters.getInt(5);
-				if(letters.getString(1).equals("?")){
-					boardData[y][x] = letters.getString(4);
-				}else{
-					boardData[y][x] = letters.getString(1);
+	public void getBoardFromDatabase() {
+		try {
+			ResultSet rs = new Query(getBoardQuery).set(gameId).set(lastTurn)
+					.select();
+			while (rs.next()) {
+				int x = rs.getInt(2) - 1;// x
+				int y = rs.getInt(3) - 1;// y
+				lastTurn = rs.getInt(5);
+				if (rs.getString(1).equals("?")) {
+					boardData[y][x] = rs.getString(4);
+				} else {
+					boardData[y][x] = rs.getString(1);
 				}
 			}
-			
-		}catch(SQLException sql){
+
+		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 	}
-	
+
 	public void requestWord(String word, int gameId) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
-		
+
 		String query = "INSERT INTO `nieuwwoord` (`woord`, `moment_ontstaan`, `spel_id`) VALUES ('"
-				+ word + "', '" 
-				+ currentdate + "','" 
-				+ gameId + "');";
-		
+				+ word + "', '" + currentdate + "','" + gameId + "');";
+
+		//TODO er komt een nieuwe tabel, dus dit staat in de koelkast
 		try {
 			Dbconnect.query(query);
 		} catch (SQLException sql) {
@@ -263,19 +214,18 @@ public class GameModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
-	
+
 	public Array getRequestedWords() {
 		Array words = null;
 		String query = "SELECT `woord` FROM `nieuwwoord`";
-		
-		try { 
+
+		try {
 			ResultSet dbResult = Dbconnect.select(query);
 			words = dbResult.getArray("woord");
-		}
-		catch (SQLException sql) {
+		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-		
+
 		return words;
 	}
 }
