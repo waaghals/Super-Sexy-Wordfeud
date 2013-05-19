@@ -79,16 +79,12 @@ public class MainController extends CoreController {
 			}
 		});
 
-		menu.addLoginItemActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				LoginController loginC = new LoginController(account);
-				loginC.addView(menu);
-			}
-		});
+		addLoginListener();
 
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
+				addLoginListener();
 			}
 		});
 		
@@ -127,11 +123,19 @@ public class MainController extends CoreController {
 			}
 		});
 	}
+	
+	private void addLoginListener(){
+		menu.addLoginItemActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginController loginC = new LoginController(account);
+				loginC.addView(menu);
+			}
+		});
+	}
 
 	protected void openGame(GameModel selectedGame) {
 		removeModel(chatModel);
-		
-		// TODO Open chat for gameId and open gameBoard for gameId
+
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		
