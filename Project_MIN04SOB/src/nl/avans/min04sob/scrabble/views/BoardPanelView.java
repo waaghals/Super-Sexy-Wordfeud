@@ -4,37 +4,28 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
-import java.lang.reflect.Array;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.controllers.ChatController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
-import nl.avans.min04sob.scrabble.models.TileModel;
+import nl.avans.min04sob.scrabble.models.BoardModel;
+import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanelView extends CorePanel {
 	JTable table;
 	JTable playerTilesField;
-	public BoardPanelView(String[][] dataValues,String[][] playertilesdata) {
-		Character columnNames[] = { '*', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-				'H', 'I', 'J', 'K', 'L', 'M', 'N' };
-		table = new JTable(dataValues, columnNames);
-
-
-		
-
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		renderer.setVerticalAlignment(DefaultTableCellRenderer.CENTER);
-		
-
+	public BoardPanelView() {
+		Character columnNames[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O' };
+				
+		table = new JTable();
+		JScrollPane scrollPane = new JScrollPane(table);
 	
 		Character[] blaat = new Character[] { ' ', ' ', ' ', ' ', ' ',' ',' ' };
 		
@@ -50,9 +41,7 @@ public class BoardPanelView extends CorePanel {
 		
 		table.setRowHeight(30);
 		
-		table.setEnabled(true);
-	
-		
+		table.setEnabled(true);		
 		table.validate();
 
 		/*for (Character character : columnNames) {
@@ -61,7 +50,7 @@ public class BoardPanelView extends CorePanel {
 		setLayout(new MigLayout("", "[-15.00px][][47.00px][60px][5px][73px][100px:400px][55.00px][292px][:430px:430px]", "[475px:475px][35px][:30px:30px][25px]"));
 
 		// Add the table to a scrolling pane
-		JScrollPane scrollPane = new JScrollPane(table);
+		//JScrollPane scrollPane = new JScrollPane(table);
 		add(scrollPane, "cell 0 0 9 1,grow");
 		
 		/*
@@ -70,7 +59,8 @@ public class BoardPanelView extends CorePanel {
 		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
 		*/
 		
-		playerTilesField = new JTable(playertilesdata, blaat);
+		Character[][] playerTiles = new Character[][] {{ 'A', 'C', 'D', 'Q' }};
+		playerTilesField = new JTable();
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
@@ -126,5 +116,12 @@ public class BoardPanelView extends CorePanel {
 			playerTilesField.setValueAt(newPlayerDataValues[0][y], 0, y);
 		}
 		
+	}
+	
+	public void setRenderer(TableCellRenderer renderer){
+		table.setDefaultRenderer(Tile.class, renderer);
+	}
+	public void setModel(BoardModel bpm) {
+		table.setModel(bpm);
 	}
 }

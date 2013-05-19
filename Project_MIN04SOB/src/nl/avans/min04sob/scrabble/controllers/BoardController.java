@@ -1,8 +1,9 @@
 package nl.avans.min04sob.scrabble.controllers;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.BoardModel;
-import nl.avans.min04sob.scrabble.models.TileModel;
+import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanelView;
 
 public class BoardController extends CoreController{
@@ -10,20 +11,22 @@ private BoardPanelView bpv;
 private BoardModel bpm;
 	public BoardController(){
 		bpm = new BoardModel();
-		bpv = new BoardPanelView(bpm.getDataValues(),bpm.getPlayerDataValues());
-		bpm.setTile(14, 14, new TileModel("het werkt"));
+		bpv = new BoardPanelView();
+		//bpm.setTile(14, 14, new TileModel("het werkt"));
 		this.updateBoard();
 		
-		bpm.setPlayetTile(3, new TileModel("P"));
+		bpm.setPlayetTile(3, new Tile("P"));
 		this.updatePlayerTiles();
+		bpv.setModel(bpm);
 	
 		this.addView(bpv);
+		initialize();
 		
 	}
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		
+		ScrabbleTableCellRenderer renderer = new ScrabbleTableCellRenderer(bpm);
+		bpv.setRenderer(renderer);
 	}
 
 	@Override
@@ -33,10 +36,10 @@ private BoardModel bpm;
 	}
 	public void updateBoard(){
 		
-		bpv.updatetable(bpm.getDataValues());
+		//bpv.updatetable(bpm.getDataValues());
 	}
 	public void updatePlayerTiles(){
-		bpv.updatePlayerTiles(bpm.getPlayerDataValues());
+	//	bpv.updatePlayerTiles(bpm.getPlayerDataValues());
 	}
 	
 	

@@ -5,30 +5,62 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Column;
+import nl.avans.min04sob.scrabble.core.CoreTableModel;
 import nl.avans.min04sob.scrabble.core.Query;
 
-public class BoardModel extends CoreModel {
-	TileModel[][] tileData;
-	TileModel[][] playerTile;
+public class BoardModel extends CoreTableModel {
+	Tile[][] tileData;
+	Tile[][] playerTile;
 	Point coordinates;
 	HashMap<Point, String> tilesHM = new HashMap<Point, String>();
 
+	public static final int DW = 1;
+	public static final int TW = 2;
+	public static final int DL = 3;
+	public static final int TL = 4;
+	public static final int STAR = 5;
+	public static final int EMPTY = 6;
+
 	public BoardModel() {
 		coordinates = new Point();
-		String query = "SELECT `X`, `Y`, `TegelType_soort` FROM `tegel` WHERE 'TegelType_soort' <> '--'";
+		int boardX = 0;
+		int boardY = 0;
+		String query = "SELECT * FROM  `tegel` WHERE  `Bord_naam` =  'Standard'";
 		try {
 			ResultSet dbResult = new Query(query).select();
-			tilesHM.put(new Point(dbResult.getInt("X"), dbResult.getInt("y")),
-					dbResult.getString("TegelType_soort"));
+			
+			while(dbResult.next()){
+				int x = dbResult.getInt("X")-1;
+				int y = dbResult.getInt("Y")-1;
+				tilesHM.put(new Point(x, y),
+						dbResult.getString("TegelType_soort"));
+				if(x > boardX){
+					boardX = x;
+				}
+				
+				if(y > boardX){
+					boardY = y;
+				}
+			}
+			
+			//Create a array the size of the board
+			initDataArray(boardX +1, boardY+1);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		for (Point point : tilesHM.keySet()) {
+			setValueAt(new Tile(tilesHM.get(point)), point.x, point.y);	
+		}
 
 		// System.out.println(tl.isEmpty());
-		playerTile = new TileModel[][] { { new TileModel("A"),
-				new TileModel("B"), new TileModel("C"), new TileModel("D"),
-				new TileModel("E"), new TileModel("F"), new TileModel("G") } };
+		playerTile = new Tile[][] { { new Tile("A"),
+				new Tile("B"), new Tile("C"), new Tile("D"),
+				new Tile("E"), new Tile("F"), new Tile("G") } };
+		
+		/*
 		tileData = new TileModel[][] {
 				{
 						// 1
@@ -169,19 +201,14 @@ public class BoardModel extends CoreModel {
 						new TileModel(""), new TileDL(), new TileModel(""),
 						new TileModel(""), new TileTW(), new TileModel(""),
 						new TileModel(""), new TileModel(""), new TileTL() } };
-	}
-
-	public String[][] getDataValues() {
-		String[][] dataValues = new String[tileData.length][tileData[1].length];
-		for (int y = 0; tileData.length > y; y++) {
-			for (int x = 0; tileData[y].length > x; x++) {
-				dataValues[y][x] = tileData[y][x].getLetter();
-
-			}
+						*/
+	
+		for (int i = 0; i <= boardY; i++) {
+			String colName = (char)(i + 97)+ "";
+			addColumn(new Column(colName, Tile.class, i));
 		}
-
-		return dataValues;
 	}
+
 
 	public String[][] getPlayerDataValues() {
 		String[][] playerDataValues = new String[1][playerTile[0].length];
@@ -191,20 +218,11 @@ public class BoardModel extends CoreModel {
 		return playerDataValues;
 	}
 
-	public TileModel getTile(int x, int y) {
-		return tileData[y][x];
-	}
-
-	public void setTile(int x, int y, TileModel newtile) {
-		tileData[y][x] = newtile;
-
-	}
-
-	public void setPlayetTile(int x, TileModel newtile) {
+	public void setPlayetTile(int x, Tile newtile) {
 		playerTile[0][x] = newtile;
 	}
 
-	public TileModel getPlayerTile(int x, int y) {
+	public Tile getPlayerTile(int x, int y) {
 		return playerTile[y][x];
 	}
 
@@ -212,23 +230,38 @@ public class BoardModel extends CoreModel {
 		if (tilesHM.containsKey(coord)) {
 			switch (tilesHM.get(coord)) {
 			case "DW":
-				return 4; // 4 moet dus voor DW staan
+				return DW;
 			case "TW":
-				return 5; // 5 moet dus voor TW staan
+				return TW;
 			case "DL":
-				return 2;
+				return DL;
 			case "TL":
-				return 3;
-			default:
-				return 1; // is de begintegel
+				return TL;
+			case "*":
+				return STAR;
 			}
-		} else {
-			return 1; // gewoon vakje
 		}
+		return EMPTY; // gewoon vakje
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		Tile tile = (Tile) getValueAt(rowIndex, columnIndex);
+		return tile.isMutatable();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return data[rowIndex][columnIndex];
+	}
+
+	@Override
+	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
+		data[rowIndex][columnIndex] = newValue;
 	}
 }

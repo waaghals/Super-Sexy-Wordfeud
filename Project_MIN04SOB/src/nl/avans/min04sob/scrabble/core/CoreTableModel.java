@@ -7,12 +7,15 @@ import javax.swing.table.TableModel;
 
 public abstract class CoreTableModel extends CoreModel implements TableModel {
 
-	private ArrayList<Object> datalist = new ArrayList<Object>();
+	protected Object[][] data;
 	ArrayList<Column> columns = new ArrayList<Column>();
 
+	public void initDataArray(int x, int y){
+		data = new Object[x][y];
+	}
 	@Override
 	public int getRowCount() {
-		return datalist.size();
+		return data.length;
 	}
 
 	@Override
@@ -40,11 +43,7 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 		if (rowIndex + 1 > getRowCount()) {
 			return null;
 		}
-		return datalist.get(rowIndex);
-	}
-	
-	protected void addRow(Object newRow){
-		datalist.add(newRow);
+		return data[rowIndex];
 	}
 
 	@Override
