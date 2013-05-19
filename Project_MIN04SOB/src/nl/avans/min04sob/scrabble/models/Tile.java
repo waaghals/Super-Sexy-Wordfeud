@@ -24,7 +24,7 @@ public class Tile {
 	}
 
 	public boolean isEmpty() {
-		return letter == null;
+		return letter.equals("");
 	}
 
 	public void setEmpty(boolean empty) {

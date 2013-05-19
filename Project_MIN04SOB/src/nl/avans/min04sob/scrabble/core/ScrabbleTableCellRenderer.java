@@ -18,19 +18,18 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private Color blue;
 	private Color lightBlue;
 	private Color beige;
-	
+
 	public ScrabbleTableCellRenderer(BoardModel model) {
 		super();
 		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 		setVerticalAlignment(DefaultTableCellRenderer.CENTER);
 
 		boardModel = model;
-		
+
 		red = new Color(227, 64, 91);
 		lightRed = new Color(255, 179, 206);
 		blue = new Color(8, 99, 240);
 		lightBlue = new Color(191, 244, 233);
-		beige = new Color(255, 255, 253);
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
@@ -38,6 +37,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 		Component c = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
+		Tile tile = (Tile) boardModel.getValueAt(row, col);
 
 		int multiplier = boardModel.getMultiplier(new Point(row, col));
 		switch (multiplier) {
@@ -58,21 +58,23 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			c.setForeground(lightRed);
 			break;
 		case BoardModel.STAR:
-			c.setBackground(lightRed);
-			c.setForeground(red);
+			c.setBackground(Color.WHITE);
+			c.setForeground(Color.GREEN);
 			break;
 		case BoardModel.EMPTY:
-		default:
-			c.setBackground(beige);
+			c.setBackground(Color.WHITE);
 			c.setForeground(Color.BLACK);
 			break;
+		default:
+			c.setBackground(Color.GREEN);
+			c.setForeground(Color.WHITE);
+			break;
 		}
-		
-		//Tile tile = (Tile) boardModel.getValueAt(row, col);
-		
-		//if(tile != null && !tile.isMutatable()){
-		//	c.setEnabled(false);
-		//}
+
+		if (tile != null && !tile.isMutatable()) {
+			c.setEnabled(false);
+		}
+
 		return c;
 	}
 }

@@ -23,9 +23,7 @@ public class BoardPanelView extends CorePanel {
 	JTable table;
 	JTable playerTilesField;
 	public BoardPanelView() {
-		Character columnNames[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O' };
-				
+
 		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
 	
@@ -47,7 +45,8 @@ public class BoardPanelView extends CorePanel {
 		table.validate();
 		table.setDragEnabled(true);
 		table.setDropMode(DropMode.USE_SELECTION);
-		table.setTransferHandler(new TileTranfserHandler());
+		TileTranfserHandler handler = new TileTranfserHandler();
+		table.setTransferHandler(handler);
 		/*for (Character character : columnNames) {
 			table.getColumn(character).setCellRenderer(renderer);
 		}*/
@@ -63,15 +62,16 @@ public class BoardPanelView extends CorePanel {
 		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
 		*/
 		
-		Tile[][] playerTiles = new Tile[][] {{ new Tile("a"), new Tile("a"), new Tile("a"), new Tile("a") }};
-		playerTilesField = new JTable(playerTiles, playerTiles);
+		Tile[][] playerTiles = new Tile[][] {{ new Tile("a"), new Tile("b"), new Tile("c"), new Tile("d") }};
+		Character[] columns = new Character[] { ' ', ' ', ' ', ' ' };
+		playerTilesField = new JTable(playerTiles, columns);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
 		
 		playerTilesField.setDragEnabled(true);
 		playerTilesField.setDropMode(DropMode.USE_SELECTION);
-		playerTilesField.setTransferHandler(new TileTranfserHandler());
+		playerTilesField.setTransferHandler(handler);
 		
 		add(playerTilesField, "cell 0 2 9 1,growx,aligny top");
 				
