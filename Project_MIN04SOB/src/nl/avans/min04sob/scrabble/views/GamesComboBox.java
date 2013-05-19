@@ -16,6 +16,7 @@ import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
+import javax.swing.JLabel;
 
 public class GamesComboBox extends CorePanel {
 
@@ -27,12 +28,14 @@ public class GamesComboBox extends CorePanel {
 	}
 	
 	public void initialize(){
+		
+		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px]", "[20px:30px:30px][20px:30px:30px]"));
+		
+		JLabel lblSelecteerEenSpel = new JLabel("Selecteer een spel");
+		add(lblSelecteerEenSpel, "cell 0 0 2 1");
 		gameList = new JComboBox<GameModel>();
 		
-		setLayout(new MigLayout("", "[100px][100px]", "[100px][100px]"));
-	
-		JScrollPane pane = new JScrollPane(gameList);
-		add(pane, "cell 0 0 2 2,grow");
+			add(gameList, "cell 0 1 2 1,grow");
 	}
 	
 	public void addGameListListener(ActionListener listenener){

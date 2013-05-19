@@ -19,10 +19,10 @@ public class ChatModel extends CoreModel {
 	private final String insertQuery = "INSERT INTO `chatregel` (`Account_naam`,`Spel_ID`, `datetime`, `bericht`) VALUES(?, ?, ?, ?)";
 	private final String selectQuery = "SELECT `Account_naam`, `datetime`, `bericht` FROM `chatregel` WHERE `Spel_ID` = ? AND datetime > ? ORDER BY `datetime` ASC";
 
-	public ChatModel(int gameId, AccountModel user) {
+	public ChatModel(GameModel game, AccountModel user) {
 		messages = new ArrayList<String>();
-		this.gameId = gameId;
-		System.out.println("ChatModel" + this.gameId);
+		gameId = game.getGameId();
+		
 		account = user;
 		timeLastMessage = "2000-1-1 00:00:00";
 		getNewMessages();

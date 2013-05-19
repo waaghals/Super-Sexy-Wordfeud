@@ -20,6 +20,7 @@ import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.UserInfoPanel;
+import net.miginfocom.swing.MigLayout;
 
 public class MainController extends CoreController {
 
@@ -40,17 +41,17 @@ public class MainController extends CoreController {
 		addView(gamesPanel);
 		addModel(account);
 		addView(chatPanel);
-		addModel(chatModel);
 
 		// Add the old messages first.
-		for (String message : chatModel.getMessages()) {
-			chatPanel.addToChatField(message);
-		}
+		//for (String message : chatModel.getMessages()) {
+			//chatPanel.addToChatField(message);
+		//}
 
 		frame.setJMenuBar(menu);
-		frame.addRightPanel(gamesPanel);
-		frame.addCenterPanel(currGamePanel);
-		frame.addLeftPanel(chatPanel);
+	
+		frame.getContentPane().add(gamesPanel, "cell 0 0 2 1,alignx left,aligny top");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		frame.getContentPane().add(chatPanel, "cell 0 1 4 8,alignx left,aligny top");
 		frame.pack();
 
 	}
@@ -58,7 +59,7 @@ public class MainController extends CoreController {
 	@Override
 	public void initialize() {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
-		changePassPanel = new ChangePassPanel();
+		//changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		account = new AccountModel();
 
@@ -66,7 +67,7 @@ public class MainController extends CoreController {
 
 		currGamePanel = new BoardPanel();
 		chatPanel = new ChatPanel();
-		chatModel = new ChatModel(511, account);
+		chatModel = null;
 	}
 
 	@Override
@@ -128,12 +129,23 @@ public class MainController extends CoreController {
 	}
 
 	protected void openGame(GameModel selectedGame) {
+		removeModel(chatModel);
+		
 		// TODO Open chat for gameId and open gameBoard for gameId
-
+		chatModel = new ChatModel(selectedGame, account);
+		addModel(chatModel);
+		
+		chatPanel.empty();
+		for (String message : chatModel.getMessages()) {
+			chatPanel.addToChatField(message);
+		}
 	}
 
 	private void changePass() {
-		frame.addCenterPanel(changePassPanel);
+		frame.remove(chatPanel);
+		frame.remove(currGamePanel);
+		frame.add(new ChangePassPanel(), "cell 0 1 4 8,alignx left,aligny top");
+		frame.repaint();
 	}
 	
 	

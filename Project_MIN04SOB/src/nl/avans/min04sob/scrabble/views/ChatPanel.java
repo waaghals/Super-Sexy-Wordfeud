@@ -22,7 +22,7 @@ public class ChatPanel extends CorePanel {
 	private JScrollPane chatScroll;
 
 	public ChatPanel() {
-		setLayout(new MigLayout("", "[100px:1000px:200px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:200px:200px][100px:150px:200px][100px:150px:200px][30px:30px]"));
+		setLayout(new MigLayout("", "[100px:1000px:200px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:500px][100px:150px:200px][100px:150px:200px][30px:30px]"));
 		chatField = new JTextArea();
 		chatScroll = new JScrollPane(chatField);
 
@@ -103,5 +103,10 @@ public class ChatPanel extends CorePanel {
 
 	public void setChatFieldSendText(String message) {
 		chatFieldSend.setText(message);
+	}
+
+
+	public void empty() {
+		chatField.setText("");
 	}
 }

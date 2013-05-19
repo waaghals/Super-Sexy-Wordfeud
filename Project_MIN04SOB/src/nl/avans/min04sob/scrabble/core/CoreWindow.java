@@ -1,19 +1,19 @@
 package nl.avans.min04sob.scrabble.core;
 
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import nl.avans.min04sob.scrabble.views.ChatPanel;
+import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.models.AccountModel;
 
 public class CoreWindow extends JFrame implements CoreView {
 
 	public CoreWindow() {
 		initialize();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	}
+		}
 
 	public CoreWindow(String title) {
 		super(title);
@@ -34,27 +34,29 @@ public class CoreWindow extends JFrame implements CoreView {
 
 	public void initialize() {
 		setVisible(true);
-		setLayout(new BorderLayout());
-	}
-
-	public void addTopPanel(JPanel panel){
-		add(panel, BorderLayout.NORTH);
-	}
-	
-	public void addCenterPanel(JPanel panel){
-		add(panel, BorderLayout.CENTER);
-	}
-	
-	public void addRightPanel(JPanel panel){
-		add(panel, BorderLayout.EAST);
+		getContentPane().setLayout(new MigLayout("", "[50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px]", "[50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px]"));
 	}
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Automatisch gegenereerde methodestub
+		switch (evt.getPropertyName()) {
+		case Event.LOGIN:
+			AccountModel loggedInAccount = (AccountModel) evt.getNewValue();
+			setTitle("Wordfeud (ingelogd als " + loggedInAccount.getUsername() + ")");
+			break;
+		case Event.LOGOUT:
+			setTitle("Wordfeud - Uitgelogd");
+			break;
+		default:
+			break;
+		}
 	}
-
-	public void addLeftPanel(JPanel panel){
-		add(panel, BorderLayout.WEST);
+	
+	public void add(Component component, String constraint){
+		getContentPane().add(component, constraint);
+	}
+	
+	public void remove(Component component){
+		getContentPane().remove(component);
 	}
 }

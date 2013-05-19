@@ -34,20 +34,32 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 	}
 
 	public void addModel(CoreModel model) {
+		if(model == null){
+			return;
+		}
 		registeredModels.add(model);
 		model.addPropertyChangeListener(this);
 	}
 
 	public void removeModel(CoreModel model) {
+		if(model == null){
+			return;
+		}
 		registeredModels.remove(model);
 		model.removePropertyChangeListener(this);
 	}
 
 	public void addView(CoreView view) {
+		if(view == null){
+			return;
+		}
 		registeredViews.add(view);
 	}
 
 	public void removeView(CoreView view) {
+		if(view == null){
+			return;
+		}
 		registeredViews.remove(view);
 	}
 
