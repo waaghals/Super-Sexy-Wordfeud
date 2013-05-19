@@ -62,7 +62,7 @@ public class LoginController extends CoreController {
 		});
 
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
 
