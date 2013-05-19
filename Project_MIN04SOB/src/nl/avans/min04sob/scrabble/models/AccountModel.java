@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.DatabasePool;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class AccountModel extends CoreModel {
@@ -46,9 +47,9 @@ public class AccountModel extends CoreModel {
 				username = result.getString(1);
 				isLoggedIn = true;
 
-				firePropertyChange("login", null, this);
+				firePropertyChange(Event.LOGIN, null, this);
 			} else {
-				firePropertyChange("loginFailure", null, this);
+				firePropertyChange(Event.LOGINFAIL, null, this);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -71,7 +72,7 @@ public class AccountModel extends CoreModel {
 
 	public void logout() {
 		isLoggedIn = false;
-		firePropertyChange("logout", null, this);
+		firePropertyChange(Event.LOGOUT, null, this);
 	}
 
 	public String getUsername() {

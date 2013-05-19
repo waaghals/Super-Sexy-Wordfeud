@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 
@@ -57,14 +58,14 @@ public class GamesComboBox extends CorePanel {
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-		case "newGame":
+		case Event.NEWGAME:
 			gameList.repaint();
 			break;
-		case "login":
+		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
 			break;
-		case "logout":
+		case Event.LOGOUT:
 			gameList.removeAll();
 			break;
 		default:

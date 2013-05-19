@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 
 public class UserInfoPanel extends CorePanel{
@@ -89,7 +90,7 @@ public class UserInfoPanel extends CorePanel{
 	
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-		case "login":
+		case Event.LOGIN:
 			AccountModel user = (AccountModel) evt.getNewValue();
 			usernameLabel.setText(user.getUsername());
 			break;

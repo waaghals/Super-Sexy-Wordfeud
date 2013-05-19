@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.Event;
 
 public class ChatPanel extends CorePanel {
 
@@ -41,16 +42,16 @@ public class ChatPanel extends CorePanel {
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		
 		switch (evt.getPropertyName()) {
-		case "chatupdate":
+		case Event.CHATUPDATE:
 			ArrayList<String> messages = (ArrayList<String>) evt.getNewValue();
 			for (String string : messages) {
 				addToChatField(string);
 			}
 			break;
-		case "login":
+		case Event.LOGIN:
 			chatFieldSend.setEnabled(true);
 			break;
-		case "logout":
+		case Event.LOGOUT:
 			chatFieldSend.setEnabled(false);
 			break;
 

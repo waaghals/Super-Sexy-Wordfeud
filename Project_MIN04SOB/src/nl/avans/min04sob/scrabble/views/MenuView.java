@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreView;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 
@@ -111,7 +112,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-		case "login":
+		case Event.LOGIN:
 			AccountModel user = (AccountModel) evt.getNewValue();
 			setAfterLoginMenu(user.getUsername());
 
@@ -138,7 +139,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			}
 
 			break;
-		case "logout":
+		case Event.LOGOUT:
 			setAfterLogoutMenu();
 			remove(challengeMenu);
 			remove(moderaterMenu);

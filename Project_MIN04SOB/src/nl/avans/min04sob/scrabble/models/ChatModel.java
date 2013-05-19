@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class ChatModel extends CoreModel {
@@ -76,7 +77,7 @@ public class ChatModel extends CoreModel {
 		newMessages.removeAll(oldMessages);
 
 		if (newMessages.size() > 0) {
-			firePropertyChange("chatupdate", null, newMessages);
+			firePropertyChange(Event.CHATUPDATE, null, newMessages);
 		}
 
 	}
