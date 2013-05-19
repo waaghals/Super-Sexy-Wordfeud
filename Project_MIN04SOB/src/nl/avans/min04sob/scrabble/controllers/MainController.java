@@ -17,7 +17,7 @@ import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
-import nl.avans.min04sob.scrabble.views.GamesPanel;
+import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
 import nl.avans.min04sob.scrabble.views.UserInfoPanel;
 
@@ -27,7 +27,7 @@ public class MainController extends CoreController {
 	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
-	private GamesPanel gamesPanel;
+	private GamesComboBox gamesPanel;
 	private BoardPanel currGamePanel;
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
@@ -62,7 +62,7 @@ public class MainController extends CoreController {
 		menu = new MenuView();
 		account = new AccountModel();
 
-		gamesPanel = new GamesPanel();
+		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanel();
 		chatPanel = new ChatPanel();
@@ -90,13 +90,13 @@ public class MainController extends CoreController {
 				account.logout();
 			}
 		});
-
-		gamesPanel.addGameListListener(new ListSelectionListener() {
-
+		
+		gamesPanel.addGameListListener(new ActionListener() {
+			
 			@Override
-			public void valueChanged(ListSelectionEvent arg0) {
-				GameModel selectedGame = gamesPanel.getSelectedValue();
-				openGame(selectedGame.getGameId());
+			public void actionPerformed(ActionEvent e) {
+				GameModel selectedGame = gamesPanel.getSelectedGame();
+				openGame(selectedGame);
 			}
 		});
 		
@@ -127,7 +127,7 @@ public class MainController extends CoreController {
 		});
 	}
 
-	protected void openGame(int gameId) {
+	protected void openGame(GameModel selectedGame) {
 		// TODO Open chat for gameId and open gameBoard for gameId
 
 	}

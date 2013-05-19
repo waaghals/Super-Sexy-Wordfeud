@@ -1,10 +1,11 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -15,23 +16,17 @@ import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 
-public class GamesPanel extends CorePanel {
+public class GamesComboBox extends CorePanel {
 
-	private JList<GameModel> gameList;
-	DefaultListModel<GameModel> listModel;  
-;
+	private JComboBox<GameModel> gameList;
 	
-	public GamesPanel(){
+	public GamesComboBox(){
 		initialize();
 		
 	}
 	
 	public void initialize(){
-		listModel = new DefaultListModel<GameModel>();  
-		gameList = new JList<GameModel>(listModel);
-		gameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		gameList.setLayoutOrientation(JList.VERTICAL);
-		gameList.setVisibleRowCount(-1);
+		gameList = new JComboBox<GameModel>();
 		
 		setLayout(new MigLayout("", "[100px][100px]", "[100px][100px]"));
 	
@@ -39,24 +34,24 @@ public class GamesPanel extends CorePanel {
 		add(pane, "cell 0 0 2 2,grow");
 	}
 	
-	public void addGameListListener(ListSelectionListener listenener){
-		gameList.getSelectionModel().addListSelectionListener(listenener);
+	public void addGameListListener(ActionListener listenener){
+		gameList.addActionListener(listenener);
 	}
 	
 	public void addGame(GameModel game){
 		if(game == null){
 			return;
 		}
-		listModel.addElement(game);
+		gameList.addItem(game);
 	}
 	
 	public void addGames(ArrayList<GameModel> arrayList){
 		if(arrayList == null){
 			return;
 		}
-		listModel.clear();
+		gameList.removeAll();
 		for (GameModel game : arrayList) {
-			listModel.addElement(game);
+			gameList.addItem(game);
 		}
 	}
 	@Override
@@ -69,14 +64,16 @@ public class GamesPanel extends CorePanel {
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
 			break;
-
+		case "logout":
+			gameList.removeAll();
+			break;
 		default:
 			break;
 		}
 
 	}
 
-	public GameModel getSelectedValue() {
-		return gameList.getSelectedValue();
+	public GameModel getSelectedGame() {
+		return (GameModel) gameList.getSelectedItem();
 	}
 }
