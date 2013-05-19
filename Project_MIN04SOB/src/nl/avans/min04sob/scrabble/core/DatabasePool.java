@@ -27,7 +27,6 @@ public class DatabasePool extends CorePool<Connection> implements Runnable {
 
 	protected Connection create() {
 		try {
-			System.out.println("Creating DB connection");
 			return (DriverManager.getConnection(DSN, USER, PASS));
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -76,7 +76,6 @@ public class Query {
 	public ResultSet select() {
 
 		try {
-			System.out.println("Using conn" + statement.getConnection());
 			result = statement.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,9 +87,7 @@ public class Query {
 	public void exec() {
 
 		try {
-			System.out.println("Using conn" + statement.getConnection());
 			statement.executeUpdate();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
