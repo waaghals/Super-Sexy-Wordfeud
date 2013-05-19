@@ -35,7 +35,8 @@ public class GamesComboBox extends CorePanel {
 		add(lblSelecteerEenSpel, "cell 0 0 2 1");
 		gameList = new JComboBox<GameModel>();
 		
-			add(gameList, "cell 0 1 2 1,grow");
+		add(gameList, "cell 0 1 2 1,grow");
+		gameList.setEnabled(false);
 	}
 	
 	public void addGameListListener(ActionListener listenener){
@@ -47,7 +48,7 @@ public class GamesComboBox extends CorePanel {
 			return;
 		}
 		gameList.addItem(game);
-	}
+	}  
 	
 	public void addGames(ArrayList<GameModel> arrayList){
 		if(arrayList == null){
@@ -67,9 +68,11 @@ public class GamesComboBox extends CorePanel {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
+			gameList.setEnabled(true);
 			break;
 		case Event.LOGOUT:
 			gameList.removeAll();
+			gameList.setEnabled(false);
 			break;
 		default:
 			break;

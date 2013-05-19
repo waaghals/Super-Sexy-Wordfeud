@@ -18,7 +18,6 @@ import nl.avans.min04sob.scrabble.models.GameModel;
 
 public class MenuView extends JMenuBar implements CoreView {
 
-	private JMenu gameMenu;
 	private JMenu accountMenu;
 	private JMenu challengeMenu;
 	private JMenu moderaterMenu;
@@ -43,7 +42,6 @@ public class MenuView extends JMenuBar implements CoreView {
 		createAccountMenu();
 		createChallengeMenu();
 		createModeratorMenu();
-		createGameMenu();
 	}
 
 	private void createChallengeMenu() {
@@ -98,11 +96,6 @@ public class MenuView extends JMenuBar implements CoreView {
 		accountMenu.add(accountName);
 	}
 
-	private void createGameMenu() { // ArrayList<GameModel>
-		gameMenu = new JMenu("Huidige spellen");
-		gameMenu.removeAll();
-	}
-
 	private void createModeratorMenu() {
 		moderaterMenu = new JMenu("Modereer");
 		viewWords = new JMenuItem("Woorden beheren");
@@ -121,29 +114,11 @@ public class MenuView extends JMenuBar implements CoreView {
 				add(moderaterMenu);
 			}
 
-			for (GameModel game : user.getOpenGames()) {
-				JMenuItem item = new JMenuItem();
-				gameMenu.add(new JMenuItem(game.toString()));
-
-			}
-
-			if (user.getOpenGames().size() > 0) {
-				add(gameMenu);
-				addGameMenuActionListener(1, new ChangeListener() {
-
-					@Override
-					public void stateChanged(ChangeEvent arg0) {
-						System.out.println(arg0.getSource());
-					}
-				});
-			}
-
 			break;
 		case Event.LOGOUT:
 			setAfterLogoutMenu();
 			remove(challengeMenu);
 			remove(moderaterMenu);
-			remove(gameMenu);
 			break;
 
 		case "numChallengeUpdate":
@@ -167,15 +142,4 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void addChangePassItemActionListener(ActionListener listener) {
 		changePassItem.addActionListener(listener);
 	}
-
-	public void addGameMenuActionListener(int index, ChangeListener listener) {
-		if (gameMenu.getItemCount() < index) {
-			gameMenu.getItem(index).addChangeListener(listener);
-			// gameMenu.getItem(index).addActionListener(listener);
-			
-			GameModel[] selectedObject = (GameModel[]) gameMenu.getModel().getSelectedObjects();
-			
-		}
-	}
-
 }
