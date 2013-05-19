@@ -68,10 +68,11 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			break;
 		}
 		
-		Tile tile = (Tile) boardModel.getValueAt(row, col);
-		if(!tile.isMutatable()){
-			c.setEnabled(false);
-		}
+		//Tile tile = (Tile) boardModel.getValueAt(row, col);
+		
+		//if(tile != null && !tile.isMutatable()){
+		//	c.setEnabled(false);
+		//}
 		return c;
 	}
 }

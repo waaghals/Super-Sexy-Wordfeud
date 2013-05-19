@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,6 +15,7 @@ import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.TileTranfserHandler;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
@@ -43,7 +45,9 @@ public class BoardPanelView extends CorePanel {
 		
 		table.setEnabled(true);		
 		table.validate();
-
+		table.setDragEnabled(true);
+		table.setDropMode(DropMode.USE_SELECTION);
+		table.setTransferHandler(new TileTranfserHandler());
 		/*for (Character character : columnNames) {
 			table.getColumn(character).setCellRenderer(renderer);
 		}*/
@@ -59,11 +63,16 @@ public class BoardPanelView extends CorePanel {
 		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
 		*/
 		
-		Character[][] playerTiles = new Character[][] {{ 'A', 'C', 'D', 'Q' }};
-		playerTilesField = new JTable();
+		Tile[][] playerTiles = new Tile[][] {{ new Tile("a"), new Tile("a"), new Tile("a"), new Tile("a") }};
+		playerTilesField = new JTable(playerTiles, playerTiles);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
+		
+		playerTilesField.setDragEnabled(true);
+		playerTilesField.setDropMode(DropMode.USE_SELECTION);
+		playerTilesField.setTransferHandler(new TileTranfserHandler());
+		
 		add(playerTilesField, "cell 0 2 9 1,growx,aligny top");
 				
 						JButton play = new JButton();
@@ -124,4 +133,6 @@ public class BoardPanelView extends CorePanel {
 	public void setModel(BoardModel bpm) {
 		table.setModel(bpm);
 	}
+	
+	
 }

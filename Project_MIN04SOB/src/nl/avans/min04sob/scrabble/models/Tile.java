@@ -9,6 +9,11 @@ public class Tile {
 		this.letter = letter;
 		mutatable = true;
 	}
+	
+	public Tile(){
+		letter = "";
+		mutatable = true;
+	}
 
 	public String getLetter() {
 		return letter;

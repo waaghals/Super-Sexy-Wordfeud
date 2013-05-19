@@ -251,8 +251,11 @@ public class BoardModel extends CoreTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		Tile tile = (Tile) getValueAt(rowIndex, columnIndex);
-		return tile.isMutatable();
+		//Tile tile = (Tile) getValueAt(rowIndex, columnIndex);
+		//if(tile == null){
+			return false;
+		//}
+		//return tile.isMutatable();
 	}
 
 	@Override
