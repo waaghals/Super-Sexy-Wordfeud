@@ -2,24 +2,21 @@ package nl.avans.min04sob.scrabble.core;
 
 import java.io.InputStream;
 
+/*
+ * 
+ * Take from http://stackoverflow.com/a/4265371
+ */
 @SuppressWarnings("unused")
 public class Queries {
-	private static final String CURRENT_LETTERS;
-	private static final String ADDRESS_QUERY;
-	private static final String AGE_QUERY;
+	private static final String CURRENT_TILES;
 
 	static {
-		CURRENT_LETTERS = Queries.load("queries/currentLetters.sql");
-		ADDRESS_QUERY = Queries.load("queries/addressQuery.sql");
-		AGE_QUERY = Queries.load("queries/ageQuery.sql");
+		CURRENT_TILES = Queries.load("queries/currentTiles.sql");
 	}
 
 	public static String load(final String path) {
 		final InputStream stream = Thread.currentThread()
 				.getContextClassLoader().getResourceAsStream(path);
-
 		return stream.toString();
-		// return IOUtils.toString(stream);
-
 	}
 }

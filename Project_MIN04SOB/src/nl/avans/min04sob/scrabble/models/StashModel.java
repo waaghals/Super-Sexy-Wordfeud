@@ -26,12 +26,13 @@ public class StashModel extends CoreModel {
 		return letters;
 	}
 
-	public Tile[] getPlayerLetters(AccountModel user, GameModel game) {
+	public Tile[] getPlayerTiles(AccountModel user, GameModel game) {
 		String sexyQuery = "SELECT `lb`.`spel_id`             AS `Spel_ID`,
        `lb`.`beurt_id`            AS `Beurt_ID`,
        `b`.`account_naam`         AS `Account_naam`,
-       `l`.`lettertype_karkakter` AS `letter`,
-       `lt`.`waarde`              AS `waarde`
+       `l`.`lettertype_karakter` AS `letter`,
+       `lt`.`waarde`              AS `waarde`,
+`max`
 FROM   `letterbakjeletter` `lb`
        JOIN `letter` `l`
          ON `lb`.`spel_id` = `l`.`spel_id`
@@ -42,9 +43,11 @@ FROM   `letterbakjeletter` `lb`
          ON `l`.`spel_id` = `s`.`id`
        RIGHT JOIN `lettertype` `lt`
                ON `lt`.`letterset_code` = `s`.`letterset_naam`
-                  AND `l`.`lettertype_karkakter` = `lt`.`karkakter`
-WHERE  `lt`.`letterset_code` = 'NL'
-ORDER  BY `lb`.`beurt_id` ASC ";
+                  AND `l`.`lettertype_karakter` = `lt`.`karakter`
+ JOIN (SELECT MAX(id) AS `max` FROM `beurt` WHERE `beurt`.`account_naam` = 'jager684' AND `beurt`.`spel_id` = '511') AS max_beurt
+ON 1=1
+WHERE  `lt`.`letterset_code` = 'NL' 
+ORDER  BY `lb`.`beurt_id` ASC  ";
 		
 		try { 
 			ResultSet dbResult = new Query(query).set(user.getUsername()).set(game.getGameId()).select();

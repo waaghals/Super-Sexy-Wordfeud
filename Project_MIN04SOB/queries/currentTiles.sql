@@ -15,8 +15,8 @@ FROM   `letterbakjeletter` `lb`
        JOIN (SELECT Max(`id`) AS `max`
                     , `account_naam`
              FROM   `beurt` AS `innerb`
-             WHERE  `innerb`.`account_naam` = 'marijntje42'
-                AND `innerb`.`spel_id` = '511'
+             WHERE  `innerb`.`account_naam` = ?
+                AND `innerb`.`spel_id` = ?
                 AND `innerb`.`aktie_type` = 'Word') AS `b`
 WHERE  `lt`.`letterset_code` = `s`.`letterset_naam`
    AND `max` = `lb`.`beurt_id`
