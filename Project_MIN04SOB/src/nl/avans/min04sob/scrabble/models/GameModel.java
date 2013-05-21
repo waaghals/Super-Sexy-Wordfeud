@@ -1,17 +1,12 @@
 package nl.avans.min04sob.scrabble.models;
 
 import java.awt.Dimension;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import nl.avans.min04sob.scrabble.Playerstash;
+import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
-import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
 
@@ -23,8 +18,10 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 
-	private Playerstash playerStash = new Playerstash();
-	private BoardPanel boardPanel = new BoardPanel();
+	private StashModel stash = new StashModel();
+	
+	private BoardController boardcontroller = new BoardController();
+	
 
 	private String[][] boardData;
 	private int lastTurn;
@@ -40,7 +37,7 @@ public class GameModel extends CoreModel {
 	private final String getBoardQuery = "SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 
 	public GameModel() {
-		boardPanel.setPreferredSize(new Dimension(300, 300));
+		boardcontroller.getBpv().setPreferredSize(new Dimension(300, 300));
 		lastTurn = 0;
 		boardData = new String[15][15];
 	}
@@ -104,8 +101,15 @@ public class GameModel extends CoreModel {
 	}
 
 	public void legWoord() {
-		getBoardFromDatabase();
-		String[][] compared = compareArrays(compared, boardData);
+		String[][] Boardcurrent = new String[boardcontroller.getBpm().tileData.length ][boardcontroller.getBpm().tileData[1].length ];
+			    for(int y = 0;boardcontroller.getBpm().tileData.length  > y; y++){
+			      for(int x = 0;boardcontroller.getBpm().tileData[y].length > x;x++){
+			       Boardcurrent[y][x] = boardcontroller.getBpm().tileData[y][x].getLetter();
+			            
+			      }
+			    }
+			     
+		String[][] compared = compareArrays(compared, Boardcurrent);
 		String oldnumberx = compared[0][1];
 		boolean verticalLine = true;
 		for (String[] s : compared) {
@@ -194,30 +198,31 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void requestWord(String word, int gameId) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date();
-		String currentdate = dateFormat.format(date);
+	public void requestWord(String word) {
+		String status = "pending";
 
-		String query = "INSERT INTO `nieuwwoord` (`woord`, `moment_ontstaan`, `spel_id`) VALUES ('"
-				+ word + "', '" + currentdate + "','" + gameId + "');";
-
-		//TODO er komt een nieuwe tabel, dus dit staat in de koelkast
+		
+		String query = "INSERT INTO `woordenboek` (`woord`, `status`) VALUES (?, ?)";
 		try {
-			Dbconnect.query(query);
+			new Query(query).set(word).set(status).exec();
 		} catch (SQLException sql) {
-			System.out.println(query);
 			sql.printStackTrace();
 		}
 	}
 
-	public Array getRequestedWords() {
-		Array words = null;
-		String query = "SELECT `woord` FROM `nieuwwoord`";
-
+	public String[] getRequestedWords() {
+		String[] words = null;
+		String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
-			words = dbResult.getArray("woord");
+			ResultSet res = new Query(query).select();
+			int numRows  = Query.getNumRows(res);
+			
+			words = new String[numRows];
+			int i = 0;
+			while(res.next()){
+				words[i] = res.getString(1);
+				i++;		
+			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

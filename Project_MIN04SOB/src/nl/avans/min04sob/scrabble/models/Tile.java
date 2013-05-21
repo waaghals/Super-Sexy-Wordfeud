@@ -11,6 +11,12 @@ public class Tile {
 		value = 0;
 		mutatable = true;
 	}
+	
+	public Tile(String character, boolean mutable){
+		letter = character;
+		value = 0;
+		this.mutatable = mutable;
+	}
 
 	public Tile(String character, int charValue) {
 		letter = character;

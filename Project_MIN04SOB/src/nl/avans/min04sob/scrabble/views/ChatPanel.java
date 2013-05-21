@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -24,6 +25,8 @@ public class ChatPanel extends CorePanel {
 	public ChatPanel() {
 		setLayout(new MigLayout("", "[100px:1000px:200px][100px:100px:100px][100px:100px:100px][100px:100px:100px]", "[100px:500px][100px:150px:200px][100px:150px:200px][30px:30px]"));
 		chatField = new JTextArea();
+		chatField.setEnabled(false);
+		chatField.setDisabledTextColor(Color.BLACK);
 		chatScroll = new JScrollPane(chatField);
 
 		chatSendButton = new JButton();
