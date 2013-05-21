@@ -206,13 +206,20 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public Array getRequestedWords() {
-		Array words = null;
+	public String[] getRequestedWords() {
+		String[] words = null;
 		String query = "SELECT `woord` FROM `nieuwwoord`";
 
 		try {
-			ResultSet dbResult = new Query(query).select();
-			words = dbResult.getArray("woord");
+			ResultSet res = new Query(query).select();
+			int numRows  = Query.getNumRows(res);
+			
+			words = new String[numRows];
+			int i = 0;
+			while(res.next()){
+				words[i] = res.getString(1);
+				i++;		
+			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
