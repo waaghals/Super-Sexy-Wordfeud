@@ -52,12 +52,22 @@ public class StashModel extends CoreModel {
 	}
 
 	public void getRandomLetter() {
-		String q = "SELECT `lettertype_karkakter` FROM `letter`";
+		String q = "SELECT `lettertype_karakter` FROM `letter`";
 		try {
 			ResultSet res = new Query(q).select();
-			Array letters = res.getArray("lettertype_karkakter");
+			int numRows  = Query.getNumRows(res);
+			
+			String[] letters = new String[numRows];
+			int i = 0;
+			while(res.next()){
+				letters[i] = res.getString(1);
+				i++;		
+			}
+			
 			Random randominteger = new Random();
 			randominteger.nextInt();
+		} catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
