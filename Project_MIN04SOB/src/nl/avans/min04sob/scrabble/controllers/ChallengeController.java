@@ -13,47 +13,37 @@ public class ChallengeController extends CoreController{
 	
 	public ChallengeController ()
 	{
-		addView(cv);
-		addModel(cm);
-		
-		cv.addActionListenerAccept (new ActionListener() {
+	    cv.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//dpeiets
+				cm.acceptCallenge();
+				cv.javaFrame().dispose();
 			}
 		});
 		cv.addActionListenerDecline (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//dpeiets
+				cm.declineCallenge();
+				cv.javaFrame().dispose();
 			}
 		});
 		cv.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//dpeiets
-			}
-		});
-		cv.addActionListenerOke (new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//dpeiets
-			}
-		});
-		cv.addActionListenerOkee (new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//dpeiets
+				cm.createChallenge("help   hoe moet dit @@@@@@@@@",  cv.getUsername());
+				cv.javaFrame().dispose();
 			}
 		});
  }
 
 	@Override
-	public void initialize() 
-	{
-		 
+	public void initialize() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addListeners() 
-	{
+	public void addListeners() {
 		// TODO Auto-generated method stub
 		
 	}
+
+	 
 }
