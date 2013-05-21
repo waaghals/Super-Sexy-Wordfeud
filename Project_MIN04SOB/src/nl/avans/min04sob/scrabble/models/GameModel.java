@@ -8,13 +8,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import nl.avans.min04sob.scrabble.Playerstash;
 import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Dbconnect;
 import nl.avans.min04sob.scrabble.core.Query;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 

@@ -52,13 +52,13 @@ public class BoardModel extends CoreTableModel {
 		}
 		
 		for (Point point : tilesHM.keySet()) {
-			setValueAt(new Tile(tilesHM.get(point)), point.x, point.y);	
+			setValueAt(new Tile(tilesHM.get(point), 1), point.x, point.y);	//TODO set tile value
 		}
 
 		// System.out.println(tl.isEmpty());
-		playerTile = new Tile[][] { { new Tile("A"),
-				new Tile("B"), new Tile("C"), new Tile("D"),
-				new Tile("E"), new Tile("F"), new Tile("G") } };
+		playerTile = new Tile[][] { { new Tile("A" ,1),
+				new Tile("B", 2), new Tile("C", 2), new Tile("D", 2),
+				new Tile("E", 2), new Tile("F", 2), new Tile("G", 2) } };
 		
 		/*
 		tileData = new TileModel[][] {

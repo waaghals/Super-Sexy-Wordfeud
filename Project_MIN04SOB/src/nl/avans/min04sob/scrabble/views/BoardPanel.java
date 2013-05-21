@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -8,23 +9,17 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
-import nl.avans.min04sob.scrabble.models.TileModel;
-
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.border.BevelBorder;
+import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
 
-	 TileModel tl = new TileModel(null);
-		TileModel[] tilearray = new TileModel[16];
+	 Tile tl = new Tile();
+	 Tile[] tilearray = new Tile[16];
 		
 
 	@Override

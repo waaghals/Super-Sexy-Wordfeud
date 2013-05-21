@@ -15,7 +15,7 @@ private BoardModel bpm;
 		//bpm.setTile(14, 14, new TileModel("het werkt"));
 		this.updateBoard();
 		
-		bpm.setPlayetTile(3, new Tile("P"));
+		bpm.setPlayetTile(3, new Tile("P", 3));
 		this.updatePlayerTiles();
 		bpv.setModel(bpm);
 	
