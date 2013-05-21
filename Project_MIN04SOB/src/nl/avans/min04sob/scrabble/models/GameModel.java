@@ -194,30 +194,32 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void requestWord(String word, int gameId) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date();
-		String currentdate = dateFormat.format(date);
+	public void requestWord(String word) {
+		String status = "pending";
 
-		String query = "INSERT INTO `nieuwwoord` (`woord`, `moment_ontstaan`, `spel_id`) VALUES ('"
-				+ word + "', '" + currentdate + "','" + gameId + "');";
-
-		//TODO er komt een nieuwe tabel, dus dit staat in de koelkast
+		
+		String query = "INSERT INTO `woordenboek` (`woord`, `status`) VALUES (?, ?)";
 		try {
-			Dbconnect.query(query);
+			new Query(query).set(word).set(status).exec();
 		} catch (SQLException sql) {
-			System.out.println(query);
 			sql.printStackTrace();
 		}
 	}
 
-	public Array getRequestedWords() {
-		Array words = null;
+	public String[] getRequestedWords() {
+		String[] words = null;
 		String query = "SELECT `woord` FROM `nieuwwoord`";
 
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
-			words = dbResult.getArray("woord");
+			ResultSet res = new Query(query).select();
+			int numRows  = Query.getNumRows(res);
+			
+			words = new String[numRows];
+			int i = 0;
+			while(res.next()){
+				words[i] = res.getString(1);
+				i++;		
+			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
