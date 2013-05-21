@@ -21,6 +21,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 	public class ChallengeView   implements CoreView{
 		// extends??
 		private JTextField Opponent;
+
 		private JPanel chpanel = new JPanel();
 		private JPanel tochallenge = new JPanel();
 		private JPanel response=new JPanel();

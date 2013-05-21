@@ -62,7 +62,7 @@ public class BoardPanelView extends CorePanel {
 		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
 		*/
 		
-		Tile[][] playerTiles = new Tile[][] {{ new Tile("a", 2), new Tile("b", 2), new Tile("c", 2), new Tile("d", 2) }};
+		Tile[][] playerTiles = new Tile[][] {{ new Tile("a", false), new Tile("b", false), new Tile("c", false), new Tile("d", false) }};
 		Character[] columns = new Character[] { ' ', ' ', ' ', ' ' };
 		playerTilesField = new JTable(playerTiles, columns);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));

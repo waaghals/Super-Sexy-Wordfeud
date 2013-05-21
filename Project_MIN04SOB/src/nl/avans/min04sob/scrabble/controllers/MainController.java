@@ -6,21 +6,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
+import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
+import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.views.BoardPanel;
+import nl.avans.min04sob.scrabble.models.Tile;
+import nl.avans.min04sob.scrabble.views.BoardPanelView;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
-import nl.avans.min04sob.scrabble.views.UserInfoPanel;
-import net.miginfocom.swing.MigLayout;
 
 public class MainController extends CoreController {
 
@@ -29,9 +28,10 @@ public class MainController extends CoreController {
 	private MenuView menu;
 	private AccountModel account;
 	private GamesComboBox gamesPanel;
-	private BoardPanel currGamePanel;
+	private BoardPanelView currGamePanel;
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
+	private BoardModel boardModel;
 
 	public MainController() {
 		initialize();
@@ -39,6 +39,7 @@ public class MainController extends CoreController {
 
 		addView(menu);
 		addView(gamesPanel);
+		addModel(boardModel);
 		addModel(account);
 		addView(chatPanel);
 
@@ -65,7 +66,12 @@ public class MainController extends CoreController {
 
 		gamesPanel = new GamesComboBox();
 
-		currGamePanel = new BoardPanel();
+		currGamePanel = new BoardPanelView();
+		boardModel = new BoardModel();
+		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+		currGamePanel.setModel(boardModel);
+		
+		boardModel.setValueAt(new Tile("B",false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
 	}

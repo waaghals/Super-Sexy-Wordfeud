@@ -1,18 +1,12 @@
 package nl.avans.min04sob.scrabble.models;
 
 import java.awt.Dimension;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import nl.avans.min04sob.scrabble.Playerstash;
-import nl.avans.min04sob.scrabble.Stash;
+import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
-import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
 
@@ -24,8 +18,10 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 
-	private Stash stash = new Stash();
-	private BoardPanel boardPanel = new BoardPanel();
+	private StashModel stash = new StashModel();
+	
+	private BoardController boardcontroller = new BoardController();
+	
 
 	private String[][] boardData;
 	private int lastTurn;
@@ -41,7 +37,7 @@ public class GameModel extends CoreModel {
 	private final String getBoardQuery = "SELECT LetterType_karkakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 
 	public GameModel() {
-		boardPanel.setPreferredSize(new Dimension(300, 300));
+		boardcontroller.getBpv().setPreferredSize(new Dimension(300, 300));
 		lastTurn = 0;
 		boardData = new String[15][15];
 	}
@@ -105,8 +101,15 @@ public class GameModel extends CoreModel {
 	}
 
 	public void legWoord() {
-		getBoardFromDatabase();
-		String[][] compared = compareArrays(compared, boardData);
+		String[][] Boardcurrent = new String[boardcontroller.getBpm().tileData.length ][boardcontroller.getBpm().tileData[1].length ];
+			    for(int y = 0;boardcontroller.getBpm().tileData.length  > y; y++){
+			      for(int x = 0;boardcontroller.getBpm().tileData[y].length > x;x++){
+			       Boardcurrent[y][x] = boardcontroller.getBpm().tileData[y][x].getLetter();
+			            
+			      }
+			    }
+			     
+		String[][] compared = compareArrays(compared, Boardcurrent);
 		String oldnumberx = compared[0][1];
 		boolean verticalLine = true;
 		for (String[] s : compared) {
