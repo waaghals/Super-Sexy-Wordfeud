@@ -60,7 +60,7 @@ public class AccountModel extends CoreModel {
 
 		String query = "INSERT INTO `account` (`naam`, `wachtwoord`) VALUES (?, ?)";
 		try {
-			new Query(query).set(username).set(password).select();
+			new Query(query).set(username).set(password).exec();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

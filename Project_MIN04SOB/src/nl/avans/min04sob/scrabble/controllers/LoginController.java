@@ -57,7 +57,6 @@ public class LoginController extends CoreController {
 		registerPanel.addActionListenerRegister(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tryToRegister();
-				registerToLogin();
 			}
 		});
 
@@ -86,6 +85,7 @@ public class LoginController extends CoreController {
 		if (username && pass1 && pass2) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1());
+			registerToLogin();
 		}
 
 	}
