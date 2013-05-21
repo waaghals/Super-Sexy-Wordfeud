@@ -19,7 +19,6 @@ import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
-import nl.avans.min04sob.scrabble.views.UserInfoPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class MainController extends CoreController {
