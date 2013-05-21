@@ -28,6 +28,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		private JButton accept = new JButton("accept");
 		private JButton decline = new JButton("decline");
 		private JButton oke = new JButton("oke");
+		private JButton oke2 =new JButton("oke");
 		private JFrame jf = new JFrame("popup");
 		private JTextField usernameField = new JTextField(10);
 			
@@ -89,7 +90,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jf.setContentPane(response);
 			response.setPreferredSize(new Dimension(130,70));
 			response.add(new JLabel("msg"));
-			response.add(oke);
+			response.add(oke2);
 		}
 		
 		public String getUsername() 
@@ -110,6 +111,9 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		}
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
+		}
+		public void addActionListenerOkee(ActionListener listener) {
+			oke2.addActionListener(listener);
 		}
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
