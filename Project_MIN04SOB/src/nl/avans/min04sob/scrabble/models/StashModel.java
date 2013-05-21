@@ -19,8 +19,8 @@ public class StashModel extends CoreModel {
 		Array letters = null;
 		String query = "SELECT `lettertype_karkakter` FROM `letter`";
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
-			letters = dbResult.getArray("lettertype_karkakter");
+			ResultSet res = new Query(query).select();
+			letters = res.getArray("lettertype_karkakter");
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -53,7 +53,7 @@ public class StashModel extends CoreModel {
 
 	public String getRandomLetter() {
 		String letter = null;
-		String q = "SELECT `lettertype_karakter` FROM `letter`";
+		String q = "SELECT `karakter` FROM `pot`";
 		try {
 			ResultSet res = new Query(q).select();
 			int numRows  = Query.getNumRows(res);
@@ -68,6 +68,7 @@ public class StashModel extends CoreModel {
 			Random randominteger = new Random();
 			int r = randominteger.nextInt(letters.length);
 			letter = letters[r];
+			
 		} catch(Exception e){
 			e.printStackTrace();
 		}
