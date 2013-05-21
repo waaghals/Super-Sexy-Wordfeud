@@ -14,7 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
-
+import java.awt.event.ActionEvent;
+//GUI checked
 public class RegisterPanel extends CorePanel {
 
 	private JLabel usernameLabel, passwordLabel1, passwordLabel2, usernameResult, password1Result, password2Result;
@@ -122,6 +123,10 @@ public class RegisterPanel extends CorePanel {
 		c.gridwidth = 4;
 		c.insets = new Insets(0, 5, 5, 5);
 		registerButton = new JButton("Register");
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		c.gridx = 4;
 		c.gridy = 3;
 		add(registerButton, c);

@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import java.awt.Insets;
-
+//GUI checked
 public class LoginPanel extends CorePanel {
 
 	private JLabel usernameLabel, passwordLabel;
