@@ -149,8 +149,9 @@ public class MainController extends CoreController {
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		ArrayList<GameModel> games =account.getOpenGames();
-			
+			int y = 0;
 		for(int x= 0; games.size() > 0;x++){
+			System.out.println(y);
 			if(games.get(x).getGameId() == 	selectedGame.getGameId()){
 				removeModel(boardModel);
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
@@ -160,6 +161,18 @@ public class MainController extends CoreController {
 				
 				addModel(boardModel);
 				
+			}else{
+				y++;
+				System.out.println(y);
+			}
+			if(y == games.size()){
+				removeModel(boardModel);
+				currGamePanel = selectedGame.getBoardcontroller().getBpv();
+				boardModel = selectedGame.getBoardcontroller().getBpm();
+				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+				currGamePanel.setModel(boardModel);
+				
+				addModel(boardModel);
 			}
 		}		
 		chatPanel.empty();
