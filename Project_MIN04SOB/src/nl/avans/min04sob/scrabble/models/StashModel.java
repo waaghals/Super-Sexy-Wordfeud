@@ -51,7 +51,8 @@ public class StashModel extends CoreModel {
 		return null;
 	}
 
-	public void getRandomLetter() {
+	public String getRandomLetter() {
+		String letter = null;
 		String q = "SELECT `lettertype_karakter` FROM `letter`";
 		try {
 			ResultSet res = new Query(q).select();
@@ -65,10 +66,12 @@ public class StashModel extends CoreModel {
 			}
 			
 			Random randominteger = new Random();
-			randominteger.nextInt();
+			int r = randominteger.nextInt(letters.length);
+			letter = letters[r];
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		return letter;
 	}
 
 	@Override
