@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Random;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Queries;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class StashModel extends CoreModel {
@@ -27,49 +28,34 @@ public class StashModel extends CoreModel {
 	}
 
 	public Tile[] getPlayerTiles(AccountModel user, GameModel game) {
-		String sexyQuery = "SELECT `lb`.`spel_id`             AS `Spel_ID`,
-       `lb`.`beurt_id`            AS `Beurt_ID`,
-       `b`.`account_naam`         AS `Account_naam`,
-       `l`.`lettertype_karakter` AS `letter`,
-       `lt`.`waarde`              AS `waarde`,
-`max`
-FROM   `letterbakjeletter` `lb`
-       JOIN `letter` `l`
-         ON `lb`.`spel_id` = `l`.`spel_id`
-            AND `lb`.`letter_id` = `l`.`id`
-       JOIN `beurt` `b`
-         ON `lb`.`beurt_id` = `b`.`id`
-       JOIN `spel` `s`
-         ON `l`.`spel_id` = `s`.`id`
-       RIGHT JOIN `lettertype` `lt`
-               ON `lt`.`letterset_code` = `s`.`letterset_naam`
-                  AND `l`.`lettertype_karakter` = `lt`.`karakter`
- JOIN (SELECT MAX(id) AS `max` FROM `beurt` WHERE `beurt`.`account_naam` = 'jager684' AND `beurt`.`spel_id` = '511') AS max_beurt
-ON 1=1
-WHERE  `lt`.`letterset_code` = 'NL' 
-ORDER  BY `lb`.`beurt_id` ASC  ";
-		
-		try { 
-			ResultSet dbResult = new Query(query).set(user.getUsername()).set(game.getGameId()).select();
-			dbResult.next();
-			String chars[] = dbResult.getString(1).split(",");
-			Tile[] tiles = new Tile[chars.length];
-			for (int i = 0; i < tiles.length; i++) {
-				tiles[i] = new Tile(chars[i]);
+		String username = user.getUsername();
+		int gameId = game.getGameId();
+		int numRows;
+		try {
+			ResultSet res = new Query(Queries.CURRENT_TILES).set(username)
+					.set(gameId).select();
+			numRows = Query.getNumRows(res);
+
+			Tile[] tiles = new Tile[numRows];
+			int i = 0;
+			while (res.next()) {
+				String character = res.getString("letter");
+				int charValue = res.getInt("waarde");
+				tiles[i] = new Tile(character, charValue);
 			}
+
 			return tiles;
-		}
-		catch (SQLException sql) {
+		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 		return null;
 	}
 
 	public void getRandomLetter() {
-		String query = "SELECT `lettertype_karkakter` FROM `letter`";
+		String q = "SELECT `lettertype_karkakter` FROM `letter`";
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
-			Array letters = dbResult.getArray("lettertype_karkakter");
+			ResultSet res = new Query(q).select();
+			Array letters = res.getArray("lettertype_karkakter");
 			Random randominteger = new Random();
 			randominteger.nextInt();
 		}

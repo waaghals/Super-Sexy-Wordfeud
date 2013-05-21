@@ -3,15 +3,18 @@ package nl.avans.min04sob.scrabble.models;
 
 public class Tile {
 	private String letter;
+	private int value;
 	private boolean mutatable;
-
-	public Tile(String letter) {
-		this.letter = letter;
-		mutatable = true;
-	}
 	
 	public Tile(){
 		letter = "";
+		value = 0;
+		mutatable = true;
+	}
+
+	public Tile(String character, int charValue) {
+		letter = character;
+		value = charValue;
 		mutatable = true;
 	}
 
@@ -43,5 +46,9 @@ public class Tile {
 	
 	public String toString(){
 		return letter;
+	}
+	
+	public int getValue(){
+		return value;
 	}
 }
