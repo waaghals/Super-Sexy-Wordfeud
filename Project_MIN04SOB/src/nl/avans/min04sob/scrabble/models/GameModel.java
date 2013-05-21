@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import nl.avans.min04sob.scrabble.Playerstash;
+import nl.avans.min04sob.scrabble.Stash;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -23,7 +24,7 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 
-	private Playerstash playerStash = new Playerstash();
+	private Stash stash = new Stash();
 	private BoardPanel boardPanel = new BoardPanel();
 
 	private String[][] boardData;
