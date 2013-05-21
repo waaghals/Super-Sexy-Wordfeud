@@ -15,7 +15,7 @@ package nl.avans.min04sob.scrabble.views;
 	import javax.swing.JPanel;
 
 	public class ChallengeView extends JFrame{
-
+//test
 		private JPanel chpanel = new JPanel();
 		private JButton accept = new JButton("accept");
 		private JButton decline = new JButton("decline");
