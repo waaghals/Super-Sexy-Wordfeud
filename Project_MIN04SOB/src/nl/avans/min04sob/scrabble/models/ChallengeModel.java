@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,9 +13,10 @@ import java.util.TimerTask;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.views.ChallengeView;
  
 
-public class ChallengeModel extends CoreModel {
+public class ChallengeModel extends Observable  {
 //  String query = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
 	public static final String STATE_ACCEPTED = "Accepted";
 	public static final String STATE_REJECTED = "Rejected";
@@ -22,19 +24,17 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
 	public int spelid;
-
 	public Timer timer = new Timer();
-	TimerTask tt;
-
-	@Override
-	public void update() {
-	}
-
-	public void createChallenge(String Challengername)//uitdager
+ 
+	public ChallengeModel()
 	{
-		//open challlenge
+		this.addObserver(new ChallengeView());
+	}
+	public void createChallenge(String Challengername,String  challegendname)//uitdager
+	{
+		// hoe kom ik aan challenger name?
 		int spelid = 0;// of 1
-		while (1 < 2) {
+		while (spelid < 10) {
 			String query = "SELECT `INT ID` FROM `Spel`;";
 			try {
 				ResultSet dbResult =  new Query(query) .select();
@@ -52,6 +52,7 @@ public class ChallengeModel extends CoreModel {
 				+ Challengername
 				+ STATE_UNKNOWN
 				+ "')  ;";
+		//replace
 		try {
 			new Query(query);
 		} catch (SQLException sql) {
@@ -62,29 +63,31 @@ public class ChallengeModel extends CoreModel {
 		final Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			public void run() {
-				String query = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
+				String query1 = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
 				try {
-					ResultSet dbResult =  new Query(query) .select();
+					ResultSet dbResult =  new Query(query1) .select();
 					if (dbResult.getString(sspelid) == "Accepted") {
-						acceptChallenge();
+					 
 						timer.cancel();
+						commandsToChallengeview(3);
 						//open gui response
 					}
 					if (dbResult.getString(sspelid) == "Rejected") {
+						commandsToChallengeview(2);
 						timer.cancel();
 						 
 					}
 				} catch (SQLException sql) {
-					System.out.println(query);
+					System.out.println(query1);
 					sql.printStackTrace();
 				}
-				// //rage
+			}}, 0, 10000);
 			}
-		}, 0, 10000);
-	}
-
+	 
 	public void receiveChallenge() // / tegenstander
 	{
+		 /// dit code wordt altijd geactiveerd.   om de 10 secondes
+		//activatie index 1
 		final int sspelid = spelid;
 		final Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -92,16 +95,13 @@ public class ChallengeModel extends CoreModel {
 				int index = 0;
 				while (index < 10)// of meer wiv
 				{
-					String query = "SELECT `Reaktie_type` FROM `Spel`; where(INT ID) values(index)";
+					String query = "SELECT `*` FROM `Spel`; where(INT ID) values(index)"; //??
 					try {
 						ResultSet dbResult =  new Query(query).select();
-						if (dbResult.getString(index) == "getplayer name-_-") // ///
-																				// ????
+						if (dbResult.getString(index) == "getplayer name-_-") // ///											// ????
 						{
-							// open gui
-
-							// acceptatie
-							acceptChallenge();
+							commandsToChallengeview(1);
+							spelid=sspelid; 
 							break;
 						}
 					} catch (SQLException sql) {
@@ -110,24 +110,42 @@ public class ChallengeModel extends CoreModel {
 					}
 					index++;
 				}
-				// //rage
+			}}, 0, 10000); 
 			}
-		}, 0, 10000);
-	}
-
-	public void acceptChallenge() // uitdager
+	 
+	public void acceptCallenge() // uitdgedaagde
 	{
-		String query = "INSERT INTO `Spel` (`Toestand_type`) VALUES ('"
-				+ STATE_PLAYING + " ') where(ID INT) VALUES ('" + spelid
+		String query = "INSERT INTO `Spel` (`Toestand_type`,Reaktie) VALUES ('"
+				+ STATE_PLAYING +  STATE_ACCEPTED+ " ') where(ID INT) VALUES ('" + spelid
 				+ "') ;"; // insert or remove
 		try {
 			new Query(query);
+		 //spele
 		} catch (SQLException sql) {
 			System.out.println(query);
 			sql.printStackTrace();
 		}
 	}
-
+	public void declineCallenge() // uitdgedaagde
+	{
+		String query = "INSERT INTO `Spel` (Reaktie) VALUES ('"+
+				STATE_REJECTED+ " ') where(ID INT) VALUES ('" + spelid
+				+ "') ;"; // insert or remove
+		try {
+			new Query(query);
+		 //spele
+		} catch (SQLException sql) {
+			System.out.println(query);
+			sql.printStackTrace();
+		}
+	}
+	
+	public void commandsToChallengeview(int getal)
+	{	
+		this.setChanged();
+		this.notifyObservers(getal);
+	}
+//// die onder wordt niet echt gebruikt
 	public void  OnlinePlayers(int competitionID) {		
 		ArrayList<Array> array = new ArrayList<Array>();		
 		String query = "SELECT `account_naam` FROM `deelnemer`;";
@@ -137,11 +155,9 @@ public class ChallengeModel extends CoreModel {
 		}
 		catch (SQLException sql) 
 		{			
-		 sql.printStackTrace();		
+			sql.printStackTrace();		
 		}		
-		 
-		}
-
+	}
 }
 
 
