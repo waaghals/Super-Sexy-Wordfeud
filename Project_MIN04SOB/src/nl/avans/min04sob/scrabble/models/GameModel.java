@@ -1,14 +1,9 @@
 package nl.avans.min04sob.scrabble.models;
 
 import java.awt.Dimension;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import nl.avans.min04sob.scrabble.Playerstash;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -23,7 +18,6 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 
-	private Playerstash playerStash = new Playerstash();
 	private BoardPanel boardPanel = new BoardPanel();
 
 	private String[][] boardData;

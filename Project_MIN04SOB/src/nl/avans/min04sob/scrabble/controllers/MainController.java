@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -19,8 +17,6 @@ import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
-import nl.avans.min04sob.scrabble.views.UserInfoPanel;
-import net.miginfocom.swing.MigLayout;
 
 public class MainController extends CoreController {
 
