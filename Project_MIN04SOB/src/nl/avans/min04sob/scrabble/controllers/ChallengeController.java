@@ -16,8 +16,6 @@ public class ChallengeController extends CoreController{
 		addView(cv);
 		addModel(cm);
 		
-		
-		 
 		cv.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//dpeiets
@@ -33,7 +31,16 @@ public class ChallengeController extends CoreController{
 				//dpeiets
 			}
 		});
-		 
+		cv.addActionListenerOke (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//dpeiets
+			}
+		});
+		cv.addActionListenerOkee (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//dpeiets
+			}
+		});
  }
 
 	@Override

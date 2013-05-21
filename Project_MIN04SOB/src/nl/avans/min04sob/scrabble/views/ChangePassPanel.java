@@ -1,102 +1,108 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JButton;
 
 public class ChangePassPanel extends CorePanel{
 	
 	private JLabel oldPassLabel, newPass1Label, newPass2Label, oldPassResult, newPass1Result, newPass2Result;
 	private JPasswordField oldPass, newPass1, newPass2; 
+	private JButton btnCancel;
+	private JButton btnChange;
 	
 	public ChangePassPanel(){
 		setPreferredSize(new Dimension(365,180));
-		GridBagLayout gbl = new GridBagLayout();
-		gbl.columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		gbl.columnWidths = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
-		gbl.rowHeights = new int[]{30, 30, 30, 30, 30, 30};
-		setLayout(gbl);
-		
-		GridBagConstraints c = new GridBagConstraints();
+		setLayout(new MigLayout("", "[115.00px][115.00px][115.00px]", "[20px][20px][20px][][]"));
 		oldPassLabel = new JLabel("Old password :");
-		c.gridwidth = 4;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(oldPassLabel, c);
-		
-		c = new GridBagConstraints();
+		add(oldPassLabel, "cell 0 0,alignx center,aligny center");
 		oldPass = new JPasswordField(11);
-		c.gridwidth = 4;
-		c.gridx = 4;
-		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(oldPass, c);
-		
-		c = new GridBagConstraints();
-		oldPassResult = new JLabel("");
-		c.gridwidth = 4;
-		c.gridx = 8;
-		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(oldPassResult, c);
-		
-		c = new GridBagConstraints();
+		add(oldPass, "cell 1 0,growx,aligny center");
+		oldPassResult = new JLabel("result");
+		add(oldPassResult, "cell 2 0,alignx center,aligny center");
 		newPass1Label = new JLabel("New pass :");
-		c.gridwidth = 4;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(newPass1Label, c);
-		
-		c = new GridBagConstraints();
+		add(newPass1Label, "cell 0 1,alignx center,aligny center");
 		newPass1 = new JPasswordField(11);
-		c.gridwidth = 4;
-		c.gridx = 4;
-		c.gridy = 1;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(newPass1, c);
-		
-		c = new GridBagConstraints();
-		newPass1Result = new JLabel("");
-		c.gridwidth = 4;
-		c.gridx = 8;
-		c.gridy = 1;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(newPass1Result, c);
-		
+		add(newPass1, "cell 1 1,growx,aligny center");
+		newPass1Result = new JLabel("result");
+		add(newPass1Result, "cell 2 1,alignx center,aligny center");
 		newPass2Label = new JLabel("Confirm :");
-		c.gridwidth = 4;
-		c.gridx = 0;
-		c.gridy = 2;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(newPass2Label, c);
-		
-		c = new GridBagConstraints();
+		add(newPass2Label, "cell 0 2,alignx center,aligny center");
 		newPass2 = new JPasswordField(11);
-		c.gridwidth = 4;
-		c.gridx = 4;
-		c.gridy = 2;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(newPass2, c);
+		add(newPass2, "cell 1 2,growx,aligny center");
+		newPass2Result = new JLabel("result");
+		add(newPass2Result, "cell 2 2,alignx center,aligny center");
 		
-		c = new GridBagConstraints();
-		newPass2Result = new JLabel("");
-		c.gridwidth = 4;
-		c.gridx = 8;
-		c.gridy = 2;
-		c.insets = new Insets(0, 0, 0, 0);
-		add(newPass2Result, c);
+		btnCancel = new JButton("Cancel");
+		add(btnCancel, "cell 0 4,growx");
+		
+		btnChange = new JButton("Change");
+		add(btnChange, "cell 2 4,growx");
 	}
 
+	public void addCancelActionListener(ActionListener listener){
+		btnCancel.addActionListener(listener);
+	}
 	
+	public void addChangeActionListener(ActionListener listener){
+		btnChange.addActionListener(listener);
+	}
+	
+	public String getOldPass(){
+		return oldPass.toString();
+	}
+	
+	public String getNewPass1(){
+		return newPass1.toString();
+	}
+	
+	public String getNewPass2(){
+		return newPass2.toString();
+	}
+	
+	public void setOldPassGood(boolean good, String discription){
+		if(good){
+			oldPass.setBackground(Color.WHITE);
+			oldPassResult.setText(discription);
+		}else{
+			oldPass.setBackground(Color.RED);
+			oldPassResult.setText(discription);
+		}
+		
+	}
+	
+	public void setNewPass1Good(boolean good, String discription){
+		if(good){
+			newPass1.setBackground(Color.WHITE);
+			newPass1Result.setText(discription);
+		}else{
+			newPass1.setBackground(Color.RED);
+			newPass1Result.setText(discription);
+		}
+		
+	}
+	
+	public void setNewPass2Good(boolean good, String discription){
+		if(good){
+			newPass2.setBackground(Color.WHITE);
+			newPass2Result.setText(discription);
+		}else{
+			newPass2.setBackground(Color.RED);
+			newPass2Result.setText(discription);
+		}
+		
+	}
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
 }
