@@ -1,20 +1,20 @@
 package nl.avans.min04sob.scrabble.core;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 public class MatrixUtils {
-	
+
 	/**
 	 * Performs a XOR on both the matrices, <- is that a word?
 	 * 
-	 * @param oldMatrix 
+	 * @param oldMatrix
 	 * @param newMatrix
 	 * @return Object[][] resulted XORed matrix other fields will be null
 	 */
-	public static Object[][] xor(Object[][] oldMatrix,
-			Object[][] newMatrix) {
+	public static Object[][] xor(Object[][] oldMatrix, Object[][] newMatrix) {
 		int cols = newMatrix[0].length;
 		int rows = newMatrix.length;
 		Object[][] xorMatrix = new Object[rows][cols];
@@ -62,7 +62,7 @@ public class MatrixUtils {
 
 		// Remove empty rows
 		for (int row = 0; row < matrix.length; row++) {
-			if (isClean(matrix[row])) {
+			if (isEmpty(matrix[row])) {
 				nominees.add(matrix[row]);
 
 			}
@@ -81,7 +81,7 @@ public class MatrixUtils {
 	 * @param arr
 	 * @return boolean if array only has null values
 	 */
-	public static boolean isClean(Object[] arr) {
+	public static boolean isEmpty(Object[] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i] != null) {
 				return false;
@@ -89,17 +89,32 @@ public class MatrixUtils {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Check if the matrix had all the elements XORed elements in a straight line
+	 * Check if the matrix had all the elements XORed elements in a straight
+	 * line
 	 * 
-	 * @param matrix The XORed object matrix
+	 * @param matrix
+	 *            The XORed object matrix
 	 * @return is numRow or numCols equals 1
 	 */
-	public static boolean isAligned(Object[][] matrix){
-		int numRows = newMatrix.length;
-		int numCols = newMatrix[0].length;
-		
+	public static boolean isAligned(Object[][] matrix) {
+		int numRows = matrix.length;
+		int numCols = matrix[0].length;
+
 		return numRows == 1 || numCols == 1;
+	}
+
+	public static Point[] getLetterCoords(Object[][] matrix) {
+		matrix = crop(matrix);
+		ArrayList<Point> coords = new ArrayList<Point>();
+		for (int col = 0; col < matrix[0].length; col++) {
+			for (int row = 0; row < matrix.length; row++) {
+				if(matrix[row][col] != null){
+					coords.add(new Point(row, col));
+				}
+			}
+		}
+		return (Point[]) coords.toArray();
 	}
 }
