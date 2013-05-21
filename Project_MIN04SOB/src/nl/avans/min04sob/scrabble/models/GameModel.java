@@ -42,13 +42,13 @@ public class GameModel extends CoreModel {
 		boardData = new String[15][15];
 	}
 
-	public GameModel(int gameId, AccountModel currentUser) {
+	public GameModel(int gameID, AccountModel currentUser) {
 		try {
 			ResultSet dbResult = new Query(getGameQuery).set(gameId).select();
 
 			if (Query.getNumRows(dbResult) == 1) {
 				dbResult.next();
-				this.gameId = gameId;
+				this.gameId = gameID;
 				competition = new CompetitionModel(dbResult.getInt(2));
 				state = dbResult.getString(3);
 				String challengerName = dbResult.getString(4);
@@ -149,6 +149,9 @@ public class GameModel extends CoreModel {
 	public int getGameId() {
 		return gameId;
 	}
+	public String[][] getboardData(){
+		return this.boardData;
+	}
 
 	public String getState() {
 		return state;
@@ -229,4 +232,10 @@ public class GameModel extends CoreModel {
 
 		return words;
 	}
+
+	public BoardController getBoardcontroller() {
+		return boardcontroller;
+	}
+
+	
 }
