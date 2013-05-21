@@ -2,6 +2,7 @@ package nl.avans.min04sob.scrabble.core;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Point;
 
 import javax.swing.JTable;
@@ -30,6 +31,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		lightRed = new Color(255, 179, 206);
 		blue = new Color(8, 99, 240);
 		lightBlue = new Color(191, 244, 233);
+		beige = new Color(255, 255, 200);
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
@@ -40,35 +42,44 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		Tile tile = (Tile) boardModel.getValueAt(row, col);
 
 		int multiplier = boardModel.getMultiplier(new Point(row, col));
-		switch (multiplier) {
-		case BoardModel.DL:
-			c.setBackground(lightBlue);
-			c.setForeground(blue);
-			break;
-		case BoardModel.TL:
-			c.setBackground(blue);
-			c.setForeground(lightBlue);
-			break;
-		case BoardModel.DW:
-			c.setBackground(lightRed);
-			c.setForeground(red);
-			break;
-		case BoardModel.TW:
-			c.setBackground(red);
-			c.setForeground(lightRed);
-			break;
-		case BoardModel.STAR:
-			c.setBackground(Color.WHITE);
-			c.setForeground(Color.GREEN);
-			break;
-		case BoardModel.EMPTY:
-			c.setBackground(Color.WHITE);
+
+		if (!tile.isMutatable()) {
+			System.out.println(tile.getLetter());
+			c.setBackground(beige);
 			c.setForeground(Color.BLACK);
-			break;
-		default:
-			c.setBackground(Color.GREEN);
-			c.setForeground(Color.WHITE);
-			break;
+		} else {
+
+			switch (multiplier) {
+			case BoardModel.DL:
+				c.setBackground(lightBlue);
+				c.setForeground(blue);
+				break;
+			case BoardModel.TL:
+				c.setBackground(blue);
+				c.setForeground(lightBlue);
+				break;
+			case BoardModel.DW:
+				c.setBackground(lightRed);
+				c.setForeground(red);
+				break;
+			case BoardModel.TW:
+				c.setBackground(red);
+				c.setForeground(lightRed);
+				break;
+			case BoardModel.STAR:
+				c.setBackground(Color.WHITE);
+				c.setForeground(Color.GREEN);
+				break;
+			case BoardModel.EMPTY:
+				c.setBackground(Color.WHITE);
+				c.setForeground(Color.BLACK);
+				break;
+			default:
+				c.setBackground(Color.GREEN);
+				c.setForeground(Color.WHITE);
+				break;
+			}
+
 		}
 
 		if (tile != null && !tile.isMutatable()) {
