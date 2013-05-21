@@ -1,12 +1,17 @@
 package nl.avans.min04sob.scrabble.models;
 
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
+ 
+
 import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Dbconnect;
+ 
 
 public class ChallengeModel extends CoreModel {
 
@@ -119,14 +124,18 @@ public class ChallengeModel extends CoreModel {
 		}
 	}
 
-	/*
-	 * / pseudo code action accept
-	 * 
-	 * 
-	 * action reject
-	 * 
-	 * 
-	 * /
-	 */
+	public void  OnlinePlayers(int competitionID) {		
+		ArrayList<Array> array = new ArrayList<Array>();		
+		String query = "SELECT `account_naam` FROM `deelnemer`;";
+		try {
+			ResultSet dbResult = Dbconnect.select(query);
+			array.addAll((Collection<? extends Array>) dbResult.getArray("account_naam"));		
+		}
+		catch (SQLException sql) 
+		{			
+		 sql.printStackTrace();		
+		}		
+		 
+		}
 
 }
