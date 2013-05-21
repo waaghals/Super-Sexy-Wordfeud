@@ -15,7 +15,7 @@ import nl.avans.min04sob.scrabble.core.Query;
  
 
 public class ChallengeModel extends CoreModel {
-
+//  String query = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
 	public static final String STATE_ACCEPTED = "Accepted";
 	public static final String STATE_REJECTED = "Rejected";
 	public static final String STATE_UNKNOWN = "Unknown";
@@ -30,13 +30,14 @@ public class ChallengeModel extends CoreModel {
 	public void update() {
 	}
 
-	public void createChallenge(String Challengername)
+	public void createChallenge(String Challengername)//uitdager
 	{
+		//open challlenge
 		int spelid = 0;// of 1
 		while (1 < 2) {
 			String query = "SELECT `INT ID` FROM `Spel`;";
 			try {
-				ResultSet dbResult = Dbconnect.select(query);
+				ResultSet dbResult =  new Query(query) .select();
 				if (dbResult.getArray(spelid) == null) {
 					break;
 				}
@@ -67,9 +68,11 @@ public class ChallengeModel extends CoreModel {
 					if (dbResult.getString(sspelid) == "Accepted") {
 						acceptChallenge();
 						timer.cancel();
+						//open gui response
 					}
 					if (dbResult.getString(sspelid) == "Rejected") {
 						timer.cancel();
+						 
 					}
 				} catch (SQLException sql) {
 					System.out.println(query);
@@ -140,4 +143,6 @@ public class ChallengeModel extends CoreModel {
 		}
 
 }
+
+
 /// teestz
