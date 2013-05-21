@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble;
+package nl.avans.min04sob.scrabble.views;
 
  
 	import java.awt.BorderLayout;
@@ -14,13 +14,13 @@ package nl.avans.min04sob.scrabble;
 	import javax.swing.JLabel;
 	import javax.swing.JPanel;
 
-	public class Challenge extends JFrame{
+	public class ChallengeView extends JFrame{
 
 		private JPanel chpanel = new JPanel();
 		private JButton accept = new JButton("accept");
 		private JButton decline = new JButton("decline");
 		
-		public Challenge()
+		public ChallengeView()
 		{
 			
 			this.setTitle("Challenge");
