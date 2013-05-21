@@ -378,18 +378,18 @@ public class GameModel extends CoreModel {
 		Point coord = null;
 
 		if (height % 2 == 1 && width % 2 == 1) {
-			coord = new Point(height / 2, width / 2);
+			coord = new Point((height / 2) + 1, (width / 2) + 1);
 			if (board.getMultiplier(coord) == BoardModel.STAR) {
 				return coord;
 			}
-		} else {
-			// Take the hard approach and find the start tile manually
-			for (int i = 0; i < width; i++) {
-				for (int j = 0; j < height; j++) {
-					coord = new Point(i, j);
-					if (board.getMultiplier(coord) == BoardModel.STAR) {
-						return coord;
-					}
+		}
+		
+		// Take the hard approach and find the start tile manually
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				coord = new Point(i, j);
+				if (board.getMultiplier(coord) == BoardModel.STAR) {
+					return coord;
 				}
 			}
 		}
