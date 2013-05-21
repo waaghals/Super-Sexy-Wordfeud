@@ -11,6 +11,7 @@ import java.util.TimerTask;
  
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Query;
  
 
 public class ChallengeModel extends CoreModel {
@@ -51,7 +52,7 @@ public class ChallengeModel extends CoreModel {
 				+ STATE_UNKNOWN
 				+ "')  ;";
 		try {
-			Dbconnect.query(query);
+			new Query(query);
 		} catch (SQLException sql) {
 			System.out.println(query);
 			sql.printStackTrace();
@@ -62,7 +63,7 @@ public class ChallengeModel extends CoreModel {
 			public void run() {
 				String query = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
 				try {
-					ResultSet dbResult = Dbconnect.select(query);
+					ResultSet dbResult =  new Query(query) .select();
 					if (dbResult.getString(sspelid) == "Accepted") {
 						acceptChallenge();
 						timer.cancel();
@@ -90,7 +91,7 @@ public class ChallengeModel extends CoreModel {
 				{
 					String query = "SELECT `Reaktie_type` FROM `Spel`; where(INT ID) values(index)";
 					try {
-						ResultSet dbResult = Dbconnect.select(query);
+						ResultSet dbResult =  new Query(query).select();
 						if (dbResult.getString(index) == "getplayer name-_-") // ///
 																				// ????
 						{
@@ -117,7 +118,7 @@ public class ChallengeModel extends CoreModel {
 				+ STATE_PLAYING + " ') where(ID INT) VALUES ('" + spelid
 				+ "') ;"; // insert or remove
 		try {
-			Dbconnect.query(query);
+			new Query(query);
 		} catch (SQLException sql) {
 			System.out.println(query);
 			sql.printStackTrace();
@@ -128,7 +129,7 @@ public class ChallengeModel extends CoreModel {
 		ArrayList<Array> array = new ArrayList<Array>();		
 		String query = "SELECT `account_naam` FROM `deelnemer`;";
 		try {
-			ResultSet dbResult = Dbconnect.select(query);
+			ResultSet dbResult = new Query(query).select();
 			array.addAll((Collection<? extends Array>) dbResult.getArray("account_naam"));		
 		}
 		catch (SQLException sql) 
