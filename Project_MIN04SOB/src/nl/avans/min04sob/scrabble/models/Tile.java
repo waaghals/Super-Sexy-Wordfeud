@@ -25,7 +25,12 @@ public class Tile {
 	}
 
 	public String getLetter() {
-		return letter;
+		if(!isEmpty()){  
+			return letter;
+		}
+		else{
+			return "";
+		}
 	}
 
 	public void setLetter(String letter) {
