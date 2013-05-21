@@ -208,8 +208,7 @@ public class GameModel extends CoreModel {
 
 	public String[] getRequestedWords() {
 		String[] words = null;
-		String query = "SELECT `woord` FROM `nieuwwoord`";
-
+		String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
 		try {
 			ResultSet res = new Query(query).select();
 			int numRows  = Query.getNumRows(res);
