@@ -15,14 +15,22 @@ public class StashModel extends CoreModel {
 
 	}
 
-	public Array getAllLetters() {
-		Array letters = null;
-		String query = "SELECT `lettertype_karkakter` FROM `letter`";
+	public String[] getAllAvailableLetters() {
+		String[] letters = null;
+		String q = "SELECT `karakter` FROM `pot`";
 		try {
-			ResultSet res = new Query(query).select();
-			letters = res.getArray("lettertype_karkakter");
-		} catch (SQLException sql) {
-			sql.printStackTrace();
+			ResultSet res = new Query(q).select();
+			int numRows  = Query.getNumRows(res);
+			
+			letters = new String[numRows];
+			int i = 0;
+			while(res.next()){
+				letters[i] = res.getString(1);
+				i++;		
+			}
+			
+		} catch(Exception e){
+			e.printStackTrace();
 		}
 		return letters;
 	}
