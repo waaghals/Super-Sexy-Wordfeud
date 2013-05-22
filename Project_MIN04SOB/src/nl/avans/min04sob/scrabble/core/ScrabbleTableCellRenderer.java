@@ -43,7 +43,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 		int multiplier = boardModel.getMultiplier(new Point(row, col));
 
-		if (!tile.isMutatable()) {
+		if (tile != null && !tile.isMutatable()) {
 			System.out.println(tile.getLetter());
 			c.setBackground(beige);
 			c.setForeground(Color.BLACK);
@@ -53,30 +53,37 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			case BoardModel.DL:
 				c.setBackground(lightBlue);
 				c.setForeground(blue);
+				boardModel.setValueAt(new Tile("DL", true), row, col);
 				break;
 			case BoardModel.TL:
 				c.setBackground(blue);
 				c.setForeground(lightBlue);
+				boardModel.setValueAt(new Tile("TL", true), row, col);
 				break;
 			case BoardModel.DW:
 				c.setBackground(lightRed);
 				c.setForeground(red);
+				boardModel.setValueAt(new Tile("DW", true), row, col);
 				break;
 			case BoardModel.TW:
 				c.setBackground(red);
 				c.setForeground(lightRed);
+				boardModel.setValueAt(new Tile("TW", true), row, col);
 				break;
 			case BoardModel.STAR:
 				c.setBackground(Color.WHITE);
 				c.setForeground(Color.GREEN);
+				boardModel.setValueAt(new Tile("*", true), row, col);
 				break;
 			case BoardModel.EMPTY:
 				c.setBackground(Color.WHITE);
 				c.setForeground(Color.BLACK);
+				//boardModel.setValueAt(" ", row, col);
 				break;
 			default:
 				c.setBackground(Color.GREEN);
 				c.setForeground(Color.WHITE);
+				boardModel.setValueAt(new Tile(" ", true), row, col);
 				break;
 			}
 

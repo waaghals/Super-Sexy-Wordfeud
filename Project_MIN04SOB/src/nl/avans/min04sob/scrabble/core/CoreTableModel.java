@@ -10,9 +10,10 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 	protected Object[][] data;
 	ArrayList<Column> columns = new ArrayList<Column>();
 
-	public void initDataArray(int x, int y){
+	public void initDataArray(int x, int y) {
 		data = new Object[x][y];
 	}
+
 	@Override
 	public int getRowCount() {
 		return data.length;
@@ -80,5 +81,16 @@ public abstract class CoreTableModel extends CoreModel implements TableModel {
 
 	protected void addColumn(Column column) {
 		columns.add(column);
+	}
+
+	public Object[][] getData() {
+		int numRows = getRowCount();
+		int numCols = getColumnCount();
+		
+		Object[][] tableData = new Object[numRows][numCols];
+		for (int i = 0; i < numRows; i++)
+			for (int j = 0; j < numCols; j++)
+				tableData[i][j] = getValueAt(i, j);
+		return tableData;
 	}
 }

@@ -7,6 +7,8 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,10 +20,10 @@ import javax.swing.JTextField;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.CoreView;
-	public class ChallengeView   implements CoreView{
+	public class ChallengeView   implements Observer{
 		// extends??
 		private JTextField Opponent;
-
+	//	http://www.oracle.com/technetwork/articles/javase/index-142890.html
 		private JPanel chpanel = new JPanel();
 		private JPanel tochallenge = new JPanel();
 		private JPanel response=new JPanel();
@@ -91,6 +93,13 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			response.setPreferredSize(new Dimension(130,70));
 			response.add(new JLabel("msg"));
 			response.add(oke2);
+			oke2.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					jf.dispose();
+					
+				}});
 		}
 		
 		public String getUsername() 
@@ -100,11 +109,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 
 		 
 
-		@Override
-		public void modelPropertyChange(PropertyChangeEvent evt) {
-			// TODO Auto-generated method stub
-			
-		}
+		 
 		
 		public void addActionListenerAccept(ActionListener listener) {
 			accept.addActionListener(listener);
@@ -112,10 +117,30 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
 		}
-		public void addActionListenerOkee(ActionListener listener) {
-			oke2.addActionListener(listener);
-		}
+		 
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
 		}
+
+		@Override
+		public void update(Observable arg0, Object arg1) {
+			 int x = (int) arg1;
+			 if(x==1)
+			 {
+				 showChallenge();
+			 }
+			 if(x==2)
+			 {
+				 response("challenge denied");
+			 }
+			 if(x==3)
+			 {
+				 response("challenge accepted");
+			 }
+			
+		}
+		public  JFrame javaFrame()		{
+			return jf;
+		}
 	}
+	///

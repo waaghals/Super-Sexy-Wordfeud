@@ -1,9 +1,12 @@
 package nl.avans.min04sob.scrabble.controllers;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -32,6 +35,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
+	
 
 	public MainController() {
 		initialize();
@@ -144,7 +148,33 @@ public class MainController extends CoreController {
 
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
-		
+		ArrayList<GameModel> games =account.getOpenGames();
+			int y = 0;
+		for(int x= 0; games.size() > 0;x++){
+			System.out.println(y);
+			if(games.get(x).getGameId() == 	selectedGame.getGameId()){
+				removeModel(boardModel);
+				currGamePanel = games.get(x).getBoardcontroller().getBpv();
+				boardModel = games.get(x).getBoardcontroller().getBpm();
+				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+				currGamePanel.setModel(boardModel);
+				
+				addModel(boardModel);
+				
+			}else{
+				y++;
+				System.out.println(y);
+			}
+			if(y == games.size()){
+				removeModel(boardModel);
+				currGamePanel = selectedGame.getBoardcontroller().getBpv();
+				boardModel = selectedGame.getBoardcontroller().getBpm();
+				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+				currGamePanel.setModel(boardModel);
+				
+				addModel(boardModel);
+			}
+		}		
 		chatPanel.empty();
 		for (String message : chatModel.getMessages()) {
 			chatPanel.addToChatField(message);
