@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.swing.JButton;
+
 import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.MatrixUtils;
@@ -27,6 +29,7 @@ public class GameModel extends CoreModel {
 
 	private BoardController boardcontroller = new BoardController();
 
+	@Deprecated
 	private String[][] boardData;
 	private int lastTurn;
 
@@ -141,6 +144,8 @@ public class GameModel extends CoreModel {
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
+		// TODO also fire property change for a when the player needs to make a new move,
+		//and only update the board when the opponent actually plays a word.
 	}
 
 	public String toString() {
@@ -159,7 +164,9 @@ public class GameModel extends CoreModel {
 	public int getGameId() {
 		return gameId;
 	}
-	public String[][] getboardData(){
+
+	@Deprecated
+	public String[][] getboardData() {
 		return this.boardData;
 	}
 
@@ -340,14 +347,16 @@ public class GameModel extends CoreModel {
 
 		// First find out which letters where played
 		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
+		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+
 		if (isFirstMove) {
 			boolean onStar = false;
-			Point starCoord = getStartPoint(oldBoard);
+			Point starCoord = oldBoard.getStartPoint();
 
 			// Coords for all currently played letters
-			Point[] coords = MatrixUtils.getLetterCoords(playedLetters);
-			for (Point point : coords) {
-				if (starCoord == point) {
+
+			for (Point letterPos : letterPositions) {
+				if (starCoord == letterPos) {
 					onStar = true;
 					break;
 				}
@@ -364,51 +373,37 @@ public class GameModel extends CoreModel {
 		}
 
 		playedLetters = (Tile[][]) MatrixUtils.crop(playedLetters);
-		
+
 		Dimension playedWordSize = MatrixUtils.getDimension(playedLetters);
-		if (!isAligned(playedWordSize)) {
+		if (!MatrixUtils.isAligned(playedWordSize)) {
 			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
 		}
-		
-		
 
-	}
+		double max = -1;
+		if (playedWordSize.getHeight() == 1) {
 
-	private Point getStartPoint(BoardModel board) {
-		// odd numbers of tile, meaning we have a center tile
-		// The database is setup in a way that a star tile doesn't need to be in
-		// the
-		// Center tile, so check it from the database
-		int width = board.getData().length;
-		int height = board.getData()[0].length;
-		Point coord = null;
-
-		if (height % 2 == 1 && width % 2 == 1) {
-			coord = new Point((height / 2) + 1, (width / 2) + 1);
-			if (board.getMultiplier(coord) == BoardModel.STAR) {
-				return coord;
-			}
-		}
-		
-		// Take the hard approach and find the start tile manually
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				coord = new Point(i, j);
-				if (board.getMultiplier(coord) == BoardModel.STAR) {
-					return coord;
+			// Check horizontally connected
+			for (Point letterPos : letterPositions) {
+				if (max != letterPos.getY()-1 && max != -1) {
+					throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
 				}
+				max = letterPos.getY();
+			}
+		} else {
+			// Check vertically connected
+			for (Point letterPos : letterPositions) {
+				if (max != letterPos.getX()-1 && max != -1) {
+					throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
+				}
+				max = letterPos.getX();
 			}
 		}
-
-		return coord;
+		
+		//Everything went better than expected.jpg :)
 	}
 
 	public BoardController getBoardcontroller() {
 		return boardcontroller;
-	}
-	
-	public boolean isAligned(Dimension size){
-		return size.getHeight() == 1 || size.getWidth() == 1;
 	}
 
 }

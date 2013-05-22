@@ -106,7 +106,13 @@ public class MatrixUtils {
 		return new Dimension(width, hight);
 	}
 
-	public static Point[] getLetterCoords(Object[][] matrix) {
+	/**
+	 * Returns an array of Points where letter is not null
+	 * 
+	 * @param matrix 
+	 * @return Point[] a list of not null coordinates in the matrix
+	 */
+	public static Point[] getCoordinates(Object[][] matrix) {
 		matrix = crop(matrix);
 		ArrayList<Point> coords = new ArrayList<Point>();
 		for (int col = 0; col < matrix[0].length; col++) {
@@ -117,5 +123,10 @@ public class MatrixUtils {
 			}
 		}
 		return (Point[]) coords.toArray();
+	}
+	
+	
+	public static boolean isAligned(Dimension size){
+		return size.getHeight() == 1 || size.getWidth() == 1;
 	}
 }
