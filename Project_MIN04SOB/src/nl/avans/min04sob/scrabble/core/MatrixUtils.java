@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.core;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -98,11 +99,11 @@ public class MatrixUtils {
 	 *            The XORed object matrix
 	 * @return is numRow or numCols equals 1
 	 */
-	public static boolean isAligned(Object[][] matrix) {
-		int numRows = matrix.length;
-		int numCols = matrix[0].length;
+	public static Dimension getDimension(Object[][] matrix) {
+		int width = matrix.length;
+		int hight = matrix[0].length;
 
-		return numRows == 1 || numCols == 1;
+		return new Dimension(width, hight);
 	}
 
 	public static Point[] getLetterCoords(Object[][] matrix) {

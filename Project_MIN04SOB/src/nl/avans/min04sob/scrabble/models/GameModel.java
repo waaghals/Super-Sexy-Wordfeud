@@ -364,10 +364,13 @@ public class GameModel extends CoreModel {
 		}
 
 		playedLetters = (Tile[][]) MatrixUtils.crop(playedLetters);
-
-		if (!MatrixUtils.isAligned(playedLetters)) {
+		
+		Dimension playedWordSize = MatrixUtils.getDimension(playedLetters);
+		if (!isAligned(playedWordSize)) {
 			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
 		}
+		
+		
 
 	}
 
@@ -402,6 +405,10 @@ public class GameModel extends CoreModel {
 
 	public BoardController getBoardcontroller() {
 		return boardcontroller;
+	}
+	
+	public boolean isAligned(Dimension size){
+		return size.getHeight() == 1 || size.getWidth() == 1;
 	}
 
 }
