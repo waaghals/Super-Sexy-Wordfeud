@@ -10,14 +10,15 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class CompetitionModel extends CoreModel {
 
-	private int cID; // competitie ID
+	private int competitieID; // competitie ID
 	private int ranking = 0;
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
+	private final String removeQuery ="DELETE FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` = ?  VALUES (?, ?)";
 
 	public CompetitionModel(int int1) {
 		// TODO Automatisch gegenereerde constructorstub
-		cID = int1;
+		competitieID = int1;
 	}
 
 	@Override
@@ -48,9 +49,17 @@ public class CompetitionModel extends CoreModel {
 	public void join(int competitionID, String username) {
 		try {
 			new Query(joinQuery).set(competitionID).set(username).set(ranking)
-					.select();
+					.exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
+		}
+	}
+	
+	public void remove(int competitionID, String username){
+		try {
+			new Query("DELETE FROM `deelnemer` WHERE `competitie_id` ="+ competitionID +" AND `account_naam` = " + username).exec();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }
