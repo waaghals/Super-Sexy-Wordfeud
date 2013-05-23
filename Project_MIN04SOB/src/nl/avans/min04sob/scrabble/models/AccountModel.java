@@ -64,7 +64,7 @@ public class AccountModel extends CoreModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		//weet niet of dit precies zo moet met de accountrol toevoegen
 		String query2 = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?,?)";
 		try {
 			new Query(query2).set(username).set(role).exec();
