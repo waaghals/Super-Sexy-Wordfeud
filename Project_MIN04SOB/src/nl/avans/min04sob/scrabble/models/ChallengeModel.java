@@ -23,18 +23,24 @@ public class ChallengeModel extends Observable  {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
-	public int spelid;
+	public ResultSet result ;
+	public int spelid; 
+	
 	public Timer timer = new Timer();
- 
-	public ChallengeModel()
+	public ArrayList <Integer> challengegamenumber = new ArrayList<Integer>();
+	public ArrayList <String> challengename = new ArrayList<String>();
+	
+	public ChallengeModel() throws SQLException
 	{
 		this.addObserver(new ChallengeView());
+		String query = "SELECT `*`;";
+		result=new Query(query).select();
 	}
 	public void createChallenge(String Challengername,String  challegendname)//uitdager
 	{
 		// hoe kom ik aan challenger name?
-		int spelid = 0;// of 1
-		while (spelid < 10) {
+		int spelid = 1;// of 1
+		while (spelid < Query.getNumRows(result )+1) {
 			String query = "SELECT `INT ID` FROM `Spel`;";
 			try {
 				ResultSet dbResult =  new Query(query) .select();
@@ -93,16 +99,28 @@ public class ChallengeModel extends Observable  {
 		timer.schedule(new TimerTask() {
 			public void run() {
 				int index = 0;
-				while (index < 10)// of meer wiv
+				while (index < Query.getNumRows(result )+1)// of meer wiv
 				{
-					String query = "SELECT `*` FROM `Spel`; where(INT ID) values(index)"; //??
+					String[] words = null;
+					String query = "SELECT `acountnamategenstander ` FROM `Spel`; where(INT ID) values(index);"; //??
+					String query2 = "SELECT `spel id ` FROM `Spel`; where(INT ID) values(index);";
 					try {
 						ResultSet dbResult =  new Query(query).select();
-						if (dbResult.getString(index) == "getplayer name-_-") // ///											// ????
+						if (dbResult.getString(index)  == "getplayer name-_-") // ///											// ????
 						{
+							// array 
+							challengename.add(dbResult.getString(index));
 							commandsToChallengeview(1);
-							spelid=sspelid; 
-							break;
+							 
+							//challengegamenumber.add(index);
+						}
+						dbResult =  new Query(query2).select();
+						if (dbResult.getString(index)  == "getplayer name-_-") // ///											// ????
+						{
+							// array 
+							challengegamenumber.add(dbResult.getInt(index));
+							 
+							//challengegamenumber.add(index);
 						}
 					} catch (SQLException sql) {
 						System.out.println(query);
@@ -111,18 +129,22 @@ public class ChallengeModel extends Observable  {
 					index++;
 				}
 			}}, 0, 10000); 
+			String query = "SELECT `acountnamategenstander ` FROM `Spel`; where(INT ID) values(index);";
 			}
 	 
 	public void acceptCallenge() // uitdgedaagde
 	{
-		String query = "INSERT INTO `Spel` (`Toestand_type`,Reaktie) VALUES ('"
+		String query = "DELETE FROM `Spel` (`Toestand_type`,Reaktie), where(ID INT) VALUES ('" + spelid
+				+ "') ;"; 
+		String query2 = "INSERT INTO `Spel` (`Toestand_type`,Reaktie) VALUES ('"
 				+ STATE_PLAYING +  STATE_ACCEPTED+ " ') where(ID INT) VALUES ('" + spelid
-				+ "') ;"; // insert or remove
+				+ "') ;";  
 		try {
-			new Query(query);
+			new Query(query).exec();
+			new Query(query2).exec();
 		 //spele
 		} catch (SQLException sql) {
-			System.out.println(query);
+			System.out.println(query2);
 			sql.printStackTrace();
 		}
 	}
@@ -147,17 +169,18 @@ public class ChallengeModel extends Observable  {
 	}
 //// die onder wordt niet echt gebruikt
 	public void  OnlinePlayers(int competitionID) {		
-		ArrayList<Array> array = new ArrayList<Array>();		
+		ArrayList<String> array = new ArrayList<String>();		
 		String query = "SELECT `account_naam` FROM `deelnemer`;";
 		try {
 			ResultSet dbResult = new Query(query).select();
-			array.addAll((Collection<? extends Array>) dbResult.getArray("account_naam"));		
+			array.add(dbResult.getString("account_naam"));		
 		}
 		catch (SQLException sql) 
 		{			
 			sql.printStackTrace();		
 		}		
 	}
+	
 }
 
 
