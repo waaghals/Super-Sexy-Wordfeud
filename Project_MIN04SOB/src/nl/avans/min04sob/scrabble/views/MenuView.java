@@ -21,6 +21,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenu accountMenu;
 	private JMenu challengeMenu;
 	private JMenu moderaterMenu;
+	private JMenu competitionMenu;
 
 	private JMenuItem loginItem;
 	private JMenuItem logoutItem;
@@ -28,6 +29,9 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private JMenuItem doChallengeItem;
 	private JMenuItem viewChallengeItem;
+	
+	private JMenuItem seeCompetitionsItem;
+	private JMenuItem joinCompetitionItem;
 
 	private JMenuItem viewWords;
 
@@ -42,6 +46,7 @@ public class MenuView extends JMenuBar implements CoreView {
 		createAccountMenu();
 		createChallengeMenu();
 		createModeratorMenu();
+		createCompetitionMenu();
 	}
 
 	private void createChallengeMenu() {
@@ -63,6 +68,19 @@ public class MenuView extends JMenuBar implements CoreView {
 
 		// Add it to the JMenuBar
 		add(accountMenu);
+	}
+	
+	private void createCompetitionMenu() {
+		// create the menu
+		competitionMenu = new JMenu("Competitie");
+		competitionMenu.setMnemonic('C');
+		// create the menuItems
+		seeCompetitionsItem = new JMenuItem("Competitie's bekijken");
+		joinCompetitionItem = new JMenuItem("Deelnemen aan competitie's");
+		// add the menu and the menuItems
+		add(competitionMenu);
+		competitionMenu.add(seeCompetitionsItem);
+		competitionMenu.add(joinCompetitionItem);
 	}
 
 	private void setAfterLogoutMenu() {

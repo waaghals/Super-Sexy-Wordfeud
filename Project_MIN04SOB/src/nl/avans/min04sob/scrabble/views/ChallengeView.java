@@ -47,20 +47,8 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jf.setVisible(true);
 			jf.setContentPane(chpanel);
 			chpanel.setPreferredSize(new Dimension(180,70));
-			/*/
-			accept.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					jf.dispose();
-				}});
-			decline.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) 
-				{
-					jf.dispose();
-				}}); 
-				/*/
-			chpanel.add( new JLabel("You have received a challenge") );
+		 
+			chpanel.add(new JLabel("You have received a challenge"));
 			chpanel.add(accept);
 			chpanel.add(decline);
 
@@ -75,14 +63,6 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			tochallenge.setPreferredSize(new Dimension(180,70));
 			tochallenge.add(usernameField);
 			jf.add(oke);
-			/*/
-			oke.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					/// controller
-					System.out.println(usernameField.getText());
-				}});
-				/*/
 		}
 		
 		public void response(String msg)//gui
@@ -94,26 +74,21 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			response.add(new JLabel("msg"));
 			response.add(oke2);
 			oke2.addActionListener(new ActionListener(){
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					jf.dispose();
-					
 				}});
+			
 		}
-		
 		public String getUsername() 
 		{
 			return usernameField.getText();
 		}
-
-		 
-
-		 
-		
 		public void addActionListenerAccept(ActionListener listener) {
 			accept.addActionListener(listener);
 		}
+		
+		
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
 		}
@@ -137,7 +112,6 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			 {
 				 response("challenge accepted");
 			 }
-			
 		}
 		public  JFrame javaFrame()		{
 			return jf;

@@ -9,8 +9,7 @@ import nl.avans.min04sob.scrabble.views.ChallengeView;
 
 public class ChallengeController extends CoreController{
 	private ChallengeView cv = new ChallengeView();
-	private ChallengeModel  cm = new ChallengeModel();
-	
+	private ChallengeModel cm = new ChallengeModel();
 	public ChallengeController ()
 	{
 	    cv.addActionListenerAccept (new ActionListener() {
@@ -31,8 +30,7 @@ public class ChallengeController extends CoreController{
 				cv.javaFrame().dispose();
 			}
 		});
- }
-
+	}
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
