@@ -28,7 +28,7 @@ public class InviteController extends CoreController {
 	@Override
 	public void addListeners() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	public static void main(String[] arg){
