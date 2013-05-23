@@ -1,11 +1,17 @@
 package nl.avans.min04sob.scrabble.models;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashMap;
+
+import javax.swing.JButton;
 
 import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.MatrixUtils;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class GameModel extends CoreModel {
@@ -17,12 +23,13 @@ public class GameModel extends CoreModel {
 	private String state;
 	private String boardName;
 	private String letterSet;
+	private boolean isFirstMove; // TODO set this value and modify it
 
 	private StashModel stash = new StashModel();
-	
-	private BoardController boardcontroller = new BoardController();
-	
 
+	private BoardController boardcontroller = new BoardController();
+
+	@Deprecated
 	private String[][] boardData;
 	private int lastTurn;
 
@@ -100,29 +107,35 @@ public class GameModel extends CoreModel {
 		return returns;
 	}
 
-	public void legWoord() {
-		String[][] Boardcurrent = new String[boardcontroller.getBpm().tileData.length ][boardcontroller.getBpm().tileData[1].length ];
-			    for(int y = 0;boardcontroller.getBpm().tileData.length  > y; y++){
-			      for(int x = 0;boardcontroller.getBpm().tileData[y].length > x;x++){
-			       Boardcurrent[y][x] = boardcontroller.getBpm().tileData[y][x].getLetter();
-			            
-			      }
-			    }
-			     
+	public void checkDirection() {
+
+	}
+
+	public void playWord(HashMap<Point, Tile> tiles) {
+		String[][] Boardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
+				.getBpm().tileData[1].length];
+		for (int y = 0; boardcontroller.getBpm().tileData.length > y; y++) {
+			for (int x = 0; boardcontroller.getBpm().tileData[y].length > x; x++) {
+				Boardcurrent[y][x] = boardcontroller.getBpm().tileData[y][x]
+						.getLetter();
+
+			}
+		}
+
 		String[][] compared = compareArrays(compared, Boardcurrent);
 		String oldnumberx = compared[0][1];
 		boolean verticalLine = true;
 		for (String[] s : compared) {
-			if (oldnumberx.equals(s[1])) {
-			} else {
+			if (!oldnumberx.equals(s[1])) {
+
 				verticalLine = false;
 			}
 		}
 		String oldnumbery = compared[0][2];
 		boolean horizontalLine = true;
 		for (String[] s : compared) {
-			if (oldnumberx.equals(s[1])) {
-			} else {
+			if (!oldnumberx.equals(s[1])) {
+
 				horizontalLine = false;
 			}
 		}
@@ -131,11 +144,13 @@ public class GameModel extends CoreModel {
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
+		// TODO also fire property change for a when the player needs to make a new move,
+		//and only update the board when the opponent actually plays a word.
 	}
 
 	public String toString() {
 		return gameId + "";
-		//return competition.getName() + " - " + opponent.getUsername();
+		// return competition.getName() + " - " + opponent.getUsername();
 	}
 
 	public CompetitionModel getCompetition() {
@@ -149,7 +164,9 @@ public class GameModel extends CoreModel {
 	public int getGameId() {
 		return gameId;
 	}
-	public String[][] getboardData(){
+
+	@Deprecated
+	public String[][] getboardData() {
 		return this.boardData;
 	}
 
@@ -204,7 +221,6 @@ public class GameModel extends CoreModel {
 	public void requestWord(String word) {
 		String status = "pending";
 
-		
 		String query = "INSERT INTO `woordenboek` (`woord`, `status`) VALUES (?, ?)";
 		try {
 			new Query(query).set(word).set(status).exec();
@@ -218,13 +234,13 @@ public class GameModel extends CoreModel {
 		String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
 		try {
 			ResultSet res = new Query(query).select();
-			int numRows  = Query.getNumRows(res);
-			
+			int numRows = Query.getNumRows(res);
+
 			words = new String[numRows];
 			int i = 0;
-			while(res.next()){
+			while (res.next()) {
 				words[i] = res.getString(1);
-				i++;		
+				i++;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -233,9 +249,161 @@ public class GameModel extends CoreModel {
 		return words;
 	}
 
+	private void test() {
+		Integer[][] matrix = new Integer[][] {
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) } };
+
+		Integer[][] matrix2 = new Integer[][] {
+				{ new Integer(1), new Integer(99), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(99), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(99) } };
+
+		Object[][] newMatrix = MatrixUtils.xor(matrix, matrix2);
+		System.out.println(Arrays.deepToString(newMatrix));
+		System.out.println();
+		newMatrix = MatrixUtils.crop(newMatrix);
+		System.out.println();
+		System.out.println(Arrays.deepToString(newMatrix));
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
+		new GameModel().test();
+	}
+
+	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
+			throws InvalidMoveException {
+
+		Tile[][] oldData = (Tile[][]) oldBoard.getData();
+		Tile[][] newData = (Tile[][]) newBoard.getData();
+
+		// First find out which letters where played
+		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
+		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+
+		if (isFirstMove) {
+			boolean onStar = false;
+			Point starCoord = oldBoard.getStartPoint();
+
+			// Coords for all currently played letters
+
+			for (Point letterPos : letterPositions) {
+				if (starCoord == letterPos) {
+					onStar = true;
+					break;
+				}
+			}
+
+			if (!onStar) {
+				throw new InvalidMoveException(
+						InvalidMoveException.NOT_ON_START);
+			}
+		}
+
+		if (!MatrixUtils.isEmpty(playedLetters)) {
+			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
+		}
+
+		playedLetters = (Tile[][]) MatrixUtils.crop(playedLetters);
+
+		Dimension playedWordSize = MatrixUtils.getDimension(playedLetters);
+		if (!MatrixUtils.isAligned(playedWordSize)) {
+			throw new InvalidMoveException(InvalidMoveException.NOT_ALIGNED);
+		}
+
+		double max = -1;
+		if (playedWordSize.getHeight() == 1) {
+
+			// Check horizontally connected
+			for (Point letterPos : letterPositions) {
+				if (max != letterPos.getY()-1 && max != -1) {
+					throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
+				}
+				max = letterPos.getY();
+			}
+		} else {
+			// Check vertically connected
+			for (Point letterPos : letterPositions) {
+				if (max != letterPos.getX()-1 && max != -1) {
+					throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
+				}
+				max = letterPos.getX();
+			}
+		}
+		
+		//Everything went better than expected.jpg :)
+	}
+
 	public BoardController getBoardcontroller() {
 		return boardcontroller;
 	}
 
-	
 }
