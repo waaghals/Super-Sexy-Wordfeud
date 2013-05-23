@@ -56,11 +56,18 @@ public class AccountModel extends CoreModel {
 		}
 	}
 
-	public static void registerAccount(String username, char[] password) {
+	public static void registerAccount(String username, char[] password, String role) {
 
 		String query = "INSERT INTO `account` (`naam`, `wachtwoord`) VALUES (?, ?)";
 		try {
 			new Query(query).set(username).set(password).exec();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//weet niet of dit precies zo moet met de accountrol toevoegen
+		String query2 = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?,?)";
+		try {
+			new Query(query2).set(username).set(role).exec();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
