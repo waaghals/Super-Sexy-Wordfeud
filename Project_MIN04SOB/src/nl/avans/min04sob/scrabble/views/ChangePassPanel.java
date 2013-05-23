@@ -29,19 +29,19 @@ public class ChangePassPanel extends CorePanel{
 		add(oldPassLabel, "cell 0 0,alignx center,aligny center");
 		oldPass = new JPasswordField(11);
 		add(oldPass, "cell 1 0,growx,aligny center");
-		oldPassResult = new JLabel("result");
+		oldPassResult = new JLabel("");
 		add(oldPassResult, "cell 2 0,alignx center,aligny center");
 		newPass1Label = new JLabel("New pass :");
 		add(newPass1Label, "cell 0 1,alignx center,aligny center");
 		newPass1 = new JPasswordField(11);
 		add(newPass1, "cell 1 1,growx,aligny center");
-		newPass1Result = new JLabel("result");
+		newPass1Result = new JLabel("");
 		add(newPass1Result, "cell 2 1,alignx center,aligny center");
 		newPass2Label = new JLabel("Confirm :");
 		add(newPass2Label, "cell 0 2,alignx center,aligny center");
 		newPass2 = new JPasswordField(11);
 		add(newPass2, "cell 1 2,growx,aligny center");
-		newPass2Result = new JLabel("result");
+		newPass2Result = new JLabel("");
 		add(newPass2Result, "cell 2 2,alignx center,aligny center");
 		
 		btnCancel = new JButton("Cancel");

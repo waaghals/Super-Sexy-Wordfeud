@@ -58,16 +58,9 @@ public class AccountModel extends CoreModel {
 
 	public static void registerAccount(String username, char[] password, String role) {
 
-		String query = "INSERT INTO `account` (`naam`, `wachtwoord`) VALUES (?, ?)";
+		String query = "INSERT INTO `account` (`naam`, `wachtwoord`, `rol_type`) VALUES (?, ?, ?)";
 		try {
-			new Query(query).set(username).set(password).exec();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		//weet niet of dit precies zo moet met de accountrol toevoegen
-		String query2 = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?,?)";
-		try {
-			new Query(query2).set(username).set(role).exec();
+			new Query(query).set(username).set(password).set(role).exec();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -86,6 +79,16 @@ public class AccountModel extends CoreModel {
 		return username;
 	}
 
+	public void changePass(String newPass){
+		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
+		try{
+			new Query(query).set(newPass).set(username).exec();
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+		
+	}
+	
 	public static boolean checkUsernameAvailable(String username) {
 		String query = "SELECT * FROM account WHERE naam = ?";
 		try {
@@ -136,5 +139,17 @@ public class AccountModel extends CoreModel {
 	public String toString() {
 		return username;
 	}
-
+	
+	public String getpass(){
+		String query="SELECT wachtwoord FROM account WHERE naam=?";
+		String pass = "";
+		try{
+			ResultSet check = new Query(query).set(username).select();
+			check.next();
+			pass = check.getString(1);
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+		return pass;
+	}
 }

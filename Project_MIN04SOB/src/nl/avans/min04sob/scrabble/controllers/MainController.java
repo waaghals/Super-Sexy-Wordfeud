@@ -27,10 +27,10 @@ import nl.avans.min04sob.scrabble.views.MenuView;
 
 public class MainController extends CoreController {
 
-	private ChangePassPanel changePassPanel;
 	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
+	private AccountController accountcontroller;
 	private GamesComboBox gamesPanel;
 	private BoardPanelView currGamePanel;
 	private ChatPanel chatPanel;
@@ -70,7 +70,6 @@ public class MainController extends CoreController {
 		//changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		account = new AccountModel();
-		
 		turn = new JLabel();
 		turn.setText("TEEEEST");
 		
@@ -147,8 +146,8 @@ public class MainController extends CoreController {
 	private void addLoginListener(){
 		menu.addLoginItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginController loginC = new LoginController(account);
-				loginC.addView(menu);
+				accountcontroller = new AccountController(account);
+				accountcontroller.addView(menu);
 			}
 		});
 	}
@@ -211,7 +210,7 @@ public class MainController extends CoreController {
 	private void changePass() {
 		frame.remove(chatPanel);
 		frame.remove(currGamePanel);
-		frame.add(new ChangePassPanel(), "cell 0 1 4 8,alignx left,aligny top");
+		frame.add(accountcontroller.getchangepasspanel(), "cell 0 1 4 8,alignx left,aligny top");
 		frame.repaint();
 	}
 	public boolean yourturn(){
