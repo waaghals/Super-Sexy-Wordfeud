@@ -8,18 +8,20 @@ import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
+import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 import nl.avans.min04sob.scrabble.views.LoginPanel;
 import nl.avans.min04sob.scrabble.views.RegisterPanel;
 
-public class LoginController extends CoreController {
+public class AccountController extends CoreController {
 
 	private LoginPanel loginPanel;
 	private RegisterPanel registerPanel;
 	private AccountModel accountModel;
+	private ChangePassPanel changepasspanel;
 	private JFrame frame;
 	private final int maxpass_userLength, minpass_userLength;
 
-	public LoginController(AccountModel account) {
+	public AccountController(AccountModel account) {
 
 		maxpass_userLength = 11;
 		minpass_userLength = 5;
@@ -29,11 +31,13 @@ public class LoginController extends CoreController {
 		loginPanel = new LoginPanel();
 		accountModel = account;
 		registerPanel = new RegisterPanel();
+		changepasspanel = new ChangePassPanel();
 
 		frame.add(loginPanel);
 
 		addView(registerPanel);
 		addView(loginPanel);
+		addView(changepasspanel);
 		addModel(accountModel);
 
 		loginPanel.addActionListenerLogin(new ActionListener() {
@@ -57,6 +61,19 @@ public class LoginController extends CoreController {
 		registerPanel.addActionListenerRegister(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tryToRegister();
+			}
+		});
+		
+		changepasspanel.addCancelActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				//TODO go back to normal view ;
+			}
+		});
+		
+		changepasspanel.addChangeActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				changePass();
+				//TODO go back too normal view ;
 			}
 		});
 
@@ -150,7 +167,31 @@ public class LoginController extends CoreController {
 			}
 		}
 	}
-
+	
+	public ChangePassPanel getchangepasspanel(){
+		return changepasspanel;
+	}
+	
+	public void changePass(){
+		String oldpass = changepasspanel.getOldPass();
+		String newpass1 = changepasspanel.getNewPass1();
+		String newpass2 = changepasspanel.getNewPass2();
+		if(oldpass.equals(accountModel.getpass())){
+			if (validateLength(newpass1.length()) == -1) {
+				changepasspanel.setNewPass1Good(false, "To short");
+			} else if (validateLength(newpass1.length()) == 1) {
+				changepasspanel.setNewPass1Good(false, "To long");
+			} else {
+				if(newpass2.equals(newpass1)){
+					accountModel.changePass(changepasspanel.getNewPass1());
+				}else{
+					changepasspanel.setNewPass2Good(false, "Doesn't match");
+				}
+			}
+		}else{
+			changepasspanel.setOldPassGood(false, "Wrong");
+		}
+	}
 	private void loginToRegister() {
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
