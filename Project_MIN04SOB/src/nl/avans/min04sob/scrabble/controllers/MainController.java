@@ -103,7 +103,9 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GameModel selectedGame = gamesPanel.getSelectedGame();
+				
 				openGame(selectedGame);
+				
 			}
 		});
 		
@@ -151,8 +153,8 @@ public class MainController extends CoreController {
 		ArrayList<GameModel> games =account.getOpenGames();
 			int y = 0;
 		for(int x= 0; games.size() > 0;x++){
-			System.out.println(y);
-			if(games.get(x).getGameId() == 	selectedGame.getGameId()){
+			
+			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
 				removeModel(boardModel);
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
@@ -163,7 +165,6 @@ public class MainController extends CoreController {
 				
 			}else{
 				y++;
-				System.out.println(y);
 			}
 			if(y == games.size()){
 				removeModel(boardModel);
