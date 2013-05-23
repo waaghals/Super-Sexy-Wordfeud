@@ -20,14 +20,17 @@ public class InviteView extends CorePanel{
 	private JButton annuleerButton;
 	private JLabel competitionLabel;
 	private JLabel spelersLabel;
+	private String competitionLabelText;
+	private String spelersLabelText;
+	private String actieButtonText;
 	
 	public InviteView(){
 		setLayout(new MigLayout("", "[100px:120px:120px,grow][100px:142.00px:100px,grow][100px:100px:100px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 		
-		competitionLabel = new JLabel("xxxxx"); //aanpassen naar variabelle
+		competitionLabel = new JLabel(competitionLabelText); //aanpassen naar variabelle
 		add(competitionLabel, "cell 0 0");
 		
-		spelersLabel = new JLabel("xxxxx"); //aanpassen naar variabelle
+		spelersLabel = new JLabel(spelersLabelText); //aanpassen naar variabelle
 		add(spelersLabel, "cell 1 0");
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -49,13 +52,12 @@ public class InviteView extends CorePanel{
 		});
 		add(annuleerButton, "cell 0 4,alignx left,aligny top");
 		
-		JButton actieButton = new JButton("xxxxx"); //aanpassen naar variabelle
+		JButton actieButton = new JButton(actieButtonText); //aanpassen naar variabelle
 		actieButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		add(actieButton, "cell 2 4,growx,aligny top");
-		
 	}
 	
 	public void addActionListenerActieButton(ActionListener listener){
@@ -65,6 +67,12 @@ public class InviteView extends CorePanel{
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setButtons(String competitionLabelText, String spelersLabelText, String actieButtonText){
+		this.competitionLabelText = competitionLabelText;
+		this.spelersLabelText = spelersLabelText;
+		this.actieButtonText = actieButtonText;
 	}
 
 }
