@@ -23,35 +23,54 @@ public class ChallengeModel extends Observable  {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
-	public ResultSet result ;
+	public ResultSet result = new Query("SELECT `*`;").select();;
 	public int spelid; 
-	
 	public Timer timer = new Timer();
 	public ArrayList <Integer> challengegamenumber = new ArrayList<Integer>();
 	public ArrayList <String> challengename = new ArrayList<String>();
-	
+	//   to do    spel id moet anders zijn dan column nummer
 	public ChallengeModel() throws SQLException
 	{
 		this.addObserver(new ChallengeView());
-		String query = "SELECT `*`;";
-		result=new Query(query).select();
 	}
-	public void createChallenge(String Challengername,String  challegendname)//uitdager
+	public void controle(String Challengername,String  challegendname) throws SQLException//uitdager
 	{
 		// hoe kom ik aan challenger name?
 		int spelid = 1;// of 1
-		while (spelid < Query.getNumRows(result )+1) {
+		
+		 
+		//// need test break
+		boolean alreadychallenged = false;
+		while (result.next()) {
 			String query = "SELECT `INT ID` FROM `Spel`;";
-			try {
+			String query2 = "SELECT `Account_naam_uitdager` FROM `Spel`;";
+				ResultSet dbResult2 =  new Query(query2) .select();
 				ResultSet dbResult =  new Query(query) .select();
-				if (dbResult.getArray(spelid) == null) {
-					break;
+				if (dbResult.getArray(spelid) == null) 
+				{
+					while(result.next())
+					{
+						if (dbResult2.getString(spelid).equals(challengename.get(spelid) )) {
+							alreadychallenged =true;
+							break;
+						}
+						spelid++;
+					}
+					
 				}
-			} catch (SQLException sql) {
-				sql.printStackTrace();
-			}
+		 
 			spelid++;
+			
 		}
+		if(alreadychallenged==false)//overbodig misschien    hoe sterk is break?
+		{
+			createChallenge(  Challengername,   challegendname);
+			 
+		}
+	}
+		
+		public void createChallenge(String Challengername,String  challegendname) throws SQLException//uitdager
+		{	
 		String query = "INSERT INTO `Spel` (`spelid`,`Toestand_type`,`Account_naam_uitdager` ) VALUES ( '"
 				+ spelid
 				+ STATE_REQUEST
@@ -60,7 +79,7 @@ public class ChallengeModel extends Observable  {
 				+ "')  ;";
 		//replace
 		try {
-			new Query(query);
+			new Query(query).exec();
 		} catch (SQLException sql) {
 			System.out.println(query);
 			sql.printStackTrace();
@@ -82,7 +101,6 @@ public class ChallengeModel extends Observable  {
 					if (dbResult.getString(sspelid) == "Rejected") {
 						commandsToChallengeview("2");
 						timer.cancel();
-						 
 					}
 				} catch (SQLException sql) {
 					System.out.println(query1);
@@ -102,50 +120,55 @@ public class ChallengeModel extends Observable  {
 			public void run() {
 				int index = 0;
 				
-					String query = "SELECT `acountnamategenstander ` FROM `Spel`; where(INT ID) values(index);"; //??
+					String query = "SELECT `Account_naam_tegenstander ` FROM `Spel`; where(INT ID) values(index);"; //??
 					String query2 = "SELECT `spel id ` FROM `Spel`; where(INT ID) values(index);";
 					
 					//voorkomt nog een uitnodiging van de zelfde persoon
 				 
-					while (index < Query.getNumRows(result )+1)// of meer wiv
-					{
 					try {
-						ResultSet dbResult =  new Query(query).select();
-						ResultSet dbResult2 = new Query("SELECT `Reaktie ` FROM `Spel`; where(INT ID) values(index);").select();
-						if(dbResult2.getString(index).equals(STATE_UNKNOWN))
+						while (result.next())// of meer wiv
 						{
-							index++;
+						try {
+							ResultSet dbResult =  new Query(query).select();
+							ResultSet dbResult2 = new Query("SELECT `Reaktie ` FROM `Spel`; where(INT ID) values(index);").select();
+							if(dbResult2.getString(index).equals(STATE_UNKNOWN) ||dbResult2.getString(index).equals(STATE_ACCEPTED) )
+							{
+								index++;
+							}
+							if (dbResult.getString(index).equals("getplayer name-_- )"))  // ///											// ????
+							{
+								// array 
+								challengename.add(dbResult.getString(index));
+								commandsToChallengeview("1");
+								new Query("INSERT INTO `Spel` (`Reaktie`) values ( '"+STATE_UNKNOWN+ "' ).exec();");
+								 
+								//challengegamenumber.add(index);
+							}
+							dbResult =  new Query(query2).select();
+							if (dbResult.getString(index)  == "getplayer name-_-") // ///											// ????
+							{
+								// array 
+								challengegamenumber.add(dbResult.getInt(index));
+								 
+								//challengegamenumber.add(index);
+							}
+						} catch (SQLException sql) {
+							System.out.println(query);
+							sql.printStackTrace();
 						}
-						if (dbResult.getString(index).equals("getplayer name-_- )"))  // ///											// ????
-						{
-							// array 
-							challengename.add(dbResult.getString(index));
-							commandsToChallengeview("1");
-							new Query("INSERT INTO `Spel` (`Reaktie`) values ( '"+STATE_UNKNOWN+ "' ).exec();");
-							 
-							//challengegamenumber.add(index);
-						}
-						dbResult =  new Query(query2).select();
-						if (dbResult.getString(index)  == "getplayer name-_-") // ///											// ????
-						{
-							// array 
-							challengegamenumber.add(dbResult.getInt(index));
-							 
-							//challengegamenumber.add(index);
-						}
-					} catch (SQLException sql) {
-						System.out.println(query);
-						sql.printStackTrace();
+						index++;
+}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					index++;
-				}
 			}}, 0, 10000); 
-			String query = "SELECT `acountnamategenstander ` FROM `Spel`; where(INT ID) values(index);";
+			String query = "SELECT `Account_naam_tegenstander ` FROM `Spel`; where(INT ID) values(index);";
 			}
 	 
-	public void acceptCallenge() // uitdgedaagde
+	public void acceptCallenge(int id) // uitdgedaagde
 	{
-		String query = "DELETE FROM `Spel` (`Toestand_type`,Reaktie), where(ID INT) VALUES ('" + spelid
+		String query = "DELETE FROM `Spel` (`Toestand_type`,Reaktie), where(ID INT) VALUES ('" + id
 				+ "') ;"; 
 		String query2 = "INSERT INTO `Spel` (`Toestand_type`,Reaktie) VALUES ('"
 				+ STATE_PLAYING +  STATE_ACCEPTED+ " ') where(ID INT) VALUES ('" + spelid
@@ -153,6 +176,7 @@ public class ChallengeModel extends Observable  {
 		try {
 			new Query(query).exec();
 			new Query(query2).exec();
+			///
 		 //spele
 		} catch (SQLException sql) {
 			System.out.println(query2);

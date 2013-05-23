@@ -99,16 +99,16 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 
 		@Override
 		public void update(Observable arg0, Object arg1) {
-			 int x = (int) arg1;
-			 if(x==1)
+			String x = (String) arg1;
+			 if(x.equals("1"))
 			 {
 				 showChallenge();
 			 }
-			 if(x==2)
+			 if(x.equals("2"))
 			 {
 				 response("challenge denied");
 			 }
-			 if(x==3)
+			 if(x.equals("3"))
 			 {
 				 response("challenge accepted");
 			 }
