@@ -151,21 +151,24 @@ public class MainController extends CoreController {
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
+		
+		
+		frame.remove(currGamePanel);
 		ArrayList<GameModel> games =account.getOpenGames();
 			Boolean needtocreatemodel = true;
 		for(int x= 0; games.size() > x;x++){
 			
 			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
-				
+				System.out.println("test");
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 				currGamePanel.setModel(boardModel);
 				needtocreatemodel = false;
 				addModel(boardModel);
-				
+				 games.get(x).update();
 			}
-			
+		}/* waarschijnlijk niet nodig maar weet niet zkr
 			if(needtocreatemodel){
 				
 				GameModel gm = new GameModel(selectedGame.getGameId(),account);
@@ -176,10 +179,13 @@ public class MainController extends CoreController {
 				
 				addModel(boardModel);
 			}
+			*/
+			
+			frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 			frame.revalidate();
 			frame.repaint();
 			
-		}
+		
 		
 		chatPanel.empty();
 		for (String message : chatModel.getMessages()) {
