@@ -24,6 +24,7 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 	private boolean isFirstMove; // TODO set this value and modify it
+	private boolean iamchallenger;
 
 	private StashModel stash = new StashModel();
 
@@ -67,9 +68,11 @@ public class GameModel extends CoreModel {
 				if (challengerName.equals(currentUser.getUsername())) {
 					opponent = new AccountModel(challengeeName);
 					challenger = currentUser;
+					iamchallenger = true;
 				} else {
 					opponent = new AccountModel(challengerName);
 					challenger = opponent;
+					iamchallenger = false;
 				}
 			}
 
@@ -404,6 +407,50 @@ public class GameModel extends CoreModel {
 
 	public BoardController getBoardcontroller() {
 		return boardcontroller;
+	}
+	public boolean yourturn(){
+		if(isFirstMove){
+			
+		}else{
+				
+		
+		//String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
+		String query = "SELECT Account_naam,ID FROM beurt  WHERE Spel_ID = ? ORDER BY ID";
+		try {
+			ResultSet res = new Query(query).set(gameId).select();
+			String lastturnplayername = null;
+			int x = 0;
+			while(res.next()){
+				if(res.getInt(2) > x){
+					x = res.getInt(2);
+					lastturnplayername = res.getString(1);
+				}
+			}
+			if(iamchallenger){
+				if(lastturnplayername.equals(this.challenger.getUsername()) ){
+					return false;
+				}else{
+					return true;
+				}
+			}else{
+				// heeft nog geen oponent dus tijdelijk uitgecommenteerd
+				//if(lastturnplayername.equals(this.opponent.getUsername()) ){
+					return true;
+				//}else{
+				//	return false;
+				//}
+			}
+			
+				
+
+			
+			
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		
+		}
+		return (Boolean) null;
 	}
 
 }
