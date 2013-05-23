@@ -103,7 +103,9 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GameModel selectedGame = gamesPanel.getSelectedGame();
+				
 				openGame(selectedGame);
+				
 			}
 		});
 		
@@ -148,33 +150,35 @@ public class MainController extends CoreController {
 
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
+		
 		ArrayList<GameModel> games =account.getOpenGames();
-			int y = 0;
-		for(int x= 0; games.size() > 0;x++){
-			System.out.println(y);
-			if(games.get(x).getGameId() == 	selectedGame.getGameId()){
+			Boolean needtocreatemodel = true;
+		for(int x= 0; games.size() > x;x++){
+			
+			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
 				removeModel(boardModel);
+				
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 				currGamePanel.setModel(boardModel);
-				
+				needtocreatemodel = false;
 				addModel(boardModel);
 				
-			}else{
-				y++;
-				System.out.println(y);
 			}
-			if(y == games.size()){
+			if(needtocreatemodel){
 				removeModel(boardModel);
-				currGamePanel = selectedGame.getBoardcontroller().getBpv();
-				boardModel = selectedGame.getBoardcontroller().getBpm();
+				GameModel gm = new GameModel(selectedGame.getGameId(),account);
+				boardModel = gm.getBoardcontroller().getBpm();
+				currGamePanel = gm.getBoardcontroller().getBpv();
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 				currGamePanel.setModel(boardModel);
 				
 				addModel(boardModel);
 			}
-		}		
+			
+		}
+		
 		chatPanel.empty();
 		for (String message : chatModel.getMessages()) {
 			chatPanel.addToChatField(message);
