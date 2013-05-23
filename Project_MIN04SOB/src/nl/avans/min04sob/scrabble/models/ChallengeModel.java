@@ -52,11 +52,11 @@ public class ChallengeModel extends Observable  {
 			}
 			spelid++;
 		}
-		String query = "INSERT INTO `Spel` (`spelid`,`Toestand_type`,`Account_naam_uitdager`,`Reactie_type`) VALUES ( '"
+		String query = "INSERT INTO `Spel` (`spelid`,`Toestand_type`,`Account_naam_uitdager` ) VALUES ( '"
 				+ spelid
 				+ STATE_REQUEST
 				+ Challengername
-				+ STATE_UNKNOWN
+				 
 				+ "')  ;";
 		//replace
 		try {
@@ -71,15 +71,16 @@ public class ChallengeModel extends Observable  {
 			public void run() {
 				String query1 = "SELECT `Reaktie_type` FROM `Spel`; where(ID INT) values()";
 				try {
-					ResultSet dbResult =  new Query(query1) .select();
+					ResultSet dbResult =  new Query(query1).select();
 					if (dbResult.getString(sspelid) == "Accepted") {
 					 
 						timer.cancel();
-						commandsToChallengeview(3);
+						commandsToChallengeview("3");
+						
 						//open gui response
 					}
 					if (dbResult.getString(sspelid) == "Rejected") {
-						commandsToChallengeview(2);
+						commandsToChallengeview("2");
 						timer.cancel();
 						 
 					}
@@ -94,23 +95,33 @@ public class ChallengeModel extends Observable  {
 	{
 		 /// dit code wordt altijd geactiveerd.   om de 10 secondes
 		//activatie index 1
+		ResultSet dbResult;
 		final int sspelid = spelid;
 		final Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			public void run() {
 				int index = 0;
-				while (index < Query.getNumRows(result )+1)// of meer wiv
-				{
-					String[] words = null;
+				
 					String query = "SELECT `acountnamategenstander ` FROM `Spel`; where(INT ID) values(index);"; //??
 					String query2 = "SELECT `spel id ` FROM `Spel`; where(INT ID) values(index);";
+					
+					//voorkomt nog een uitnodiging van de zelfde persoon
+				 
+					while (index < Query.getNumRows(result )+1)// of meer wiv
+					{
 					try {
 						ResultSet dbResult =  new Query(query).select();
-						if (dbResult.getString(index)  == "getplayer name-_-") // ///											// ????
+						ResultSet dbResult2 = new Query("SELECT `Reaktie ` FROM `Spel`; where(INT ID) values(index);").select();
+						if(dbResult2.getString(index).equals(STATE_UNKNOWN))
+						{
+							index++;
+						}
+						if (dbResult.getString(index).equals("getplayer name-_- )"))  // ///											// ????
 						{
 							// array 
 							challengename.add(dbResult.getString(index));
-							commandsToChallengeview(1);
+							commandsToChallengeview("1");
+							new Query("INSERT INTO `Spel` (`Reaktie`) values ( '"+STATE_UNKNOWN+ "' ).exec();");
 							 
 							//challengegamenumber.add(index);
 						}
@@ -162,10 +173,10 @@ public class ChallengeModel extends Observable  {
 		}
 	}
 	
-	public void commandsToChallengeview(int getal)
+	public void commandsToChallengeview(String commando)
 	{	
 		this.setChanged();
-		this.notifyObservers(getal);
+		this.notifyObservers(commando);
 	}
 //// die onder wordt niet echt gebruikt
 	public void  OnlinePlayers(int competitionID) {		
