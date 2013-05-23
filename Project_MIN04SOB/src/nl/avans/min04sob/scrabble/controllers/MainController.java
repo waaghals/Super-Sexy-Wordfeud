@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -35,6 +36,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
+	private JLabel turn;
 	
 
 	public MainController() {
@@ -57,6 +59,7 @@ public class MainController extends CoreController {
 		frame.getContentPane().add(gamesPanel, "cell 0 0 2 1,alignx left,aligny top");
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.getContentPane().add(chatPanel, "cell 0 1 4 8,alignx left,aligny top");
+		frame.getContentPane().add(turn, "cell 0 0 3 2,alignx right , aligny top");
 		frame.pack();
 
 	}
@@ -67,7 +70,12 @@ public class MainController extends CoreController {
 		//changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 		account = new AccountModel();
-
+		
+		turn = new JLabel();
+		turn.setText("TEEEEST");
+		
+		
+		
 		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanelView();
@@ -160,6 +168,12 @@ public class MainController extends CoreController {
 			
 			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
 				System.out.println("test");
+				if(games.get(x).yourturn()){
+					turn.setText("you turn");
+				}else{
+					turn.setText("openentturn");
+				}
+				
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
@@ -184,6 +198,7 @@ public class MainController extends CoreController {
 			frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 			frame.revalidate();
 			frame.repaint();
+		
 			
 		
 		
@@ -199,7 +214,11 @@ public class MainController extends CoreController {
 		frame.add(new ChangePassPanel(), "cell 0 1 4 8,alignx left,aligny top");
 		frame.repaint();
 	}
-	
+	public boolean yourturn(){
+		
+		return false;
+		
+	}
 	
 
 	public void sendChat() {

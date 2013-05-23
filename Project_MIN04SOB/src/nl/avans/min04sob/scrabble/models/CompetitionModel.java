@@ -1,9 +1,12 @@
 package nl.avans.min04sob.scrabble.models;
 
 import java.sql.Array;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
@@ -14,11 +17,20 @@ public class CompetitionModel extends CoreModel {
 	private int ranking = 0;
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
-	private final String removeQuery ="DELETE FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` = ?  VALUES (?, ?)";
+	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
+	private final String createQuery = "INSERT INTO `competitie` (`ID`, `account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?,?)";
 
-	public CompetitionModel(int int1) {
-		// TODO Automatisch gegenereerde constructorstub
+	public CompetitionModel(int int1, String username, String omschrijving) {
 		competitieID = int1;
+		
+		try {
+			new Query(createQuery).set(competitieID).set(username).set(new Date(2013,5,23)).set(new Date(2013,6,1)).set(omschrijving).exec();
+			// eerste Date moet currentDay zijn
+			// tweede Date moet meegegeven worden in een string door gebruiker (en omgezet worden naar date)
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	
 	}
 
 	@Override
@@ -57,9 +69,9 @@ public class CompetitionModel extends CoreModel {
 	
 	public void remove(int competitionID, String username){
 		try {
-			new Query("DELETE FROM `deelnemer` WHERE `competitie_id` ="+ competitionID +" AND `account_naam` = " + username).exec();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			new Query(removeQuery).set(competitionID).set(username).exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
 	}
 }
