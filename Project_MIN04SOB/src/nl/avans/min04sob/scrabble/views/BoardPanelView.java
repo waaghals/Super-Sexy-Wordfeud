@@ -3,6 +3,7 @@ package nl.avans.min04sob.scrabble.views;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.DropMode;
@@ -20,6 +21,7 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanelView extends CorePanel {
+	private JButton resign;
 	JTable table;
 	JTable playerTilesField;
 	public BoardPanelView() {
@@ -87,14 +89,18 @@ public class BoardPanelView extends CorePanel {
 				swap.setText("Swap");
 				add(swap, "cell 5 3,grow");
 				
-				JButton resign = new JButton();
+				resign = new JButton();
 				resign.setText("Resign");
-				
-			
 				add(resign, "cell 8 3,alignx center,growy");
 
 
 	}
+	
+	public void addResignActionListener(ActionListener listener) {
+		resign.addActionListener(listener);
+	}
+	
+	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub

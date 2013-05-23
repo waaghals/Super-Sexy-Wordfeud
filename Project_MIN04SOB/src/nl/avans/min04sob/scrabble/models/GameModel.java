@@ -152,8 +152,8 @@ public class GameModel extends CoreModel {
 	}
 
 	public String toString() {
-		return gameId + "";
-		// return competition.getName() + " - " + opponent.getUsername();
+		//return gameId + "";
+		return competition.getName() + " - " + opponent.getUsername();
 	}
 
 	public CompetitionModel getCompetition() {
@@ -408,6 +408,7 @@ public class GameModel extends CoreModel {
 	public BoardController getBoardcontroller() {
 		return boardcontroller;
 	}
+
 	public boolean yourturn(){
 		if(isFirstMove){
 			
@@ -451,6 +452,18 @@ public class GameModel extends CoreModel {
 		
 		}
 		return (Boolean) null;
+}
+
+	
+	public void Resign() {
+		String resigned = "Resigned";
+		String query = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = `" + gameId + "`";
+		try {
+			new Query(query).set(resigned).exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+
 	}
 
 }
