@@ -1,5 +1,7 @@
 package nl.avans.min04sob.scrabble.controllers;
 
+import javax.swing.JFrame;
+
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.views.InviteView;
@@ -7,7 +9,7 @@ import nl.avans.min04sob.scrabble.views.InviteView;
 public class InviteController extends CoreController {
 
 	private InviteView inviteView;
-	private CoreWindow window;
+	private JFrame window;
 	
 	public InviteController(){
 		initialize();
@@ -15,7 +17,7 @@ public class InviteController extends CoreController {
 	
 	@Override
 	public void initialize() {
-		window = new CoreWindow();
+		window = new JFrame();
 		
 		inviteView = new InviteView();
 		addView(inviteView);
@@ -29,7 +31,7 @@ public class InviteController extends CoreController {
 
 	}
 
-	public static void Main(String[] arg){
+	public static void main(String[] arg){
 		new InviteView();
 		
 	}
