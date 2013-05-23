@@ -150,13 +150,12 @@ public class MainController extends CoreController {
 
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
-		
+		removeModel(boardModel);
 		ArrayList<GameModel> games =account.getOpenGames();
 			Boolean needtocreatemodel = true;
 		for(int x= 0; games.size() > x;x++){
 			
 			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
-				removeModel(boardModel);
 				
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
@@ -166,8 +165,9 @@ public class MainController extends CoreController {
 				addModel(boardModel);
 				
 			}
+			
 			if(needtocreatemodel){
-				removeModel(boardModel);
+				
 				GameModel gm = new GameModel(selectedGame.getGameId(),account);
 				boardModel = gm.getBoardcontroller().getBpm();
 				currGamePanel = gm.getBoardcontroller().getBpv();
@@ -176,6 +176,8 @@ public class MainController extends CoreController {
 				
 				addModel(boardModel);
 			}
+			frame.revalidate();
+			frame.repaint();
 			
 		}
 		
