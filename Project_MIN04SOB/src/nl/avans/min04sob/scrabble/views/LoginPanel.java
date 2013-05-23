@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import java.awt.Insets;
+import net.miginfocom.swing.MigLayout;
 //GUI checked
 public class LoginPanel extends CorePanel {
 
@@ -27,67 +28,20 @@ public class LoginPanel extends CorePanel {
 	}
 
 	public LoginPanel() {
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0 };
-		gridBagLayout.rowHeights = new int[] { 30, 30, 30 };
-		gridBagLayout.columnWidths = new int[] { 30, 30, 30, 30, 30, 30, 30, 30 };
-		setLayout(gridBagLayout);
-		setPreferredSize(new Dimension(240, 90));
-
-		GridBagConstraints b = new GridBagConstraints();
-		b.gridwidth = 3;
-		b.insets = new Insets(0, 0, 5, 5);
+		setPreferredSize(new Dimension(376, 86));
+		setLayout(new MigLayout("", "[65px][20px][30px][][115px][][96.00][]", "[20px][][20px][23px]"));
 		usernameLabel = new JLabel("Username :");
-		b.gridx = 0;
-		b.gridy = 0;
-		add(usernameLabel, b);
-
-		GridBagConstraints d = new GridBagConstraints();
-		d.fill = GridBagConstraints.HORIZONTAL;
-		d.gridwidth = 5;
-		d.insets = new Insets(0, 0, 5, 5);
+		add(usernameLabel, "cell 0 0,alignx center,aligny center");
 		usernameField = new JTextField();
-
-		d.gridx = 3;
-		d.gridy = 0;
-		add(usernameField, d);
-
-		GridBagConstraints e = new GridBagConstraints();
-		e.gridwidth = 3;
-		e.insets = new Insets(0, 0, 5, 5);
+		add(usernameField, "cell 2 0 3 1,growx,aligny center");
+		registerButton = new JButton("Go to register");
+		add(registerButton, "cell 6 0 2 4,grow");
 		passwordLabel = new JLabel("Password :");
-		e.gridx = 0;
-		e.gridy = 1;
-		add(passwordLabel, e);
-
-		GridBagConstraints f = new GridBagConstraints();
-		f.fill = GridBagConstraints.HORIZONTAL;
-		f.gridwidth = 5;
-		f.insets = new Insets(0, 0, 5, 5);
+		add(passwordLabel, "cell 0 2,alignx center,aligny center");
 		passwordField = new JPasswordField();
-
-		f.gridx = 3;
-		f.gridy = 1;
-		add(passwordField, f);
-
-		GridBagConstraints g = new GridBagConstraints();
-		g.fill = GridBagConstraints.HORIZONTAL;
-		g.gridwidth = 4;
-		g.insets = new Insets(0, 5, 0, 0);
+		add(passwordField, "cell 2 2 3 1,growx,aligny center");
 		loginButton = new JButton("Login");
-		g.gridx = 0;
-		g.gridy = 2;
-		add(loginButton, g);
-
-		GridBagConstraints h = new GridBagConstraints();
-		h.insets = new Insets(0, 0, 0, 5);
-		h.fill = GridBagConstraints.HORIZONTAL;
-		h.gridwidth = 4;
-		registerButton = new JButton("Register");
-		h.gridx = 4;
-		h.gridy = 2;
-		add(registerButton, h);
+		add(loginButton, "cell 4 3,growx,aligny center");
 	}
 
 	public String getUsername() {
