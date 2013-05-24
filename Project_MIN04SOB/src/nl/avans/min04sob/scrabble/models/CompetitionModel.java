@@ -20,6 +20,12 @@ public class CompetitionModel extends CoreModel {
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
+	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished" ;
+	private final String totalPointsQuery = "SELECT SUM(score) FROM `beurt` as b JOIN `spel` as s ON `b.spel_id` = `s.id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
+	private final String averagePointsQuery = "SELECT (SUM(score) / COUNT(DISTINCT spel_id)) FROM `beurt` as b JOIN `spel` as s ON `s.id` = `b.spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
+	private final String gamefinished= "SELECT `spel_id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
+	private final String amountWonLosedGamesQuery= "SELECT `account_naam`, SUM(score) FROM `spel` as s JOIN `beurt` as b ON `s.id` = `b.spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `s.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
+	private final String bayesianAverageQuery = "";
 
 	public CompetitionModel(int int1) {
 		competitieID = int1;
@@ -68,7 +74,7 @@ public class CompetitionModel extends CoreModel {
 	}
 	
 	public void createCompetition(String username, String omschrijving){
-		try {
+		try { 
 			new Query(createQuery).set(username).set(new Date(2013,5,23)).set(new Date(2013,6,1)).set(omschrijving).exec();
 			// eerste Date moet currentDay zijn
 			// tweede Date moet meegegeven worden in een string door gebruiker (en omgezet worden naar date)
