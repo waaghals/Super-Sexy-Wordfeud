@@ -8,9 +8,7 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
-
- 
-
+import nl.avans.min04sob.scrabble.controllers.ChallengeController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
@@ -31,9 +29,9 @@ public class ChallengeModel extends Observable  {
 	//   to do    spel id moet anders zijn dan column nummer
 	public ChallengeModel()  
 	{
-		this.addObserver(new ChallengeView());
+		this.addObserver(new ChallengeController());
 	}
-	public void controle(String Challengername,String  challegendname, int id) throws SQLException//uitdager
+	public void controle(String Challengername,String  challegendname, String string) throws SQLException//uitdager
 	{
 		 result = new Query("SELECT `*`;").select();;
 		// hoe kom ik aan challenger name?
@@ -46,7 +44,7 @@ public class ChallengeModel extends Observable  {
 			ResultSet dbResult2 =  new Query(query2) .select();
 			ResultSet dbResult =  new Query(query) .select();
 		while (result.next()) {
-				if (dbResult.getInt(  spelid) == id) 
+				if (dbResult.getString(  spelid).equals(string)) 
 				{
 					error =true;
 					commandsToChallengeview("4 ");
@@ -67,11 +65,11 @@ public class ChallengeModel extends Observable  {
 		}
 		if(error==false)//overbodig misschien    hoe sterk is break?
 		{
-			createChallenge(  Challengername,   challegendname , id);
+			createChallenge(  Challengername,   challegendname , string);
 		}
 	}
 		
-		public void createChallenge(String Challengername,String  challegendname,int id) throws SQLException//uitdager
+		public void createChallenge(String Challengername,String  challegendname,String id) throws SQLException//uitdager
 		{	
 		String query = "INSERT INTO `Spel` (`spelid`,`Toestand_type`,`Account_naam_uitdager` ) VALUES ( '"
 				+ spelid
@@ -228,6 +226,3 @@ public class ChallengeModel extends Observable  {
 	}
 	
 }
-
-
-/// teestz
