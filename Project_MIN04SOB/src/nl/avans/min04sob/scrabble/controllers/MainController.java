@@ -76,7 +76,7 @@ public class MainController extends CoreController {
 		turn.setText("TEEEEST");
 		
 		
-		crtl=new ChallengeController();
+		crtl=new ChallengeController(account.getUsername() );
 		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanelView();

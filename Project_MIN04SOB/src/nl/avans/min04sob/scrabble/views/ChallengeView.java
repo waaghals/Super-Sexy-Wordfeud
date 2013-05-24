@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.CoreView;
-	public class ChallengeView    {
+	public class ChallengeView implements CoreView  {
 		// extends??
 		private JTextField Opponent;
 	//	http://www.oracle.com/technetwork/articles/javase/index-142890.html
@@ -108,6 +108,11 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public  JFrame javaFrame()		
 		{
 			return jf;
+		}
+		@Override
+		public void modelPropertyChange(PropertyChangeEvent evt) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	 

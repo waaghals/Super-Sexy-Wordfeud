@@ -11,27 +11,40 @@ import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
 
-public class ChallengeController extends AccountModel implements Observer{
+public class ChallengeController extends CoreController  {
 	private ChallengeView cv = new ChallengeView();
 	private ChallengeModel cm = new ChallengeModel();
-	public ChallengeController ()
+	 
+	public ChallengeController (final String naam)
 	{
+		addView(cv);
+		addModel(cm);
 	    cv.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cm.acceptCallenge(cv.getspelID());
+				try {
+					cm.respondChallenge(cv.getspelID(), naam,true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				cv.javaFrame().dispose();
 			}
 		});
 		cv.addActionListenerDecline (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cm.declineCallenge(cv.getspelID());
+				try {
+					cm.respondChallenge(cv.getspelID(), naam,false);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				cv.javaFrame().dispose();
 			}
 		});
 		cv.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cm.controle(getUsername(),  cv.getUsername(), cv.getspelID());
+					cm.controle(naam,  cv.getUsername(), cv.getspelID());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -41,9 +54,9 @@ public class ChallengeController extends AccountModel implements Observer{
 		});
 	}
 	 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-	String x = (String) arg1;
+	 /*/
+	public void   {
+	String x =  ;
 	 switch(x)
 		 {
 		 case "1": cv.showChallenge(challengers());break;
@@ -52,15 +65,15 @@ public class ChallengeController extends AccountModel implements Observer{
 		 case "4": cv.response("something went wrong");break;
 		 default: break;
 		 }
-	}
-	
+			}
+	 /*/
 	public String challengers()
 	{
 		String iets = "";
 		int index=0;
-		while(index<cm.Uitnodigingnaam().size())
+		while(index<cm.gegevens().size())
 		{
-			iets = iets + cm.Uitnodigingnaam()+ ": "+cm.Uitnodigingnummer();
+			iets = iets + cm.gegevens();
 			index++;
 		}
 		return iets;
@@ -74,6 +87,18 @@ public class ChallengeController extends AccountModel implements Observer{
 	public void toChallenge()
 	{
 		toChallenge();
+	}
+
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	 
