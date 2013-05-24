@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.controllers.AcceptDeclineController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import javax.swing.JScrollPane;
@@ -19,6 +20,7 @@ public class AcceptDeclineView extends CorePanel{
 	private JList wordList;
 	private GameModel gameModel = new GameModel();
 	private JFrame myFrame;
+	//private AcceptDeclineController adController;
 	
 	public AcceptDeclineView()
 	{
@@ -48,7 +50,11 @@ public class AcceptDeclineView extends CorePanel{
 		wordList = new JList(gameModel.getRequestedWords());
 		
 	}
-
+	
+	public void fillJList(JList list)
+	{
+		wordList = list;
+	}
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
