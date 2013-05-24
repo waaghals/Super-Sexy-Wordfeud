@@ -2,12 +2,14 @@ package nl.avans.min04sob.scrabble.models;
 
 import java.awt.Point;
 import java.sql.Array;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
@@ -73,17 +75,18 @@ public class CompetitionModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
-
-	public void createCompetition(String username, String omschrijving) {
-		try {
-			new Query(createQuery).set(username).set(new Date(2013, 5, 23))
-					.set(new Date(2013, 6, 1)).set(omschrijving).exec();
-			// eerste Date moet currentDay zijn
-			// tweede Date moet meegegeven worden in een string door gebruiker
-			// (en omgezet worden naar date)
-			// of met die DateRangePanel?
-		} catch (SQLException sql) {
-			sql.printStackTrace();
+	
+	public void createCompetition(String username, String eindDatum, String omschrijving){
+		try { 
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date1 = new Date();
+			String currentdate = dateFormat.format(date1);
+			Date date2;
+			date2 = dateFormat.parse(eindDatum);
+			String endDate = dateFormat.format(date2);
+			new Query(createQuery).set(username).set(currentdate).set(endDate).set(omschrijving).exec();
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
 		}
 	}
 

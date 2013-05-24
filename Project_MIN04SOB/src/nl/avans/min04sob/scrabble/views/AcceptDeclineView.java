@@ -28,9 +28,14 @@ public class AcceptDeclineView extends CorePanel{
 		
 		JButton terugButton = new JButton("Terug");
 		terugButton.addActionListener(new ActionListener() {
+		//hier een method van maken bv: public void addActionListenerBack(ActionListener listener) {
+		//	terugButton.addActionListener(listener);
+		//} 
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
+		
+		
 		
 		JLabel lblVoorgesteldeWoorden = new JLabel("voorgestelde woorden");
 		add(lblVoorgesteldeWoorden, "cell 0 0");
