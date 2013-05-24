@@ -1,5 +1,8 @@
 package nl.avans.min04sob.scrabble.controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JList;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
@@ -39,7 +42,15 @@ public class AcceptDeclineController extends CoreController{
 
 	@Override
 	public void addListeners() {
-		// TODO Auto-generated method stub
-		
+		/*addActionListenerBack(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		*/
 	}
+	
+	
 }
