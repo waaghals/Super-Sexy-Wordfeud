@@ -95,10 +95,8 @@ public class CompetitionModel extends CoreModel {
 
 	public void deleteCompetition(int competitionID) {
 		try {
-			Date date = new Date();
-			ResultSet dbResult = new Query(
-					"SELECT `einde FROM `competitie` WHERE `id` = ?").set(
-					competitionID).select();
+			Date date = new Date();	
+			ResultSet dbResult = new Query("SELECT `einde FROM `competitie` WHERE `id` = ?").set(competitionID).select();
 			if (dbResult.next()) {
 				date = dbResult.getDate("einde");
 			}
