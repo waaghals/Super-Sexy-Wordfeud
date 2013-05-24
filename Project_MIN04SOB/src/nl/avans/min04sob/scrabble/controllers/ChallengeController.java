@@ -11,7 +11,7 @@ import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
 
-public class ChallengeController implements Observer{
+public class ChallengeController extends AccountModel implements Observer{
 	private ChallengeView cv = new ChallengeView();
 	private ChallengeModel cm = new ChallengeModel();
 	public ChallengeController ()
@@ -31,7 +31,7 @@ public class ChallengeController implements Observer{
 		cv.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cm.controle("iets",  cv.getUsername(), cv.getspelID());
+					cm.controle(getUsername(),  cv.getUsername(), cv.getspelID());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
