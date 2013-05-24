@@ -25,8 +25,8 @@ public class CompetitionModel extends CoreModel {
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
 	private final String removeCompetitionQuery = "DELETE FROM `competitie` WHERE `ID` = ?";
 	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
-	private final String totalPointsQuery = "SELECT SUM(`score`) FROM `beurt` as b JOIN `spel` as s ON `b.spel_id` = `s.id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
-	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) FROM `beurt` as `b` JOIN `spel` as `s` ON `s.id` = `b.spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
+	private final String totalPointsQuery = "SELECT SUM(`score`) FROM `beurt` as `b` JOIN `spel` as `s` ON `b.spel_id` = `s.id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
+	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) as `avg` FROM `beurt` as `b` JOIN `spel` as `s` ON `s.id` = `b.spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
 	private final String gamefinished = "SELECT `spel_id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
 	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(score) FROM `spel` as `s` JOIN `beurt` as `b` ON `s.id` = `b.spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `s.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
 	private final String bayesianAverageQuery = "";
@@ -134,8 +134,41 @@ public class CompetitionModel extends CoreModel {
 				}
 			}
 		} catch (SQLException sql) {
-			// TODO Auto-generated catch block
 			sql.printStackTrace();
 		}
+	}
+	
+	public void totalPlayedGames(int competitionID, String username){
+		try {
+			ResultSet dbResult = new Query(totalPlayedGamesQuery).set(username).set(username).set(competitionID).select();
+			if(dbResult.next()){
+				int x = dbResult.getInt("COUNT(*)");
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+	
+	public void totalPoints(int competitionID, String username){
+		try {
+			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID).set(username).select();
+			if(dbResult.next()){
+				int x = dbResult.getInt("SUM(score)");
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+	
+	public void averagePoints(int competitionID, String username){
+		try {
+			ResultSet dbResult = new Query(averagePointsQuery).set(competitionID).set(username).select();
+			if(dbResult.next()){
+				int x = dbResult.getInt("avg");
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		
 	}
 }
