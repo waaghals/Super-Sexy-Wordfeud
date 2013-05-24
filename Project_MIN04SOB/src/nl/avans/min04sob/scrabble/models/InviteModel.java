@@ -14,7 +14,7 @@ public class InviteModel extends CoreModel {
 	private ArrayList<String> players;
 	private AccountModel account;
 	private final String selectQueryCompetitie = "SELECT 'ID', 'omschrijving' FROM 'competitie' AS 'co' JOIN 'deelnemer' AS 'dr'  ON 'co.ID' = 'dr.Competitie_ID' WHERE 'dr.Account_naam' = ?";
-	private final String selectQueryPlayers = "SELECT 'Account_naam' FROM 'competitie' AS 'co' JOIN 'deelnemer' AS 'dr' ON 'co.ID' = 'dr.Competitie_ID' WHERE 'dr.Competitie_ID' = '1'";
+	private final String selectQueryPlayers = "SELECT 'Account_naam' FROM 'competitie' AS 'co' JOIN 'deelnemer' AS 'dr' ON 'co.ID' = 'dr.Competitie_ID' WHERE 'dr.Competitie_ID' = '?'";
 
 	public InviteModel() {
 		account = new AccountModel();

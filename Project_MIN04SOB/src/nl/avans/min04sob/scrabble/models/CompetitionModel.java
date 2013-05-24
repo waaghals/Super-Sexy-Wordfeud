@@ -13,24 +13,16 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class CompetitionModel extends CoreModel {
 
-	private int competitieID; // competitie ID
+	private int competitieID;
 	private int ranking = 0;
+	private String name;
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
-	private final String createQuery = "INSERT INTO `competitie` (`ID`, `account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?,?)";
+	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
 
-	public CompetitionModel(int int1, String username, String omschrijving) {
+	public CompetitionModel(int int1) {
 		competitieID = int1;
-		
-		try {
-			new Query(createQuery).set(competitieID).set(username).set(new Date(2013,5,23)).set(new Date(2013,6,1)).set(omschrijving).exec();
-			// eerste Date moet currentDay zijn
-			// tweede Date moet meegegeven worden in een string door gebruiker (en omgezet worden naar date)
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-	
 	}
 
 	@Override
@@ -40,7 +32,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	public String getName() {
-		return "CompName";
+		return name;
 	}
 
 	public ArrayList<Array> getLeaderBoard(int competitionID) {
@@ -70,6 +62,17 @@ public class CompetitionModel extends CoreModel {
 	public void remove(int competitionID, String username){
 		try {
 			new Query(removeQuery).set(competitionID).set(username).exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+	
+	public void createCompetition(String username, String omschrijving){
+		try {
+			new Query(createQuery).set(username).set(new Date(2013,5,23)).set(new Date(2013,6,1)).set(omschrijving).exec();
+			// eerste Date moet currentDay zijn
+			// tweede Date moet meegegeven worden in een string door gebruiker (en omgezet worden naar date)
+			// of met die DateRangePanel?
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
