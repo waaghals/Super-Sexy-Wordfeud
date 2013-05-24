@@ -161,4 +161,13 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void addChangePassItemActionListener(ActionListener listener) {
 		changePassItem.addActionListener(listener);
 	}
+	public void adddoChallengeItemActionListener(ActionListener listener) {
+		doChallengeItem.addActionListener(listener);
+	}
+	public void viewChallengeItemActionListener(ActionListener listener) {
+		viewChallengeItem.addActionListener(listener);
+	}
+	
+	
+	
 }

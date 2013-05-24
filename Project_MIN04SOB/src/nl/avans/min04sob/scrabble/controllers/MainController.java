@@ -30,6 +30,7 @@ public class MainController extends CoreController {
 	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
+	private ChallengeController crtl;
 	private AccountController accountcontroller;
 	private GamesComboBox gamesPanel;
 	private BoardPanelView currGamePanel;
@@ -58,6 +59,7 @@ public class MainController extends CoreController {
 	
 		frame.getContentPane().add(gamesPanel, "cell 0 0 2 1,alignx left,aligny top");
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		
 		frame.getContentPane().add(chatPanel, "cell 0 1 4 8,alignx left,aligny top");
 		frame.getContentPane().add(turn, "cell 0 0 3 2,alignx right , aligny top");
 		frame.pack();
@@ -74,7 +76,7 @@ public class MainController extends CoreController {
 		turn.setText("TEEEEST");
 		
 		
-		
+		crtl=new ChallengeController();
 		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanelView();
@@ -90,6 +92,20 @@ public class MainController extends CoreController {
 	@Override
 	public void addListeners() {
 
+		menu.viewChallengeItemActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				crtl.openchallenges();
+				
+			}} );
+		menu.adddoChallengeItemActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				crtl.toChallenge();
+				
+			}} );
 		menu.addChangePassItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePass();
