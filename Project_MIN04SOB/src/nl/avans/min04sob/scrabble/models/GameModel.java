@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.swing.JButton;
-
 import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.MatrixUtils;
@@ -19,6 +17,7 @@ public class GameModel extends CoreModel {
 	private CompetitionModel competition;
 	private AccountModel opponent;
 	private AccountModel challenger;
+	private AccountModel currentUser;
 	private int gameId;
 	private String state;
 	private String boardName;
@@ -50,17 +49,21 @@ public class GameModel extends CoreModel {
 		boardData = new String[15][15];
 	}
 
-	public GameModel(int gameID, AccountModel currentUser) {
+	public GameModel(int gameId, AccountModel user) {
+		currentUser = user;
 		try {
 			ResultSet dbResult = new Query(getGameQuery).set(gameId).select();
-
-			if (Query.getNumRows(dbResult) == 1) {
+			int numRows = Query.getNumRows(dbResult);
+			if (numRows == 1) {
 				dbResult.next();
-				this.gameId = gameID;
-				competition = new CompetitionModel(dbResult.getInt(2));
-				state = dbResult.getString(3);
-				String challengerName = dbResult.getString(4);
-				String challengeeName = dbResult.getString(5);
+				this.gameId = gameId;
+				competition = new CompetitionModel(
+						dbResult.getInt("competitie_id"));
+				state = dbResult.getString("toestand_type");
+				String challengerName = dbResult
+						.getString("account_naam_uitdager");
+				String challengeeName = dbResult
+						.getString("account_naam_tegenstander");
 
 				boardName = dbResult.getString(9);
 				letterSet = dbResult.getString(10);
@@ -115,7 +118,9 @@ public class GameModel extends CoreModel {
 	}
 
 	public void playWord(HashMap<Point, Tile> tiles) {
-		String[][] Boardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
+		String[][] Bnaam_uitdager");
+		String challengeeName = dbResult.getString("account_naam_tegenstander");
+oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
 				.getBpm().tileData[1].length];
 		for (int y = 0; boardcontroller.getBpm().tileData.length > y; y++) {
 			for (int x = 0; boardcontroller.getBpm().tileData[y].length > x; x++) {
@@ -147,13 +152,14 @@ public class GameModel extends CoreModel {
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
-		// TODO also fire property change for a when the player needs to make a new move,
-		//and only update the board when the opponent actually plays a word.
+		// TODO also fire property change for a when the player needs to make a
+		// new move,
+		// and only update the board when the opponent actually plays a word.
 	}
 
 	public String toString() {
-		//return gameId + "";
-		return competition.getName() + " - " + opponent.getUsername();
+		return gameId + "";
+		// return competition.getDesc() + " - " + opponent.getUsername();
 	}
 
 	public CompetitionModel getCompetition() {
@@ -337,7 +343,7 @@ public class GameModel extends CoreModel {
 		System.out.println(Arrays.deepToString(newMatrix));
 	}
 
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
 		new GameModel().test();
 	}
@@ -387,77 +393,78 @@ public class GameModel extends CoreModel {
 
 			// Check horizontally connected
 			for (Point letterPos : letterPositions) {
-				if (max != letterPos.getY()-1 && max != -1) {
-					throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
+				if (max != letterPos.getY() - 1 && max != -1) {
+					throw new InvalidMoveException(
+							InvalidMoveException.NOT_CONNECTED);
 				}
 				max = letterPos.getY();
 			}
 		} else {
 			// Check vertically connected
 			for (Point letterPos : letterPositions) {
-				if (max != letterPos.getX()-1 && max != -1) {
-					throw new InvalidMoveException(InvalidMoveException.NOT_CONNECTED);
+				if (max != letterPos.getX() - 1 && max != -1) {
+					throw new InvalidMoveException(
+							InvalidMoveException.NOT_CONNECTED);
 				}
 				max = letterPos.getX();
 			}
 		}
-		
-		//Everything went better than expected.jpg :)
+
+		// Everything went better than expected.jpg :)
 	}
 
 	public BoardController getBoardcontroller() {
 		return boardcontroller;
 	}
 
-	public boolean yourturn(){
-		if(isFirstMove){
-			
-		}else{
-				
-		
-		//String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-		String query = "SELECT Account_naam,ID FROM beurt  WHERE Spel_ID = ? ORDER BY ID";
-		try {
-			ResultSet res = new Query(query).set(gameId).select();
-			String lastturnplayername = null;
-			int x = 0;
-			while(res.next()){
-				if(res.getInt(2) > x){
-					x = res.getInt(2);
-					lastturnplayername = res.getString(1);
-				}
-			}
-			if(iamchallenger){
-				if(lastturnplayername.equals(this.challenger.getUsername()) ){
-					return false;
-				}else{
-					return true;
-				}
-			}else{
-				// heeft nog geen oponent dus tijdelijk uitgecommenteerd
-				//if(lastturnplayername.equals(this.opponent.getUsername()) ){
-					return true;
-				//}else{
-				//	return false;
-				//}
-			}
-			
-				
+	public boolean yourturn() {
+		if (isFirstMove) {
 
-			
-			
-		} catch (SQLException sql) {
-			sql.printStackTrace();
+		} else {
+
+			// String query =
+			// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
+			String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+			try {
+				ResultSet res = new Query(query).set(gameId).select();
+				res.next();
+				int turnCount = Query.getNumRows(res);
+				
+				//If it is the first turn
+				if(turnCount == 0){
+					//If the currentUser is the challenger return true else false
+					return currentUser.equals(challenger);
+				}
+				
+				String lastturnplayername = res.getString(1);
+				
+				// Get the last turn made
+				// The challenger makes the first move
+				if (lastturnplayername.equals(currentUser.getUsername())) {
+					// If he is challenger
+					if (currentUser.equals(challenger)) {
+						return false;
+					}
+					return true;
+				} else if (currentUser.equals(challenger)) {
+					return true;
+
+				}
+				return false;
+
+			} catch (SQLException sql) {
+				sql.printStackTrace();
+			}
+
 		}
-		
-		}
+
 		return (Boolean) null;
-}
+	}
 
-	
 	public void Resign() {
 		String resigned = "Resigned";
-		String query = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = `" + gameId + "`";
+		String query = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = `"
+				+ gameId + "`";
 		try {
 			new Query(query).set(resigned).exec();
 		} catch (SQLException sql) {
