@@ -32,7 +32,8 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		private JButton oke = new JButton("oke");
 		private JButton oke2 =new JButton("oke");
 		private JFrame jf = new JFrame("popup");
-		private JTextField usernameField = new JTextField(10);
+		private JTextField usernameFielduitdager = new JTextField(10);
+		private JTextField speliduitgedaagde = new JTextField(10);
 			
 		public ChallengeView()
 		{
@@ -41,6 +42,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jf.pack();
 		}
 		
+		/// pas aan
 		public void showChallenge()//gui 
 		{
 			jf.setResizable(false);
@@ -55,13 +57,15 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			accept.setFont(new Font("Serif", Font.ITALIC, 14));
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
 		}
+		//wordt gebruikt of niet
+		// 
 		
 		public void toChallenge()//gui
 		{	
 			jf.setVisible(true);
 			jf .setContentPane(tochallenge);
 			tochallenge.setPreferredSize(new Dimension(180,70));
-			tochallenge.add(usernameField);
+			tochallenge.add(usernameFielduitdager);
 			jf.add(oke);
 		}
 		
@@ -73,48 +77,44 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			response.setPreferredSize(new Dimension(130,70));
 			response.add(new JLabel("msg"));
 			response.add(oke2);
-			oke2.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					jf.dispose();
-				}});
-			
 		}
 		public String getUsername() 
 		{
-			return usernameField.getText();
+			return usernameFielduitdager.getText();
 		}
+		public String getspelID() 
+		{
+			return  speliduitgedaagde.getText();
+		}
+		
+		
 		public void addActionListenerAccept(ActionListener listener) {
 			accept.addActionListener(listener);
 		}
 		
-		
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
-		}
-		 
+		} 
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
 		}
-
 		@Override
 		public void update(Observable arg0, Object arg1) {
-			String x = (String) arg1;
-			 if(x.equals("1"))
+		String x = (String) arg1;
+		 switch(x)
 			 {
-				 showChallenge();
-			 }
-			 if(x.equals("2"))
-			 {
-				 response("challenge denied");
-			 }
-			 if(x.equals("3"))
-			 {
-				 response("challenge accepted");
+			 case "1": showChallenge();break;
+			 case "2": response("challenge denied");break;
+			 case "3": response("challenge accepted");break;
+			 case "4":  response("something went wrong");break;
+			 default: break;
 			 }
 		}
-		public  JFrame javaFrame()		{
+		public  JFrame javaFrame()		
+		{
 			return jf;
 		}
+		
+	 
 	}
 	///
