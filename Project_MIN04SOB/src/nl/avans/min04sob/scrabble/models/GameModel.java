@@ -22,7 +22,6 @@ public class GameModel extends CoreModel {
 	private String state;
 	private String boardName;
 	private String letterSet;
-	private boolean isFirstMove; // TODO set this value and modify it
 	private boolean iamchallenger;
 
 	private StashModel stash = new StashModel();
@@ -418,44 +417,39 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 	}
 
 	public boolean yourturn() {
-		if (isFirstMove) {
 
-		} else {
+		// String query =
+		// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
+		String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+		try {
+			ResultSet res = new Query(query).set(gameId).select();
+			res.next();
+			int turnCount = Query.getNumRows(res);
 
-			// String query =
-			// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-			String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
-			try {
-				ResultSet res = new Query(query).set(gameId).select();
-				res.next();
-				int turnCount = Query.getNumRows(res);
-				
-				//If it is the first turn
-				if(turnCount == 0){
-					//If the currentUser is the challenger return true else false
-					return currentUser.equals(challenger);
-				}
-				
-				String lastturnplayername = res.getString(1);
-				
-				// Get the last turn made
-				// The challenger makes the first move
-				if (lastturnplayername.equals(currentUser.getUsername())) {
-					// If he is challenger
-					if (currentUser.equals(challenger)) {
-						return false;
-					}
-					return true;
-				} else if (currentUser.equals(challenger)) {
-					return true;
-
-				}
-				return false;
-
-			} catch (SQLException sql) {
-				sql.printStackTrace();
+			// If it is the first turn
+			if (turnCount == 0) {
+				// If the currentUser is the challenger return true else false
+				return iamchallenger;
 			}
 
+			String lastturnplayername = res.getString("account_naam");
+
+			// Get the last turn made
+			// The challenger makes the first move
+			if (lastturnplayername.equals(currentUser.getUsername())) {
+				// If he is challenger
+				if (iamchallenger) {
+					return false;
+				}
+				return true;
+			} else if (iamchallenger) {
+				return true;
+
+			}
+			return false;
+
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
 
 		return (Boolean) null;
