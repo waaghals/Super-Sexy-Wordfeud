@@ -23,6 +23,7 @@ public class CompetitionModel extends CoreModel {
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
+	private final String removeCompetitionQuery = "DELETE FROM `competitie` WHERE `ID` = ?";
 	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
 	private final String totalPointsQuery = "SELECT SUM(`score`) FROM `beurt` as b JOIN `spel` as s ON `b.spel_id` = `s.id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
 	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) FROM `beurt` as `b` JOIN `spel` as `s` ON `s.id` = `b.spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
@@ -75,18 +76,38 @@ public class CompetitionModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
-	
-	public void createCompetition(String username, String eindDatum, String omschrijving){
-		try { 
+
+	public void createCompetition(String username, String eindDatum,
+			String omschrijving) {
+		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date1 = new Date();
 			String currentdate = dateFormat.format(date1);
 			Date date2;
 			date2 = dateFormat.parse(eindDatum);
 			String endDate = dateFormat.format(date2);
-			new Query(createQuery).set(username).set(currentdate).set(endDate).set(omschrijving).exec();
+			new Query(createQuery).set(username).set(currentdate).set(endDate)
+					.set(omschrijving).exec();
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void deleteCompetition(int competitionID) {
+		try {
+			Date date = new Date();
+			ResultSet dbResult = new Query(
+					"SELECT `einde FROM `competitie` WHERE `id` = ?").set(
+					competitionID).select();
+			if (dbResult.next()) {
+				date = dbResult.getDate("einde");
+			}
+			// if(vandaag voorbij einddatum is)
+			if (date.compareTo(new Date()) > 0) {
+				new Query(removeCompetitionQuery).set(competitionID).exec();
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
 	}
 
@@ -102,9 +123,10 @@ public class CompetitionModel extends CoreModel {
 				spel_ids.add(dbResult1.getInt("spel_id"));
 			}
 
-			for(Integer id: spel_ids){
-				ResultSet dbResult2 = new Query(amountWonLosedGamesQuery).set(username)
-						.set(username).set(competitionID).set(id).select();
+			for (Integer id : spel_ids) {
+				ResultSet dbResult2 = new Query(amountWonLosedGamesQuery)
+						.set(username).set(username).set(competitionID).set(id)
+						.select();
 				if (dbResult2.next()) {
 					if (dbResult2.getString(1).equals(username)) {
 						amountWon++;
