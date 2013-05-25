@@ -23,6 +23,9 @@ public class AcceptDeclineView extends CorePanel{
 	private JButton accepteerButton;
 	private JButton weigerButton;
 	private boolean status;
+	private JLabel voorgesteldeWoordenLabel;
+	private JScrollPane scrollPane;
+	private JList voorgesteldeWoordenList;
 	
 	public AcceptDeclineView()
 	{
@@ -41,13 +44,13 @@ public class AcceptDeclineView extends CorePanel{
 			}
 		});
 		
-		JLabel lblVoorgesteldeWoorden = new JLabel("voorgestelde woorden");
-		add(lblVoorgesteldeWoorden, "cell 0 0");
+		voorgesteldeWoordenLabel = new JLabel("voorgestelde woorden");
+		add(voorgesteldeWoordenLabel, "cell 0 0");
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 2 3,grow");
 		
-		JList voorgesteldeWoordenList = new JList();
+		voorgesteldeWoordenList = new JList();
 		scrollPane.setViewportView(voorgesteldeWoordenList);
 		
 		accepteerButton = new JButton("Accepteren");
@@ -77,6 +80,7 @@ public class AcceptDeclineView extends CorePanel{
 	public void fillJList(JList list)
 	{
 		wordList = list;
+		list.add(wordList);
 	}
 	
 	public boolean getStatus(){
