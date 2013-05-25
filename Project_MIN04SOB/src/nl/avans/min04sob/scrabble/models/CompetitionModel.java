@@ -23,6 +23,10 @@ public class CompetitionModel extends CoreModel {
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
+	private final String chatsToRemove = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `competitie_id` = ?";
+	private final String removeChats = "DELETE FROM `chatregel` WHERE `spel_id` = ?";
+	private final String removeScores = "DELETE FROM `beurt` WHERE `spel_id` = ?";
+	private final String removeGames = "DELETE FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `competitie_id` = ?";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
 	private final String removeCompetitionQuery = "DELETE FROM `competitie` WHERE `ID` = ?";
 	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
@@ -71,7 +75,17 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	public void remove(int competitionID, String username) {
+		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		try {
+			ResultSet dbResult = new Query(chatsToRemove).set(username).set(username).set(competitionID).select();
+			while (dbResult.next()) {
+				spel_ids.add(dbResult.getInt("spel_id"));
+				for (Integer id : spel_ids) {
+					new Query(removeChats).set(id).exec();
+					new Query(removeScores).set(id).exec();
+				}
+			}
+			new Query(removeGames).set(username).set(username).set(competitionID).exec();	
 			new Query(removeQuery).set(competitionID).set(username).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -95,6 +109,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	public void deleteCompetition(int competitionID) {
+		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		try {
 			Date date = new Date();	
 			ResultSet dbResult = new Query("SELECT `einde FROM `competitie` WHERE `id` = ?").set(competitionID).select();
@@ -102,7 +117,17 @@ public class CompetitionModel extends CoreModel {
 				date = dbResult.getDate("einde");
 			}
 			// if(vandaag voorbij einddatum is)
-			if (date.compareTo(new Date()) > 0) {
+			if (date.compareTo(new Date()) > 0) {				
+				ResultSet dbResult1 = new Query("SELECT `id` FROM `spel` WHERE `competitie_id` = ?").set(competitionID).select();
+				while(dbResult1.next()){
+					spel_ids.add(dbResult.getInt("spel_id"));
+					for (Integer id : spel_ids) {
+						new Query(removeChats).set(id).exec();
+						new Query(removeScores).set(id).exec();
+					}
+				}
+				new Query("DELETE FROM `spel` WHERE `competitie_ID` = ?").set(competitionID).exec();
+				new Query("DELETE FROM `deelnemer` WHERE `competitie_ID` = ?").set(competitionID).exec();
 				new Query(removeCompetitionQuery).set(competitionID).exec();
 			}
 		} catch (SQLException sql) {
