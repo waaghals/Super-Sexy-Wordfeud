@@ -67,7 +67,7 @@ public class TileTranfserHandler extends TransferHandler implements
 
 	@Override
 	public boolean canImport(TransferSupport support) {
-		if(!sourceTile.isMutatable()){
+		if(sourceTile != null && !sourceTile.isMutatable()){
 			return false;
 		}
 		support.setShowDropLocation(true);
