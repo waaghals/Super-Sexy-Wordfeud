@@ -40,6 +40,7 @@ public class AcceptDeclineController extends CoreController{
 	
 	public void fillJList(){
 		adView.fillJList(wordList);
+		
 	}
 	
 	public void checkStatus(){		//naam kan miss beter, nog bedenken.
