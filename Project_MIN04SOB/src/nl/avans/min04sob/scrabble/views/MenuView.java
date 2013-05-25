@@ -32,6 +32,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	
 	private JMenuItem seeCompetitionsItem;
 	private JMenuItem joinCompetitionItem;
+	private JMenuItem deleteCompetitionItem;
 
 	private JMenuItem viewWords;
 
@@ -77,10 +78,12 @@ public class MenuView extends JMenuBar implements CoreView {
 		// create the menuItems
 		seeCompetitionsItem = new JMenuItem("Competitie's bekijken");
 		joinCompetitionItem = new JMenuItem("Deelnemen aan competitie's");
+		deleteCompetitionItem = new JMenuItem("verwijder competitie"); 
 		// add the menu and the menuItems
 		add(competitionMenu);
 		competitionMenu.add(seeCompetitionsItem);
 		competitionMenu.add(joinCompetitionItem);
+		competitionMenu.add(deleteCompetitionItem);
 	}
 
 	private void setAfterLogoutMenu() {
@@ -129,6 +132,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			setAfterLoginMenu(user.getUsername());
 
 			add(challengeMenu);
+			add(competitionMenu);
 			if (user.isModerator()) {
 				add(moderaterMenu);
 			}
@@ -167,7 +171,18 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void viewChallengeItemActionListener(ActionListener listener) {
 		viewChallengeItem.addActionListener(listener);
 	}
-	
-	
+		
+	public void seeCompetitionsItem(ActionListener listener) {
+		seeCompetitionsItem.addActionListener(listener);
+	}
+	public void joinCompetitionItem(ActionListener listener) {
+		joinCompetitionItem.addActionListener(listener);
+	}
+	public void viewWords(ActionListener listener) {
+		viewWords.addActionListener(listener);
+	}
+	public void deleteCompetitionItem(ActionListener listener) {
+		deleteCompetitionItem.addActionListener(listener);
+	}
 	
 }

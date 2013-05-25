@@ -39,6 +39,7 @@ public class MainController extends CoreController {
 	private BoardModel boardModel;
 	private JLabel turn;
 	private JLabel score;
+	 
 	
 
 	public MainController() {
@@ -115,6 +116,30 @@ public class MainController extends CoreController {
 		menu.addChangePassItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePass();
+			}
+		});
+		
+		menu.seeCompetitionsItem(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 
+			}
+		});
+		
+		menu.joinCompetitionItem(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 
+			}
+		});
+		
+		menu.viewWords(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 
+			}
+		});
+		
+		menu.deleteCompetitionItem(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 
 			}
 		});
 
