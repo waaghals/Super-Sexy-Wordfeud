@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JList;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.models.AcceptDeclineModel;
+import nl.avans.min04sob.scrabble.models.ModeratorModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.views.AcceptDeclineView;
 
@@ -17,7 +17,7 @@ public class AcceptDeclineController extends CoreController{
 	private String[] words;
 	private AcceptDeclineView adView;
 	
-	private AcceptDeclineModel adModel = new AcceptDeclineModel();
+	private ModeratorModel adModel = new ModeratorModel();
 	
 	
 	public AcceptDeclineController()
