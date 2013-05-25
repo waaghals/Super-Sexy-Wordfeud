@@ -19,6 +19,7 @@ public class CompetitionModel extends CoreModel {
 	private int competitieID;
 	private int ranking = 0;
 	private String name;
+	
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
@@ -110,7 +111,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	// aantal wedstrijden gewonnen/ verloren
-	public void winLoseRatio(int competitionID, String username) {
+	public int amountWon(int competitionID, String username) {
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		int amountWon = 0;
 		int amountLost = 0;
@@ -133,42 +134,83 @@ public class CompetitionModel extends CoreModel {
 					}
 				}
 			}
+			return amountWon;
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return amountWon;
 	}
 	
-	public void totalPlayedGames(int competitionID, String username){
+	public int amountLost(int competitionID, String username) {
+		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
+		int amountWon = 0;
+		int amountLost = 0;
+		try {
+			ResultSet dbResult1 = new Query(gamefinished).set(username)
+					.set(username).set(competitionID).select();
+			while (dbResult1.next()) {
+				spel_ids.add(dbResult1.getInt("spel_id"));
+			}
+
+			for (Integer id : spel_ids) {
+				ResultSet dbResult2 = new Query(amountWonLosedGamesQuery)
+						.set(username).set(username).set(competitionID).set(id)
+						.select();
+				if (dbResult2.next()) {
+					if (dbResult2.getString(1).equals(username)) {
+						amountWon++;
+					} else {
+						amountLost++;
+					}
+				}
+			}
+			return amountLost;
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return amountLost;
+	}
+
+	public int totalPlayedGames(int competitionID, String username){
+		int totalGames = 0;
 		try {
 			ResultSet dbResult = new Query(totalPlayedGamesQuery).set(username).set(username).set(competitionID).select();
 			if(dbResult.next()){
-				int x = dbResult.getInt("COUNT(*)");
+				totalGames = dbResult.getInt("COUNT(*)");
+				return totalGames;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return totalGames;
 	}
 	
-	public void totalPoints(int competitionID, String username){
+	public int totalPoints(int competitionID, String username){
+		int total = 0;
 		try {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID).set(username).select();
 			if(dbResult.next()){
-				int x = dbResult.getInt("SUM(score)");
+				total = dbResult.getInt("SUM(score)");
+				return total;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return total;
 	}
 	
-	public void averagePoints(int competitionID, String username){
+	public int averagePoints(int competitionID, String username){
+		int average = 0;
 		try {
 			ResultSet dbResult = new Query(averagePointsQuery).set(competitionID).set(username).select();
 			if(dbResult.next()){
-				int x = dbResult.getInt("avg");
+				average = dbResult.getInt("avg");
+			return average;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return average;
 		
 	}
 }
