@@ -16,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
-public class BoardPanel extends CorePanel {
+public class BoardPanelt extends CorePanel {
 
 	 Tile tl = new Tile();
 	 Tile[] tilearray = new Tile[16];
@@ -28,7 +28,7 @@ public class BoardPanel extends CorePanel {
 
 	}
 
-	public BoardPanel() {
+	public BoardPanelt() {
 		
 
 		
@@ -68,9 +68,7 @@ public class BoardPanel extends CorePanel {
 		Character columnNames[] = { ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
 				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O' };
 
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		renderer.setVerticalAlignment(DefaultTableCellRenderer.CENTER);
+
 
 		Object[][] playerTiles = new Character[][] { { 'K', 'Z', 'V', 'Q', 'N',
 				'V', 'Q' } };
