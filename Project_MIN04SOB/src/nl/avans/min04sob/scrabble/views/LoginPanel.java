@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
@@ -55,7 +56,11 @@ public class LoginPanel extends CorePanel {
 	public void addActionListenerLogin(ActionListener listener) {
 		loginButton.addActionListener(listener);
 	}
-
+	
+	public void addKeyListenerPassword(KeyAdapter listener) {
+		passwordField.addKeyListener(listener);
+	}
+	
 	public void addActionListenerRegister(ActionListener listener) {
 		registerButton.addActionListener(listener);
 	}

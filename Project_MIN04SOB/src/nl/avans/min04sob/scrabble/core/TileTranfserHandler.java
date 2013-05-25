@@ -8,22 +8,24 @@ import java.io.IOException;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
+import javax.swing.table.TableModel;
 
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class TileTranfserHandler extends TransferHandler implements
 		Transferable {
-	
+
 	private static final DataFlavor flavors[] = { new DataFlavor(Tile.class,
 			"Tile") };
-	private Tile tile;
+	private Tile sourceTile;
+	private JTable sourceTable;
 
 	public TileTranfserHandler() {
 	}
 
 	public Object getTransferData(DataFlavor flavor) {
 		if (isDataFlavorSupported(flavor)) {
-			return tile;
+			return sourceTile;
 		}
 		return null;
 	}
@@ -43,43 +45,74 @@ public class TileTranfserHandler extends TransferHandler implements
 
 	@Override
 	protected Transferable createTransferable(JComponent source) {
-		
-		//Pure Magic
-		tile = (Tile) ((JTable) source).getModel().getValueAt(
-				((JTable) source).getSelectedRow(),
-				((JTable) source).getSelectedColumn());
+		sourceTable = (JTable) source;
+		int row = sourceTable.getSelectedRow();
+		int col = sourceTable.getSelectedColumn();
+
+		sourceTile = (Tile) sourceTable.getModel().getValueAt(row, col);
 		return this;
 	}
 
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
+		JTable table = (JTable) source;
+		int row = table.getSelectedRow();
+		int col = table.getSelectedColumn();
+		if(sourceTile != null){
+			table.getModel().setValueAt(new Tile(), row, col);
+		}
 
-		((JTable) source).getModel().setValueAt(new Tile(),
-				((JTable) source).getSelectedRow(),
-				((JTable) source).getSelectedColumn());
-
+		table.clearSelection();
 	}
 
 	@Override
 	public boolean canImport(TransferSupport support) {
-		return true;
+		if(!sourceTile.isMutatable()){
+			return false;
+		}
+		support.setShowDropLocation(true);
+		JTable table = (JTable) support.getComponent();
+		TableModel model = table.getModel();
+		int row = table.getSelectedRow();
+		int col = table.getSelectedColumn();
+		if(row == -1 || col == -1){
+			return true;
+		}
+
+		Tile tile = (Tile) model.getValueAt(row, col);
+		
+		if (tile == sourceTile) {
+			return true;
+		}
+		if (tile == null) {
+			return true;
+		}
+		return tile.isMutatable();
 	}
 
 	@Override
 	public boolean importData(TransferSupport support) {
-		JTable jt = (JTable) support.getComponent();
-		try {
-			jt.setValueAt(
-					support.getTransferable().getTransferData(
-							new DataFlavor(Tile.class,
-									"Tile")), jt.getSelectedRow(),
-					jt.getSelectedColumn());
-		} catch (UnsupportedFlavorException ex) {
-			ex.printStackTrace();
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		if(!canImport(support)){
+			return false;
 		}
+		JTable table = (JTable) support.getComponent();
+		Tile newTile;
+		try {
+
+			newTile = (Tile) support.getTransferable().getTransferData(
+					new DataFlavor(Tile.class, "Tile"));
+		} catch (UnsupportedFlavorException | IOException e) {
+			// TODO Automatisch gegenereerd catch-blok
+			e.printStackTrace();
+			return false;
+		}
+
+		TableModel model = table.getModel();
+		int row = table.getSelectedRow();
+		int col = table.getSelectedColumn();
+
+		table.setValueAt(newTile, row, col);
+
 		return super.importData(support);
 	}
 }

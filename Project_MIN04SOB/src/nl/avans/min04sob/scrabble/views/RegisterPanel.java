@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
@@ -138,6 +139,10 @@ public class RegisterPanel extends CorePanel {
 	
 	public void addActionListenerRegister(ActionListener listener){
 		registerButton.addActionListener(listener);
+	}
+	
+	public void addKeyListenerPassword(KeyAdapter listener) {
+		passwordField2.addKeyListener(listener);
 	}
 	
 	public void setUsernameMistake(boolean good, String discription){

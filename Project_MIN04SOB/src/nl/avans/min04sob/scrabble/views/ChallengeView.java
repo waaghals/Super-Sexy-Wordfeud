@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.CoreView;
-	public class ChallengeView   implements Observer{
+	public class ChallengeView implements CoreView  {
 		// extends??
 		private JTextField Opponent;
 	//	http://www.oracle.com/technetwork/articles/javase/index-142890.html
@@ -32,37 +32,47 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		private JButton oke = new JButton("oke");
 		private JButton oke2 =new JButton("oke");
 		private JFrame jf = new JFrame("popup");
-		private JTextField usernameField = new JTextField(10);
+	 
+		private JTextField tegenstanderduitdager = new JTextField(10);
+		private JTextField spelidduitdager = new JTextField(10);
+		private JTextField naamuitgedaagde = new JTextField(10);
 			
 		public ChallengeView()
 		{
 			jf.setTitle("Challenge");
 			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			jf.pack();
 		}
-		
-		public void showChallenge()//gui 
-		{
-			jf.setResizable(false);
+		/// pas aan
+		public void showChallenge(String iets)//gui 
+		{ 
 			jf.setVisible(true);
 			jf.setContentPane(chpanel);
-			chpanel.setPreferredSize(new Dimension(180,70));
-		 
-			chpanel.add(new JLabel("You have received a challenge"));
-			chpanel.add(accept);
-			chpanel.add(decline);
-
+			chpanel.setLayout(new BoxLayout(jf, BoxLayout.PAGE_AXIS));
+			chpanel.add(new JLabel( iets ));
+			chpanel.add(spelidduitdager);
+			
 			accept.setFont(new Font("Serif", Font.ITALIC, 14));
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
+			
+			jf.pack();
 		}
+		//wordt gebruikt of niet
+		// 
 		
 		public void toChallenge()//gui
 		{	
 			jf.setVisible(true);
 			jf .setContentPane(tochallenge);
-			tochallenge.setPreferredSize(new Dimension(180,70));
-			tochallenge.add(usernameField);
+			tochallenge.setLayout(new BoxLayout(tochallenge, BoxLayout.PAGE_AXIS));
+			tochallenge.setPreferredSize(new Dimension(210,120));
+			tochallenge.add(new JLabel("insert game id"));
+			tochallenge.add(spelidduitdager);
+			tochallenge.add(new JLabel("insert opponent"));
+			tochallenge.add(naamuitgedaagde);
+			
 			jf.add(oke);
+			jf.setResizable(false);
+			jf.pack();
 		}
 		
 		public void response(String msg)//gui
@@ -73,48 +83,38 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			response.setPreferredSize(new Dimension(130,70));
 			response.add(new JLabel("msg"));
 			response.add(oke2);
-			oke2.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					jf.dispose();
-				}});
-			
+			jf.pack();
 		}
 		public String getUsername() 
 		{
-			return usernameField.getText();
+			return naamuitgedaagde.getText();
 		}
+		public String getspelID() 
+		{
+			return  spelidduitdager.getText();
+		}
+		
 		public void addActionListenerAccept(ActionListener listener) {
 			accept.addActionListener(listener);
 		}
 		
-		
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
-		}
-		 
+		} 
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
 		}
 
-		@Override
-		public void update(Observable arg0, Object arg1) {
-			String x = (String) arg1;
-			 if(x.equals("1"))
-			 {
-				 showChallenge();
-			 }
-			 if(x.equals("2"))
-			 {
-				 response("challenge denied");
-			 }
-			 if(x.equals("3"))
-			 {
-				 response("challenge accepted");
-			 }
-		}
-		public  JFrame javaFrame()		{
+		public  JFrame javaFrame()		
+		{
 			return jf;
 		}
+		@Override
+		public void modelPropertyChange(PropertyChangeEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	 
 	}
 	///

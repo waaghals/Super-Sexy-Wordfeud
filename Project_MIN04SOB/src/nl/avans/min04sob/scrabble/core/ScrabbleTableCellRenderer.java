@@ -44,7 +44,6 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		int multiplier = boardModel.getMultiplier(new Point(row, col));
 
 		if (tile != null && !tile.isMutatable()) {
-			System.out.println(tile.getLetter());
 			c.setBackground(beige);
 			c.setForeground(Color.BLACK);
 		} else {
@@ -76,21 +75,13 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 				boardModel.setValueAt(new Tile("*", true), row, col);
 				break;
 			case BoardModel.EMPTY:
+			default:
 				c.setBackground(Color.WHITE);
 				c.setForeground(Color.BLACK);
-				//boardModel.setValueAt(" ", row, col);
-				break;
-			default:
-				c.setBackground(Color.GREEN);
-				c.setForeground(Color.WHITE);
-				boardModel.setValueAt(new Tile(" ", true), row, col);
+				// boardModel.setValueAt(" ", row, col);
 				break;
 			}
 
-		}
-
-		if (tile != null && !tile.isMutatable()) {
-			c.setEnabled(false);
 		}
 
 		return c;
