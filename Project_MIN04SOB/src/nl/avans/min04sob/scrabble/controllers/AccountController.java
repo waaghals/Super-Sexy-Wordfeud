@@ -118,7 +118,7 @@ public class AccountController extends CoreController {
 //TODO een goede account rol toevoegen
 		if ( validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
-					registerPanel.getPassword1(), null);
+					registerPanel.getPassword1(), registerPanel.getRole());
 			registerToLogin();
 		}
 

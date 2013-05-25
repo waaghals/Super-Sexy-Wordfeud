@@ -21,6 +21,7 @@ public class RegisterPanel extends CorePanel {
 
 	private JLabel usernameLabel, passwordLabel1, passwordLabel2, usernameResult, password1Result, password2Result;
 	private JTextField usernameField;
+	private JTextField role;
 	private JPasswordField passwordField1, passwordField2;
 	private JButton cancelButton, registerButton;
 
@@ -33,7 +34,7 @@ public class RegisterPanel extends CorePanel {
 		gridBagLayout.rowHeights = new int[] {30, 30, 30, 30};
 		gridBagLayout.columnWidths = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
 		setLayout(gridBagLayout);
-		setPreferredSize(new Dimension(390,120));
+		setPreferredSize(new Dimension(390,170));
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = 3;
@@ -109,6 +110,22 @@ public class RegisterPanel extends CorePanel {
 		c.gridx = 8;
 		c.gridy = 2;
 		add(password2Result, c); 
+		/////////////////////////////////////
+		c = new GridBagConstraints();
+		c.gridwidth = 3;
+		c.insets = new Insets(0, 0, 5, 5);
+		c.gridx = 0;
+		c.gridy = 3;
+		add(new JLabel("role :"), c);
+		
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 5;
+		c.insets = new Insets(0, 0, 5, 5);
+		role = new JTextField();
+		c.gridx = 3;
+		c.gridy = 3;
+		add(role, c);
 		
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -116,7 +133,7 @@ public class RegisterPanel extends CorePanel {
 		c.insets = new Insets(0, 5, 5, 5);
 		cancelButton = new JButton("Cancel");
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 4;
 		add(cancelButton, c);
 		
 		c = new GridBagConstraints();
@@ -129,7 +146,7 @@ public class RegisterPanel extends CorePanel {
 			}
 		});
 		c.gridx = 4;
-		c.gridy = 3;
+		c.gridy = 4;
 		add(registerButton, c);
 	}
 	
@@ -194,6 +211,10 @@ public class RegisterPanel extends CorePanel {
 	
 	public char[] getPassword2(){
 		return passwordField2.getPassword();
+	}
+	
+	public String getRole(){
+		return role.getText();
 	}
 
 }
