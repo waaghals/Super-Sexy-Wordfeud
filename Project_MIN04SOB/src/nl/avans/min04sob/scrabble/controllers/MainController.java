@@ -37,6 +37,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private JLabel turn;
+	private JLabel score;
 	
 
 	public MainController() {
@@ -59,7 +60,10 @@ public class MainController extends CoreController {
 		frame.getContentPane().add(gamesPanel, "cell 0 0 2 1,alignx left,aligny top");
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.getContentPane().add(chatPanel, "cell 0 1 4 8,alignx left,aligny top");
+		
+		//TODO positienering moet beter maar snap niet veel van die cell 0 0 0 0
 		frame.getContentPane().add(turn, "cell 0 0 3 2,alignx right , aligny top");
+		frame.getContentPane().add(score, "cell 4 0 3 3,alignx left,aligny top");
 		frame.pack();
 
 	}
@@ -72,6 +76,8 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 		turn = new JLabel();
 		turn.setText("TEEEEST");
+		score = new JLabel();
+		score.setText("teeeeest");
 		
 		
 		
@@ -172,7 +178,7 @@ public class MainController extends CoreController {
 				}else{
 					turn.setText("openentturn");
 				}
-				
+				//score.setText(games.get(x).score());
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));

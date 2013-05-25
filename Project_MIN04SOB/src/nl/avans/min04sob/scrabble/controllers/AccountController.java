@@ -95,13 +95,11 @@ public class AccountController extends CoreController {
 	}
 
 	private void tryToRegister() {
-		boolean username = validateUsername();
-		boolean pass1 = validatePassword1();
-		boolean pass2 = validatePassword2();
-
-		if (username && pass1 && pass2) {
+		
+//TODO een goede account rol toevoegen
+		if ( validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
-					registerPanel.getPassword1());
+					registerPanel.getPassword1(), null);
 			registerToLogin();
 		}
 
