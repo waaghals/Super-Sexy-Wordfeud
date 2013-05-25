@@ -23,14 +23,10 @@ public class ChallengeModel extends CoreModel  {
 	public static final String STATE_PLAYING = "Playing";
 	public ResultSet result;
 	 
-	public Timer timer = new Timer();
 	public ArrayList <String> challengegegevens = new ArrayList<String>();
 	 
 	//   to do    spel id moet anders zijn dan column nummer
-	public ChallengeModel()  
-	{
-		 
-	}
+
 	public void controle(String Challengername,String  challegendname, String string) throws SQLException//uitdager
 	{
 		 result = new Query("SELECT `*`;").select();

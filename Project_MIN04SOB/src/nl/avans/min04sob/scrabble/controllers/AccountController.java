@@ -54,18 +54,18 @@ public class AccountController extends CoreController {
 				loginToRegister();
 			}
 		});
-		
+
 		loginPanel.addKeyListenerPassword(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					checkLogin();
 				}
 			}
 		});
-		
+
 		registerPanel.addKeyListenerPassword(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					tryToRegister();
 				}
 			}
@@ -82,17 +82,17 @@ public class AccountController extends CoreController {
 				tryToRegister();
 			}
 		});
-		
-		changepasspanel.addCancelActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//TODO go back to normal view ;
+
+		changepasspanel.addCancelActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO go back to normal view ;
 			}
 		});
-		
-		changepasspanel.addChangeActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		changepasspanel.addChangeActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				changePass();
-				//TODO go back too normal view ;
+				// TODO go back too normal view ;
 			}
 		});
 
@@ -114,9 +114,9 @@ public class AccountController extends CoreController {
 	}
 
 	private void tryToRegister() {
-		
-//TODO een goede account rol toevoegen
-		if ( validateUsername() && validatePassword1() && validatePassword2()&&validateRole()) {
+
+		// TODO een goede account rol toevoegen
+		if (validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1(), registerPanel.getRole());
 			registerToLogin();
@@ -134,16 +134,6 @@ public class AccountController extends CoreController {
 		}
 	}
 
-	private boolean validateRole()
-	{
-		if(registerPanel.getRole().equals("spam"))
-		{
-			registerPanel.setRoleMistake(false, "invalid role");
-			return false;
-		}
-		return true;
-		
-	}
 	private boolean validateUsername() {
 		if (validateLength(registerPanel.getUsername().length()) == -1) {
 			registerPanel.setUsernameMistake(false, "To short");
@@ -152,7 +142,8 @@ public class AccountController extends CoreController {
 			registerPanel.setUsernameMistake(false, "To long");
 			return false;
 		} else {
-			if (AccountModel.checkUsernameAvailable(registerPanel.getUsername())) {
+			if (AccountModel
+					.checkUsernameAvailable(registerPanel.getUsername())) {
 				registerPanel.setUsernameMistake(true, "");
 				return true;
 			} else {
@@ -194,31 +185,32 @@ public class AccountController extends CoreController {
 			}
 		}
 	}
-	
-	public ChangePassPanel getchangepasspanel(){
+
+	public ChangePassPanel getchangepasspanel() {
 		return changepasspanel;
 	}
-	
-	public void changePass(){
+
+	public void changePass() {
 		String oldpass = changepasspanel.getOldPass();
 		String newpass1 = changepasspanel.getNewPass1();
 		String newpass2 = changepasspanel.getNewPass2();
-		if(oldpass.equals(accountModel.getpass())){
+		if (oldpass.equals(accountModel.getpass())) {
 			if (validateLength(newpass1.length()) == -1) {
 				changepasspanel.setNewPass1Good(false, "To short");
 			} else if (validateLength(newpass1.length()) == 1) {
 				changepasspanel.setNewPass1Good(false, "To long");
 			} else {
-				if(newpass2.equals(newpass1)){
+				if (newpass2.equals(newpass1)) {
 					accountModel.changePass(changepasspanel.getNewPass1());
-				}else{
+				} else {
 					changepasspanel.setNewPass2Good(false, "Doesn't match");
 				}
 			}
-		}else{
+		} else {
 			changepasspanel.setOldPassGood(false, "Wrong");
 		}
 	}
+
 	private void loginToRegister() {
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
@@ -240,12 +232,12 @@ public class AccountController extends CoreController {
 	@Override
 	public void initialize() {
 		// TODO Automatisch gegenereerde methodestub
-		
+
 	}
 
 	@Override
 	public void addListeners() {
 		// TODO Automatisch gegenereerde methodestub
-		
+
 	}
 }
