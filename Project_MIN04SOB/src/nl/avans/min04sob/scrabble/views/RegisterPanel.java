@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 //GUI checked
 public class RegisterPanel extends CorePanel {
 
-	private JLabel usernameLabel, passwordLabel1, passwordLabel2, usernameResult, password1Result, password2Result;
+	private JLabel usernameLabel, passwordLabel1, passwordLabel2, usernameResult, password1Result, password2Result,roleResult;
 	private JTextField usernameField;
 	private JTextField role;
 	private JPasswordField passwordField1, passwordField2;
@@ -126,6 +126,14 @@ public class RegisterPanel extends CorePanel {
 		c.gridx = 3;
 		c.gridy = 3;
 		add(role, c);
+		///////////////////////////
+		c = new GridBagConstraints();
+		c.gridwidth = 5;
+		c.insets = new Insets(0, 0, 5, 5);
+		roleResult = new JLabel("");
+		c.gridx = 8;
+		c.gridy = 3;
+		add(roleResult, c); 
 		
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -169,6 +177,16 @@ public class RegisterPanel extends CorePanel {
 		}else{
 			usernameField.setBackground(Color.RED);
 			usernameResult.setText(discription);
+		}
+	}
+	//////////////////////////////////////////////////
+	public void setRoleMistake(boolean good, String discription){
+		if(good){
+			role.setBackground(Color.WHITE);
+			roleResult.setText("");
+		}else{
+			role.setBackground(Color.RED);
+			roleResult.setText(discription);
 		}
 	}
 	

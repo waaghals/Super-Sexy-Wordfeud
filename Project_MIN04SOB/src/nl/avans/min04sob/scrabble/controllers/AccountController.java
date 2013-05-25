@@ -116,7 +116,7 @@ public class AccountController extends CoreController {
 	private void tryToRegister() {
 		
 //TODO een goede account rol toevoegen
-		if ( validateUsername() && validatePassword1() && validatePassword2()) {
+		if ( validateUsername() && validatePassword1() && validatePassword2()&&validateRole()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1(), registerPanel.getRole());
 			registerToLogin();
@@ -134,6 +134,16 @@ public class AccountController extends CoreController {
 		}
 	}
 
+	private boolean validateRole()
+	{
+		if(registerPanel.getRole().equals("spam"))
+		{
+			registerPanel.setRoleMistake(false, "invalid role");
+			return false;
+		}
+		return true;
+		
+	}
 	private boolean validateUsername() {
 		if (validateLength(registerPanel.getUsername().length()) == -1) {
 			registerPanel.setUsernameMistake(false, "To short");
