@@ -64,6 +64,7 @@ public class GameModel extends CoreModel {
 				String challengeeName = dbResult
 						.getString("account_naam_tegenstander");
 
+
 				boardName = dbResult.getString(9);
 				letterSet = dbResult.getString(10);
 
@@ -452,9 +453,52 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-
 		return (Boolean) null;
+
+		
+		}
+		
+
+	public String score(){
+		String score = "";
+		String query = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
+		
+		try {
+
+			int ch = scorecounter(new Query(query).set(challenger.getUsername()).select());
+			
+			int op = scorecounter(new Query(query).set(opponent.getUsername()).select());
+			
+			if(iamchallenger){
+				score = "you : "+ Integer.toString(ch)+ " points" + "/n" + opponent.getUsername() + " : "+ Integer.toString(op) + " points";
+			}
+			else{
+				score = "you : "+ Integer.toString(op)+ " points" + "/n" + challenger.getUsername() + " : "+ Integer.toString(ch) + " points";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return score;
+	
 	}
+	
+	private int scorecounter(ResultSet s){
+		int counter = 0;
+		try {
+			while(s.next()){
+				counter += s.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return counter;
+	}
+
+	
+
 
 	public void Resign() {
 		String resigned = "Resigned";

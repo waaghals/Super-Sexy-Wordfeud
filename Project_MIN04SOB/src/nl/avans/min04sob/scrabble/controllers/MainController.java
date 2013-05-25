@@ -37,6 +37,8 @@ public class MainController extends CoreController {
 	private BoardModel boardModel;
 	private JLabel turn;
 
+	private JLabel score;
+
 	public MainController() {
 		initialize();
 		addListeners();
@@ -60,8 +62,14 @@ public class MainController extends CoreController {
 
 		frame.getContentPane().add(chatPanel,
 				"cell 0 1 4 8,alignx left,aligny top");
+
+		// TODO positienering moet beter maar snap niet veel van die cell 0 0 0
+		// 0
 		frame.getContentPane().add(turn,
 				"cell 0 0 3 2,alignx right , aligny top");
+		frame.getContentPane()
+				.add(score, "cell 4 0 3 3,alignx left,aligny top");
+
 		frame.pack();
 
 	}
@@ -75,7 +83,11 @@ public class MainController extends CoreController {
 		turn = new JLabel();
 		turn.setText("TEEEEST");
 
-		crtl = new ChallengeController();
+		score = new JLabel();
+		score.setText("teeeeest");
+
+		crtl = new ChallengeController(account.getUsername());
+
 		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanel();
@@ -110,6 +122,30 @@ public class MainController extends CoreController {
 		menu.addChangePassItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePass();
+			}
+		});
+
+		menu.seeCompetitionsItem(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		menu.joinCompetitionItem(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		menu.viewWords(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		menu.deleteCompetitionItem(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
 
@@ -181,7 +217,7 @@ public class MainController extends CoreController {
 		Boolean needtocreatemodel = true;
 		StashModel stash = new StashModel();
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-		
+
 		currGamePanel.setPlayerTiles(letters);
 
 		for (int x = 0; games.size() > x; x++) {
@@ -194,6 +230,7 @@ public class MainController extends CoreController {
 					turn.setText("openentturn");
 				}
 
+				// score.setText(games.get(x).score());
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
 				boardModel = games.get(x).getBoardcontroller().getBpm();
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(
