@@ -119,6 +119,15 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	public void deleteCompetition(int competitionID) {
+		boolean competition =false;
+		ResultSet res = new Query(query).select();
+		while(res.next()){
+			if(res.getString("competitie").equals(competitionID)){
+				competition=true;
+				break;
+			}
+		}
+		if(competition==true){
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		try {
 			Date date = new Date();	
@@ -142,6 +151,7 @@ public class CompetitionModel extends CoreModel {
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
+		}
 		}
 	}
 
