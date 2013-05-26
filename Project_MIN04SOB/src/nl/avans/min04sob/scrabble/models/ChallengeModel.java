@@ -13,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import nl.avans.min04sob.scrabble.controllers.ChallengeController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
 
@@ -105,14 +106,12 @@ public class ChallengeModel extends CoreModel  {
 			public void run() {
 				int index = 0;
 					String query = "SELECT `*` FROM `Spel`; where(INT ID) values(?);"; //??
-					 
 					//voorkomt nog een uitnodiging van de zelfde persoon
 					try {
 						while (result.next())// of meer wiv
 						{
 						try {
 							ResultSet dbResult =  new Query(query).set(index).select();
-							 
 							if(dbResult.getString(7).equals(STATE_UNKNOWN) ||dbResult.getString(7).equals(STATE_ACCEPTED) )
 							{
 								result.next();
@@ -137,7 +136,7 @@ public class ChallengeModel extends CoreModel  {
 					}
 			}}, 0, 10000); 
 			 
-			}
+		}
 	 
 	public void respondChallenge(String spelid,String name,boolean geaccepteerd) throws SQLException // uitdgedaagde
 	{
@@ -178,9 +177,10 @@ public class ChallengeModel extends CoreModel  {
 				new Query(query2).exec(); 
 		}
 	}
+ 
 	public void commandsToChallengeview(String commando)
 	{	
-		 	
+		firePropertyChange(null, null, commando);
 	}
 
 	public ArrayList<String> gegevens() 

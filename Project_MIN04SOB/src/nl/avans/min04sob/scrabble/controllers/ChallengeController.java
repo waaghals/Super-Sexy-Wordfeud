@@ -2,6 +2,7 @@ package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.sql.SQLException;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,7 +16,6 @@ public class ChallengeController extends CoreController  {
 	private ChallengeView cv = new ChallengeView();
 	private ChallengeModel cm ;
 	private String naam="";
-	
 	public ChallengeController (final String naam)
 	{
 		cm= new ChallengeModel(naam);
@@ -55,20 +55,20 @@ public class ChallengeController extends CoreController  {
 			}
 		});
 	}
-	 /*/
-	public void   {
-	String x =  ;
+ 
+	public void propertyChange(String evt)  {
+	String x =  evt;
 	 switch(x)
 		 {
-		 case "1": cv.showChallenge(challengers());break;
+		 case "1": challengers();break;
 		 case "2": cv.response("challenge denied");break;
 		 case "3": cv.response("challenge accepted");break;
 		 case "4": cv.response("something went wrong");break;
 		 default: break;
 		 }
-			}
-	 /*/
-	public void challenger()
+	}
+	 
+	public void challengers()
 	{
 		cv.remove();
 		String iets = "";
@@ -77,11 +77,7 @@ public class ChallengeController extends CoreController  {
 		{
 			cv.iets(cm.gegevens().get(index));
 		}
-	}
-	
-	public void openchallenges()
-	{
-		challenger();
+		cv.showChallenge();
 	}
 	
 	public void toChallenge()

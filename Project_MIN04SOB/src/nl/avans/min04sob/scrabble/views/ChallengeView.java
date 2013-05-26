@@ -62,7 +62,9 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			chpanel.setLayout(new BoxLayout(jf, BoxLayout.PAGE_AXIS));
 			int index=0;
 			while(index < challengegegevens.size())
+			{
 			chpanel.add(new JLabel(challengegegevens.get(index)));
+			}
 			chpanel.add(spelidduitdager);
 			accept.setFont(new Font("Serif", Font.ITALIC, 14));
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
