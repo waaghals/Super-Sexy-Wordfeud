@@ -18,6 +18,7 @@ import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
+import nl.avans.min04sob.scrabble.models.Role;
 import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -95,7 +96,7 @@ public class MainController extends CoreController {
 		
 		
 		crtl=new ChallengeController(account.getUsername());
-		gamesPanel = new GamesComboBox(account.isRole("observer"));
+		gamesPanel = new GamesComboBox(account.isRole(Role.OBSERVER));
 
 
 		
@@ -118,8 +119,8 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				crtl.openchallenges();
-
+				//crtl.openchallenges();
+				//TODO stops program from running
 			}
 		});
 		menu.adddoChallengeItemActionListener(new ActionListener() {
@@ -180,7 +181,7 @@ public class MainController extends CoreController {
 			}
 		});
 
-		if(account.isRole("observer")){
+		if(account.isRole(Role.OBSERVER)){
 		gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
 
 			@Override
