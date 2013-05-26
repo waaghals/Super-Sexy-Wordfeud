@@ -24,48 +24,50 @@ public class GamesComboBox extends CorePanel {
 
 	private JComboBox<GameModel> gameList;
 	private JCheckBox observer;
-	
-	public GamesComboBox(boolean canobserve){
+
+	public GamesComboBox(boolean canobserve) {
 		initialize(canobserve);
-		
+
 	}
-	
-	public void initialize(boolean canobserve){
-		
-		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px]", "[20px:30px:30px][20px:30px:30px]"));
-		
+
+	public void initialize(boolean canobserve) {
+
+		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px]",
+				"[20px:30px:30px][20px:30px:30px]"));
+
 		JLabel lblSelecteerEenSpel = new JLabel("Selecteer een spel");
 		add(lblSelecteerEenSpel, "cell 0 0 2 1");
 		gameList = new JComboBox<GameModel>();
-		
+
 		add(gameList, "cell 0 1 2 1,grow");
 		gameList.setEnabled(false);
-		if(canobserve){
-		observer = new JCheckBox();	
-		add(observer,"cell 0 1 2 1 ,grow");
-		observer.setEnabled(false);
-		observer.setText("bekijk een spel");
+		observer = new JCheckBox();
+		if (canobserve) {
+			add(observer, "cell 0 1 2 1 ,grow");
+			observer.setEnabled(false);
+			observer.setText("bekijk een spel");
 		}
 	}
-	
-	public void addGameListListener(ActionListener listenener){
+
+	public void addGameListListener(ActionListener listenener) {
 		gameList.addActionListener(listenener);
 	}
-	public void addObserverCheckBoxListener(ChangeListener listenener){
-		
+
+	public void addObserverCheckBoxListener(ChangeListener listenener) {
+
 		observer.addChangeListener(listenener);
-		
+
 	}
-	
-	public void addGame(GameModel game){
-		if(game == null){
+
+	public void addGame(GameModel game) {
+		if (game == null) {
 			return;
 		}
 		gameList.addItem(game);
-	}  
-	
-	public void addGames(ArrayList<GameModel> arrayList){
-		if(arrayList == null){
+	}
+
+	public void addGames(ArrayList<GameModel> arrayList) {
+		if (arrayList == null) {
 			return;
 		}
 		gameList.removeAll();
@@ -73,6 +75,7 @@ public class GamesComboBox extends CorePanel {
 			gameList.addItem(game);
 		}
 	}
+
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
@@ -96,7 +99,8 @@ public class GamesComboBox extends CorePanel {
 		}
 
 	}
-	public boolean checkBoxIsSelected(){
+
+	public boolean checkBoxIsSelected() {
 		return observer.isSelected();
 	}
 
