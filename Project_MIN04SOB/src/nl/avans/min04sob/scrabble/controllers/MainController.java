@@ -169,6 +169,15 @@ public class MainController extends CoreController {
 				addLoginListener();
 			}
 		});
+		
+		menu.addRegisterListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AccountController login = new AccountController(account);
+				login.loginToRegister();
+			}
+		});
 
 		gamesPanel.addGameListListener(new ActionListener() {
 

@@ -202,6 +202,10 @@ public class MenuView extends JMenuBar implements CoreView {
 		deleteCompetitionItem.addActionListener(listener);
 	}
 	
+	public void addRegisterListener(ActionListener listener){
+		registerItem.addActionListener(listener);
+	}
+	
 	public void setChallengeCount(int count){
 		//TODO make this work
 		numChallenge = count;
