@@ -105,7 +105,7 @@ public class AccountModel extends CoreModel {
 
 	}
 
-	public boolean isRol(String role) {
+	public boolean isRole(String role) {
 		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
 		try {
 			ResultSet rs = new Query(query).set(username).select();

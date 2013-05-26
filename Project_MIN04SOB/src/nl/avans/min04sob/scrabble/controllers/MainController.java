@@ -95,7 +95,7 @@ public class MainController extends CoreController {
 		
 		
 		crtl=new ChallengeController(account.getUsername());
-		gamesPanel = new GamesComboBox(account.isRol("observer"));
+		gamesPanel = new GamesComboBox(account.isRole("observer"));
 
 
 		
@@ -180,7 +180,7 @@ public class MainController extends CoreController {
 			}
 		});
 
-		if(account.isRol("observer")){
+		if(account.isRole("observer")){
 		gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
 
 			@Override
