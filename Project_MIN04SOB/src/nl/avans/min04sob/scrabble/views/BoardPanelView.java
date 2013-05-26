@@ -22,9 +22,14 @@ import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanelView extends CorePanel {
 	private JButton resign;
+	private JButton swap;
+	private JButton pass;
+	private JButton play;
+	private JButton volgende;
+	private JButton vorige;
 	JTable table;
 	JTable playerTilesField;
-	public BoardPanelView() {
+	public BoardPanelView(boolean isObserver) {
 
 		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -43,26 +48,14 @@ public class BoardPanelView extends CorePanel {
 		
 		table.setRowHeight(30);
 		
+		
 		table.setEnabled(true);		
 		table.validate();
-		table.setDragEnabled(true);
-		table.setDropMode(DropMode.USE_SELECTION);
-		TileTranfserHandler handler = new TileTranfserHandler();
-		table.setTransferHandler(handler);
-		/*for (Character character : columnNames) {
-			table.getColumn(character).setCellRenderer(renderer);
-		}*/
+
 		setLayout(new MigLayout("", "[-15.00px][][47.00px][60px][5px][73px][100px:400px][55.00px][292px][:430px:430px]", "[475px:475px][35px][:30px:30px][25px]"));
 
-		// Add the table to a scrolling pane
-		//JScrollPane scrollPane = new JScrollPane(table);
-		add(scrollPane, "cell 0 0 9 1,grow");
 		
-		/*
-		ChatController chat = new ChatController(150, "player");
-		chat.getchatpanel().setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
-		*/
+		add(scrollPane, "cell 0 0 9 1,grow");
 		
 		Tile[][] playerTiles = new Tile[][] {{ new Tile("a", true), new Tile("b", true), new Tile("c", true), new Tile("d", true) }};
 		Character[] columns = new Character[] { ' ', ' ', ' ', ' ' };
@@ -71,21 +64,44 @@ public class BoardPanelView extends CorePanel {
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
 		
+		add(playerTilesField, "cell 0 2 9 1,growx,aligny top");
+		
+		if(!(isObserver)){
+		table.setDragEnabled(true);
+		table.setDropMode(DropMode.USE_SELECTION);
+		TileTranfserHandler handler = new TileTranfserHandler();
+		table.setTransferHandler(handler);
+		/*for (Character character : columnNames) {
+			table.getColumn(character).setCellRenderer(renderer);
+		}*/
+		
+		// Add the table to a scrolling pane
+		//JScrollPane scrollPane = new JScrollPane(table);
+		
+		
+		/*
+		ChatController chat = new ChatController(150, "player");
+		chat.getchatpanel().setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		add(chat.getchatpanel(), "cell 9 0 1 3,grow");
+		*/
+		
+		
 		playerTilesField.setDragEnabled(true);
 		playerTilesField.setDropMode(DropMode.USE_SELECTION);
 		playerTilesField.setTransferHandler(handler);
 		
-		add(playerTilesField, "cell 0 2 9 1,growx,aligny top");
+		
+		
 				
-						JButton play = new JButton();
-						play.setText("Play");
-						add(play, "cell 1 3,alignx left,aligny center");
+				play = new JButton();
+				play.setText("Play");
+				add(play, "cell 1 3,alignx left,aligny center");
 				
-				JButton pass = new JButton();
+				pass = new JButton();
 				pass.setText("Pas");
 				add(pass, "cell 3 3,grow");
 				
-				JButton swap = new JButton();
+				swap = new JButton();
 				swap.setText("Swap");
 				add(swap, "cell 5 3,grow");
 				
@@ -93,12 +109,27 @@ public class BoardPanelView extends CorePanel {
 				resign.setText("Resign");
 				add(resign, "cell 8 3,alignx center,growy");
 
-
+		}else{
+			volgende = new JButton();
+			volgende.setText("volgende");
+			add(volgende, "cell 3 3,grow");
+			
+			vorige = new JButton();
+			vorige.setText("vorige");
+			add(vorige, "alignx left,aligny center");
+			
+		}
 	}
-	
+	public void addVolgendeActionListener(ActionListener listener){
+		volgende.addActionListener(listener);
+	}
+	public void addVorigeActionListener(ActionListener listener){
+		vorige.addActionListener(listener);
+	}
 	public void addResignActionListener(ActionListener listener) {
 		resign.addActionListener(listener);
 	}
+	
 	
 	
 	@Override

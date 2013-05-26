@@ -9,9 +9,9 @@ import nl.avans.min04sob.scrabble.views.BoardPanelView;
 public class BoardController extends CoreController{
 private BoardPanelView bpv;
 private BoardModel bpm;
-	public BoardController(){
+	public BoardController(boolean observer){
 		bpm = new BoardModel();
-		bpv = new BoardPanelView();
+		bpv = new BoardPanelView(observer);
 		//bpm.setTile(14, 14, new TileModel("het werkt"));
 		this.updateBoard();
 		
@@ -20,6 +20,7 @@ private BoardModel bpm;
 		bpv.setModel(bpm);
 	
 		this.addView(bpv);
+		
 		initialize();
 		
 	}
@@ -31,6 +32,7 @@ private BoardModel bpm;
 
 	@Override
 	public void addListeners() {
+		
 		// TODO Auto-generated method stub
 		
 	}
