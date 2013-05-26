@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.models;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
@@ -9,6 +10,8 @@ public class ModeratorModel extends CoreModel{
 	
 	private AccountModel account;
 	private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM 'spel'";
+	private final String checkFilledChallengeQuery = "SELECT 'goedgekeurd_uitdager' FROM 'nieuwwoord'";
+	private final String checkFilledTegenstanderQuery = "SELECT 'goedgekeurd_tegenstander' FROM 'nieuwwoord'";
 	private final String changeStatusChallenger = "INSERT INTO 'nieuwwoord' ('goedgekeurd_uitdager') VALUES(?)";
 	private final String changeStatusTegenstander = "INSERT INTO 'nieuwwoord' ('goedgekeurd_tegenstander') VALUES(?)";
 
@@ -55,6 +58,7 @@ public class ModeratorModel extends CoreModel{
 				}
 			}
 		}	
+		addWord();//gaat naar methode om eventueel woord toe te voegen
 	}
 	
 	public boolean checkChallenger(){
@@ -63,6 +67,18 @@ public class ModeratorModel extends CoreModel{
 		}
 		else{
 			return false;
+		}
+	}
+	
+	public void addWord(){
+		try {
+			ResultSet rs1 = new Query(checkFilledChallengeQuery).select();
+			ResultSet rs2 = new Query(checkFilledTegenstanderQuery).select();
+			if (rs1.getInt(1) == 1 && rs2.getInt(1) == 1){
+				//hier moet query die zorgt dat het woord wordt toegevoegd aan de database
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
