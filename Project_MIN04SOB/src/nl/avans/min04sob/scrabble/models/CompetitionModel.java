@@ -35,7 +35,7 @@ public class CompetitionModel extends CoreModel {
 	private final String gamefinished = "SELECT `spel_id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
 	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(score) FROM `spel` as `s` JOIN `beurt` as `b` ON `s.id` = `b.spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `s.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
 	private final String bayesianAverageQuery = "";
-
+	private final String query="SELECT `*` FROM `deelnemer`;";
 	public CompetitionModel(int int1) {
 		competitieID = int1;
 	}
@@ -67,8 +67,18 @@ public class CompetitionModel extends CoreModel {
 
 	public void join(int competitionID, String username) {
 		try {
-			new Query(joinQuery).set(competitionID).set(username).set(ranking)
-					.exec();
+			// zorgt dat de deelnemer niet kan inschrijven omdat hij al ingeschreven is
+			boolean ingeschreven =false;
+			ResultSet dbResult = new Query(query).select();
+			while(dbResult.next()){
+				if(dbResult.getString("account_naam").equals(username)){
+					ingeschreven=true;
+					break;
+				}
+			}
+			if(ingeschreven ==false){
+			new Query(joinQuery).set(competitionID).set(username).set(ranking).exec();
+			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

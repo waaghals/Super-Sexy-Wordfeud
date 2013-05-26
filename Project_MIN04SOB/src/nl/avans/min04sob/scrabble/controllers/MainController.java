@@ -39,9 +39,8 @@ public class MainController extends CoreController {
 	private BoardModel boardModel;
 	private JLabel turn;
 	private JLabel score;
-	 
+	private CompetitionController competitioncontroller; 
 	
-
 	public MainController() {
 		initialize();
 		addListeners();
@@ -76,6 +75,7 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		//changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
+		competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 		turn = new JLabel();
 		turn.setText("TEEEEST");
