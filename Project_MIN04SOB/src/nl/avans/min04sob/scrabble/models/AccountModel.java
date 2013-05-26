@@ -105,12 +105,12 @@ public class AccountModel extends CoreModel {
 
 	}
 
-	public boolean isModerator() {
+	public boolean isRol(String role) {
 		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
 		try {
 			ResultSet rs = new Query(query).set(username).select();
 			while (rs.next()) {
-				if (rs.getString(1).equals("Moderator")) {
+				if (rs.getString(1).equals(role)) {
 					return true;
 				}
 			}
@@ -128,7 +128,22 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query(query).set(username).set(username)
 					.set(GameModel.STATE_PLAYING).select();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this));
+				games.add(new GameModel(dbResult.getInt(1), this,false));
+				// Add a new game with the gameId for this account
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return games;
+	}
+	public ArrayList<GameModel> getObserverAbleGames(){
+		ArrayList<GameModel> games = new ArrayList<GameModel>();
+		String query = "SELECT `ID` FROM `spel` WHERE NOT `Toestand_type` = ?";
+		try {
+			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
+			while (dbResult.next()) {
+				games.add(new GameModel(dbResult.getInt(1), this,true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -154,4 +169,5 @@ public class AccountModel extends CoreModel {
 		}
 		return pass;
 	}
+	
 }

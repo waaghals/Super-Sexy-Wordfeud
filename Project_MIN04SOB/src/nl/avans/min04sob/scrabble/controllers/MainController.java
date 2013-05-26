@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -36,9 +38,10 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private JLabel turn;
-
 	private JLabel score;
+	private Boolean observer;
 	private CompetitionController competitioncontroller; 
+
 
 	public MainController() {
 		initialize();
@@ -77,6 +80,7 @@ public class MainController extends CoreController {
 
 	@Override
 	public void initialize() {
+		observer = false;
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
@@ -88,11 +92,16 @@ public class MainController extends CoreController {
 		score = new JLabel();
 		score.setText("teeeeest");
 
-		crtl = new ChallengeController(account.getUsername());
+		
+		
+		crtl=new ChallengeController(account.getUsername());
+		gamesPanel = new GamesComboBox(account.isRol("observer"));
 
-		gamesPanel = new GamesComboBox();
 
-		currGamePanel = new BoardPanel();
+		
+
+		currGamePanel = new BoardPanel(observer);
+
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
@@ -171,6 +180,28 @@ public class MainController extends CoreController {
 			}
 		});
 
+		if(account.isRol("observer")){
+		gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+					if(gamesPanel.checkBoxIsSelected()){
+						
+						gamesPanel.addGames(account.getObserverAbleGames());
+						observer = true;
+						
+					}else{
+						gamesPanel.addGames(account.getOpenGames());
+						observer = false;
+					}				
+			}
+		});
+		
+		}
+		
+
+
+
 		chatPanel.addListenerChatField(new KeyListener() {
 
 			@Override
@@ -215,16 +246,22 @@ public class MainController extends CoreController {
 		removeModel(boardModel);
 
 		frame.remove(currGamePanel);
-		ArrayList<GameModel> games = account.getOpenGames();
-		Boolean needtocreatemodel = true;
+
+		ArrayList<GameModel> games;
 		StashModel stash = new StashModel();
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
 
 		currGamePanel.setPlayerTiles(letters);
+		if(observer){
+			games = account.getObserverAbleGames();
+		}else{
+		
+			games = account.getOpenGames();
+		}
+		for(int x= 0; games.size() > x;x++){
+			
+			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
 
-		for (int x = 0; games.size() > x; x++) {
-
-			if (games.get(x).getGameId() == selectedGame.getGameId()) {
 				System.out.println("test");
 				if (games.get(x).yourturn()) {
 					turn.setText("you turn");
@@ -238,25 +275,21 @@ public class MainController extends CoreController {
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(
 						boardModel));
 				currGamePanel.setModel(boardModel);
-				needtocreatemodel = false;
+			
 				addModel(boardModel);
-				games.get(x).update();
-			}
-		}/*
-		 * waarschijnlijk niet nodig maar weet niet zkr if(needtocreatemodel){
-		 * 
-		 * GameModel gm = new GameModel(selectedGame.getGameId(),account);
-		 * boardModel = gm.getBoardcontroller().getBpm(); currGamePanel =
-		 * gm.getBoardcontroller().getBpv(); currGamePanel.setRenderer(new
-		 * ScrabbleTableCellRenderer(boardModel));
-		 * currGamePanel.setModel(boardModel);
-		 * 
-		 * addModel(boardModel); }
-		 */
 
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-		frame.revalidate();
-		frame.repaint();
+				
+				 games.get(x).getBoardFromDatabase();
+					games.get(x).update();
+			}
+		}
+			
+			frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+			frame.revalidate();
+			frame.repaint();
+		
+			
+		
 
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();

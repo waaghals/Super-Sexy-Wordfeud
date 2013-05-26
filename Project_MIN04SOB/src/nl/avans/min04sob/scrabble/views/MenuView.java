@@ -133,7 +133,7 @@ public class MenuView extends JMenuBar implements CoreView {
 
 			add(challengeMenu);
 			add(competitionMenu);
-			if (user.isModerator()) {
+			if (user.isRol("moderater")) {
 				add(moderaterMenu);
 			}
 
