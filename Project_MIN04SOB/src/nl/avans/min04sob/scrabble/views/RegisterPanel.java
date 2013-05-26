@@ -5,32 +5,35 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
-import java.awt.event.ActionEvent;
+import nl.avans.min04sob.scrabble.models.Role;
+
 //GUI checked
 public class RegisterPanel extends CorePanel {
 
 	private JLabel usernameLabel, passwordLabel1, passwordLabel2, usernameResult, password1Result, password2Result,roleResult;
 	private JTextField usernameField;
-	private JTextField role;
 	private JPasswordField passwordField1, passwordField2;
 	private JButton cancelButton, registerButton;
+	private JComboBox<Role> comboBox;
 
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
 	
 	public RegisterPanel(){
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gridBagLayout.rowHeights = new int[] {30, 30, 30, 30};
 		gridBagLayout.columnWidths = new int[] {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
 		setLayout(gridBagLayout);
@@ -55,7 +58,7 @@ public class RegisterPanel extends CorePanel {
 		
 		c = new GridBagConstraints();
 		c.gridwidth = 5;
-		c.insets = new Insets(0, 0, 5, 5);
+		c.insets = new Insets(0, 0, 5, 0);
 		usernameResult = new JLabel("");
 		c.gridx = 8;
 		c.gridy = 0;
@@ -80,7 +83,7 @@ public class RegisterPanel extends CorePanel {
 		
 		c = new GridBagConstraints();
 		c.gridwidth = 5;
-		c.insets = new Insets(0, 0, 5, 5);
+		c.insets = new Insets(0, 0, 5, 0);
 		password1Result = new JLabel("");
 		c.gridx = 8;
 		c.gridy = 1;
@@ -105,7 +108,7 @@ public class RegisterPanel extends CorePanel {
 		
 		c = new GridBagConstraints();
 		c.gridwidth = 5;
-		c.insets = new Insets(0, 0, 5, 5);
+		c.insets = new Insets(0, 0, 5, 0);
 		password2Result = new JLabel("");
 		c.gridx = 8;
 		c.gridy = 2;
@@ -118,18 +121,23 @@ public class RegisterPanel extends CorePanel {
 		c.gridy = 3;
 		add(new JLabel("role :"), c);
 		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 5;
-		c.insets = new Insets(0, 0, 5, 5);
-		role = new JTextField();
-		c.gridx = 3;
-		c.gridy = 3;
-		add(role, c);
+		comboBox = new JComboBox<Role>();
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.gridwidth = 5;
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 3;
+		gbc_comboBox.gridy = 3;
+		add(comboBox, gbc_comboBox);
+		for (Role role : Role.values()) {
+			comboBox.addItem(role);
+		}
+		
+		
 		///////////////////////////
 		c = new GridBagConstraints();
 		c.gridwidth = 5;
-		c.insets = new Insets(0, 0, 5, 5);
+		c.insets = new Insets(0, 0, 5, 0);
 		roleResult = new JLabel("");
 		c.gridx = 8;
 		c.gridy = 3;
@@ -138,7 +146,7 @@ public class RegisterPanel extends CorePanel {
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 4;
-		c.insets = new Insets(0, 5, 5, 5);
+		c.insets = new Insets(0, 5, 0, 5);
 		cancelButton = new JButton("Cancel");
 		c.gridx = 0;
 		c.gridy = 4;
@@ -147,7 +155,7 @@ public class RegisterPanel extends CorePanel {
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 4;
-		c.insets = new Insets(0, 5, 5, 5);
+		c.insets = new Insets(0, 5, 0, 5);
 		registerButton = new JButton("Register");
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -179,17 +187,7 @@ public class RegisterPanel extends CorePanel {
 			usernameResult.setText(discription);
 		}
 	}
-	//////////////////////////////////////////////////
-	public void setRoleMistake(boolean good, String discription){
-		if(good){
-			role.setBackground(Color.WHITE);
-			roleResult.setText("");
-		}else{
-			role.setBackground(Color.RED);
-			roleResult.setText(discription);
-		}
-	}
-	
+	//////////////////////////////////////////////////	
 	public void setPassword1Mistake(boolean good, String discription){
 		if(good){
 			passwordField1.setBackground(Color.WHITE);
@@ -231,8 +229,8 @@ public class RegisterPanel extends CorePanel {
 		return passwordField2.getPassword();
 	}
 	
-	public String getRole(){
-		return role.getText();
+	public Role getRole(){
+		return (Role) comboBox.getSelectedItem();
 	}
 
 }

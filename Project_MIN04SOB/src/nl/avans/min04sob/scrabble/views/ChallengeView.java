@@ -7,6 +7,7 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,28 +33,39 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		private JButton oke = new JButton("oke");
 		private JButton oke2 =new JButton("oke");
 		private JFrame jf = new JFrame("popup");
-	 
+		private ArrayList<String> gegevens = new ArrayList<String>();
 		private JTextField tegenstanderduitdager = new JTextField(10);
 		private JTextField spelidduitdager = new JTextField(10);
 		private JTextField naamuitgedaagde = new JTextField(10);
-			
+		public ArrayList <String> challengegegevens = new ArrayList<String>();	
 		public ChallengeView()
 		{
 			jf.setTitle("Challenge");
 			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
+		
 		/// pas aan
-		public void showChallenge(String iets)//gui 
+		public void remove()
+		{
+			challengegegevens.removeAll(challengegegevens);
+		}
+		public void iets(String msg)
+		{
+			challengegegevens.add(msg);
+			showChallenge();
+		}
+		
+		public void showChallenge()//gui 
 		{ 
 			jf.setVisible(true);
 			jf.setContentPane(chpanel);
 			chpanel.setLayout(new BoxLayout(jf, BoxLayout.PAGE_AXIS));
-			chpanel.add(new JLabel( iets ));
+			int index=0;
+			while(index < challengegegevens.size())
+			chpanel.add(new JLabel(challengegegevens.get(index)));
 			chpanel.add(spelidduitdager);
-			
 			accept.setFont(new Font("Serif", Font.ITALIC, 14));
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
-			
 			jf.pack();
 		}
 		//wordt gebruikt of niet
@@ -69,7 +81,6 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			tochallenge.add(spelidduitdager);
 			tochallenge.add(new JLabel("insert opponent"));
 			tochallenge.add(naamuitgedaagde);
-			
 			jf.add(oke);
 			jf.setResizable(false);
 			jf.pack();
@@ -104,7 +115,6 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
 		}
-
 		public  JFrame javaFrame()		
 		{
 			return jf;
@@ -114,7 +124,5 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			// TODO Auto-generated method stub
 			
 		}
-		
-	 
 	}
 	///

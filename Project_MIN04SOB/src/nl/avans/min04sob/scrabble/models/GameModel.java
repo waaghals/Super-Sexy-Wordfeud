@@ -151,8 +151,9 @@ public class GameModel extends CoreModel {
 		return returns;
 	}
 
-	public void checkDirection() {
-
+	public Tile[] getTiles() {
+		
+		return null;
 	}
 
 	public void playWord(HashMap<Point, Tile> tiles) {
@@ -403,7 +404,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 			// Coords for all currently played letters
 
 			for (Point letterPos : letterPositions) {
-				if (starCoord == letterPos) {
+				if (starCoord.equals(letterPos)) {
 					onStar = true;
 					break;
 				}
@@ -462,7 +463,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 		try {
 			ResultSet res = new Query(query).set(gameId).select();
-			res.next();
+
 			int turnCount = Query.getNumRows(res);
 
 			// If it is the first turn
@@ -470,7 +471,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 				// If the currentUser is the challenger return true else false
 				return iamchallenger;
 			}
-
+			res.next();
 			String lastturnplayername = res.getString("account_naam");
 
 			// Get the last turn made

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
+import nl.avans.min04sob.scrabble.models.Role;
+
 public class Query {
 
 	private PreparedStatement statement;
@@ -104,5 +106,9 @@ public class Query {
 			e.printStackTrace();
 		}
 		return numRows;
+	}
+
+	public Query set(Role role) throws SQLException {
+		return set(role.toString());
 	}
 }

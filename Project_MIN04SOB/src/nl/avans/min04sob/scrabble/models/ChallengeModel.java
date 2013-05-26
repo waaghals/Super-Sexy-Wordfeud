@@ -33,6 +33,7 @@ public class ChallengeModel extends CoreModel  {
 	{
 		 naam=iets;
 	}
+
 	public void controle(String Challengername,String  challegendname, String string) throws SQLException//uitdager
 	{
 		result = new Query("SELECT `*`;").select();
@@ -167,10 +168,10 @@ public class ChallengeModel extends CoreModel  {
 			 
 			for(int index=0;index < challengegegevens.size();index++ )
 			{	
-
-				if(spelid.equals(challengegegevens.get(1)))
+				String xx= res.getString(1)+" "+res.getString(5);
+				if(xx.equals(challengegegevens.get(index)))
 				{
-					challengegegevens.remove(spelid);
+					challengegegevens.remove(index);
 				}
 			}
 			new Query(query ).exec();
@@ -179,8 +180,7 @@ public class ChallengeModel extends CoreModel  {
 	}
 	public void commandsToChallengeview(String commando)
 	{	
-		 
-		
+		 	
 	}
 
 	public ArrayList<String> gegevens() 
