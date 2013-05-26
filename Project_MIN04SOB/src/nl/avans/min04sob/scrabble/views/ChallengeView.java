@@ -25,7 +25,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		private JTextField Opponent;
 	//	http://www.oracle.com/technetwork/articles/javase/index-142890.html
 		private JPanel chpanel = new JPanel();
-		private JPanel tochallenge = new JPanel();
+		public JPanel tochallenge = new JPanel();
 		private JPanel response=new JPanel();
 		private JButton accept = new JButton("accept");
 		private JButton decline = new JButton("decline");

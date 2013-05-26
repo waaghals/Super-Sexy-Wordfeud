@@ -13,12 +13,16 @@ import nl.avans.min04sob.scrabble.views.ChallengeView;
 
 public class ChallengeController extends CoreController  {
 	private ChallengeView cv = new ChallengeView();
-	private ChallengeModel cm = new ChallengeModel();
-	 
+	private ChallengeModel cm ;
+	private String naam="";
+	
 	public ChallengeController (final String naam)
 	{
+	  
+		cm= new ChallengeModel(naam);
 		addView(cv);
 		addModel(cm);
+		
 	    cv.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -86,13 +90,12 @@ public class ChallengeController extends CoreController  {
 	
 	public void toChallenge()
 	{
-		toChallenge();
+		cv.toChallenge();
 	}
 
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
