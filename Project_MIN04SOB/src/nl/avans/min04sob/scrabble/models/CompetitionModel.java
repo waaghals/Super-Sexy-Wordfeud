@@ -119,13 +119,18 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	public void deleteCompetition(int competitionID) {
-		boolean competition =false;
-		ResultSet res = new Query(query).select();
-		while(res.next()){
-			if(res.getString("competitie").equals(competitionID)){
-				competition=true;
-				break;
+		boolean competition =false;  // kijkt of de competitie eerst bestaat.
+		ResultSet res;
+		try {
+			res = new Query(query).select();
+			while(res.next()){
+				if(res.getString("competitie").equals(competitionID)){
+					competition=true;
+					break;
+				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		if(competition==true){
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
