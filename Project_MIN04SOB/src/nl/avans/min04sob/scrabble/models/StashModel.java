@@ -49,7 +49,7 @@ public class StashModel extends CoreModel {
 			while (res.next()) {
 				String character = res.getString("letter");
 				int charValue = res.getInt("waarde");
-				tiles[i] = new Tile(character, charValue);
+				tiles[i] = new Tile(character, charValue, Tile.NOT_MUTATABLE);
 			}
 
 			return tiles;

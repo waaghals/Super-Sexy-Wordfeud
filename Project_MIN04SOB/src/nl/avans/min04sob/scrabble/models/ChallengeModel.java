@@ -33,6 +33,7 @@ public class ChallengeModel extends CoreModel  {
 	{
 		 naam=iets;
 	}
+
 	public void controle(String Challengername,String  challegendname, String string) throws SQLException//uitdager
 	{
 		result = new Query("SELECT `*`;").select();
