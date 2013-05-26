@@ -18,11 +18,9 @@ public class ChallengeController extends CoreController  {
 	
 	public ChallengeController (final String naam)
 	{
-	  
 		cm= new ChallengeModel(naam);
 		addView(cv);
 		addModel(cm);
-		
 	    cv.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -57,7 +55,6 @@ public class ChallengeController extends CoreController  {
 			}
 		});
 	}
-	 
 	 /*/
 	public void   {
 	String x =  ;
@@ -71,21 +68,20 @@ public class ChallengeController extends CoreController  {
 		 }
 			}
 	 /*/
-	public String challengers()
+	public void challenger()
 	{
+		cv.remove();
 		String iets = "";
 		int index=0;
 		while(index<cm.gegevens().size())
 		{
-			iets = iets + cm.gegevens();
-			index++;
+			cv.iets(cm.gegevens().get(index));
 		}
-		return iets;
 	}
 	
 	public void openchallenges()
 	{
-		cv.showChallenge(challengers());
+		challenger();
 	}
 	
 	public void toChallenge()
@@ -102,7 +98,5 @@ public class ChallengeController extends CoreController  {
 	public void addListeners() {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	 
+	} 
 }
