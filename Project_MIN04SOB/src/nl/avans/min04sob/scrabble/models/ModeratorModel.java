@@ -31,10 +31,9 @@ public class ModeratorModel extends CoreModel{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return (String[]) words.toArray();
 	}
-	
+
 	public void acceptWord(String word){
 		
 		try {

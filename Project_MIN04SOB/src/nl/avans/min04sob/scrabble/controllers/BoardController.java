@@ -12,7 +12,7 @@ private BoardModel bpm;
 	public BoardController(boolean observer){
 		bpm = new BoardModel();
 
-		bpv = new BoardPanel(observer);
+		bpv = new BoardPanel();
 
 		//bpm.setTile(14, 14, new TileModel("het werkt"));
 		this.updateBoard();
