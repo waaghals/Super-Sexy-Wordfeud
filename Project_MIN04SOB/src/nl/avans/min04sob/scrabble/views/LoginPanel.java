@@ -16,33 +16,42 @@ import javax.swing.JTextField;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionEvent;
 //GUI checked
 public class LoginPanel extends CorePanel {
 
 	private JLabel usernameLabel, passwordLabel;
+	private JButton loginButton, registerButton;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JButton loginButton, registerButton;
 
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 	}
 
 	public LoginPanel() {
-		setPreferredSize(new Dimension(376, 86));
-		setLayout(new MigLayout("", "[65px][20px][30px][][115px][][96.00][]", "[20px][][20px][23px]"));
-		usernameLabel = new JLabel("Username :");
-		add(usernameLabel, "cell 0 0,alignx center,aligny center");
+		setPreferredSize(new Dimension(507, 117));
+		setLayout(new MigLayout("", "[65px][50px:100px:100px,grow][100px:n]", "[20px][23px][]"));
+		usernameLabel = new JLabel("Gebruikersnaam :");
+		add(usernameLabel, "cell 0 0,alignx trailing,aligny center");
+		
 		usernameField = new JTextField();
-		add(usernameField, "cell 2 0 3 1,growx,aligny center");
-		registerButton = new JButton("Go to register");
-		add(registerButton, "cell 6 0 2 4,grow");
-		passwordLabel = new JLabel("Password :");
-		add(passwordLabel, "cell 0 2,alignx center,aligny center");
+		add(usernameField, "cell 1 0 2 1,growx");
+		usernameField.setColumns(10);
+		passwordLabel = new JLabel("Wachtwoord :");
+		add(passwordLabel, "cell 0 1,alignx trailing,aligny center");
+		
 		passwordField = new JPasswordField();
-		add(passwordField, "cell 2 2 3 1,growx,aligny center");
+		add(passwordField, "cell 1 1 2 1,growx");
 		loginButton = new JButton("Login");
-		add(loginButton, "cell 4 3,growx,aligny center");
+		add(loginButton, "cell 1 2,aligny center");
+		registerButton = new JButton("Ik heb nog geen account");
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		add(registerButton, "cell 2 2");
+		//add(registerButton, "cell 5 2 2 1,grow");
 	}
 
 	public String getUsername() {
