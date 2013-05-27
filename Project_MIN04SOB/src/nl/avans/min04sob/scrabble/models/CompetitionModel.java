@@ -100,7 +100,7 @@ public class CompetitionModel extends CoreModel {
 			if (dbResult.next()) {
 				date = dbResult.getDate("einde");
 			}
-			// if(vandaag voorbij einddatum is)
+			// als vandaag voorbij einddatum is
 			if (date.compareTo(new Date()) > 0) {
 				new Query(removeCompetitionQuery).set(competitionID).exec();
 			}
