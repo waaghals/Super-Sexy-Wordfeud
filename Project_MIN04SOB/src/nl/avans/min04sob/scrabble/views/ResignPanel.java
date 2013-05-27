@@ -14,8 +14,8 @@ import java.awt.event.ActionEvent;
 
 public class ResignPanel extends CorePanel {
 	
-	private JButton btnYes;
-	private JButton btnNo;
+	private JButton yesButton;
+	private JButton noButton;
 	
 	
 	public ResignPanel() {
@@ -25,11 +25,11 @@ public class ResignPanel extends CorePanel {
 		JLabel lblAreYouSure = new JLabel("Are you sure you want to resign?");
 		add(lblAreYouSure, "cell 2 0 2 1,alignx left,aligny top");
 		
-		btnYes = new JButton("Yes");
-		add(btnYes, "cell 2 2,alignx center");
+		yesButton = new JButton("Yes");
+		add(yesButton, "cell 2 2,alignx center");
 		
-		btnNo = new JButton("No");
-		add(btnNo, "cell 3 2,alignx center");
+		noButton = new JButton("No");
+		add(noButton, "cell 3 2,alignx center");
 	}
 
 	@Override
@@ -39,10 +39,10 @@ public class ResignPanel extends CorePanel {
 	}
 	
 	public void addResignActionListener(ActionListener listener) {
-		btnYes.addActionListener(listener);
+		yesButton.addActionListener(listener);
 	}
 	
 	public void addNoResignActionListener(ActionListener listener) {
-		btnNo.addActionListener(listener);
+		noButton.addActionListener(listener);
 	}
 }
