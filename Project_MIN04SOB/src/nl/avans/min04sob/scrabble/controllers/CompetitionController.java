@@ -22,5 +22,9 @@ public class CompetitionController extends CoreController {
 	public void addListeners() {
 		// TODO Auto-generated method stub
 	}
+	
+	public void getCompetitions(String username){
+		cv.fillCompitions(cm.getCompitions(username));
+	}
 
 }
