@@ -216,7 +216,7 @@ public class AccountController extends CoreController {
 		}
 	}
 
-	private void loginToRegister() {
+	public void loginToRegister() {
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
 		registerPanel.clearFields();
