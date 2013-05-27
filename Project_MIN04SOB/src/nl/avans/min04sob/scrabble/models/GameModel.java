@@ -47,7 +47,7 @@ public class GameModel extends CoreModel {
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
 
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
-	
+
 	public GameModel() {
 		boardcontroller = new BoardController(false);
 		boardcontroller.getBpv().setPreferredSize(new Dimension(300, 300));
@@ -112,32 +112,32 @@ public class GameModel extends CoreModel {
 	}
 
 	private void addlistenerobserver() {
-		boardcontroller.getBpv().addVolgendeActionListener(
+		boardcontroller.getBpv().addNextActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				currentobserveturn++;
+				updateboardfromdatabasetoturn(currentobserveturn);
+
+			}
+
+		});
+		boardcontroller.getBpv().addPreviousActionListener(
 				new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						currentobserveturn++;
-						updateboardfromdatabasetoturn(currentobserveturn);
+						currentobserveturn--;
+						for (int x = 0; currentobserveturn > x
+								|| currentobserveturn == x; x++) {
+							updateboardfromdatabasetoturn(x);
 
+						}
 					}
 
 				});
-		boardcontroller.getBpv().addVorigeActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				currentobserveturn--;
-				for (int x = 0; currentobserveturn > x
-						|| currentobserveturn == x; x++) {
-					updateboardfromdatabasetoturn(x);
-
-				}
-			}
-
-		});
 	}
 
 	public String[][] compareArrays(String[][] bord, String[][] database) {
@@ -160,11 +160,11 @@ public class GameModel extends CoreModel {
 
 		return null;
 	}
-
+/* TODO
 	public void playWord(HashMap<Point, Tile> tiles) {
-		String[][] Bnaam_uitdager");
+		String[][] Bnaam_uitdagers;
 		String challengeeName = dbResult.getString("account_naam_tegenstander");
-oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
+		oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
 				.getBpm().tileData[1].length];
 		for (int y = 0; boardcontroller.getBpm().tileData.length > y; y++) {
 			for (int x = 0; boardcontroller.getBpm().tileData[y].length > x; x++) {
@@ -192,7 +192,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 			}
 		}
 	}
-
+*/
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
@@ -402,7 +402,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 
-		if (isFirstMove) {
+		if (yourturn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
 
@@ -598,6 +598,5 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 			sql.printStackTrace();
 		}
 	}
-	
 
 }
