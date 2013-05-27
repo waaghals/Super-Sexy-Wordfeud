@@ -27,18 +27,21 @@ public class AcceptDeclineController extends CoreController {
 	public void fillJList() {
 		String[] words = modModel.getRequestedWordList();
 		adView.fillJList(words);
+		adView.revalidate();
+		adView.repaint();
 
 	}
 
 	public void acceptWord() {
 		String word = adView.getSelectedWord();
 		modModel.acceptWord(word);
-
+		fillJList();
 	}
 
 	public void deniedWord() {
 		String word = adView.getSelectedWord();
 		modModel.deniedWord(word);
+		fillJList();
 	}
 
 	@Override
