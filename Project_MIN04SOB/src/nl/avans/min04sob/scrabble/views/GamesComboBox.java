@@ -35,15 +35,13 @@ public class GamesComboBox extends CorePanel {
 				"[20px:30px:30px][20px:30px:30px]"));
 
 
-		JLabel lblSelecteerEenSpel = new JLabel("Selecteer een spel");
-		add(lblSelecteerEenSpel, "cell 0 0 2 1");
+		JLabel selectLabel = new JLabel("Selecteer een spel");
+		add(selectLabel, "cell 0 0 2 1");
 		gameList = new JComboBox<GameModel>();
 
 		add(gameList, "cell 0 1 2 1,grow");
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
-
-		
 
 	}
 
@@ -99,7 +97,9 @@ public class GamesComboBox extends CorePanel {
 		case Event.LOGOUT:
 			gameList.removeAll();
 			gameList.setEnabled(false);
-			
+
+			observer.setEnabled(false);
+
 			observer.setSelected(false);
 			this.remove(observer);
 			break;

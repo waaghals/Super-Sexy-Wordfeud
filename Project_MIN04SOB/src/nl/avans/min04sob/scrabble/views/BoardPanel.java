@@ -15,9 +15,12 @@ import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.TileTable;
 import nl.avans.min04sob.scrabble.core.TileTranfserHandler;
+import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
+import nl.avans.min04sob.scrabble.models.Role;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
@@ -25,112 +28,98 @@ public class BoardPanel extends CorePanel {
 	private JButton swap;
 	private JButton pass;
 	private JButton play;
-	private JButton volgende;
-	private JButton vorige;
-	
+	private JButton nextTurn;
+	private JButton prevTurn;
+
 	private JTable playBoard;
 	private JTable playerTilesField;
 	
+	private boolean isObserver;
 
+	public BoardPanel() {
+		/**
+		 * 
+		 * Main playing board
+		 */
 
-		public BoardPanel(boolean isObserver) {
-			/**
-			 * 
-			 * Main playing board
-			 */
-		
-			playBoard = new TileTable();
-			playBoard.setBorder(new LineBorder(new Color(0, 0, 0)));
-			playBoard.setPreferredSize(new Dimension(0, 0));
-			playBoard.setPreferredScrollableViewportSize(new Dimension(0, 0));
-			playBoard.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			playBoard.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			playBoard.setFillsViewportHeight(true);
-			playBoard.getTableHeader().setReorderingAllowed(false);
-			playBoard.getTableHeader().setResizingAllowed(false);
-			playBoard.setRowHeight(30);
-			playBoard.setEnabled(true);
-			playBoard.validate();
-			
+		playBoard = new TileTable();
+		playBoard.setBorder(new LineBorder(new Color(0, 0, 0)));
+		playBoard.setPreferredSize(new Dimension(0, 0));
+		playBoard.setPreferredScrollableViewportSize(new Dimension(0, 0));
+		playBoard.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		playBoard.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		playBoard.setFillsViewportHeight(true);
+		playBoard.getTableHeader().setReorderingAllowed(false);
+		playBoard.getTableHeader().setResizingAllowed(false);
+		playBoard.setRowHeight(30);
+		playBoard.setEnabled(true);
+		playBoard.validate();
 
-			add(playBoard, "cell 0 0 6 1,grow");
-			
+		add(playBoard, "cell 0 0 5 1");
 
+		/**
+		 * 
+		 * Set the basic stuff such as layout
+		 */
 
-			/**
-			 * 
-			 * Set the basic stuff such as layout
-			 */
-			
-			setLayout(new MigLayout(
-					"",
-					"[75px:100px,grow][150px:n][5px][75px:100px][75px:100px][75px:100px]",
-					"[450px][:30px:30px][25px]"));
+		setLayout(new MigLayout("", "[450px,grow][150px:n][75px:100px][75px:100px][75px:100px]", "[450px][:30px:30px][25px]"));
 
-		
+		/**
+		 * 
+		 * Player letter rack
+		 */
 
-			/**
-			 * 
-			 * Player letter rack
-			 */
+		playerTilesField = new JTable(1, 7);
+		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
+		playerTilesField.setRowHeight(30);
+		playerTilesField.setCellSelectionEnabled(true);
 
-			playerTilesField = new JTable(1, 7);
-			playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
-			playerTilesField.setRowHeight(30);
-			playerTilesField.setCellSelectionEnabled(true);
+		add(playerTilesField, "cell 0 2 8 1,growx,aligny top");
 
+		if (!(isObserver)) {
+			playBoard.setDragEnabled(true);
+			playBoard.setDropMode(DropMode.USE_SELECTION);
+			playBoard.setTransferHandler(new TileTranfserHandler());
 
-			add(playerTilesField, "cell 0 2 9 1,growx,aligny top");
-			
-			if(!(isObserver)){
-				playBoard.setDragEnabled(true);
-				playBoard.setDropMode(DropMode.USE_SELECTION);
-				playBoard.setTransferHandler(new TileTranfserHandler());
-			
-				playerTilesField.setDragEnabled(true);
-				playerTilesField.setDropMode(DropMode.USE_SELECTION);
-				playerTilesField.setTransferHandler(new TileTranfserHandler());
-			
-			
-			
-					
-					play = new JButton();
-					play.setText("Play");
-					add(play, "cell 1 3,alignx left,aligny center");
-					
-					pass = new JButton();
-					pass.setText("Pas");
-					add(pass, "cell 3 3,grow");
-					
-					swap = new JButton();
-					swap.setText("Swap");
-					add(swap, "cell 5 3,grow");
-					
-					resign = new JButton();
-					resign.setText("Resign");
-					add(resign, "cell 8 3,alignx center,growy");
+			playerTilesField.setDragEnabled(true);
+			playerTilesField.setDropMode(DropMode.USE_SELECTION);
+			playerTilesField.setTransferHandler(new TileTranfserHandler());
 
-			}else{
-				volgende = new JButton();
-				volgende.setText("volgende");
-				add(volgende, "cell 3 3,grow");
-				
-				vorige = new JButton();
-				vorige.setText("vorige");
-				add(vorige, "alignx left,aligny center");
-				
-			}
+			play = new JButton();
+			play.setText("Play");
+			add(play, "cell 1 3,alignx left,aligny center");
+
+			pass = new JButton();
+			pass.setText("Pas");
+			add(pass, "cell 3 3,grow");
+
+			swap = new JButton();
+			swap.setText("Swap");
+			add(swap, "cell 5 3,grow");
+
+			resign = new JButton();
+			resign.setText("Resign");
+			add(resign, "cell 8 3,alignx center,growy");
+
+		} else {
+			nextTurn = new JButton();
+			nextTurn.setText("Volgende");
+			add(nextTurn, "cell 3 3,grow");
+
+			prevTurn = new JButton();
+			prevTurn.setText("Vorige");
+			add(prevTurn, "alignx left,aligny center");
+
 		}
-		public void addVolgendeActionListener(ActionListener listener){
-			volgende.addActionListener(listener);
-		}
-		public void addVorigeActionListener(ActionListener listener){
-			vorige.addActionListener(listener);
-		}
-	
-		
+	}
 
-	
+	public void addVolgendeActionListener(ActionListener listener) {
+		nextTurn.addActionListener(listener);
+	}
+
+	public void addVorigeActionListener(ActionListener listener) {
+		prevTurn.addActionListener(listener);
+	}
 
 	public void addResignActionListener(ActionListener listener) {
 		resign.addActionListener(listener);
@@ -138,7 +127,16 @@ public class BoardPanel extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		switch(evt.getPropertyName()){
+		case Event.LOGIN:
+			AccountModel account = (AccountModel) evt.getNewValue();
+			if(account.isRole(Role.OBSERVER)){
+				
+			}
+			revalidate();
+			break;
+		
+		}
 
 	}
 
