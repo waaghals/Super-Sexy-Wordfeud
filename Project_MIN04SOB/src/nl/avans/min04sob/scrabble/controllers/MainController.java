@@ -197,14 +197,17 @@ public class MainController extends CoreController {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
+				System.out.println("teeeeeeeeeest0");
 					if(gamesPanel.checkBoxIsSelected()){
 						
 						gamesPanel.addGames(account.getObserverAbleGames());
 						observer = true;
+						System.out.println("teeeeeeeeeest");
 						
 					}else{
 						gamesPanel.addGames(account.getOpenGames());
 						observer = false;
+						System.out.println("teeeeeeeeeest1");
 					}				
 			}
 		});
