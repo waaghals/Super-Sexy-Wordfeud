@@ -45,9 +45,10 @@ public class GameModel extends CoreModel {
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
-
+	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
-
+	private final String scoreQuery = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
+	
 	public GameModel() {
 		boardcontroller = new BoardController(false);
 		boardcontroller.getBpv().setPreferredSize(new Dimension(300, 300));
@@ -465,9 +466,9 @@ public class GameModel extends CoreModel {
 
 		// String query =
 		// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-		String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+		//String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 		try {
-			ResultSet res = new Query(query).set(gameId).select();
+			ResultSet res = new Query(yourTurnQuery).set(getGameId()).select();
 
 			int turnCount = Query.getNumRows(res);
 
@@ -502,14 +503,13 @@ public class GameModel extends CoreModel {
 
 	public String score() {
 		String score = "";
-		String query = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 
 		try {
 
-			int ch = scorecounter(new Query(query)
+			int ch = scorecounter(new Query(scoreQuery)
 					.set(challenger.getUsername()).select());
 
-			int op = scorecounter(new Query(query).set(opponent.getUsername())
+			int op = scorecounter(new Query(scoreQuery).set(opponent.getUsername())
 					.select());
 
 			if (iamchallenger) {
