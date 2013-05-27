@@ -40,6 +40,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		Component c = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
 		JLabel label = (JLabel) c;
+		
 		Tile tile = (Tile) boardModel.getValueAt(row, col);
 		
 		int multiplier = boardModel.getMultiplier(new Point(row, col));

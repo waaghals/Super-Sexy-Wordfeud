@@ -55,8 +55,8 @@ public class GameModel extends CoreModel {
 		boardData = new String[15][15];
 	}
 
-	public GameModel(int gameId, AccountModel user, boolean observer) {
-		boardcontroller = new BoardController(observer);
+	public GameModel(int gameId, AccountModel user,BoardController board, boolean observer) {
+		boardcontroller = board;
 		currentUser = user;
 		currentobserveturn = 0;
 		try {
@@ -549,11 +549,13 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 			while (rs.next()) {
 				int x = rs.getInt(2) - 1;// x
 				int y = rs.getInt(3) - 1;// y
-
-				if (rs.getString(1).equals("?")) {
-					boardData[y][x] = rs.getString(4);
-				} else {
-					boardData[y][x] = rs.getString(1);
+				if(x > -1 && y > -1){
+					if (rs.getString(1).equals("?")) {
+						boardcontroller.getBpm().setValueAt(rs.getString(4), y, x);
+						
+					} else {
+						boardcontroller.getBpm().setValueAt(rs.getString(1), y, x);
+					}
 				}
 			}
 
