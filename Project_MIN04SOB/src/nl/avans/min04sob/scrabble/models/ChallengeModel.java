@@ -29,6 +29,7 @@ public class ChallengeModel extends CoreModel  {
 	public String name=""; 
 	public Timer timer = new Timer();
 	public ArrayList <String> challenge = new ArrayList<String>();
+	
 
 	public ChallengeModel(String name)  
 	{

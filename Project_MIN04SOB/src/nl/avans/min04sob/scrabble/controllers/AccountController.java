@@ -46,6 +46,7 @@ public class AccountController extends CoreController {
 		loginPanel.addActionListenerLogin(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkLogin();
+				frame.dispose();
 			}
 		});
 

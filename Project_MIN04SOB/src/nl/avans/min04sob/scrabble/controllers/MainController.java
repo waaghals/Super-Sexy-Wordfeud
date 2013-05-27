@@ -121,6 +121,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				//crtl.openchallenges();
 				//TODO stops program from running
+
 			}
 		});
 		menu.adddoChallengeItemActionListener(new ActionListener() {

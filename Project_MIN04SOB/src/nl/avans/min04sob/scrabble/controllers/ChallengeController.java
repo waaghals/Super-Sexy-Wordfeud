@@ -26,6 +26,7 @@ public class ChallengeController extends CoreController  {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.respondChallenge(challengeview.getspelID(), name,true);
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -37,6 +38,7 @@ public class ChallengeController extends CoreController  {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.respondChallenge(challengeview.getspelID(), name,false);
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -48,6 +50,7 @@ public class ChallengeController extends CoreController  {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.controle(name,  challengeview.getUsername(), challengeview.getspelID());
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
