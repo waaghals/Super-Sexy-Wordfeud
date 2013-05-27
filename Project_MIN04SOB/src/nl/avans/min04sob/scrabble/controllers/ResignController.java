@@ -13,7 +13,7 @@ public class ResignController extends CoreController {
 
 	private ResignPanel resignPanel;
 	private JFrame frame;
-	private GameModel gameModel;
+	private GameModel gameModel = new GameModel();
 	
 	public ResignController() {
 		

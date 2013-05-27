@@ -76,7 +76,7 @@ public class Query {
 	}
 
 	public ResultSet select() {
-
+		//System.out.println(statement);
 		try {
 			result = statement.executeQuery();
 		} catch (SQLException e) {

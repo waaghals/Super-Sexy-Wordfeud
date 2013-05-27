@@ -76,6 +76,12 @@ public class BoardPanel extends CorePanel {
 
 		add(playerTilesField, "cell 0 2 8 1,growx,aligny top");
 
+		nextTurn = new JButton();
+		nextTurn.setText("Volgende");
+
+		prevTurn = new JButton();
+		prevTurn.setText("Vorige");
+		
 		if (!(isObserver)) {
 			playBoard.setDragEnabled(true);
 			playBoard.setDropMode(DropMode.USE_SELECTION);
@@ -102,12 +108,9 @@ public class BoardPanel extends CorePanel {
 			add(resign, "cell 8 3,alignx center,growy");
 
 		} else {
-			nextTurn = new JButton();
-			nextTurn.setText("Volgende");
+			
 			add(nextTurn, "cell 3 3,grow");
 
-			prevTurn = new JButton();
-			prevTurn.setText("Vorige");
 			add(prevTurn, "alignx left,aligny center");
 
 		}

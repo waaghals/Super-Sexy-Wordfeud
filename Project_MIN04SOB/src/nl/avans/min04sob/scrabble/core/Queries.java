@@ -14,7 +14,7 @@ public class Queries {
 	public static final String CURRENT_TILES;
 
 	static {
-		CURRENT_TILES = Queries.readFile("Project_MIN04SOB/queries/currentTiles.sql");
+		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
 	}
 
 	private static String readFile(final String file) {
