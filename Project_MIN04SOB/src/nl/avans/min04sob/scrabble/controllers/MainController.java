@@ -102,7 +102,7 @@ public class MainController extends CoreController {
 
 		
 
-		currGamePanel = new BoardPanel(observer);
+		currGamePanel = new BoardPanel();
 
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
