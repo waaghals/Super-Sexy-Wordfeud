@@ -97,12 +97,13 @@ public class MainController extends CoreController {
 		
 		
 		crtl=new ChallengeController(account.getUsername());
-		gamesPanel = new GamesComboBox(account.isRole(Role.OBSERVER));
+
+		gamesPanel = new GamesComboBox();
 
 
 		
 
-		currGamePanel = new BoardPanel(observer);
+		currGamePanel = new BoardPanel();
 
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));

@@ -46,7 +46,7 @@ public class AccountController extends CoreController {
 		loginPanel.addActionListenerLogin(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkLogin();
-				frame.dispose();
+				 
 			}
 		});
 
@@ -104,10 +104,14 @@ public class AccountController extends CoreController {
 
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
+		 
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(false);
+			frame.dispose();
+			frame = null;
 			loginPanel.setPasswordMistake(false);
-		} else {
+		}
+		else {
 			frame.dispose();
 			frame = null;
 		}
