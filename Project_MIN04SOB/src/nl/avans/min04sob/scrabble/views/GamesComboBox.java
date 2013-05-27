@@ -83,12 +83,15 @@ public class GamesComboBox extends CorePanel {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
+			
 			gameList.setEnabled(true);
 			if(account.isRole(Role.OBSERVER)){
 				
-				
-				add(observer,"cell 0 2 3 1 ,grow");
 				observer.setEnabled(true);
+				add(observer,"cell 2 1 ,grow");
+				System.out.println("teeeeeeeeeeeeeeeeeeeeeeest");
+			
+				observer.setVisible(true);
 				observer.setText("bekijk een spel");
 			}
 			observer.setEnabled(true);
