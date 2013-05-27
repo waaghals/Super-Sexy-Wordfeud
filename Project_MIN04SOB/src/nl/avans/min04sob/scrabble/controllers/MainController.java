@@ -92,6 +92,7 @@ public class MainController extends CoreController {
 		score = new JLabel();
 		score.setText("teeeeest");
 
+
 		crtl = new ChallengeController(account.getUsername());
 
 		gamesPanel = new GamesComboBox();
