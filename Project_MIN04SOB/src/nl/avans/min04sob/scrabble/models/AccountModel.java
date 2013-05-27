@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.DatabasePool;
 import nl.avans.min04sob.scrabble.core.Event;
@@ -128,7 +129,7 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query(query).set(username).set(username)
 					.set(GameModel.STATE_PLAYING).select();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,false));
+				games.add(new GameModel(dbResult.getInt(1), this,new BoardController(false), false));
 				// Add a new game with the gameId for this account
 			}
 
@@ -143,7 +144,7 @@ public class AccountModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,true));
+				games.add(new GameModel(dbResult.getInt(1),this,new BoardController(true), true));
 				// Add a new game with the gameId for this account
 			}
 

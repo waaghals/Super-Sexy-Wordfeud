@@ -161,11 +161,11 @@ public class MainController extends CoreController {
 		});
 
 		addLoginListener();
-
+		addResignListener();
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
-				addLoginListener();
+				//addLoginListener();
 			}
 		});
 
@@ -190,7 +190,9 @@ public class MainController extends CoreController {
 
 
 		});
-
+		
+		
+		
 		//if (account.isRole(Role.OBSERVER)) {
 			gamesPanel.addObserverCheckBoxListener(new ChangeListener() {
 
@@ -246,7 +248,7 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
-		addResignListener();
+		
 	}
 	
 	private void addResignListener() {
