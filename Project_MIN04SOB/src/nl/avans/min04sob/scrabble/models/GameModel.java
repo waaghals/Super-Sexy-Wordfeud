@@ -45,6 +45,7 @@ public class GameModel extends CoreModel {
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
+
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
 	
 	public GameModel() {
@@ -54,7 +55,7 @@ public class GameModel extends CoreModel {
 		boardData = new String[15][15];
 	}
 
-	public GameModel(int gameId, AccountModel user,boolean observer) {
+	public GameModel(int gameId, AccountModel user, boolean observer) {
 		boardcontroller = new BoardController(observer);
 		currentUser = user;
 		currentobserveturn = 0;
@@ -72,10 +73,9 @@ public class GameModel extends CoreModel {
 				String challengeeName = dbResult
 						.getString("account_naam_tegenstander");
 
-
 				boardName = dbResult.getString(9);
 				letterSet = dbResult.getString(10);
-				if(!(observer)){
+				if (!(observer)) {
 					if (challengerName.equals(currentUser.getUsername())) {
 						opponent = new AccountModel(challengeeName);
 						challenger = currentUser;
@@ -85,11 +85,11 @@ public class GameModel extends CoreModel {
 						challenger = opponent;
 						iamchallenger = false;
 					}
-				}else{
-				opponent = new AccountModel(challengeeName);
-				challenger = new AccountModel(challengerName);
-				iamchallenger  = false;
-				addlistenerobserver();
+				} else {
+					opponent = new AccountModel(challengeeName);
+					challenger = new AccountModel(challengerName);
+					iamchallenger = false;
+					addlistenerobserver();
 				}
 			}
 
@@ -110,33 +110,36 @@ public class GameModel extends CoreModel {
 		}
 		return false;
 	}
-	private void addlistenerobserver(){
-		boardcontroller.getBpv().addVolgendeActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				currentobserveturn++;
-				updateboardfromdatabasetoturn(currentobserveturn);
-				
-				
-			}
-			
-		});
-		boardcontroller.getBpv().addVorigeActionListener(new ActionListener(){
+	private void addlistenerobserver() {
+		boardcontroller.getBpv().addVolgendeActionListener(
+				new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						currentobserveturn++;
+						updateboardfromdatabasetoturn(currentobserveturn);
+
+					}
+
+				});
+		boardcontroller.getBpv().addVorigeActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				currentobserveturn--;
-				for(int x = 0;currentobserveturn > x ||currentobserveturn == x ;x++){
-				updateboardfromdatabasetoturn(x);
-				
+				for (int x = 0; currentobserveturn > x
+						|| currentobserveturn == x; x++) {
+					updateboardfromdatabasetoturn(x);
+
 				}
 			}
-			
+
 		});
 	}
+
 	public String[][] compareArrays(String[][] bord, String[][] database) {
 		String[][] returns = new String[7][3];
 		int counter = 0;
@@ -154,7 +157,7 @@ public class GameModel extends CoreModel {
 	}
 
 	public Tile[] getTiles() {
-		
+
 		return null;
 	}
 
@@ -495,39 +498,42 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		}
 		return (Boolean) null;
 
-		
-		}
-		
+	}
 
-	public String score(){
+	public String score() {
 		String score = "";
 		String query = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
-		
+
 		try {
 
-			int ch = scorecounter(new Query(query).set(challenger.getUsername()).select());
-			
-			int op = scorecounter(new Query(query).set(opponent.getUsername()).select());
-			
-			if(iamchallenger){
-				score = "you : "+ Integer.toString(ch)+ " points" + "/n" + opponent.getUsername() + " : "+ Integer.toString(op) + " points";
+			int ch = scorecounter(new Query(query)
+					.set(challenger.getUsername()).select());
+
+			int op = scorecounter(new Query(query).set(opponent.getUsername())
+					.select());
+
+			if (iamchallenger) {
+				score = "you : " + Integer.toString(ch) + " points" + "/n"
+						+ opponent.getUsername() + " : " + Integer.toString(op)
+						+ " points";
+			} else {
+				score = "you : " + Integer.toString(op) + " points" + "/n"
+						+ challenger.getUsername() + " : "
+						+ Integer.toString(ch) + " points";
 			}
-			else{
-				score = "you : "+ Integer.toString(op)+ " points" + "/n" + challenger.getUsername() + " : "+ Integer.toString(ch) + " points";
-			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return score;
-	
+
 	}
-	
-	private int scorecounter(ResultSet s){
+
+	private int scorecounter(ResultSet s) {
 		int counter = 0;
 		try {
-			while(s.next()){
+			while (s.next()) {
 				counter += s.getInt(1);
 			}
 		} catch (SQLException e) {
@@ -536,56 +542,54 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		}
 		return counter;
 	}
-public void getBoardFromDatabase(){
-	try {
-		ResultSet rs = new Query(getBoardQuery).set(gameId).select();
-		while (rs.next()) {
-			int x = rs.getInt(2) - 1;// x
-			int y = rs.getInt(3) - 1;// y
-			
-			if (rs.getString(1).equals("?")) {
-				boardData[y][x] = rs.getString(4);
-			} else {
-				boardData[y][x] = rs.getString(1);
+
+	public void getBoardFromDatabase() {
+		try {
+			ResultSet rs = new Query(getBoardQuery).set(gameId).select();
+			while (rs.next()) {
+				int x = rs.getInt(2) - 1;// x
+				int y = rs.getInt(3) - 1;// y
+
+				if (rs.getString(1).equals("?")) {
+					boardData[y][x] = rs.getString(4);
+				} else {
+					boardData[y][x] = rs.getString(1);
+				}
 			}
+
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
 
-	} catch (SQLException sql) {
-		sql.printStackTrace();
 	}
 
-
-}
-public void updateboardfromdatabasetoturn(int turn_id){
-	try {
-		ResultSet rs = new Query(getTurnQuery).set(gameId).set(turn_id)
-				.select();
-		while (rs.next()) {
-			int x = rs.getInt(2) - 1;// x
-			int y = rs.getInt(3) - 1;// y
-			lastTurn = rs.getInt(5);
-			if (rs.getString(1).equals("?")) {
-				boardData[y][x] = rs.getString(4);
-			} else {
-				boardData[y][x] = rs.getString(1);
+	public void updateboardfromdatabasetoturn(int turn_id) {
+		try {
+			ResultSet rs = new Query(getTurnQuery).set(gameId).set(turn_id)
+					.select();
+			while (rs.next()) {
+				int x = rs.getInt(2) - 1;// x
+				int y = rs.getInt(3) - 1;// y
+				lastTurn = rs.getInt(5);
+				if (rs.getString(1).equals("?")) {
+					boardData[y][x] = rs.getString(4);
+				} else {
+					boardData[y][x] = rs.getString(1);
+				}
 			}
+
+		} catch (SQLException sql) {
+			sql.printStackTrace();
 		}
-
-	} catch (SQLException sql) {
-		sql.printStackTrace();
 	}
-}
-
-
-
 
 	public int getCurrentobserveturn() {
-	return currentobserveturn;
-}
+		return currentobserveturn;
+	}
 
-public void setCurrentobserveturn(int currentobserveturn) {
-	this.currentobserveturn = currentobserveturn;
-}
+	public void setCurrentobserveturn(int currentobserveturn) {
+		this.currentobserveturn = currentobserveturn;
+	}
 
 	public void Resign() {
 		try {
