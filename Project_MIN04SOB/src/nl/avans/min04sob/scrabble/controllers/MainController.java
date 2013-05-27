@@ -188,7 +188,6 @@ public class MainController extends CoreController {
 
 			}
 		});
-<<<<<<< HEAD
 
 		//if (account.isRole(Role.OBSERVER)) {
 			gamesPanel.addObserverCheckBoxListener(new ChangeListener() {
@@ -219,28 +218,6 @@ public class MainController extends CoreController {
 
 	//	}
 
-=======
-
-		if(account.isRole(Role.OBSERVER)){
-			gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
-	
-				@Override
-				public void stateChanged(ChangeEvent e) {
-						if(gamesPanel.checkBoxIsSelected()){
-							
-							gamesPanel.addGames(account.getObserverAbleGames());
-							observer = true;
-							
-						}else{
-							gamesPanel.addGames(account.getOpenGames());
-							observer = false;
-						}				
-				}
-			});
-		
-		}
-		
->>>>>>> refs/remotes/origin/master
 		chatPanel.addListenerChatField(new KeyListener() {
 
 			@Override
@@ -332,19 +309,12 @@ public class MainController extends CoreController {
 				games.get(x).update();
 			}
 		}
-<<<<<<< HEAD
+
 
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
 		frame.repaint();
 
-=======
-			
-			frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-			frame.revalidate();
-			frame.repaint();
-		
->>>>>>> refs/remotes/origin/master
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
