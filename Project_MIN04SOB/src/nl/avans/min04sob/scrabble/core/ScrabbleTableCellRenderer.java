@@ -2,9 +2,9 @@ package nl.avans.min04sob.scrabble.core;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.Point;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -39,8 +39,9 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 		Component c = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
+		JLabel label = (JLabel) c;
 		Tile tile = (Tile) boardModel.getValueAt(row, col);
-
+		
 		int multiplier = boardModel.getMultiplier(new Point(row, col));
 
 		if (tile != null && !tile.isMutatable()) {

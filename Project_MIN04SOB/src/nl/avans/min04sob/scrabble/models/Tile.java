@@ -5,6 +5,9 @@ public class Tile {
 	private String letter;
 	private int value;
 	private boolean mutatable;
+	public final static boolean MUTATABLE = true;
+	public final static boolean NOT_MUTATABLE = false;
+	
 	
 	public Tile(){
 		letter = "";
@@ -12,13 +15,19 @@ public class Tile {
 		mutatable = true;
 	}
 	
-	public Tile(String character, boolean mutable){
+	public Tile(String letter, int value, boolean mutatable) {
+		this.letter = letter;
+		this.value = value;
+		this.mutatable = mutatable;
+	}
+	
+	@Deprecated public Tile(String character, boolean mutable){
 		letter = character;
 		value = 0;
 		this.mutatable = mutable;
 	}
 
-	public Tile(String character, int charValue) {
+	@Deprecated public Tile(String character, int charValue) {
 		letter = character;
 		value = charValue;
 		mutatable = true;

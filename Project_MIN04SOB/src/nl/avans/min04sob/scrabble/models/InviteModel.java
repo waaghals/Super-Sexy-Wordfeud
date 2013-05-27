@@ -43,6 +43,7 @@ public class InviteModel extends CoreModel {
 
 	public ArrayList<String> getPlayers() {
 		try {
+			//TODO de rs variabele afmaken doormiddel van het commentaar in de .set
 			ResultSet rs = new Query(selectQueryPlayers).set(/*hier moet de geselcteerde ID in komende te staan die je uit de vorige query-resultaten haalt*/).select();
 			while (rs.next()) {
 				players.add(rs.getString(1));

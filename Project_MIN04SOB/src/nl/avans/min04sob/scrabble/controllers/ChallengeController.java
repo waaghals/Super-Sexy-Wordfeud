@@ -2,6 +2,7 @@ package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.sql.SQLException;
 import java.util.Observable;
 import java.util.Observer;
@@ -11,70 +12,90 @@ import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
 
-public class ChallengeController extends AccountModel implements Observer{
-	private ChallengeView cv = new ChallengeView();
-	private ChallengeModel cm = new ChallengeModel();
-	public ChallengeController ()
+public class ChallengeController extends CoreController  {
+	private ChallengeView challengeview;
+	private ChallengeModel challengemodel ;
+ 
+	public ChallengeController (final String name)
 	{
-	    cv.addActionListenerAccept (new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cm.acceptCallenge(cv.getspelID());
-				cv.javaFrame().dispose();
-			}
-		});
-		cv.addActionListenerDecline (new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cm.declineCallenge(cv.getspelID());
-				cv.javaFrame().dispose();
-			}
-		});
-		cv.addActionListenerOke (new ActionListener() {
+		challengeview = new ChallengeView();
+		challengemodel= new ChallengeModel(name);
+		addView(challengeview);
+		addModel(challengemodel);
+		challengeview.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cm.controle(getUsername(),  cv.getUsername(), cv.getspelID());
+					challengemodel.respondChallenge(challengeview.getspelID(), name,true);
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				cv.javaFrame().dispose();
+				challengeview.javaFrame().dispose();
+			}
+		});
+		challengeview.addActionListenerDecline (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					challengemodel.respondChallenge(challengeview.getspelID(), name,false);
+					challengeview.javaFrame().dispose();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				challengeview.javaFrame().dispose();
+			}
+		});
+		challengeview.addActionListenerOke (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					challengemodel.controle(name,  challengeview.getUsername(), challengeview.getspelID());
+					challengeview.javaFrame().dispose();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				challengeview.javaFrame().dispose();
 			}
 		});
 	}
-	 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-	String x = (String) arg1;
+ 
+	public void propertyChange(String evt)  {
+	String x =  evt;
 	 switch(x)
 		 {
-		 case "1": cv.showChallenge(challengers());break;
-		 case "2": cv.response("challenge denied");break;
-		 case "3": cv.response("challenge accepted");break;
-		 case "4": cv.response("something went wrong");break;
+		 case "1": challengers();break;
+		 case "2": challengeview.response("challenge denied");break;
+		 case "3": challengeview.response("challenge accepted");break;
+		 case "4": challengeview.response("something went wrong");break;
 		 default: break;
 		 }
 	}
-	
-	public String challengers()
+	 
+	public void challengers()
 	{
-		String iets = "";
-		int index=0;
-		while(index<cm.Uitnodigingnaam().size())
+		challengeview.viewArraylistRemove();
+	 	int index=0;
+		while(index<challengemodel.challengeArray().size())
 		{
-			iets = iets + cm.Uitnodigingnaam()+ ": "+cm.Uitnodigingnummer();
-			index++;
+			challengeview.viewArrayListadd(challengemodel.challengeArray().get(index));
 		}
-		return iets;
-	}
-	
-	public void openchallenges()
-	{
-		cv.showChallenge(challengers());
+		challengeview.showChallenge();
 	}
 	
 	public void toChallenge()
 	{
-		toChallenge();
+		challengeview.toChallenge();
 	}
-	
-	 
+
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Auto-generated method stub
+		
+	} 
 }

@@ -18,47 +18,73 @@ import javax.swing.JLabel;
 public class AcceptDeclineView extends CorePanel{
 
 	private JList wordList;
-	private GameModel gameModel = new GameModel();
 	private JFrame myFrame;
-	//private AcceptDeclineController adController;
+	private JButton terugButton;
+	private JButton accepteerButton;
+	private JButton weigerButton;
+	private boolean status;
+	private JLabel voorgesteldeWoordenLabel;
+	private JScrollPane scrollPane;
+	private JList voorgesteldeWoordenList;
 	
 	public AcceptDeclineView()
 	{
 		setLayout(new MigLayout("", "[65px:30px:120px][100px:142.00px:100px,grow][65px:67.00px:100px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 		
-		JButton terugButton = new JButton("Terug");
+		wordList = new JList();
+		
+		terugButton = new JButton("Terug");
+		add(terugButton, "cell 2 0");
 		terugButton.addActionListener(new ActionListener() {
-		//hier een method van maken bv: public void addActionListenerBack(ActionListener listener) {
-		//	terugButton.addActionListener(listener);
-		//} 
+		public void addActionListenerBack(ActionListener listener) {
+			terugButton.addActionListener(listener);
+		} 
 			public void actionPerformed(ActionEvent arg0) {
+				myFrame.dispose();
 			}
 		});
 		
+		voorgesteldeWoordenLabel = new JLabel("voorgestelde woorden");
+		add(voorgesteldeWoordenLabel, "cell 0 0");
 		
-		
-		JLabel lblVoorgesteldeWoorden = new JLabel("voorgestelde woorden");
-		add(lblVoorgesteldeWoorden, "cell 0 0");
-		add(terugButton, "cell 2 0");
-		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 2 3,grow");
 		
-		JList voorgesteldeWoordenList = new JList();
+		voorgesteldeWoordenList = new JList();
 		scrollPane.setViewportView(voorgesteldeWoordenList);
 		
-		JButton accepteerButton = new JButton("Accepteren");
+		accepteerButton = new JButton("Accepteren");
 		add(accepteerButton, "cell 0 4,alignx left");
+		accepteerButton.addActionListener(new ActionListener() {
+		public void addActionListenerAccept(ActionListener listener) {
+			accepteerButton.addActionListener(listener);
+		} 
+			public void actionPerformed(ActionEvent arg0) {
+				status = true;
+			}
+		});
 		
-		JButton weigerButton = new JButton("Weigeren");
+		weigerButton = new JButton("Weigeren");
 		add(weigerButton, "cell 1 4,alignx right");
-		wordList = new JList(gameModel.getRequestedWords());
+		weigerButton.addActionListener(new ActionListener() {
+			public void addActionListenerDecline(ActionListener listener) {
+				weigerButton.addActionListener(listener);
+			} 
+				public void actionPerformed(ActionEvent arg0) {
+					status = false;
+				}
+			});
 		
 	}
 	
 	public void fillJList(JList list)
 	{
 		wordList = list;
+		list.add(wordList);
+	}
+	
+	public boolean getStatus(){
+		return status;
 	}
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {

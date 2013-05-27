@@ -1,5 +1,9 @@
 package nl.avans.min04sob.scrabble.core;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 
 /*
@@ -10,12 +14,28 @@ public class Queries {
 	public static final String CURRENT_TILES;
 
 	static {
-		CURRENT_TILES = Queries.load("queries/currentTiles.sql");
+		CURRENT_TILES = Queries.readFile("Project_MIN04SOB/queries/currentTiles.sql");
 	}
 
-	public static String load(final String path) {
-		final InputStream stream = Thread.currentThread()
-				.getContextClassLoader().getResourceAsStream(path);
-		return stream.toString();
+	private static String readFile(final String file) {
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		String line = null;
+		StringBuilder stringBuilder = new StringBuilder();
+		String ls = System.getProperty("line.separator");
+
+		try {
+			while ((line = reader.readLine()) != null) {
+				stringBuilder.append(line);
+				stringBuilder.append(ls);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return stringBuilder.toString();
 	}
 }

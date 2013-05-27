@@ -2,8 +2,6 @@ package testmains;
 
 import javax.swing.JFrame;
 
-import nl.avans.min04sob.scrabble.controllers.LoginController;
-import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
 
 public class TestLogin {

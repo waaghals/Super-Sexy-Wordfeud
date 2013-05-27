@@ -56,11 +56,13 @@ public class AccountModel extends CoreModel {
 		}
 	}
 
-	public static void registerAccount(String username, char[] password, String role) {
+	public static void registerAccount(String username, char[] password, Role role) {
 
-		String query = "INSERT INTO `account` (`naam`, `wachtwoord`, `rol_type`) VALUES (?, ?, ?)";
+		String createAccount = "INSERT INTO `account` (`naam`, `wachtwoord` ) VALUES (?, ?)";
+		String setRole = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?, ?)";
 		try {
-			new Query(query).set(username).set(password).set(role).exec();
+			new Query(createAccount).set(username).set(password).exec();
+			new Query(setRole).set(username).set(role).exec();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -103,12 +105,12 @@ public class AccountModel extends CoreModel {
 
 	}
 
-	public boolean isModerator() {
+	public boolean isRole(Role moderator) {
 		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
 		try {
 			ResultSet rs = new Query(query).set(username).select();
 			while (rs.next()) {
-				if (rs.getString(1).equals("Moderator")) {
+				if (rs.getString(1).equals(moderator)) {
 					return true;
 				}
 			}
@@ -126,7 +128,22 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query(query).set(username).set(username)
 					.set(GameModel.STATE_PLAYING).select();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this));
+				games.add(new GameModel(dbResult.getInt(1), this,false));
+				// Add a new game with the gameId for this account
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return games;
+	}
+	public ArrayList<GameModel> getObserverAbleGames(){
+		ArrayList<GameModel> games = new ArrayList<GameModel>();
+		String query = "SELECT `ID` FROM `spel` WHERE NOT `Toestand_type` = ?";
+		try {
+			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
+			while (dbResult.next()) {
+				games.add(new GameModel(dbResult.getInt(1), this,true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -152,4 +169,10 @@ public class AccountModel extends CoreModel {
 		}
 		return pass;
 	}
+
+	public int getChallengeCount() {
+		// TODO Automatisch gegenereerde methodestub
+		return 1;
+	}
+	
 }

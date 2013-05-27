@@ -46,6 +46,7 @@ public class AccountController extends CoreController {
 		loginPanel.addActionListenerLogin(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkLogin();
+				 
 			}
 		});
 
@@ -54,18 +55,18 @@ public class AccountController extends CoreController {
 				loginToRegister();
 			}
 		});
-		
+
 		loginPanel.addKeyListenerPassword(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					checkLogin();
 				}
 			}
 		});
-		
+
 		registerPanel.addKeyListenerPassword(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					tryToRegister();
 				}
 			}
@@ -82,17 +83,17 @@ public class AccountController extends CoreController {
 				tryToRegister();
 			}
 		});
-		
-		changepasspanel.addCancelActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//TODO go back to normal view ;
+
+		changepasspanel.addCancelActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO go back to normal view ;
 			}
 		});
-		
-		changepasspanel.addChangeActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		changepasspanel.addChangeActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				changePass();
-				//TODO go back too normal view ;
+				// TODO go back too normal view ;
 			}
 		});
 
@@ -103,10 +104,14 @@ public class AccountController extends CoreController {
 
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
+		 
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(false);
+			frame.dispose();
+			frame = null;
 			loginPanel.setPasswordMistake(false);
-		} else {
+		}
+		else {
 			frame.dispose();
 			frame = null;
 		}
@@ -114,13 +119,11 @@ public class AccountController extends CoreController {
 	}
 
 	private void tryToRegister() {
-		boolean username = validateUsername();
-		boolean pass1 = validatePassword1();
-		boolean pass2 = validatePassword2();
 
-		if (username && pass1 && pass2) {
+		// TODO een goede account rol toevoegen
+		if (validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
-					registerPanel.getPassword1());
+					registerPanel.getPassword1(), registerPanel.getRole());
 			registerToLogin();
 		}
 
@@ -144,7 +147,8 @@ public class AccountController extends CoreController {
 			registerPanel.setUsernameMistake(false, "To long");
 			return false;
 		} else {
-			if (AccountModel.checkUsernameAvailable(registerPanel.getUsername())) {
+			if (AccountModel
+					.checkUsernameAvailable(registerPanel.getUsername())) {
 				registerPanel.setUsernameMistake(true, "");
 				return true;
 			} else {
@@ -186,32 +190,33 @@ public class AccountController extends CoreController {
 			}
 		}
 	}
-	
-	public ChangePassPanel getchangepasspanel(){
+
+	public ChangePassPanel getchangepasspanel() {
 		return changepasspanel;
 	}
-	
-	public void changePass(){
+
+	public void changePass() {
 		String oldpass = changepasspanel.getOldPass();
 		String newpass1 = changepasspanel.getNewPass1();
 		String newpass2 = changepasspanel.getNewPass2();
-		if(oldpass.equals(accountModel.getpass())){
+		if (oldpass.equals(accountModel.getpass())) {
 			if (validateLength(newpass1.length()) == -1) {
 				changepasspanel.setNewPass1Good(false, "To short");
 			} else if (validateLength(newpass1.length()) == 1) {
 				changepasspanel.setNewPass1Good(false, "To long");
 			} else {
-				if(newpass2.equals(newpass1)){
+				if (newpass2.equals(newpass1)) {
 					accountModel.changePass(changepasspanel.getNewPass1());
-				}else{
+				} else {
 					changepasspanel.setNewPass2Good(false, "Doesn't match");
 				}
 			}
-		}else{
+		} else {
 			changepasspanel.setOldPassGood(false, "Wrong");
 		}
 	}
-	private void loginToRegister() {
+
+	public void loginToRegister() {
 		frame.remove(loginPanel);
 		frame.add(registerPanel);
 		registerPanel.clearFields();
@@ -232,12 +237,12 @@ public class AccountController extends CoreController {
 	@Override
 	public void initialize() {
 		// TODO Automatisch gegenereerde methodestub
-		
+
 	}
 
 	@Override
 	public void addListeners() {
 		// TODO Automatisch gegenereerde methodestub
-		
+
 	}
 }
