@@ -32,79 +32,78 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		private JButton decline = new JButton("decline");
 		private JButton oke = new JButton("oke");
 		private JButton oke2 =new JButton("oke");
-		private JFrame jf = new JFrame("popup");
-		private ArrayList<String> gegevens = new ArrayList<String>();
-		private JTextField tegenstanderduitdager = new JTextField(10);
-		private JTextField spelidduitdager = new JTextField(10);
-		private JTextField naamuitgedaagde = new JTextField(10);
-		public ArrayList <String> challengegegevens = new ArrayList<String>();	
+		private JFrame jframe = new JFrame("popup");
+		private JTextField gameidchallenger = new JTextField(10);
+		private JTextField nameChallenged = new JTextField(10);
+		public ArrayList <String> challenge  = new ArrayList<String>();	
 		public ChallengeView()
 		{
-			jf.setTitle("Challenge");
-			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jframe.setTitle("Challenge");
+			jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 		
 		/// pas aan
-		public void remove()
+		public void viewArraylistRemove()
 		{
-			challengegegevens.removeAll(challengegegevens);
+			challenge.removeAll(challenge);
 		}
-		public void iets(String msg)
+		public void viewArrayListadd(String msg)
 		{
-			challengegegevens.add(msg);
+			challenge.add(msg);
 			showChallenge();
 		}
 		
 		public void showChallenge()//gui 
 		{ 
-			jf.setVisible(true);
-			jf.setContentPane(chpanel);
-			chpanel.setLayout(new BoxLayout(jf, BoxLayout.PAGE_AXIS));
+			jframe.setVisible(true);
+			jframe.setContentPane(chpanel);
+			chpanel.setLayout(new BoxLayout(jframe, BoxLayout.PAGE_AXIS));
 			int index=0;
-			while(index < challengegegevens.size())
+			while(index < challenge.size())
 			{
-			chpanel.add(new JLabel(challengegegevens.get(index)));
+			chpanel.add(new JLabel(challenge.get(index)));
 			}
-			chpanel.add(spelidduitdager);
+			chpanel.add(gameidchallenger);
 			accept.setFont(new Font("Serif", Font.ITALIC, 14));
 			decline.setFont(new Font("Serif", Font.ITALIC, 14));
-			jf.pack();
+			jframe.pack();
 		}
 		//wordt gebruikt of niet
 		// 
 		
 		public void toChallenge()//gui
 		{	
-			jf.setVisible(true);
-			jf .setContentPane(tochallenge);
+			jframe.setVisible(true);
+			jframe.setContentPane(tochallenge);
 			tochallenge.setLayout(new BoxLayout(tochallenge, BoxLayout.PAGE_AXIS));
 			tochallenge.setPreferredSize(new Dimension(210,120));
 			tochallenge.add(new JLabel("insert game id"));
-			tochallenge.add(spelidduitdager);
+			tochallenge.add(gameidchallenger);
 			tochallenge.add(new JLabel("insert opponent"));
-			tochallenge.add(naamuitgedaagde);
-			jf.add(oke);
-			jf.setResizable(false);
-			jf.pack();
+			tochallenge.add(nameChallenged);
+			jframe.add(oke);
+			jframe.setResizable(false);
+			jframe.pack();
+			jframe.dispose();
 		}
 		
 		public void response(String msg)//gui
 		{
-			jf.setResizable(false);
-			jf.setVisible(true);
-			jf.setContentPane(response);
+			jframe.setResizable(false);
+			jframe.setVisible(true);
+			jframe.setContentPane(response);
 			response.setPreferredSize(new Dimension(130,70));
 			response.add(new JLabel("msg"));
 			response.add(oke2);
-			jf.pack();
+			jframe.pack();
 		}
 		public String getUsername() 
 		{
-			return naamuitgedaagde.getText();
+			return nameChallenged.getText();
 		}
 		public String getspelID() 
 		{
-			return  spelidduitdager.getText();
+			return gameidchallenger.getText();
 		}
 		
 		public void addActionListenerAccept(ActionListener listener) {
@@ -119,7 +118,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		}
 		public  JFrame javaFrame()		
 		{
-			return jf;
+			return jframe;
 		}
 		@Override
 		public void modelPropertyChange(PropertyChangeEvent evt) {

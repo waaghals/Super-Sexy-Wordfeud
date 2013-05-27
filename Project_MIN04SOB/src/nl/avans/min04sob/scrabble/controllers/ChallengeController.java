@@ -13,45 +13,49 @@ import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
 
 public class ChallengeController extends CoreController  {
-	private ChallengeView cv = new ChallengeView();
-	private ChallengeModel cm ;
-	private String naam="";
-	public ChallengeController (final String naam)
+	private ChallengeView challengeview;
+	private ChallengeModel challengemodel ;
+ 
+	public ChallengeController (final String name)
 	{
-		cm= new ChallengeModel(naam);
-		addView(cv);
-		addModel(cm);
-	    cv.addActionListenerAccept (new ActionListener() {
+		challengeview = new ChallengeView();
+		challengemodel= new ChallengeModel(name);
+		addView(challengeview);
+		addModel(challengemodel);
+		challengeview.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cm.respondChallenge(cv.getspelID(), naam,true);
+					challengemodel.respondChallenge(challengeview.getspelID(), name,true);
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				cv.javaFrame().dispose();
+				challengeview.javaFrame().dispose();
 			}
 		});
-		cv.addActionListenerDecline (new ActionListener() {
+		challengeview.addActionListenerDecline (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cm.respondChallenge(cv.getspelID(), naam,false);
+					challengemodel.respondChallenge(challengeview.getspelID(), name,false);
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				cv.javaFrame().dispose();
+				challengeview.javaFrame().dispose();
 			}
 		});
-		cv.addActionListenerOke (new ActionListener() {
+		challengeview.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					cm.controle(naam,  cv.getUsername(), cv.getspelID());
+					challengemodel.controle(name,  challengeview.getUsername(), challengeview.getspelID());
+					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				cv.javaFrame().dispose();
+				challengeview.javaFrame().dispose();
 			}
 		});
 	}
@@ -61,28 +65,27 @@ public class ChallengeController extends CoreController  {
 	 switch(x)
 		 {
 		 case "1": challengers();break;
-		 case "2": cv.response("challenge denied");break;
-		 case "3": cv.response("challenge accepted");break;
-		 case "4": cv.response("something went wrong");break;
+		 case "2": challengeview.response("challenge denied");break;
+		 case "3": challengeview.response("challenge accepted");break;
+		 case "4": challengeview.response("something went wrong");break;
 		 default: break;
 		 }
 	}
 	 
 	public void challengers()
 	{
-		cv.remove();
-		String iets = "";
-		int index=0;
-		while(index<cm.gegevens().size())
+		challengeview.viewArraylistRemove();
+	 	int index=0;
+		while(index<challengemodel.challengeArray().size())
 		{
-			cv.iets(cm.gegevens().get(index));
+			challengeview.viewArrayListadd(challengemodel.challengeArray().get(index));
 		}
-		cv.showChallenge();
+		challengeview.showChallenge();
 	}
 	
 	public void toChallenge()
 	{
-		cv.toChallenge();
+		challengeview.toChallenge();
 	}
 
 	@Override

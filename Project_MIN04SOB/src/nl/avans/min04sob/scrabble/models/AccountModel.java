@@ -105,12 +105,12 @@ public class AccountModel extends CoreModel {
 
 	}
 
-	public boolean isRol(String role) {
+	public boolean isRole(Role moderator) {
 		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
 		try {
 			ResultSet rs = new Query(query).set(username).select();
 			while (rs.next()) {
-				if (rs.getString(1).equals(role)) {
+				if (rs.getString(1).equals(moderator)) {
 					return true;
 				}
 			}
@@ -168,6 +168,11 @@ public class AccountModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return pass;
+	}
+
+	public int getChallengeCount() {
+		// TODO Automatisch gegenereerde methodestub
+		return 1;
 	}
 	
 }
