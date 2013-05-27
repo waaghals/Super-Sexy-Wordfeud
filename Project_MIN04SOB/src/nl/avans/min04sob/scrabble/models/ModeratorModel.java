@@ -9,20 +9,24 @@ import nl.avans.min04sob.scrabble.core.Query;
 public class ModeratorModel extends CoreModel{
 	
 	private AccountModel account;
-	private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM 'spel'";
+	
+	private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM `spel`";
 	private final String checkFilledChallengeQuery = "SELECT 'goedgekeurd_uitdager' FROM 'nieuwwoord'";
 	private final String checkFilledTegenstanderQuery = "SELECT 'goedgekeurd_tegenstander' FROM 'nieuwwoord'";
 	private final String changeStatusChallenger = "INSERT INTO 'nieuwwoord' ('goedgekeurd_uitdager') VALUES(?)";
 	private final String changeStatusTegenstander = "INSERT INTO 'nieuwwoord' ('goedgekeurd_tegenstander') VALUES(?)";
-
+	
+	private final String wordsWhoExist = "SELECT 'word','status' FROM 'woordenboek'";
+	private final String addWord = "INSERT INTO 'woordenboek' ('woord','status') VALUES(?, 'pending')";
+	
 	
 	public ModeratorModel()
 	{
-		account = new AccountModel();
+		account = new AccountModel();	
 	}
 	
 	public void changeStatus(int status){
-		if(status == 1){	//accpeteren
+		/*if(status == 1){	//accpeteren
 			if (checkChallenger()){	//naar metode om te kijken of je uitdager bent
 				//voeg de status in in tabel uitdager
 				try {
@@ -57,7 +61,16 @@ public class ModeratorModel extends CoreModel{
 					e.printStackTrace();
 				}
 			}
-		}	
+		}
+		*/	
+		if(status == 1)
+		{
+			
+		}
+		else if(status == 0)
+		{
+			
+		}
 		addWord();//gaat naar methode om eventueel woord toe te voegen
 	}
 	
@@ -71,7 +84,7 @@ public class ModeratorModel extends CoreModel{
 	}
 	
 	public void addWord(){
-		try {
+		/*try {
 			ResultSet rs1 = new Query(checkFilledChallengeQuery).select();
 			ResultSet rs2 = new Query(checkFilledTegenstanderQuery).select();
 			if (rs1.getInt(1) == 1 && rs2.getInt(1) == 1){
@@ -80,6 +93,8 @@ public class ModeratorModel extends CoreModel{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		*/
+		
 	}
 
 	@Override
