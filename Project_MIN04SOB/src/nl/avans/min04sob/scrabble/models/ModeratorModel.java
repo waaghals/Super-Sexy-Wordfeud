@@ -9,17 +9,9 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class ModeratorModel extends CoreModel{
 	
-	private AccountModel account;
-	
-	private final String wordsWhoExist = "SELECT 'woord','status' FROM 'woordenboek'";
 	private final String requestWord = "SELECT 'woord' FROM 'woordenboek' WHERE status = 'Pending'";
 	private final String acceptWord = "UPDATE 'woordenboek' set status = 'Accepted' WHERE woord = ?";
 	private final String deniedWord = "UPDATE 'woordenboek' set status = 'Denied' WHERE woord = ?";
-	
-	public ModeratorModel()
-	{	
-		
-	}
 	
 	public String[] getRequestedWordList(){
 		ArrayList<String> words = new ArrayList<String>();
