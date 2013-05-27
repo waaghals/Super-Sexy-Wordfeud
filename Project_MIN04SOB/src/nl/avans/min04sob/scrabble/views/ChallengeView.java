@@ -84,6 +84,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jframe.add(oke);
 			jframe.setResizable(false);
 			jframe.pack();
+			jframe.dispose();
 		}
 		
 		public void response(String msg)//gui
