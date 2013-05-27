@@ -9,56 +9,26 @@ import nl.avans.min04sob.scrabble.core.Query;
 public class ModeratorModel extends CoreModel{
 	
 	private AccountModel account;
-	private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM 'spel'";
+	
+	private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM `spel`";
 	private final String checkFilledChallengeQuery = "SELECT 'goedgekeurd_uitdager' FROM 'nieuwwoord'";
 	private final String checkFilledTegenstanderQuery = "SELECT 'goedgekeurd_tegenstander' FROM 'nieuwwoord'";
 	private final String changeStatusChallenger = "INSERT INTO 'nieuwwoord' ('goedgekeurd_uitdager') VALUES(?)";
 	private final String changeStatusTegenstander = "INSERT INTO 'nieuwwoord' ('goedgekeurd_tegenstander') VALUES(?)";
-
+	
+	private final String wordsWhoExist = "SELECT 'word','status' FROM 'woordenboek'";
+	private final String requestWord = "SELECT 'word' FROM 'woordenboek' WHERE status = 'Pending'";
+	private final String acceptWord = "UPDATE 'woordenboek' set status = 'Accepted' WHERE woord = ?";
+	private final String deniedWord = "UPDATE 'woordenboek' set status = 'Denied' WHERE woord = ?";
 	
 	public ModeratorModel()
 	{
-		account = new AccountModel();
+		account = new AccountModel();	
 	}
 	
-	public void changeStatus(int status){
-		if(status == 1){	//accpeteren
-			if (checkChallenger()){	//naar metode om te kijken of je uitdager bent
-				//voeg de status in in tabel uitdager
-				try {
-					new Query(changeStatusChallenger).set(1).exec();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			else{
-				//voeg bij tabel tegenstander de status in
-				try {
-					new Query(changeStatusTegenstander).set(1).exec();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		else {	//weigeren
-			if (checkChallenger()){	//naar metode om te kijken of je uitdager bent
-				//voeg de status in in tabel uitdager
-				try {
-					new Query(changeStatusChallenger).set(0).exec();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			else{
-				//voeg bij tabel tegenstander de status in
-				try {
-					new Query(changeStatusTegenstander).set(0).exec();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}	
-		addWord();//gaat naar methode om eventueel woord toe te voegen
+	public void changeStatus(){
+	
+		
 	}
 	
 	public boolean checkChallenger(){
@@ -70,14 +40,20 @@ public class ModeratorModel extends CoreModel{
 		}
 	}
 	
-	public void addWord(){
+	public void acceptWord(String word){
+		
 		try {
-			ResultSet rs1 = new Query(checkFilledChallengeQuery).select();
-			ResultSet rs2 = new Query(checkFilledTegenstanderQuery).select();
-			if (rs1.getInt(1) == 1 && rs2.getInt(1) == 1){
-				//hier moet query die zorgt dat het woord wordt toegevoegd aan de database
-			}
+			new Query(acceptWord).set(word).exec();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void deniedWord(String word){
+		try {
+			new Query(deniedWord).set(word).exec();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
