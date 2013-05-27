@@ -42,6 +42,7 @@ public class MainController extends CoreController {
 	private JLabel score;
 	private Boolean observer;
 	private CompetitionController competitioncontroller; 
+	private ResignController resigncontroller;
 
 
 	public MainController() {
@@ -114,7 +115,7 @@ public class MainController extends CoreController {
 
 	@Override
 	public void addListeners() {
-
+		
 		menu.viewChallengeItemActionListener(new ActionListener() {
 
 			@Override
@@ -192,27 +193,24 @@ public class MainController extends CoreController {
 		});
 
 		if(account.isRole(Role.OBSERVER)){
-		gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-					if(gamesPanel.checkBoxIsSelected()){
-						
-						gamesPanel.addGames(account.getObserverAbleGames());
-						observer = true;
-						
-					}else{
-						gamesPanel.addGames(account.getOpenGames());
-						observer = false;
-					}				
-			}
-		});
+			gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
+	
+				@Override
+				public void stateChanged(ChangeEvent e) {
+						if(gamesPanel.checkBoxIsSelected()){
+							
+							gamesPanel.addGames(account.getObserverAbleGames());
+							observer = true;
+							
+						}else{
+							gamesPanel.addGames(account.getOpenGames());
+							observer = false;
+						}				
+				}
+			});
 		
 		}
 		
-
-
-
 		chatPanel.addListenerChatField(new KeyListener() {
 
 			@Override
@@ -238,6 +236,16 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
+		addResignListener();
+	}
+	
+	private void addResignListener() {
+		currGamePanel.addResignActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resigncontroller = new ResignController();
+			}
+		});
 	}
 
 	private void addLoginListener() {
@@ -245,6 +253,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);
+				
 			}
 		});
 	}
@@ -299,9 +308,6 @@ public class MainController extends CoreController {
 			frame.revalidate();
 			frame.repaint();
 		
-			
-		
-
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -334,5 +340,6 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
+	
 
 }
