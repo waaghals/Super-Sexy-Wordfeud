@@ -18,7 +18,7 @@ public class CompetitionModel extends CoreModel {
 
 	private int competitieID;
 	private int ranking = 0;
-	private String name;
+	private String name = "name";
 	
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
@@ -36,6 +36,7 @@ public class CompetitionModel extends CoreModel {
 	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(score) FROM `spel` as `s` JOIN `beurt` as `b` ON `s.id` = `b.spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `s.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
 	private final String bayesianAverageQuery = "";
 	private final String query="SELECT `*` FROM `deelnemer`;";
+	
 	public CompetitionModel(int int1) {
 		competitieID = int1;
 	}
@@ -63,6 +64,30 @@ public class CompetitionModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return all;
+	}
+	
+	public void getCompitions(String username){
+		ArrayList<CompetitionModel> comp_ids = new ArrayList<CompetitionModel>();
+		try {
+			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
+			while(dbResult.next()){
+				comp_ids.add(new CompetitionModel(dbResult.getInt("competitie_id")));
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+	
+	public void getUsersFromCompetition(int competition_id){
+		ArrayList<AccountModel> accounts = new ArrayList<AccountModel>();
+		try {
+			ResultSet dbResult = new Query("SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?").set(competition_id).select();
+			while(dbResult.next()){
+				accounts.add(new AccountModel(dbResult.getString("account_naam")));
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
 	}
 
 	public void join(int competitionID, String username) {
