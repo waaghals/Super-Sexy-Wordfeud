@@ -4,20 +4,20 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
+
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionListener;
+
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
+import nl.avans.min04sob.scrabble.models.Role;
+
 import javax.swing.JLabel;
 
 public class GamesComboBox extends CorePanel {
@@ -25,15 +25,15 @@ public class GamesComboBox extends CorePanel {
 	private JComboBox<GameModel> gameList;
 	private JCheckBox observer;
 
-	public GamesComboBox(boolean canobserve) {
-		initialize(canobserve);
+	public GamesComboBox(){
+		initialize();
+}
 
-	}
+	public void initialize() {
 
-	public void initialize(boolean canobserve) {
+		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px][75px:100px:150px]",
+				"[20px:30px:30px][20px:30px:30px]"));
 
-		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px][]",
-				"[20px:30px:30px][20px:30px:30px][][][][]"));
 
 		JLabel selectLabel = new JLabel("Selecteer een spel");
 		add(selectLabel, "cell 0 0 2 1");
@@ -42,10 +42,7 @@ public class GamesComboBox extends CorePanel {
 		add(gameList, "cell 0 1 2 1,grow");
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
-		// if (canobserve) {
-		add(observer, "cell 2 1,grow");
-		observer.setText("Bekijk een spel");
-		// }
+
 	}
 
 	public void addGameListListener(ActionListener listenener) {
@@ -85,13 +82,23 @@ public class GamesComboBox extends CorePanel {
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
 			gameList.setEnabled(true);
+			if(account.isRole(Role.OBSERVER)){
+				
+				
+				add(observer,"cell 0 2 3 1 ,grow");
+				observer.setEnabled(true);
+				observer.setText("bekijk een spel");
+			}
 			observer.setEnabled(true);
 			break;
 		case Event.LOGOUT:
 			gameList.removeAll();
 			gameList.setEnabled(false);
+
 			observer.setEnabled(false);
+
 			observer.setSelected(false);
+			this.remove(observer);
 			break;
 		default:
 			break;

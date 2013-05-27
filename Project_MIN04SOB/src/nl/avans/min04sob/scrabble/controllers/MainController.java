@@ -96,7 +96,8 @@ public class MainController extends CoreController {
 		
 		
 		crtl=new ChallengeController(account.getUsername());
-		gamesPanel = new GamesComboBox(account.isRole(Role.OBSERVER));
+
+		gamesPanel = new GamesComboBox();
 
 
 		
