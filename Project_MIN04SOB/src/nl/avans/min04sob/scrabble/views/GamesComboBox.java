@@ -32,21 +32,20 @@ public class GamesComboBox extends CorePanel {
 
 	public void initialize(boolean canobserve) {
 
-		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px]",
-				"[20px:30px:30px][20px:30px:30px]"));
+		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px][]",
+				"[20px:30px:30px][20px:30px:30px][][][][]"));
 
-		JLabel lblSelecteerEenSpel = new JLabel("Selecteer een spel");
-		add(lblSelecteerEenSpel, "cell 0 0 2 1");
+		JLabel selectLabel = new JLabel("Selecteer een spel");
+		add(selectLabel, "cell 0 0 2 1");
 		gameList = new JComboBox<GameModel>();
 
 		add(gameList, "cell 0 1 2 1,grow");
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
-		if (canobserve) {
-			add(observer, "cell 0 1 2 1 ,grow");
-			observer.setEnabled(false);
-			observer.setText("bekijk een spel");
-		}
+		// if (canobserve) {
+		add(observer, "cell 2 1,grow");
+		observer.setText("Bekijk een spel");
+		// }
 	}
 
 	public void addGameListListener(ActionListener listenener) {
@@ -91,7 +90,7 @@ public class GamesComboBox extends CorePanel {
 		case Event.LOGOUT:
 			gameList.removeAll();
 			gameList.setEnabled(false);
-			observer.setEnabled(true);
+			observer.setEnabled(false);
 			observer.setSelected(false);
 			break;
 		default:
