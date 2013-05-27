@@ -10,11 +10,11 @@ public class ModeratorModel extends CoreModel{
 	
 	private AccountModel account;
 	
-	private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM `spel`";
+	/*private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM `spel`";
 	private final String checkFilledChallengeQuery = "SELECT 'goedgekeurd_uitdager' FROM 'nieuwwoord'";
 	private final String checkFilledTegenstanderQuery = "SELECT 'goedgekeurd_tegenstander' FROM 'nieuwwoord'";
 	private final String changeStatusChallenger = "INSERT INTO 'nieuwwoord' ('goedgekeurd_uitdager') VALUES(?)";
-	private final String changeStatusTegenstander = "INSERT INTO 'nieuwwoord' ('goedgekeurd_tegenstander') VALUES(?)";
+	private final String changeStatusTegenstander = "INSERT INTO 'nieuwwoord' ('goedgekeurd_tegenstander') VALUES(?)";*/
 	
 	private final String wordsWhoExist = "SELECT 'word','status' FROM 'woordenboek'";
 	private final String requestWord = "SELECT 'word' FROM 'woordenboek' WHERE status = 'Pending'";
@@ -31,14 +31,14 @@ public class ModeratorModel extends CoreModel{
 		
 	}
 	
-	public boolean checkChallenger(){
+	/*public boolean checkChallenger(){
 		if(findChallengerQuery.equals(account.getUsername())){
 			return true;
 		}
 		else{
 			return false;
 		}
-	}
+	}*/
 	
 	public void acceptWord(String word){
 		

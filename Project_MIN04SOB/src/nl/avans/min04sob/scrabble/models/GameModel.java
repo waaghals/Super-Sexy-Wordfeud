@@ -595,7 +595,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 
 	public void Resign() {
 		try {
-			new Query(resignQuery).set(STATE_RESIGNED).set(gameId).exec();
+			new Query(resignQuery).set(STATE_RESIGNED).set(getGameId()).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
