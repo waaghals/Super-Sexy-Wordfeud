@@ -46,6 +46,8 @@ public class GameModel extends CoreModel {
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
 
+	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
+	
 	public GameModel() {
 		boardcontroller = new BoardController(false);
 		boardcontroller.getBpv().setPreferredSize(new Dimension(300, 300));
@@ -590,15 +592,12 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 	}
 
 	public void Resign() {
-		String resigned = "Resigned";
-		String query = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = `"
-				+ gameId + "`";
 		try {
-			new Query(query).set(resigned).exec();
+			new Query(resignQuery).set(STATE_RESIGNED).set(gameId).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-
 	}
+	
 
 }

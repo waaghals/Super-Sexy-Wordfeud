@@ -35,14 +35,6 @@ public class AcceptDeclineView extends CorePanel{
 		
 		terugButton = new JButton("Terug");
 		add(terugButton, "cell 2 0");
-		terugButton.addActionListener(new ActionListener() {
-		public void addActionListenerBack(ActionListener listener) {
-			terugButton.addActionListener(listener);
-		} 
-			public void actionPerformed(ActionEvent arg0) {
-				myFrame.dispose();
-			}
-		});
 		
 		voorgesteldeWoordenLabel = new JLabel("voorgestelde woorden");
 		add(voorgesteldeWoordenLabel, "cell 0 0");
@@ -55,36 +47,26 @@ public class AcceptDeclineView extends CorePanel{
 		
 		accepteerButton = new JButton("Accepteren");
 		add(accepteerButton, "cell 0 4,alignx left");
-		accepteerButton.addActionListener(new ActionListener() {
-		public void addActionListenerAccept(ActionListener listener) {
-			accepteerButton.addActionListener(listener);
-		} 
-			public void actionPerformed(ActionEvent arg0) {
-				status = true;
-			}
-		});
 		
 		weigerButton = new JButton("Weigeren");
 		add(weigerButton, "cell 1 4,alignx right");
-		weigerButton.addActionListener(new ActionListener() {
-			public void addActionListenerDecline(ActionListener listener) {
-				weigerButton.addActionListener(listener);
-			} 
-				public void actionPerformed(ActionEvent arg0) {
-					status = false;
-				}
-			});
 		
 	}
 	
 	public void fillJList(JList list)
 	{
 		wordList = list;
-		list.add(wordList);
+		
 	}
 	
 	public boolean getStatus(){
 		return status;
+	}
+	public String getSelectedWord(){
+		String returnObject = null;
+		returnObject = wordList.getSelectedValue().toString();
+		
+		return returnObject;
 	}
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
