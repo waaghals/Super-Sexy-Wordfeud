@@ -27,31 +27,29 @@ public class AcceptDeclineController extends CoreController{
 		this.addModel(modModel);
 		adView = new AcceptDeclineView();
 		wordList = new JList();
-		getTheRequestedWords();
+		
 		wordList.setListData(words);
 		this.addView(adView);
 		fillJList();
 	}
 
-	public void getTheRequestedWords()
-	{
-		words = gameModel.getRequestedWords();
-	}
+	
 	
 	public void fillJList(){
 		adView.fillJList(wordList);
 		
 	}
-	
-	public void checkStatus(){		//naam kan miss beter, nog bedenken.
-		if(adView.getStatus()){
-			modModel.changeStatus(1);
-		}
-		else{
-			modModel.changeStatus(0);
-		}
+	public void acceptWord()
+	{
+		String word = adView.getSelectedWord();
+		modModel.acceptWord(word);
+		
 	}
-	
+	public void deniedWord()
+	{
+		String word = adView.getSelectedWord();
+		modModel.deniedWord(word);
+	}
 	
 	@Override
 	public void initialize() {
@@ -59,17 +57,17 @@ public class AcceptDeclineController extends CoreController{
 		
 	}
 
+
+
 	@Override
 	public void addListeners() {
-		/*addActionListenerBack(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		*/
+		// TODO Auto-generated method stub
+		
 	}
+
+	
+		
+
 	
 	
 }
