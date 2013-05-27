@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,7 +19,6 @@ import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.Role;
 import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -41,8 +41,7 @@ public class MainController extends CoreController {
 	private JLabel turn;
 	private JLabel score;
 	private Boolean observer;
-	private CompetitionController competitioncontroller; 
-
+	private CompetitionController competitioncontroller;
 
 	public MainController() {
 		initialize();
@@ -93,16 +92,11 @@ public class MainController extends CoreController {
 		score = new JLabel();
 		score.setText("teeeeest");
 
-		
-		
-		crtl=new ChallengeController(account.getUsername());
+		crtl = new ChallengeController(account.getUsername());
 
 		gamesPanel = new GamesComboBox();
 
-
-		
-
-		currGamePanel = new BoardPanel(observer);
+		currGamePanel = new BoardPanel();
 
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
@@ -120,8 +114,8 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//crtl.openchallenges();
-				//TODO stops program from running
+				// crtl.openchallenges();
+				// TODO stops program from running
 
 			}
 		});
@@ -171,9 +165,9 @@ public class MainController extends CoreController {
 				addLoginListener();
 			}
 		});
-		
+
 		menu.addRegisterListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AccountController login = new AccountController(account);
@@ -192,27 +186,34 @@ public class MainController extends CoreController {
 			}
 		});
 
-		if(account.isRole(Role.OBSERVER)){
-		gamesPanel.addObserverCheckBoxListener(new ChangeListener(){
+		//if (account.isRole(Role.OBSERVER)) {
+			gamesPanel.addObserverCheckBoxListener(new ChangeListener() {
 
-			@Override
-			public void stateChanged(ChangeEvent e) {
-					if(gamesPanel.checkBoxIsSelected()){
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					if (gamesPanel.checkBoxIsSelected()) {
+
+						ArrayList<GameModel> firstGames = account.getObserverAbleGames();
+						Object[] games =  firstGames.toArray();
 						
-						gamesPanel.addGames(account.getObserverAbleGames());
+						System.out.println(Arrays.deepToString(games));
+						
+						
+						gamesPanel.addGames(firstGames);
 						observer = true;
-						
-					}else{
+						gamesPanel.repaint();
+						gamesPanel.revalidate();
+
+					} else {
 						gamesPanel.addGames(account.getOpenGames());
 						observer = false;
-					}				
-			}
-		});
-		
-		}
-		
+						gamesPanel.repaint();
+						gamesPanel.revalidate();
+					}
+				}
+			});
 
-
+	//	}
 
 		chatPanel.addListenerChatField(new KeyListener() {
 
@@ -264,15 +265,15 @@ public class MainController extends CoreController {
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
 
 		currGamePanel.setPlayerTiles(letters);
-		if(observer){
+		if (observer) {
 			games = account.getObserverAbleGames();
-		}else{
-		
+		} else {
+
 			games = account.getOpenGames();
 		}
-		for(int x= 0; games.size() > x;x++){
-			
-			if(games.get(x).getGameId() ==	selectedGame.getGameId()){
+		for (int x = 0; games.size() > x; x++) {
+
+			if (games.get(x).getGameId() == selectedGame.getGameId()) {
 
 				System.out.println("test");
 				if (games.get(x).yourturn()) {
@@ -287,21 +288,17 @@ public class MainController extends CoreController {
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(
 						boardModel));
 				currGamePanel.setModel(boardModel);
-			
+
 				addModel(boardModel);
 
-				
-				 games.get(x).getBoardFromDatabase();
-					games.get(x).update();
+				games.get(x).getBoardFromDatabase();
+				games.get(x).update();
 			}
 		}
-			
-			frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-			frame.revalidate();
-			frame.repaint();
-		
-			
-		
+
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		frame.revalidate();
+		frame.repaint();
 
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
