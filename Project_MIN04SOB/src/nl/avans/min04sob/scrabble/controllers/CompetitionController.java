@@ -26,5 +26,9 @@ public class CompetitionController extends CoreController {
 	public void getCompetitions(String username){
 		cv.fillCompitions(cm.getCompitions(username));
 	}
+	
+	public void getParticipants(int competition_id){
+		cv.fillParticipants(cm.getUsersFromCompetition(competition_id));
+	}
 
 }
