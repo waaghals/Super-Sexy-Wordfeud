@@ -82,16 +82,18 @@ public class CompetitionModel extends CoreModel {
 		return comp_ids;
 	}
 	
-	public void getUsersFromCompetition(int competition_id){
-		ArrayList<AccountModel> accounts = new ArrayList<AccountModel>();
+	public AccountModel[] getUsersFromCompetition(int competition_id){
+		AccountModel[] accounts = new AccountModel[0];
+		int x = 0;
 		try {
 			ResultSet dbResult = new Query("SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?").set(competition_id).select();
-			while(dbResult.next()){
-				accounts.add(new AccountModel(dbResult.getString("account_naam")));
+			while(dbResult.next() && x < accounts.length){
+				accounts[x] = new AccountModel(dbResult.getString("account_naam"));
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return accounts;
 	}
 
 	public void join(int competitionID, String username) {
