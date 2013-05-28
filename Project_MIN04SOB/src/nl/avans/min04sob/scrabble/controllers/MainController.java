@@ -1,9 +1,11 @@
 package nl.avans.min04sob.scrabble.controllers;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,6 +16,7 @@ import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -60,11 +63,8 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
+		
 
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
-
-		frame.getContentPane().add(chatPanel,
-				"cell 0 0 4 6,alignx left,aligny top");
 
 		frame.pack();
 
@@ -98,7 +98,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// crtl.openchallenges();
+				 crtl.challengers();
 				// TODO stops program from running
 
 			}
@@ -309,6 +309,22 @@ public class MainController extends CoreController {
 
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");
+		}
+	}
+	public void propertyChange(PropertyChangeEvent evt) {
+		switch(evt.getPropertyName()) {
+		case Event.LOGIN:
+			frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+
+			frame.getContentPane().add(chatPanel,
+					"cell 0 0 4 6,alignx left,aligny top");
+			frame.repaint();
+			break;
+		case Event.LOGOUT:
+			frame.getContentPane().remove(currGamePanel);
+			frame.getContentPane().remove(chatPanel);
+			frame.repaint();
+			break;
 		}
 	}
 }
