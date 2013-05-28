@@ -21,10 +21,15 @@ public class CompetitionController extends CoreController {
 	@Override
 	public void addListeners() {
 		// TODO Auto-generated method stub
+		
 	}
 	
 	public void getCompetitions(String username){
 		cv.fillCompitions(cm.getCompitions(username));
+	}
+	
+	public void getParticipants(int competition_id){
+		cv.fillPlayerList(cm.getUsersFromCompetition(competition_id));
 	}
 
 }

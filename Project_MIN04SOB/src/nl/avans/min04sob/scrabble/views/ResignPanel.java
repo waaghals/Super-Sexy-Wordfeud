@@ -23,6 +23,7 @@ public class ResignPanel extends CorePanel {
 		this.setName("");
 		setLayout(new MigLayout("", "[][][134.00px][134.00px][]", "[14px][][][]"));
 		
+
 		areYouSureLabel = new JLabel();
 		add(areYouSureLabel, "cell 2 0 2 1,alignx left,aligny top");
 		

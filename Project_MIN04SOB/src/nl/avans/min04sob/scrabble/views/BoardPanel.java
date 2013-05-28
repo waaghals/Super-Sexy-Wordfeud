@@ -2,12 +2,14 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.DropMode;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
@@ -24,12 +26,12 @@ import nl.avans.min04sob.scrabble.models.Role;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
-	private JButton resign;
-	private JButton swap;
-	private JButton pass;
+	private JButton resignButton;
+	private JButton swapButton;
+	private JButton passButton;
 	private JButton play;
-	private JButton nextTurn;
-	private JButton prevTurn;
+	private JButton nextButton;
+	private JButton prevButton;
 
 	private JTable playBoard;
 	private JTable playerTilesField;
@@ -37,8 +39,22 @@ public class BoardPanel extends CorePanel {
 	private ActionListener resignActionListener;
 	
 	private boolean isObserver;
+	private JLabel exploreText;
+	private JLabel turnTextLabel;
+	private JLabel turnLabel;
+	private JLabel lblTegenstander;
+	private JLabel opponentNameLabel;
+	private JLabel turnScoreText;
+	private JLabel opponentScoreLabel;
+	private JLabel turnScoreLabel;
+	private JLabel playerScoreLabel;
+	private JLabel playerNameLabel;
 
 	public BoardPanel() {
+		setLayout(new MigLayout(
+				"",
+				"[75px:75px][75px:75px][100px:100px:100px][100px:100px:100px][100px:100px:100px][125px][100px][]",
+				"[30px][30px][][:390px:390px][30px][30px][30px]"));
 		/**
 		 * 
 		 * Main playing board
@@ -46,84 +62,129 @@ public class BoardPanel extends CorePanel {
 
 		playBoard = new TileTable();
 		playBoard.setBorder(new LineBorder(new Color(0, 0, 0)));
-		playBoard.setPreferredSize(new Dimension(0, 0));
-		playBoard.setPreferredScrollableViewportSize(new Dimension(0, 0));
 		playBoard.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		playBoard.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		playBoard.setFillsViewportHeight(true);
 		playBoard.getTableHeader().setReorderingAllowed(false);
 		playBoard.getTableHeader().setResizingAllowed(false);
 		playBoard.setRowHeight(30);
 		playBoard.setEnabled(true);
 		playBoard.validate();
 
-		add(playBoard, "cell 0 0 5 1");
+		lblTegenstander = new JLabel("Spelers");
+		add(lblTegenstander, "cell 5 0,alignx left");
+
+		add(playBoard, "cell 0 0 5 4");
 
 		/**
 		 * 
 		 * Set the basic stuff such as layout
 		 */
 
-		setLayout(new MigLayout("", "[450px,grow][150px:n][75px:100px][75px:100px][75px:100px]", "[450px][:30px:30px][25px]"));
-
 		/**
 		 * 
 		 * Player letter rack
 		 */
 
+		playerNameLabel = new JLabel("<player>");
+		add(playerNameLabel, "cell 5 1,alignx right");
+
+		playerScoreLabel = new JLabel("<score>");
+		add(playerScoreLabel, "cell 6 1");
+
+		opponentNameLabel = new JLabel("<opponent>");
+		add(opponentNameLabel, "cell 5 2,alignx right");
+
+		opponentScoreLabel = new JLabel("<score>");
+		add(opponentScoreLabel, "cell 6 2");
+
 		playerTilesField = new JTable(1, 7);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
-
-		add(playerTilesField, "cell 0 2 8 1,growx,aligny top");
-
-		nextTurn = new JButton();
-		nextTurn.setText("Volgende");
-
-		prevTurn = new JButton();
-		prevTurn.setText("Vorige");
 		
-		if (!(isObserver)) {
-			playBoard.setDragEnabled(true);
-			playBoard.setDropMode(DropMode.USE_SELECTION);
-			playBoard.setTransferHandler(new TileTranfserHandler());
 
-			playerTilesField.setDragEnabled(true);
-			playerTilesField.setDropMode(DropMode.USE_SELECTION);
-			playerTilesField.setTransferHandler(new TileTranfserHandler());
+		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
-			play = new JButton();
-			play.setText("Play");
-			add(play, "cell 1 3,alignx left,aligny center");
+		// if (!(isObserver)) {
+		playBoard.setDragEnabled(true);
+		playBoard.setDropMode(DropMode.USE_SELECTION);
+		playBoard.setTransferHandler(new TileTranfserHandler());
 
-			pass = new JButton();
-			pass.setText("Pas");
-			add(pass, "cell 3 3,grow");
+		playerTilesField.setDragEnabled(true);
+		playerTilesField.setDropMode(DropMode.USE_SELECTION);
+		playerTilesField.setTransferHandler(new TileTranfserHandler());
 
-			swap = new JButton();
-			swap.setText("Swap");
-			add(swap, "cell 5 3,grow");
+		play = new JButton();
+		play.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 
-			resign = new JButton();
-			resign.setText("Resign");
-			add(resign, "cell 8 3,alignx center,growy");
+		turnTextLabel = new JLabel("Beurt");
+		add(turnTextLabel, "cell 5 4,alignx right");
 
-		} else {
-			
-			add(nextTurn, "cell 3 3,grow");
+		turnLabel = new JLabel("<player>");
+		add(turnLabel, "cell 6 4");
+		play.setText("Spelen");
+		add(play, "flowx,cell 0 5 2 1,grow");
 
-			add(prevTurn, "alignx left,aligny center");
+		swapButton = new JButton();
+		swapButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		swapButton.setText("Wissel");
+		add(swapButton, "cell 2 5,grow");
 
-		}
+		passButton = new JButton();
+		passButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		passButton.setText("Passen");
+		add(passButton, "cell 3 5,grow");
+
+		resignButton = new JButton();
+		resignButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		resignButton.setText("Opgeven");
+		add(resignButton, "cell 4 5,grow");
+
+		nextButton = new JButton();
+		nextButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		nextButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+
+		prevButton = new JButton();
+		prevButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		prevButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		turnScoreText = new JLabel("Score");
+		add(turnScoreText, "cell 0 6,alignx right");
+
+		turnScoreLabel = new JLabel("<score>");
+		add(turnScoreLabel, "cell 1 6");
+
+		exploreText = new JLabel("Bladeren");
+		add(exploreText, "cell 2 6,alignx right");
+		prevButton.setText("Vorige");
+
+		add(prevButton, "cell 3 6,grow");
+		nextButton.setText("Volgende");
+
+		// } else {
+
+		add(nextButton, "cell 4 6,grow");
+
+		// }
 	}
 
 	public void addNextActionListener(ActionListener listener) {
-		nextTurn.addActionListener(listener);
+		nextButton.addActionListener(listener);
+
 	}
 
 	public void addPreviousActionListener(ActionListener listener) {
-		prevTurn.addActionListener(listener);
+		prevButton.addActionListener(listener);
+
 	}
 
 	public void addResignActionListener(ActionListener listener) {
@@ -132,16 +193,16 @@ public class BoardPanel extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		switch(evt.getPropertyName()){
+		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
-			resign.addActionListener(resignActionListener);
+			resignButton.addActionListener(resignActionListener);
 			if(account.isRole(Role.OBSERVER)){
-				
+
 			}
 			revalidate();
 			break;
-		
+
 		}
 
 	}
@@ -159,6 +220,22 @@ public class BoardPanel extends CorePanel {
 
 	public void setModel(BoardModel bpm) {
 		playBoard.setModel(bpm);
+	}
+
+	public void setOpponent(String name) {
+		opponentNameLabel.setText(name);
+	}
+
+	public void setPlayer(String name) {
+		playerNameLabel.setText(name);
+	}
+
+	public void setYourTurn(boolean yourTurn) {
+		if (yourTurn) {
+			turnLabel.setText("Aan jouw");
+		} else {
+			turnLabel.setText("Tegenstander");
+		}
 	}
 
 }

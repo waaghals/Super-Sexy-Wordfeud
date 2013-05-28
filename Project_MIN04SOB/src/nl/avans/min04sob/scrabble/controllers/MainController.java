@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -33,14 +33,11 @@ public class MainController extends CoreController {
 	private AccountModel account;
 	private ChallengeController crtl;
 	private AccountController accountcontroller;
-	private GamesComboBox gamesPanel;
 	private BoardPanel currGamePanel;
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
-	private JLabel turn;
 
-	private JLabel score;
 	private Boolean observer;
 	private CompetitionController competitioncontroller; 
 	private ResignController resigncontroller;
@@ -50,7 +47,6 @@ public class MainController extends CoreController {
 		addListeners();
 
 		addView(menu);
-		addView(gamesPanel);
 		addModel(boardModel);
 		addModel(account);
 		addView(chatPanel);
@@ -62,19 +58,10 @@ public class MainController extends CoreController {
 
 		frame.setJMenuBar(menu);
 
-		frame.getContentPane().add(gamesPanel,
-				"cell 0 0 2 1,alignx left,aligny top");
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
 		frame.getContentPane().add(chatPanel,
-				"cell 0 1 4 8,alignx left,aligny top");
-
-		// TODO positienering moet beter maar snap niet veel van die cell 0 0 0
-		// 0
-		frame.getContentPane().add(turn,
-				"cell 0 0 3 2,alignx right , aligny top");
-		frame.getContentPane()
-				.add(score, "cell 4 0 3 3,alignx left,aligny top");
+				"cell 0 0 4 6,alignx left,aligny top");
 
 		frame.pack();
 
@@ -88,16 +75,8 @@ public class MainController extends CoreController {
 		menu = new MenuView();
 		competitioncontroller = new CompetitionController();
 		account = new AccountModel();
-		turn = new JLabel();
-		turn.setText("TEEEEST");
-
-		score = new JLabel();
-		score.setText("teeeeest");
-
 
 		crtl = new ChallengeController(account.getUsername());
-
-		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanel();
 
@@ -150,7 +129,7 @@ public class MainController extends CoreController {
 
 		menu.viewWords(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new AcceptDeclineController();
 			}
 		});
 
@@ -177,51 +156,28 @@ public class MainController extends CoreController {
 				login.loginToRegister();
 			}
 		});
-
-		gamesPanel.addGameListListener(new ActionListener() {
+		
+		menu.addOpenGamesListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GameModel selectedGame = gamesPanel.getSelectedGame();
-
-				openGame(selectedGame);
-
+				JMenuItem source = (JMenuItem) e.getSource();
+				GameModel clickedGame = (GameModel) source.getClientProperty("game");
+				openGame(clickedGame);
 			}
-
-
 		});
 		
-		
-		
-		//if (account.isRole(Role.OBSERVER)) {
-			gamesPanel.addObserverCheckBoxListener(new ChangeListener() {
+		menu.addViewGamesListener(new ActionListener() {
 
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					if (gamesPanel.checkBoxIsSelected()) {
-
-						ArrayList<GameModel> firstGames = account.getObserverAbleGames();
-						Object[] games =  firstGames.toArray();
-						
-						System.out.println(Arrays.deepToString(games));
-						
-						
-						gamesPanel.addGames(firstGames);
-						observer = true;
-						gamesPanel.repaint();
-						gamesPanel.revalidate();
-
-					} else {
-						gamesPanel.addGames(account.getOpenGames());
-						observer = false;
-						gamesPanel.repaint();
-						gamesPanel.revalidate();
-					}
-				}
-			});
-
-	//	}
-
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JMenuItem source = (JMenuItem) e.getSource();
+				GameModel clickedGame = (GameModel) source.getClientProperty("game");
+				
+				//TODO open game as observer
+				openGame(clickedGame);
+			}
+		});
 
 		chatPanel.addListenerChatField(new KeyListener() {
 
@@ -267,7 +223,6 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);
-				
 			}
 		});
 	}
@@ -297,11 +252,9 @@ public class MainController extends CoreController {
 			if (games.get(x).getGameId() == selectedGame.getGameId()) {
 
 				System.out.println("test");
-				if (games.get(x).yourturn()) {
-					turn.setText("you turn");
-				} else {
-					turn.setText("openentturn");
-				}
+				boolean yourTurn = games.get(x).yourturn();
+				currGamePanel.setYourTurn(yourTurn);
+				
 
 				// score.setText(games.get(x).score());
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
@@ -311,7 +264,7 @@ public class MainController extends CoreController {
 				currGamePanel.setModel(boardModel);
 
 				addModel(boardModel);
-
+				games.get(x).setPlayerLetterFromDatabase();
 				games.get(x).getBoardFromDatabase();
 				games.get(x).update();
 			}
@@ -332,15 +285,9 @@ public class MainController extends CoreController {
 	private void changePass() {
 		frame.remove(chatPanel);
 		frame.remove(currGamePanel);
-		frame.add(accountcontroller.getchangepasspanel(),
+		frame.getContentPane().add(accountcontroller.getchangepasspanel(),
 				"cell 0 1 4 8,alignx left,aligny top");
 		frame.repaint();
-	}
-
-	public boolean yourturn() {
-
-		return false;
-
 	}
 
 	public void sendChat() {
@@ -354,6 +301,4 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
-	
-
 }

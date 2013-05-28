@@ -31,8 +31,7 @@ public class GamesComboBox extends CorePanel {
 
 	public void initialize() {
 
-		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px][75px:100px:150px]",
-				"[20px:30px:30px][20px:30px:30px]"));
+		setLayout(new MigLayout("", "[100px][100px][250px]", "[20px:30px:30px][30px][30px]"));
 
 
 		JLabel selectLabel = new JLabel("Selecteer een spel");
@@ -42,16 +41,16 @@ public class GamesComboBox extends CorePanel {
 		add(gameList, "cell 0 1 2 1,grow");
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
-
+		add(observer,"cell 2 1,grow");
 	}
 
 	public void addGameListListener(ActionListener listenener) {
 		gameList.addActionListener(listenener);
 	}
 
-	public void addObserverCheckBoxListener(ChangeListener listenener) {
+	public void addObserverCheckBoxListener(ActionListener listenener) {
 
-		observer.addChangeListener(listenener);
+		observer.addActionListener(listenener);
 
 	}
 
@@ -74,6 +73,7 @@ public class GamesComboBox extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
+		
 		switch (evt.getPropertyName()) {
 		case Event.NEWGAME:
 			gameList.repaint();
@@ -81,7 +81,7 @@ public class GamesComboBox extends CorePanel {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
-			
+			gameList.setVisible(true);
 			gameList.setEnabled(true);
 			if(account.isRole(Role.OBSERVER)){
 				
@@ -95,7 +95,7 @@ public class GamesComboBox extends CorePanel {
 			observer.setEnabled(true);
 			break;
 		case Event.LOGOUT:
-			gameList.removeAll();
+			gameList.setVisible(false);
 			gameList.setEnabled(false);
 
 			observer.setEnabled(false);
@@ -111,6 +111,7 @@ public class GamesComboBox extends CorePanel {
 
 	public boolean checkBoxIsSelected() {
 		return observer.isSelected();
+		
 	}
 
 	public GameModel getSelectedGame() {

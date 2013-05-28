@@ -1,5 +1,7 @@
 package nl.avans.min04sob.scrabble.models;
 
+import java.util.HashMap;
+
 
 public class Tile {
 	private String letter;
@@ -71,4 +73,5 @@ public class Tile {
 	public int getValue(){
 		return value;
 	}
+	
 }
