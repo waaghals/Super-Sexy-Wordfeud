@@ -211,7 +211,7 @@ public class MainController extends CoreController {
 						gamesPanel.revalidate();
 
 					} else {
-						gamesPanel.removeAll();
+						
 						gamesPanel.addGames(account.getOpenGames());
 						observer = false;
 						gamesPanel.repaint();
