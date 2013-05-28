@@ -220,8 +220,7 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setOpponent(String name) {
-		opponentNameLabel.setText(name)
-
+		opponentNameLabel.setText(name);
 	}
 
 	public void setPlayer(String name) {
