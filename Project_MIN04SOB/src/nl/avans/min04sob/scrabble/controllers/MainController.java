@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -62,10 +63,7 @@ public class MainController extends CoreController {
 
 		frame.setJMenuBar(menu);
 		
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
-		frame.getContentPane().add(chatPanel,
-				"cell 0 0 4 6,alignx left,aligny top");
 
 		frame.pack();
 
@@ -313,6 +311,13 @@ public class MainController extends CoreController {
 		}
 	}
 	public void propertyChange(PropertyChangeEvent evt) {
-		
+		switch(evt.getPropertyName()) {
+		case Event.LOGIN:
+			frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+
+			frame.getContentPane().add(chatPanel,
+					"cell 0 0 4 6,alignx left,aligny top");
+			
+		}
 	}
 }
