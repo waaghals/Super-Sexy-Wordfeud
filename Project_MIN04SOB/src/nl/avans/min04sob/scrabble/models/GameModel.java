@@ -51,8 +51,7 @@ public class GameModel extends CoreModel {
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
 
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
-
-	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
+	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 	private final String scoreQuery = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 
 	public GameModel() {
@@ -125,7 +124,6 @@ public class GameModel extends CoreModel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				currentobserveturn++;
 				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
 				updateboardfromdatabasetoturn(currentobserveturn);
@@ -138,7 +136,6 @@ public class GameModel extends CoreModel {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
 						currentobserveturn--;
 						for (int x = 0; currentobserveturn > x
 								|| currentobserveturn == x; x++) {
@@ -524,7 +521,6 @@ public class GameModel extends CoreModel {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return score;
@@ -538,7 +534,6 @@ public class GameModel extends CoreModel {
 				counter += s.getInt(1);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return counter;
@@ -601,9 +596,9 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void Resign() {
+	public void Resign(int i) {
 		try {
-			new Query(resignQuery).set(STATE_RESIGNED).set(getGameId()).exec();
+			new Query(resignQuery).set(STATE_RESIGNED).set(i).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

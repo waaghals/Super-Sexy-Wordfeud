@@ -16,13 +16,15 @@ public class ResignPanel extends CorePanel {
 	
 	private JButton yesButton;
 	private JButton noButton;
+	private JLabel areYouSureLabel;
 	
 	
 	public ResignPanel() {
 		this.setName("");
 		setLayout(new MigLayout("", "[][][134.00px][134.00px][]", "[14px][][][]"));
 		
-		JLabel areYouSureLabel = new JLabel("weet je zeker dat je wilt opgeven?");
+
+		areYouSureLabel = new JLabel();
 		add(areYouSureLabel, "cell 2 0 2 1,alignx left,aligny top");
 		
 		yesButton = new JButton("Yes");
@@ -30,6 +32,7 @@ public class ResignPanel extends CorePanel {
 		
 		noButton = new JButton("No");
 		add(noButton, "cell 3 2,alignx center");
+		
 	}
 
 	@Override
@@ -44,5 +47,9 @@ public class ResignPanel extends CorePanel {
 	
 	public void addNoResignActionListener(ActionListener listener) {
 		noButton.addActionListener(listener);
+	}
+	
+	public void setResignLabelName(String labelname) {
+		areYouSureLabel.setText(labelname);
 	}
 }

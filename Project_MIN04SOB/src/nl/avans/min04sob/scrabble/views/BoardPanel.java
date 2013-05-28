@@ -35,7 +35,9 @@ public class BoardPanel extends CorePanel {
 
 	private JTable playBoard;
 	private JTable playerTilesField;
-
+	
+	private ActionListener resignActionListener;
+	
 	private boolean isObserver;
 	private JLabel exploreText;
 	private JLabel turnTextLabel;
@@ -180,7 +182,7 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void addResignActionListener(ActionListener listener) {
-		resignButton.addActionListener(listener);
+		resignActionListener = listener;
 	}
 
 	@Override
@@ -188,7 +190,8 @@ public class BoardPanel extends CorePanel {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
-			if (account.isRole(Role.OBSERVER)) {
+			resignButton.addActionListener(resignActionListener);
+			if(account.isRole(Role.OBSERVER)){
 
 			}
 			revalidate();

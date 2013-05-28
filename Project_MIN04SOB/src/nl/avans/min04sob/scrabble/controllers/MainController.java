@@ -43,6 +43,8 @@ public class MainController extends CoreController {
 	private ResignController resigncontroller;
 
 	public MainController() {
+		
+		
 		initialize();
 		addListeners();
 
@@ -140,7 +142,9 @@ public class MainController extends CoreController {
 		});
 
 		addLoginListener();
+
 		addButtonListener();
+
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
@@ -212,6 +216,7 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resigncontroller = new ResignController();
+				System.out.println("Testresign");
 			}
 		});
 		
