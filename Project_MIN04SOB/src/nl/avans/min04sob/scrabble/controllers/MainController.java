@@ -37,7 +37,8 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
-
+	private GameModel currentGame;
+	
 	private Boolean observer;
 	private CompetitionController competitioncontroller; 
 	private ResignController resigncontroller;
@@ -216,7 +217,7 @@ public class MainController extends CoreController {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				resigncontroller = new ResignController();
+				resigncontroller = new ResignController(currentGame);
 				System.out.println("Testresign");
 			}
 		});
@@ -234,7 +235,7 @@ public class MainController extends CoreController {
 
 	protected void openGame(GameModel selectedGame) {
 		removeModel(chatModel);
-
+		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
@@ -285,6 +286,10 @@ public class MainController extends CoreController {
 		for (String message : messages) {
 			chatPanel.addToChatField(message);
 		}
+	}
+
+	private void setCurrentGame(GameModel selectedGame) {
+		currentGame = selectedGame;
 	}
 
 	private void changePass() {
