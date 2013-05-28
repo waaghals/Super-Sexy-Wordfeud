@@ -50,7 +50,7 @@ public class ResignController extends CoreController {
 	}
 	
 	public void setLabelName() {
-		labelName = "Are you sure you want to resign from your current game?";
+		labelName = "Weet je zeker dat je de huidige game wilt opgeven?";
 	}
 	
 	public String getLabelName() {
@@ -70,7 +70,7 @@ public class ResignController extends CoreController {
 	}
 	
 	private void doResign() {
-		gameModel.Resign(gameModel.getGameId());
+		gameModel.Resign();
 		frame.dispose();
 		frame = null;
 	}

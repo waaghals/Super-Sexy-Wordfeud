@@ -1,9 +1,11 @@
 package nl.avans.min04sob.scrabble.controllers;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,6 +16,7 @@ import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -59,6 +62,7 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
+		
 
 		frame.getContentPane().add(currGamePanel,
 				"cell 4 0 6 6,growx,aligny top");
@@ -67,7 +71,6 @@ public class MainController extends CoreController {
 				"cell 0 0 4 6,alignx left,aligny top");
 
 		frame.pack();
-
 	}
 
 	@Override
@@ -76,8 +79,11 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
-		competitioncontroller = new CompetitionController();
+
+		//competitioncontroller = new CompetitionController();
 		account = new AccountModel();
+
+	
 
 		crtl = new ChallengeController(account.getUsername());
 
@@ -99,7 +105,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// crtl.openchallenges();
+				 crtl.challengers();
 				// TODO stops program from running
 
 			}
@@ -120,9 +126,11 @@ public class MainController extends CoreController {
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new CompetitionController(account);
 			}
 		});
+		
+		
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +152,7 @@ public class MainController extends CoreController {
 
 		addLoginListener();
 
-		addButtonListener();
+
 
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -325,6 +333,24 @@ public class MainController extends CoreController {
 
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");
+		}
+	}
+	public void propertyChange(PropertyChangeEvent evt) {
+		switch(evt.getPropertyName()) {
+		case Event.LOGIN:
+			frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+
+			frame.getContentPane().add(chatPanel,
+					"cell 0 0 4 6,alignx left,aligny top");
+			addButtonListener();
+			frame.repaint();
+			break;
+		case Event.LOGOUT:
+			frame.getContentPane().remove(currGamePanel);
+			frame.getContentPane().remove(chatPanel);
+			frame.repaint();
+			break;
+
 		}
 	}
 }

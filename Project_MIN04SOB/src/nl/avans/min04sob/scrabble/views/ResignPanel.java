@@ -27,10 +27,10 @@ public class ResignPanel extends CorePanel {
 		areYouSureLabel = new JLabel();
 		add(areYouSureLabel, "cell 2 0 2 1,alignx left,aligny top");
 		
-		yesButton = new JButton("Yes");
+		yesButton = new JButton("Ja");
 		add(yesButton, "cell 2 2,alignx center");
 		
-		noButton = new JButton("No");
+		noButton = new JButton("Nee");
 		add(noButton, "cell 3 2,alignx center");
 		
 	}

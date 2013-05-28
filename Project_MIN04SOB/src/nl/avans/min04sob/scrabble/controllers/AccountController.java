@@ -107,8 +107,6 @@ public class AccountController extends CoreController {
 		 
 		if (!accountModel.isLoggedIn()) {
 			loginPanel.setUsernameMistake(false);
-			frame.dispose();
-			frame = null;
 			loginPanel.setPasswordMistake(false);
 		}
 		else {
@@ -141,10 +139,10 @@ public class AccountController extends CoreController {
 
 	private boolean validateUsername() {
 		if (validateLength(registerPanel.getUsername().length()) == -1) {
-			registerPanel.setUsernameMistake(false, "To short");
+			registerPanel.setUsernameMistake(false, "Te kort");
 			return false;
 		} else if (validateLength(registerPanel.getUsername().length()) == 1) {
-			registerPanel.setUsernameMistake(false, "To long");
+			registerPanel.setUsernameMistake(false, "Te lang");
 			return false;
 		} else {
 			if (AccountModel
@@ -152,7 +150,7 @@ public class AccountController extends CoreController {
 				registerPanel.setUsernameMistake(true, "");
 				return true;
 			} else {
-				registerPanel.setUsernameMistake(false, "Already used");
+				registerPanel.setUsernameMistake(false, "Al in gebruik");
 				return false;
 			}
 		}
@@ -161,10 +159,10 @@ public class AccountController extends CoreController {
 
 	private boolean validatePassword1() {
 		if (validateLength(registerPanel.getPassword1().length) == -1) {
-			registerPanel.setPassword1Mistake(false, "To short");
+			registerPanel.setPassword1Mistake(false, "Te kort");
 			return false;
 		} else if (validateLength(registerPanel.getPassword1().length) == 1) {
-			registerPanel.setPassword1Mistake(false, "To long");
+			registerPanel.setPassword1Mistake(false, "Te lang");
 			return false;
 		} else {
 			registerPanel.setPassword1Mistake(true, "");
@@ -174,10 +172,10 @@ public class AccountController extends CoreController {
 
 	private boolean validatePassword2() {
 		if (validateLength(registerPanel.getPassword2().length) == -1) {
-			registerPanel.setPassword2Mistake(false, "To short");
+			registerPanel.setPassword2Mistake(false, "Te kort");
 			return false;
 		} else if (validateLength(registerPanel.getPassword2().length) == 1) {
-			registerPanel.setPassword2Mistake(false, "To long");
+			registerPanel.setPassword2Mistake(false, "Te lang");
 			return false;
 		} else {
 			if (Arrays.equals(registerPanel.getPassword1(),
@@ -185,7 +183,7 @@ public class AccountController extends CoreController {
 				registerPanel.setPassword2Mistake(true, "");
 				return true;
 			} else {
-				registerPanel.setPassword2Mistake(false, "doesn't match");
+				registerPanel.setPassword2Mistake(false, "Wachtwoorden komen niet overeen");
 				return false;
 			}
 		}
@@ -201,18 +199,18 @@ public class AccountController extends CoreController {
 		String newpass2 = changepasspanel.getNewPass2();
 		if (oldpass.equals(accountModel.getpass())) {
 			if (validateLength(newpass1.length()) == -1) {
-				changepasspanel.setNewPass1Good(false, "To short");
+				changepasspanel.setNewPass1Good(false, "Te Kort");
 			} else if (validateLength(newpass1.length()) == 1) {
-				changepasspanel.setNewPass1Good(false, "To long");
+				changepasspanel.setNewPass1Good(false, "Te Lang");
 			} else {
 				if (newpass2.equals(newpass1)) {
 					accountModel.changePass(changepasspanel.getNewPass1());
 				} else {
-					changepasspanel.setNewPass2Good(false, "Doesn't match");
+					changepasspanel.setNewPass2Good(false, "wrong");
 				}
 			}
 		} else {
-			changepasspanel.setOldPassGood(false, "Wrong");
+			changepasspanel.setOldPassGood(false, "Fout");
 		}
 	}
 

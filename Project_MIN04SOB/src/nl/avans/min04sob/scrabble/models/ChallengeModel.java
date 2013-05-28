@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.JFrame;
+
 import nl.avans.min04sob.scrabble.controllers.ChallengeController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Event;
@@ -24,141 +27,105 @@ public class ChallengeModel extends CoreModel  {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
-	private final String selectQuery = "SELECT `*` FROM `Spel`; "; 
+	private final String selectQuery = "SELECT * FROM `Spel`; "; 
 	public ResultSet result;
-	public String name=""; 
+	public String yourname=""; 
 	public Timer timer = new Timer();
 	public ArrayList <String> challenge = new ArrayList<String>();
 	
 
-	public ChallengeModel(String name)  
+	public ChallengeModel(String name) throws SQLException  
 	{
-		 this.name=name;
+		yourname=name;
 	}
 
-	public void controle(String Challengername,String  challegendname, String string) throws SQLException//uitdager
+	public void controle(String Challengername,String  challegendname) throws SQLException//uitdager
 	{
-		result = new Query("SELECT `*`;").select();
+		///  zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
 		boolean error = false;
-	 	ResultSet dbResult =  new Query(selectQuery) .select();
-		while(result.next()){
-			if(dbResult.getString(1).equals(string))
-			{
-				error = true;
-				break;
+		String queryy = "SELECT COUNT(*)   FROM Spel ";
+		result =  new Query(queryy).select();
+		if(result.getInt(1)>0)
+		{
+			result =  new Query(selectQuery) .select();
+			while(result.next()){
+				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(5).equals(challegendname))
+				{
+					error = true;
+					commandsToChallengeview("4");
+					break;
+				}
 			}
 		}
-		String query = "SELECT `Reaktie ` FROM `Spel`; where(INT ID) values(?);";
-		ResultSet dbResult3 = new Query(query).set(string).select();
-		if(dbResult3.getString(7).equals(STATE_UNKNOWN) ||dbResult3.getString(7).equals(STATE_ACCEPTED) ||dbResult3.getString(1).equals(STATE_ACCEPTED)){
-			error = true;
-			commandsToChallengeview("4 ");
-		} 
 		if(error==false){
-			createChallenge(  Challengername,   challegendname , string);
+			createChallenge(Challengername, challegendname);
 		}
-	}
-	public void createChallenge(String Challengername,String  challegendname,final String id) throws SQLException//uitdager
+	} 
+		
+	 
+	public void createChallenge(String Challengername,String  challegendname) throws SQLException//uitdager
 	{	
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
-		String currentdate = dateFormat.format(date);		
-		String query = "INSERT INTO `Spel` (`spelid`,`Toestand_type`,`Account_naam_uitdager` ) VALUES (?, ?, ?, ?)";
-		try {
-			new Query(query).set(id).set(STATE_REQUEST).set(Challengername).set( currentdate). exec();
-		} catch (SQLException sql) {
-			System.out.println(query);
-			sql.printStackTrace();
-		}
-		final Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			public void run() {
-				String query1 = "SELECT `*` FROM `Spel`; where(ID INT) values(?)";
+		String currentdate = dateFormat.format(date);	
+			//standard
+	            
+				String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
 				try {
-					ResultSet dbResult =  new Query(query1).set(id).select();
-					if (dbResult.getString(7).equals("Accepted")) {
-						timer.cancel();
-						commandsToChallengeview("3");
-					}
-					if (dbResult.getString(7).equals("Rejected")) {
-						commandsToChallengeview("2");
-						timer.cancel();
-					}
+					new Query(query).set(2).set(STATE_REQUEST).set(Challengername).set(challegendname).set(currentdate).set(STATE_UNKNOWN).set(currentdate).set("standard").set("NL"). exec();
 				} catch (SQLException sql) {
-					System.out.println(query1);
+					System.out.println(query);
 					sql.printStackTrace();
-				}
-		}}, 0, 10000);
+				} 
 	}
 	 
 	@Override
 	public void update() {
-		ResultSet dbResult;
-		int index = 0;
-		String query = "SELECT `*` FROM `Spel`; where(INT ID) values(?);"; //??
-		//voorkomt nog een uitnodiging van de zelfde persoon
+		//// if your name = tegenstander          if your naam = uitdager 	
+ ///// receive challenge    your name = challenged ///// ///// ///// ///// ///// ///// /////
+///array list add alleen als challend= yourname;;		
 		try {
+			ResultSet dbResult = new Query(selectQuery).select();
 			while (result.next()){
-			try {
-					dbResult =  new Query(query).set(index).select();
-				if(dbResult.getString(7).equals(STATE_UNKNOWN) ||dbResult.getString(7).equals(STATE_ACCEPTED) )
-				{
-					result.next();
-				}
-				if (dbResult.getString(5).equals(name))  // ///											// ????
-				{
-					challenge.add(dbResult.getString(1)+" "+dbResult.getString(5));
-					commandsToChallengeview("1");
-					String queryx = "INSERT INTO `Spel` (`Reaktie`) values (?);";
-					new Query(queryx).set(STATE_UNKNOWN).exec(); 
-				}
-			 
-			} catch (SQLException sql) {
-				System.out.println(query);
-				sql.printStackTrace();
-			}
-			index++;
+				 if(!challenge.contains(dbResult.getString(4))){
+					if(dbResult.getString(5).equals(yourname) &&dbResult.getString(3).equals(STATE_REQUEST)) {
+					challenge.add(dbResult.getString(4));
+					 
+					}
+				 }
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		 
 	}
 	 
-	public void respondChallenge(String gameid,String name,boolean accepted) throws SQLException // uitdgedaagde
+	public void respondChallenge(String nameuitdager,boolean accepted) throws SQLException // uitdgedaagde
 	{
+		//where
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
-		String query = "SELECT `*` FROM `Spel`; where(INT ID) = ? ;";
-		ResultSet resultset = new Query(query).set(gameid).select();
+		String query = "SELECT `*` FROM `Spel` WHERE  `Account_naam_uitdager`=? and `Account_naam_tegenstander` =? ;";
+		ResultSet resultset = new Query(query).set(nameuitdager).set(yourname).select();
 		String query2 ="";
-		 if(resultset.getString(5).equals(name)||resultset.getString(3).equals(STATE_REQUEST)){
-			 commandsToChallengeview("4 ");
-		 }
-		 else{
-			query = "DELETE FROM `Spel` (`Toestand_type`,Reaktie), where(ID INT) VALUES ('" + gameid
-					+ "') ;"; 
+		new Query(query).exec();
+			 
 			if(accepted==true){
-				query2 = "INSERT INTO `Spel` (`Toestand_type`,`Reaktie`,`moment_reaktie`) VALUES ('"
-					+ STATE_PLAYING +  STATE_ACCEPTED+currentdate+ " ') where(ID INT) VALUES ('" +  gameid
-					+ "') ;";  
+				query2 = "UPDATE Spel SET Toestand_type=? ,  Reaktie_type=? ,   moment_reaktie=?  WHERE `Account_naam_uitdager` = 'nameuitdager' AND `Account_naam_tegenstander=`yourname` ;";
+				new Query(query2).set(STATE_REJECTED).set(STATE_ACCEPTED).set( currentdate).exec(); 
 			}
 			else{
-				  query2 = "INSERT INTO `Spel` (`Toestand_type`,`Reaktie`,`moment_reaktie`) VALUES ('"
-						+ STATE_PLAYING +  STATE_REJECTED+currentdate+ " ') where(ID INT) VALUES ('" +  gameid
-						+ "') ;";  
+				query2 = "UPDATE Spel SET  ,  Reaktie_type=? ,   moment_reaktie=?  WHERE `Account_naam_uitdager` = 'nameuitdager' AND `Account_naam_tegenstander=`yourname` ;";
+				  new Query(query2).set(STATE_ACCEPTED).set( currentdate).exec(); 
 			}
-			 
 			for(int index=0;index < challenge.size();index++ ){	
-				String xx= resultset.getString(1)+" "+resultset.getString(5);
+				String xx=   resultset.getString(4) ;
 				if(xx.equals(challenge.get(index)))
 				{
 					challenge.remove(index);
 				}
-			}
-			new Query(query).exec();
-			new Query(query2).exec(); 
-		}
+			}	
 	}
  
 	public void commandsToChallengeview(String commando)
