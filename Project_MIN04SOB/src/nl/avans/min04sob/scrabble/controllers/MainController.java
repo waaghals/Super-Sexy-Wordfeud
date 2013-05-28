@@ -86,14 +86,12 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
-		competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 		turn = new JLabel();
 		turn.setText("TEEEEST");
 
 		score = new JLabel();
 		score.setText("teeeeest");
-
 
 		crtl = new ChallengeController(account.getUsername());
 
@@ -138,9 +136,11 @@ public class MainController extends CoreController {
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new CompetitionController(account);
 			}
 		});
+		
+		
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
