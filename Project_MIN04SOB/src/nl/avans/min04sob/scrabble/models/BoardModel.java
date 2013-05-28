@@ -24,33 +24,7 @@ public class BoardModel extends CoreTableModel {
 
 	public BoardModel() {
 		coordinates = new Point();
-		int boardX = 0;
-		int boardY = 0;
-		String query = "SELECT * FROM  `tegel` WHERE  `Bord_naam` =  'Standard'";
-		try {
-			ResultSet dbResult = new Query(query).select();
-
-			while (dbResult.next()) {
-				int x = dbResult.getInt("X") - 1;
-				int y = dbResult.getInt("Y") - 1;
-				tilesHM.put(new Point(x, y),
-						dbResult.getString("TegelType_soort"));
-
-				if (x > boardX) {
-					boardX = x;
-				}
-
-				if (y > boardX) {
-					boardY = y;
-				}
-			}
-
-			// Create a array the size of the board
-			initDataArray(boardX + 1, boardY + 1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		setBoardToDefault();
 
 		for (Point point : tilesHM.keySet()) {
 			// setValueAt(new Tile(tilesHM.get(point), 1), point.x, point.y);
@@ -62,10 +36,7 @@ public class BoardModel extends CoreTableModel {
 				new Tile("C", 2), new Tile("D", 2), new Tile("E", 2),
 				new Tile("F", 2), new Tile("G", 2) } };
 
-		for (int i = 0; i <= boardY; i++) {
-			String colName = (char) (i + 97) + "";
-			addColumn(new Column(colName, Tile.class, i));
-		}
+		
 	}
 
 	public String[][] getPlayerDataValues() {
@@ -105,6 +76,7 @@ public class BoardModel extends CoreTableModel {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -118,7 +90,43 @@ public class BoardModel extends CoreTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		if(rowIndex < 15 && columnIndex <15){
 		return data[rowIndex][columnIndex];
+		}
+		return null;
+	}
+	public void setBoardToDefault(){
+		int boardX = 0;
+		int boardY = 0;
+		String query = "SELECT * FROM  `tegel` WHERE  `Bord_naam` =  'Standard'";
+		try {
+			ResultSet dbResult = new Query(query).select();
+
+			while (dbResult.next()) {
+				int x = dbResult.getInt("X") - 1;
+				int y = dbResult.getInt("Y") - 1;
+				tilesHM.put(new Point(x, y),
+						dbResult.getString("TegelType_soort"));
+
+				if (x > boardX) {
+					boardX = x;
+				}
+
+				if (y > boardX) {
+					boardY = y;
+				}
+			}
+
+			// Create a array the size of the board
+			initDataArray(boardX + 1, boardY + 1);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i <= boardY; i++) {
+			String colName = (char) (i + 97) + "";
+			addColumn(new Column(colName, Tile.class, i));
+		}
 	}
 
 	@Override
