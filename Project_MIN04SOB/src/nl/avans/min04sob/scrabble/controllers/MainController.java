@@ -219,6 +219,35 @@ public class MainController extends CoreController {
 				System.out.println("Testresign");
 			}
 		});
+
+		
+		currGamePanel.addNextActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentobserveturn++;
+				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
+				updateboardfromdatabasetoturn(currentobserveturn);
+
+			}
+
+		});
+		currGamePanel.addPreviousActionListener(
+				new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						currentobserveturn--;
+						for (int x = 0; currentobserveturn > x
+								|| currentobserveturn == x; x++) {
+							updateboardfromdatabasetoturn(x);
+
+						}
+					}
+
+				});
+	}
+
 		
 	}
 
