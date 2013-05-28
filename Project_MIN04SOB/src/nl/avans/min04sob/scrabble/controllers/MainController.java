@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -60,7 +61,7 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
-
+		
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
 		frame.getContentPane().add(chatPanel,
@@ -310,5 +311,8 @@ public class MainController extends CoreController {
 			// Empty the chat message box
 			chatPanel.setChatFieldSendText("");
 		}
+	}
+	public void propertyChange(PropertyChangeEvent evt) {
+		
 	}
 }
