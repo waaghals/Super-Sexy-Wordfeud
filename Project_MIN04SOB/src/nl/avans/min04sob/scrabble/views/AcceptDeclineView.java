@@ -28,7 +28,7 @@ public class AcceptDeclineView extends CorePanel{
 	
 	public AcceptDeclineView()
 	{
-		setLayout(new MigLayout("", "[65px:30px:120px][100px:142.00px:100px,grow][65px:67.00px:100px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+		setLayout(new MigLayout("", "[65px:95.00px:120px][100px:95.00px:100px,grow][65px:67.00px:100px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 		
 		wordList = new JList<String>();
 		wordList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -36,7 +36,7 @@ public class AcceptDeclineView extends CorePanel{
 		add(backButton, "cell 2 0");
 		
 		requestedWordLabel = new JLabel("voorgestelde woorden");
-		add(requestedWordLabel, "cell 0 0");
+		add(requestedWordLabel, "cell 0 0 2 1");
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 2 3,grow");
@@ -50,6 +50,8 @@ public class AcceptDeclineView extends CorePanel{
 		add(deniedButton, "cell 1 4,alignx right");
 		
 		myFrame = new JFrame();
+		myFrame.setTitle("Voorgestelde woorden");
+		myFrame.setAlwaysOnTop(true);
 		myFrame.setContentPane(this);
 		myFrame.pack();
 		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -73,6 +73,7 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
+		
 
 		add(playerTilesField, "cell 0 2 8 1,growx,aligny top");
 

@@ -45,7 +45,11 @@ public class GameModel extends CoreModel {
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
+
+	private final String getPlayerTiles = "Select " ;
+
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
 	private final String scoreQuery = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 	
@@ -600,5 +604,4 @@ public class GameModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
-
 }

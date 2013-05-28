@@ -1,12 +1,10 @@
 *.class
-
-
-
 # Package Files #
 *.war
 
 *.ear
 
 /bin
+
 
 .classpath
