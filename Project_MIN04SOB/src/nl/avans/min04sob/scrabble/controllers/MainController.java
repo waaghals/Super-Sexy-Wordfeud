@@ -262,7 +262,7 @@ public class MainController extends CoreController {
 				currGamePanel.setModel(boardModel);
 
 				addModel(boardModel);
-
+				games.get(x).setPlayerLetterFromDatabase();
 				games.get(x).getBoardFromDatabase();
 				games.get(x).update();
 			}
