@@ -234,7 +234,7 @@ public class MainController extends CoreController {
 
 	protected void openGame(GameModel selectedGame) {
 		removeModel(chatModel);
-		currentGame = selectedGame;
+		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
@@ -285,6 +285,10 @@ public class MainController extends CoreController {
 		for (String message : messages) {
 			chatPanel.addToChatField(message);
 		}
+	}
+
+	private void setCurrentGame(GameModel selectedGame) {
+		currentGame = selectedGame;
 	}
 
 	private void changePass() {
