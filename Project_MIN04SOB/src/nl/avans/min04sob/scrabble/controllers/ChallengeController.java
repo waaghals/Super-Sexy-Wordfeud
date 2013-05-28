@@ -19,25 +19,31 @@ public class ChallengeController extends CoreController  {
 	public ChallengeController (final String name)
 	{
 		challengeview = new ChallengeView();
-		challengemodel= new ChallengeModel(name);
+		try {
+			challengemodel= new ChallengeModel(name);
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		addView(challengeview);
 		addModel(challengemodel);
 		challengeview.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.respondChallenge(challengeview.getspelID(), name,true);
-					challengeview.javaFrame().dispose();
+					challengemodel.respondChallenge( name,true);//??
+					 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				challengeview.javaFrame().dispose();
+				 
 			}
 		});
 		challengeview.addActionListenerDecline (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.respondChallenge(challengeview.getspelID(), name,false);
+					challengemodel.respondChallenge(challengeview.getSelectedChallenge(),false);
 					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -49,7 +55,7 @@ public class ChallengeController extends CoreController  {
 		challengeview.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.controle(name,  challengeview.getUsername(), challengeview.getspelID());
+					challengemodel.controle(name,  challengeview.getUsername());
 					challengeview.javaFrame().dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -73,13 +79,15 @@ public class ChallengeController extends CoreController  {
 	}
 	 
 	public void challengers()
-	{
+	{ 
 		challengeview.viewArraylistRemove();
 	 	int index=0;
 		while(index<challengemodel.challengeArray().size())
 		{
 			challengeview.viewArrayListadd(challengemodel.challengeArray().get(index));
+			index++;
 		}
+		 
 		challengeview.showChallenge();
 	}
 	

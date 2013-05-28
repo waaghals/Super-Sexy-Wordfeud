@@ -98,7 +98,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// crtl.openchallenges();
+				 crtl.challengers();
 				// TODO stops program from running
 
 			}
