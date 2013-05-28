@@ -298,7 +298,8 @@ public class CompetitionModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
 					.set(username).select();
-			if (dbResult.next()) {
+			if (db// TODO Automatisch gegenereerde methodestub
+					return null;Result.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}
 		} catch (SQLException sql) {
@@ -320,5 +321,21 @@ public class CompetitionModel extends CoreModel {
 		}
 		return average;
 
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+	
+	public AccountModel getOwner(){
+		return owner;
+	}
+	
+	public Date getStartDate(){
+		return start;
+	}
+	
+	public Date getEndData(){
+		return end;
 	}
 }
