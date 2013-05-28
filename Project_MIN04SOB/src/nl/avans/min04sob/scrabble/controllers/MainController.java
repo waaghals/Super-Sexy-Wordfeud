@@ -194,10 +194,11 @@ public class MainController extends CoreController {
 		
 		
 		//if (account.isRole(Role.OBSERVER)) {
-			gamesPanel.addObserverCheckBoxListener(new ChangeListener() {
+			gamesPanel.addObserverCheckBoxListener(new ActionListener() {
 
 				@Override
-				public void stateChanged(ChangeEvent e) {
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
 					if (gamesPanel.checkBoxIsSelected()) {
 
 						ArrayList<GameModel> firstGames = account.getObserverAbleGames();
@@ -212,13 +213,19 @@ public class MainController extends CoreController {
 						gamesPanel.revalidate();
 
 					} else {
+						
 						gamesPanel.addGames(account.getOpenGames());
 						observer = false;
 						gamesPanel.repaint();
 						gamesPanel.revalidate();
 					}
 				}
+				
+				
 			});
+
+					
+			
 
 	//	}
 
