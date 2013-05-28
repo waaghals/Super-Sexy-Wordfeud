@@ -6,12 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -25,7 +22,6 @@ import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
-import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
 
 public class MainController extends CoreController {
@@ -54,6 +50,7 @@ public class MainController extends CoreController {
 		addModel(boardModel);
 		addModel(account);
 		addView(chatPanel);
+		addView(frame);
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -61,7 +58,6 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
-
 		frame.pack();
 	}
 
@@ -111,7 +107,9 @@ public class MainController extends CoreController {
 		});
 		menu.addChangePassItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changePass();
+				//changePass();
+				AccountController accountController = new AccountController(account);
+				accountController.setChangePassPanel();
 			}
 		});
 
@@ -315,14 +313,6 @@ public class MainController extends CoreController {
 
 	private void setCurrentGame(GameModel selectedGame) {
 		currentGame = selectedGame;
-	}
-
-	private void changePass() {
-		frame.remove(chatPanel);
-		frame.remove(currGamePanel);
-		frame.getContentPane().add(accountcontroller.getchangepasspanel(),
-				"cell 0 1 4 8,alignx left,aligny top");
-		frame.repaint();
 	}
 
 	public void sendChat() {
