@@ -175,12 +175,12 @@ public class BoardPanel extends CorePanel {
 		// }
 	}
 
-	public void addVolgendeActionListener(ActionListener listener) {
+	public void addNextActionListener(ActionListener listener) {
 		nextButton.addActionListener(listener);
 
 	}
 
-	public void addVorigeActionListener(ActionListener listener) {
+	public void addPreviousActionListener(ActionListener listener) {
 		prevButton.addActionListener(listener);
 
 	}

@@ -38,7 +38,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			boolean isSelected, boolean hasFocus, int row, int col) {
 
 		Component c = super.getTableCellRendererComponent(table, value,
-				isSelected, hasFocus, row, col);
+				isSelected, hasFocus, row, col);		
 		JLabel label = (JLabel) c;
 		
 		Tile tile = (Tile) boardModel.getValueAt(row, col);
