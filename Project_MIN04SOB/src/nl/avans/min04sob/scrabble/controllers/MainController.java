@@ -129,7 +129,7 @@ public class MainController extends CoreController {
 
 		menu.viewWords(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new AcceptDeclineController();
 			}
 		});
 

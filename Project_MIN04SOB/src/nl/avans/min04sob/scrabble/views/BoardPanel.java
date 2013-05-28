@@ -99,6 +99,7 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
+		
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
@@ -176,10 +177,12 @@ public class BoardPanel extends CorePanel {
 
 	public void addVolgendeActionListener(ActionListener listener) {
 		nextButton.addActionListener(listener);
+
 	}
 
 	public void addVorigeActionListener(ActionListener listener) {
 		prevButton.addActionListener(listener);
+
 	}
 
 	public void addResignActionListener(ActionListener listener) {

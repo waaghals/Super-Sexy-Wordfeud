@@ -2,44 +2,30 @@ package nl.avans.min04sob.scrabble.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class ModeratorModel extends CoreModel{
 	
-	private AccountModel account;
+	private final String requestWord = "SELECT woord FROM woordenboek WHERE status = 'Pending' ORDER BY woord ASC";
+	private final String acceptWord = "UPDATE woordenboek set status = 'Accepted' WHERE woord = ?";
+	private final String deniedWord = "UPDATE woordenboek set status = 'Denied' WHERE woord = ?";
 	
-	/*private final String findChallengerQuery = "SELECT 'Account_naam_uitdager' FROM `spel`";
-	private final String checkFilledChallengeQuery = "SELECT 'goedgekeurd_uitdager' FROM 'nieuwwoord'";
-	private final String checkFilledTegenstanderQuery = "SELECT 'goedgekeurd_tegenstander' FROM 'nieuwwoord'";
-	private final String changeStatusChallenger = "INSERT INTO 'nieuwwoord' ('goedgekeurd_uitdager') VALUES(?)";
-	private final String changeStatusTegenstander = "INSERT INTO 'nieuwwoord' ('goedgekeurd_tegenstander') VALUES(?)";*/
-	
-	private final String wordsWhoExist = "SELECT 'word','status' FROM 'woordenboek'";
-	private final String requestWord = "SELECT 'word' FROM 'woordenboek' WHERE status = 'Pending'";
-	private final String acceptWord = "UPDATE 'woordenboek' set status = 'Accepted' WHERE woord = ?";
-	private final String deniedWord = "UPDATE 'woordenboek' set status = 'Denied' WHERE woord = ?";
-	
-	public ModeratorModel()
-	{
-		account = new AccountModel();	
-	}
-	
-	public void changeStatus(){
-	
-		
-	}
-	
-	/*public boolean checkChallenger(){
-		if(findChallengerQuery.equals(account.getUsername())){
-			return true;
+	public String[] getRequestedWordList(){
+		ArrayList<String> words = new ArrayList<String>();
+		try {
+			ResultSet wordlist = new Query(requestWord).select();
+			while(wordlist.next()){
+				words.add(wordlist.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else{
-			return false;
-		}
-	}*/
-	
+		return words.toArray(new String[words.size()]);
+	}
+
 	public void acceptWord(String word){
 		
 		try {

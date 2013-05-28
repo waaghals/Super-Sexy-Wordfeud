@@ -48,9 +48,9 @@ public class GamesComboBox extends CorePanel {
 		gameList.addActionListener(listenener);
 	}
 
-	public void addObserverCheckBoxListener(ChangeListener listenener) {
+	public void addObserverCheckBoxListener(ActionListener listenener) {
 
-		observer.addChangeListener(listenener);
+		observer.addActionListener(listenener);
 
 	}
 
@@ -73,6 +73,7 @@ public class GamesComboBox extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
+		
 		switch (evt.getPropertyName()) {
 		case Event.NEWGAME:
 			gameList.repaint();
@@ -80,7 +81,7 @@ public class GamesComboBox extends CorePanel {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			addGames(account.getOpenGames());
-			
+			gameList.setVisible(true);
 			gameList.setEnabled(true);
 			if(account.isRole(Role.OBSERVER)){
 				
@@ -94,7 +95,7 @@ public class GamesComboBox extends CorePanel {
 			observer.setEnabled(true);
 			break;
 		case Event.LOGOUT:
-			gameList.removeAll();
+			gameList.setVisible(false);
 			gameList.setEnabled(false);
 
 			observer.setEnabled(false);
@@ -110,6 +111,7 @@ public class GamesComboBox extends CorePanel {
 
 	public boolean checkBoxIsSelected() {
 		return observer.isSelected();
+		
 	}
 
 	public GameModel getSelectedGame() {

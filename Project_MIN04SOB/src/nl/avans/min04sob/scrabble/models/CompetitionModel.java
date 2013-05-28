@@ -66,28 +66,34 @@ public class CompetitionModel extends CoreModel {
 		return all;
 	}
 	
-	public void getCompitions(String username){
-		ArrayList<CompetitionModel> comp_ids = new ArrayList<CompetitionModel>();
+	public CompetitionModel[] getCompitions(String username){
+		CompetitionModel[] comp_ids = new CompetitionModel[0];
+		int x = 0;
 		try {
 			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
-			while(dbResult.next()){
-				comp_ids.add(new CompetitionModel(dbResult.getInt("competitie_id")));
+			comp_ids = new CompetitionModel[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < comp_ids.length){
+				comp_ids[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+				x++;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return comp_ids;
 	}
 	
-	public void getUsersFromCompetition(int competition_id){
-		ArrayList<AccountModel> accounts = new ArrayList<AccountModel>();
+	public AccountModel[] getUsersFromCompetition(int competition_id){
+		AccountModel[] accounts = new AccountModel[0];
+		int x = 0;
 		try {
 			ResultSet dbResult = new Query("SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?").set(competition_id).select();
-			while(dbResult.next()){
-				accounts.add(new AccountModel(dbResult.getString("account_naam")));
+			while(dbResult.next() && x < accounts.length){
+				accounts[x] = new AccountModel(dbResult.getString("account_naam"));
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+		return accounts;
 	}
 
 	public void join(int competitionID, String username) {
@@ -209,7 +215,6 @@ public class CompetitionModel extends CoreModel {
 					}
 				}
 			}
-			return amountWon;
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -239,7 +244,6 @@ public class CompetitionModel extends CoreModel {
 					}
 				}
 			}
-			return amountLost;
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -252,7 +256,6 @@ public class CompetitionModel extends CoreModel {
 			ResultSet dbResult = new Query(totalPlayedGamesQuery).set(username).set(username).set(competitionID).select();
 			if(dbResult.next()){
 				totalGames = dbResult.getInt("COUNT(*)");
-				return totalGames;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -266,7 +269,6 @@ public class CompetitionModel extends CoreModel {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID).set(username).select();
 			if(dbResult.next()){
 				total = dbResult.getInt("SUM(score)");
-				return total;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -280,7 +282,6 @@ public class CompetitionModel extends CoreModel {
 			ResultSet dbResult = new Query(averagePointsQuery).set(competitionID).set(username).select();
 			if(dbResult.next()){
 				average = dbResult.getInt("avg");
-			return average;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
