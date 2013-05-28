@@ -44,7 +44,7 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private int numChallenge;
 	private String username;
-	
+
 	private ActionListener openGameListener;
 	private ActionListener viewGameListener;
 
@@ -147,6 +147,13 @@ public class MenuView extends JMenuBar implements CoreView {
 		accountMenu.removeAll();
 		accountMenu.add(loginItem);
 		accountMenu.add(registerItem);
+		challengeMenu.setEnabled(false);
+		competitionMenu.setEnabled(false);
+		moderaterMenu.setEnabled(false);
+		gameMenu.setEnabled(false);
+		
+		gameMenuOpen.removeAll();
+		gameMenuView.removeAll();
 	}
 
 	private void setLoggedInState() {
@@ -169,10 +176,14 @@ public class MenuView extends JMenuBar implements CoreView {
 			setLoggedInState();
 
 			challengeMenu.setEnabled(true);
+
 			competitionMenu.setEnabled(true);
 			if (user.isRole(Role.MODERATOR)) {
 				moderaterMenu.setEnabled(true);
+			} else {
+				moderaterMenu.setEnabled(false);
 			}
+
 			setChallengeCount(user.getChallengeCount());
 			ArrayList<GameModel> userGames = user.getOpenGames();
 			addGamesToMenu(gameMenuOpen, userGames);
@@ -182,9 +193,9 @@ public class MenuView extends JMenuBar implements CoreView {
 				gameMenu.setEnabled(true);
 			}
 
-			// if(user.isRole(Role.OBSERVER)){
-			gameMenuView.setEnabled(true);
-			// }
+			if (user.isRole(Role.OBSERVER)) {
+				gameMenuView.setEnabled(true);
+			}
 
 			System.out.println("Size: " + userGames.size());
 			if (userGames.size() > 0) {
@@ -197,9 +208,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			break;
 		case Event.LOGOUT:
 			setLoggedOutState();
-			challengeMenu.setEnabled(false);
-			competitionMenu.setEnabled(false);
-			moderaterMenu.setEnabled(false);
+
 			break;
 
 		case Event.NEWCHALLENGE:
