@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.models.CompetitionModel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -14,7 +16,7 @@ public class CompetitionView extends CorePanel{
 	private JLabel IngeschrevenCompetitiesLabel;
 	private JLabel SpelersInDeCompetitieLabel;
 	private JScrollPane scrollPane;
-	private JList competitions;
+	private JList<CompetitionModel> competitions;
 	private JScrollPane scrollPane_1;
 	private JList playerList;
 	private JButton terugButton;
@@ -48,6 +50,10 @@ public class CompetitionView extends CorePanel{
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void fillCompitions(CompetitionModel[] comp_ids) {
+		competitions.setListData(comp_ids);
 	}
 
 }

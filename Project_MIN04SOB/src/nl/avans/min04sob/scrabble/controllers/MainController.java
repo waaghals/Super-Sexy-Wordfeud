@@ -190,7 +190,9 @@ public class MainController extends CoreController {
 
 
 		});
-
+		
+		
+		
 		//if (account.isRole(Role.OBSERVER)) {
 			gamesPanel.addObserverCheckBoxListener(new ActionListener() {
 

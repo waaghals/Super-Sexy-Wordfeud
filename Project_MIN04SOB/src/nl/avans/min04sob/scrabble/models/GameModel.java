@@ -45,8 +45,13 @@ public class GameModel extends CoreModel {
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
+
 	private final String getPlayerTiles = "Select " ;
+
+	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
+	private final String scoreQuery = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 	
 	public GameModel() {
 		boardcontroller = new BoardController(false);
@@ -112,32 +117,32 @@ public class GameModel extends CoreModel {
 	}
 
 	private void addlistenerobserver() {
-		boardcontroller.getBpv().addVolgendeActionListener(
+		boardcontroller.getBpv().addNextActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				currentobserveturn++;
+				updateboardfromdatabasetoturn(currentobserveturn);
+
+			}
+
+		});
+		boardcontroller.getBpv().addPreviousActionListener(
 				new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						currentobserveturn++;
-						updateboardfromdatabasetoturn(currentobserveturn);
+						currentobserveturn--;
+						for (int x = 0; currentobserveturn > x
+								|| currentobserveturn == x; x++) {
+							updateboardfromdatabasetoturn(x);
 
+						}
 					}
 
 				});
-		boardcontroller.getBpv().addVorigeActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				currentobserveturn--;
-				for (int x = 0; currentobserveturn > x
-						|| currentobserveturn == x; x++) {
-					updateboardfromdatabasetoturn(x);
-
-				}
-			}
-
-		});
 	}
 
 	public String[][] compareArrays(String[][] bord, String[][] database) {
@@ -160,11 +165,11 @@ public class GameModel extends CoreModel {
 
 		return null;
 	}
-
+/* TODO
 	public void playWord(HashMap<Point, Tile> tiles) {
-		String[][] Bnaam_uitdager");
+		String[][] Bnaam_uitdagers;
 		String challengeeName = dbResult.getString("account_naam_tegenstander");
-oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
+		oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroller
 				.getBpm().tileData[1].length];
 		for (int y = 0; boardcontroller.getBpm().tileData.length > y; y++) {
 			for (int x = 0; boardcontroller.getBpm().tileData[y].length > x; x++) {
@@ -192,7 +197,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 			}
 		}
 	}
-
+*/
 	@Override
 	public void update() {
 		// TODO fire property change for new games and changed game states
@@ -402,7 +407,7 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 
-		if (isFirstMove) {
+		if (yourturn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
 
@@ -465,9 +470,9 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 
 		// String query =
 		// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-		String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+		//String query = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 		try {
-			ResultSet res = new Query(query).set(gameId).select();
+			ResultSet res = new Query(yourTurnQuery).set(getGameId()).select();
 
 			int turnCount = Query.getNumRows(res);
 
@@ -502,14 +507,13 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 
 	public String score() {
 		String score = "";
-		String query = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 
 		try {
 
-			int ch = scorecounter(new Query(query)
+			int ch = scorecounter(new Query(scoreQuery)
 					.set(challenger.getUsername()).select());
 
-			int op = scorecounter(new Query(query).set(opponent.getUsername())
+			int op = scorecounter(new Query(scoreQuery).set(opponent.getUsername())
 					.select());
 
 			if (iamchallenger) {
@@ -600,5 +604,4 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 			sql.printStackTrace();
 		}
 	}
-	
 }
