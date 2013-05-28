@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.GameModel;
@@ -20,13 +22,13 @@ public class AcceptDeclineController extends CoreController {
 		adView = new AcceptDeclineView();
 
 		this.addView(adView);
-		fillJList();
+		fillWordList();
 		addListeners();
 	}
 
-	public void fillJList() {
+	public void fillWordList() {
 		String[] words = modModel.getRequestedWordList();
-		adView.fillJList(words);
+		adView.fillWordList(words);
 		adView.revalidate();
 		adView.repaint();
 
@@ -35,13 +37,13 @@ public class AcceptDeclineController extends CoreController {
 	public void acceptWord() {
 		String word = adView.getSelectedWord();
 		modModel.acceptWord(word);
-		fillJList();
+		fillWordList();
 	}
 
 	public void deniedWord() {
 		String word = adView.getSelectedWord();
 		modModel.deniedWord(word);
-		fillJList();
+		fillWordList();
 	}
 
 	@Override
@@ -66,7 +68,20 @@ public class AcceptDeclineController extends CoreController {
 
 		adView.addBackActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adView.removeVenster();
+				adView.removeWindow();
+			}
+		});
+		
+		adView.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				 JList list = (JList) e.getSource();
+				 if(list.getSelectedValue() == null){
+					 adView.setButtonsEnabled(false);
+				 } else {
+					 adView.setButtonsEnabled(true);
+				 }
 			}
 		});
 	}
