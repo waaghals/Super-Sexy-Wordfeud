@@ -97,8 +97,9 @@ public class GameModel extends CoreModel {
 					opponent = new AccountModel(challengeeName);
 					challenger = new AccountModel(challengerName);
 					iamchallenger = false;
-					addlistenerobserver();
+					
 				}
+				addlistenerobserver();
 			}
 
 		} catch (SQLException e) {
@@ -126,6 +127,7 @@ public class GameModel extends CoreModel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				currentobserveturn++;
+				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
 				updateboardfromdatabasetoturn(currentobserveturn);
 
 			}
@@ -611,13 +613,17 @@ public class GameModel extends CoreModel {
 		try {
 			ResultSet res = new Query(getPlayerTiles).set(getGameId())
 					.set(currentUser.getUsername()).select();
-
-			String[] letters = res.getString(2).split(",");
-			Tile[] tiles = new Tile[letters.length];
+			String[] letters;
+			Tile[] tiles = new Tile[0];
+			if(!(Query.getNumRows(res) == 0)){
+			letters = res.getString(2).split(",");
+			tiles = new Tile[letters.length];
 			for (int x = 0; letters.length > x; x++) {
 				ResultSet tilewaarde = new Query(getTileValue).set(letters[x])
 						.set(letterSet).select();
 				tiles[x] = new Tile(letters[x], tilewaarde.getInt(1), true);
+			
+			}
 			}
 			boardcontroller.getBpv().setPlayerTiles(tiles);
 		} catch (SQLException sql) {

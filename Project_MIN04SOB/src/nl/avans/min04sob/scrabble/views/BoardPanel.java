@@ -143,17 +143,11 @@ public class BoardPanel extends CorePanel {
 
 		nextButton = new JButton();
 		nextButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-		nextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		
 
 		prevButton = new JButton();
 		prevButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-		prevButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 
 		turnScoreText = new JLabel("Score");
 		add(turnScoreText, "cell 0 6,alignx right");
@@ -205,10 +199,11 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
+		if(!(playerTiles.length == 0)){
 		for (int y = 0; playerTiles.length > y + 1; y++) {
 			playerTilesField.setValueAt(playerTiles[y], 0, y);
 		}
-
+		}
 	}
 
 	public void setRenderer(TableCellRenderer renderer) {

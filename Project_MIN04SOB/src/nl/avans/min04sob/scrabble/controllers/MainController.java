@@ -140,7 +140,7 @@ public class MainController extends CoreController {
 		});
 
 		addLoginListener();
-		addResignListener();
+		addButtonListener();
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
@@ -207,13 +207,14 @@ public class MainController extends CoreController {
 		
 	}
 	
-	private void addResignListener() {
+	private void addButtonListener() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resigncontroller = new ResignController();
 			}
 		});
+		
 	}
 
 	private void addLoginListener() {
