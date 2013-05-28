@@ -79,9 +79,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jframe.setVisible(true);
 			jframe.setContentPane(tochallenge);
 			tochallenge.setLayout(new BoxLayout(tochallenge, BoxLayout.PAGE_AXIS));
-			tochallenge.setPreferredSize(new Dimension(210,120));
-			tochallenge.add(new JLabel("insert game id"));
-		 
+			tochallenge.setPreferredSize(new Dimension(210,80));
 			tochallenge.add(new JLabel("insert opponent"));
 			tochallenge.add(nameChallenged);
 			jframe.add(oke);
