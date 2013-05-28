@@ -1,6 +1,5 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.awt.Point;
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +7,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
@@ -16,10 +14,13 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class CompetitionModel extends CoreModel {
 
-	private int competitieID;
+	private int competitieId;
 	private int ranking = 0;
-	private String name = "name";
-	
+	private String desc;
+	private AccountModel owner;
+	private Date start;
+	private Date end;
+
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
@@ -36,19 +37,30 @@ public class CompetitionModel extends CoreModel {
 	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(score) FROM `spel` as `s` JOIN `beurt` as `b` ON `s.id` = `b.spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `s.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
 	private final String bayesianAverageQuery = "";
 	private final String query="SELECT `*` FROM `deelnemer`;";
+	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
 	
-	public CompetitionModel(int int1) {
-		competitieID = int1;
+	public CompetitionModel(int compId) {
+		try {
+			ResultSet res = new Query(initQuery).set(compId).select();
+			if(Query.getNumRows(res) == 1){
+				res.next();
+				competitieId = res.getInt("id");
+				owner = new AccountModel(res.getString("account_naam_eigenaar"));
+				start = res.getDate("start");
+				end = res.getDate("einde");
+				desc = res.getString("omschrijving");
+			} else {
+				throw new IllegalArgumentException("Invalid competition ID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void update() {
 		// TODO Automatisch gegenereerde methodestub
 
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public ArrayList<Array> getLeaderBoard(int competitionID) {
@@ -251,7 +263,8 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	public int totalPlayedGames(int competitionID, String username){
-		int totalGames = 0;
+		int totalGames = 0;// TODO Automatisch gegenereerde methodestub
+		return null;
 		try {
 			ResultSet dbResult = new Query(totalPlayedGamesQuery).set(username).set(username).set(competitionID).select();
 			if(dbResult.next()){
@@ -288,5 +301,21 @@ public class CompetitionModel extends CoreModel {
 		}
 		return average;
 		
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+	
+	public AccountModel getOwner(){
+		return owner;
+	}
+	
+	public Date getStartDate(){
+		return start;
+	}
+	
+	public Date getEndDate(){
+		return end;
 	}
 }

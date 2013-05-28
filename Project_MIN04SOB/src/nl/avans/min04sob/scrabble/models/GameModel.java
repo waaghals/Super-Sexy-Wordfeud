@@ -198,8 +198,8 @@ public class GameModel extends CoreModel {
 	}
 
 	public String toString() {
-		return gameId + "";
-		// return competition.getDesc() + " - " + opponent.getUsername();
+		//return gameId + "";
+		return competition.getDesc() + " - " + opponent.getUsername();
 	}
 
 	public CompetitionModel getCompetition() {
