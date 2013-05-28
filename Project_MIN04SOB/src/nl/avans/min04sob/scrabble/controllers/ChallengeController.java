@@ -86,8 +86,7 @@ public class ChallengeController extends CoreController  {
 		{
 			challengeview.viewArrayListadd(challengemodel.challengeArray().get(index));
 			index++;
-		}
-		 
+		} 
 		challengeview.showChallenge();
 	}
 	

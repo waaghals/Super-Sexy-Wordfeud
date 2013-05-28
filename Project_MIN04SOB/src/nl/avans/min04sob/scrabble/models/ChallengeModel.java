@@ -90,7 +90,7 @@ public class ChallengeModel extends CoreModel  {
 				 if(!challenge.contains(dbResult.getString(4))){
 					if(dbResult.getString(5).equals(yourname) &&dbResult.getString(3).equals(STATE_REQUEST)) {
 					challenge.add(dbResult.getString(4));
-					commandsToChallengeview("1");
+					 
 					}
 				 }
 			}
