@@ -1,15 +1,13 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreView;
 import nl.avans.min04sob.scrabble.core.Event;
@@ -23,6 +21,9 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenu challengeMenu;
 	private JMenu moderaterMenu;
 	private JMenu competitionMenu;
+	private JMenu gameMenu;
+	private JMenu gameMenuView;
+	private JMenu gameMenuOpen;
 
 	private JMenuItem loginItem;
 	private JMenuItem logoutItem;
@@ -43,6 +44,9 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private int numChallenge;
 	private String username;
+	
+	private ActionListener openGameListener;
+	private ActionListener viewGameListener;
 
 	public MenuView() {
 		numChallenge = 0;
@@ -72,10 +76,26 @@ public class MenuView extends JMenuBar implements CoreView {
 		moderaterMenu.setMnemonic('M');
 		moderaterMenu.setEnabled(false);
 
+		gameMenu = new JMenu("Spellen");
+		gameMenu.setMnemonic('S');
+		gameMenu.setEnabled(false);
+
+		gameMenuOpen = new JMenu("Bezig");
+		gameMenuOpen.setMnemonic('B');
+		gameMenuOpen.setEnabled(false);
+
+		gameMenuView = new JMenu("Meekijken");
+		gameMenuView.setMnemonic('M');
+		gameMenuView.setEnabled(false);
+
+		gameMenu.add(gameMenuOpen);
+		gameMenu.add(gameMenuView);
+
 		add(accountMenu);
 		add(challengeMenu);
 		add(competitionMenu);
 		add(moderaterMenu);
+		add(gameMenu);
 
 	}
 
@@ -91,16 +111,24 @@ public class MenuView extends JMenuBar implements CoreView {
 	private void createAccountMenu() {
 		registerItem = new JMenuItem("Registreren");
 		registerItem.setMnemonic('R');
-		
+
 		loginItem = new JMenuItem("Inloggen");
 		loginItem.setMnemonic('I');
-		
+
 		logoutItem = new JMenuItem("Logout");
 		logoutItem.setMnemonic('O');
 		logoutItem.setEnabled(true);
 
 		changePassItem = new JMenuItem("Wachtwoord veranderen");
 		changePassItem.setMnemonic('W');
+	}
+
+	private void addGamesToMenu(JMenu menu, ArrayList<GameModel> games) {
+		for (GameModel game : games) {
+			JMenuItem item = new JMenuItem(game.toString());
+			item.putClientProperty("game", game);
+			menu.add(item);
+		}
 	}
 
 	private void createCompetitionMenu() {
@@ -128,8 +156,6 @@ public class MenuView extends JMenuBar implements CoreView {
 	}
 
 	private void createModeratorMenu() {
-		moderaterMenu = new JMenu("Modereer");
-		moderaterMenu.setMnemonic('M');
 		viewWords = new JMenuItem("Woorden beheren");
 		viewWords.setMnemonic('W');
 		moderaterMenu.add(viewWords);
@@ -148,6 +174,25 @@ public class MenuView extends JMenuBar implements CoreView {
 				moderaterMenu.setEnabled(true);
 			}
 			setChallengeCount(user.getChallengeCount());
+			ArrayList<GameModel> userGames = user.getOpenGames();
+			addGamesToMenu(gameMenuOpen, userGames);
+			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
+
+			if (user.isRole(Role.OBSERVER) || userGames.size() > 0) {
+				gameMenu.setEnabled(true);
+			}
+
+			// if(user.isRole(Role.OBSERVER)){
+			gameMenuView.setEnabled(true);
+			// }
+
+			System.out.println("Size: " + userGames.size());
+			if (userGames.size() > 0) {
+				gameMenuOpen.setEnabled(true);
+			}
+
+			addMenuItemListeners(gameMenuOpen, openGameListener);
+			addMenuItemListeners(gameMenuView, viewGameListener);
 
 			break;
 		case Event.LOGOUT:
@@ -157,7 +202,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			moderaterMenu.setEnabled(false);
 			break;
 
-		case "numChallengeUpdate":
+		case Event.NEWCHALLENGE:
 			numChallenge = (int) evt.getNewValue();
 			break;
 
@@ -201,18 +246,35 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void deleteCompetitionItem(ActionListener listener) {
 		deleteCompetitionItem.addActionListener(listener);
 	}
-	
-	public void addRegisterListener(ActionListener listener){
+
+	public void addRegisterListener(ActionListener listener) {
 		registerItem.addActionListener(listener);
 	}
-	
-	public void setChallengeCount(int count){
-		//TODO make this work
+
+	public void setChallengeCount(int count) {
+		// TODO make this work
 		numChallenge = count;
-		viewChallengeItem =  new JMenuItem("Bekijk uitdagingen ( "
+		viewChallengeItem = new JMenuItem("Bekijk uitdagingen ( "
 				+ numChallenge + " )");
 		challengeMenu.revalidate();
-		
+
+	}
+
+	public void addOpenGamesListener(ActionListener listener) {
+		openGameListener = listener;
+		addMenuItemListeners(gameMenuOpen, openGameListener);
+	}
+
+	public void addViewGamesListener(ActionListener listener) {
+		viewGameListener = listener;
+		addMenuItemListeners(gameMenuView, viewGameListener);
+	}
+
+	private void addMenuItemListeners(JMenu menu, ActionListener listener) {
+		for (int i = 0; i < menu.getItemCount(); i++) {
+			JMenuItem menuItem = menu.getItem(i);
+			menuItem.addActionListener(listener);
+		}
 	}
 
 }
