@@ -58,6 +58,7 @@ public class AcceptDeclineView extends CorePanel{
 	
 	public void fillJList(String[] list)
 	{
+		wordList.removeAll();
 		wordList.setListData(list);
 		
 	}

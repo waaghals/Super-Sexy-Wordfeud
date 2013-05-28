@@ -9,9 +9,9 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class ModeratorModel extends CoreModel{
 	
-	private final String requestWord = "SELECT 'woord' FROM 'woordenboek' WHERE status = 'Pending'";
-	private final String acceptWord = "UPDATE 'woordenboek' set status = 'Accepted' WHERE woord = ?";
-	private final String deniedWord = "UPDATE 'woordenboek' set status = 'Denied' WHERE woord = ?";
+	private final String requestWord = "SELECT woord FROM woordenboek WHERE status = 'Pending' ORDER BY woord ASC";
+	private final String acceptWord = "UPDATE woordenboek set status = 'Accepted' WHERE woord = ?";
+	private final String deniedWord = "UPDATE woordenboek set status = 'Denied' WHERE woord = ?";
 	
 	public String[] getRequestedWordList(){
 		ArrayList<String> words = new ArrayList<String>();
@@ -23,7 +23,7 @@ public class ModeratorModel extends CoreModel{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return (String[]) words.toArray();
+		return words.toArray(new String[words.size()]);
 	}
 
 	public void acceptWord(String word){
