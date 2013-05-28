@@ -1,6 +1,5 @@
 package nl.avans.min04sob.scrabble.controllers;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -72,6 +71,8 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
+
+		//competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
 		crtl = new ChallengeController(account.getUsername());
@@ -207,6 +208,7 @@ public class MainController extends CoreController {
 
 	}
 
+
 	private void addResignButtonListener() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
@@ -216,6 +218,33 @@ public class MainController extends CoreController {
 			}
 		});
 
+		currGamePanel.addNextActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentGame.setCurrentobserveturn(currentGame
+						.getCurrentobserveturn() + 1);
+				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
+				currentGame.updateboardfromdatabasetoturn(currentGame
+						.getCurrentobserveturn());
+
+			}
+
+		});
+		currGamePanel.addPreviousActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentGame.setCurrentobserveturn(currentGame
+						.getCurrentobserveturn() - 1);
+				for (int x = 0; currentGame.getCurrentobserveturn() > x
+						|| currentGame.getCurrentobserveturn() == x; x++) {
+					currentGame.updateboardfromdatabasetoturn(x);
+
+				}
+			}
+
+		});
 	}
 
 	private void addLoginListener() {
@@ -241,38 +270,30 @@ public class MainController extends CoreController {
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
 
 		currGamePanel.setPlayerTiles(letters);
-		if (observer) {
-			games = account.getObserverAbleGames();
-		} else {
 
-			games = account.getOpenGames();
-		}
-		for (int x = 0; games.size() > x; x++) {
+		games = account.getObserverAbleGames();
 
-			if (games.get(x).getGameId() == selectedGame.getGameId()) {
+		System.out.println("test");
+		boolean yourTurn = selectedGame.yourturn();
+		currGamePanel.setYourTurn(yourTurn);
 
-				System.out.println("test");
-				boolean yourTurn = games.get(x).yourturn();
-				currGamePanel.setYourTurn(yourTurn);
 
-				// score.setText(games.get(x).score());
-				currGamePanel = games.get(x).getBoardcontroller().getBpv();
-				boardModel = games.get(x).getBoardcontroller().getBpm();
-				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(
-						boardModel));
-				currGamePanel.setModel(boardModel);
-				addResignButtonListener();
-				addModel(boardModel);
-				games.get(x).setPlayerLetterFromDatabase();
-				games.get(x).getBoardFromDatabase();
-				games.get(x).update();
-			}
-		}
-
+		// score.setText(games.get(x).score());
+		currGamePanel = selectedGame.getBoardcontroller().getBpv();
+		boardModel = selectedGame.getBoardcontroller().getBpm();
+		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+		currGamePanel.setModel(boardModel);
+		addResignButtonListener();
+		addModel(boardModel);
+		selectedGame.setPlayerLetterFromDatabase();
+		selectedGame.getBoardFromDatabase();
+		selectedGame.update();
+			
+		
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
 		frame.repaint();
-		
+
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
