@@ -1,6 +1,5 @@
 package nl.avans.min04sob.scrabble.controllers;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -318,13 +317,7 @@ public class MainController extends CoreController {
 
 			frame.getContentPane().add(chatPanel,
 					"cell 0 0 4 6,alignx left,aligny top");
-			frame.repaint();
-			break;
-		case Event.LOGOUT:
-			frame.getContentPane().remove(currGamePanel);
-			frame.getContentPane().remove(chatPanel);
-			frame.repaint();
-			break;
+			
 		}
 	}
 }
