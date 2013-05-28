@@ -145,7 +145,7 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query(query).set(username).set(username)
 					.set(GameModel.STATE_PLAYING).select();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this,new BoardController(false), false));
+				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(), false));
 				// Add a new game with the gameId for this account
 			}
 
@@ -160,7 +160,7 @@ public class AccountModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1),this,new BoardController(true), true));
+				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(), true));
 				// Add a new game with the gameId for this account
 			}
 

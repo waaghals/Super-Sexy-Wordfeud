@@ -224,6 +224,10 @@ public class BoardPanel extends CorePanel {
 	public void setPlayer(String name) {
 		playerNameLabel.setText(name);
 	}
+	public void update(){
+		
+		this.repaint();
+	}
 
 	public void setYourTurn(boolean yourTurn) {
 		if (yourTurn) {

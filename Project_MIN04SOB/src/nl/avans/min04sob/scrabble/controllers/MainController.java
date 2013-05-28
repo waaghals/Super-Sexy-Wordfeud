@@ -96,6 +96,7 @@ public class MainController extends CoreController {
 		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
+		addButtonListener();
 	}
 
 	@Override
@@ -219,7 +220,7 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
-
+		
 	}
 
 	private void addButtonListener() {
@@ -230,17 +231,22 @@ public class MainController extends CoreController {
 				System.out.println("Testresign");
 			}
 		});
-
+		System.out.println("teseeeeeeeeeeeeeeeeeeee1eeeeeeeeeeeet");
 		currGamePanel.addNextActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentGame.setCurrentobserveturn(currentGame
 						.getCurrentobserveturn() + 1);
-				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
-				currentGame.updateboardfromdatabasetoturn(currentGame
-						.getCurrentobserveturn());
+				
+				currGamePanel.update();
 
+				
+					currentGame.updateboardfromdatabasetoturn(currentGame
+							.getCurrentobserveturn());
+
+				
+					currentGame.getBoardModel().update();
 			}
 
 		});
@@ -250,12 +256,17 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				currentGame.setCurrentobserveturn(currentGame
 						.getCurrentobserveturn() - 1);
+				currentGame.getBoardModel().setBoardToDefault();
+				currGamePanel.update();
 				for (int x = 0; currentGame.getCurrentobserveturn() > x
 						|| currentGame.getCurrentobserveturn() == x; x++) {
 					currentGame.updateboardfromdatabasetoturn(x);
 
 				}
+				
 			}
+			
+
 
 		});
 	}
@@ -275,7 +286,7 @@ public class MainController extends CoreController {
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-
+	
 		frame.remove(currGamePanel);
 
 		ArrayList<GameModel> games;
@@ -291,8 +302,8 @@ public class MainController extends CoreController {
 		currGamePanel.setYourTurn(yourTurn);
 
 		// score.setText(games.get(x).score());
-		currGamePanel = selectedGame.getBoardcontroller().getBpv();
-		boardModel = selectedGame.getBoardcontroller().getBpm();
+		currGamePanel = new BoardPanel();
+		boardModel = selectedGame.getBoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
@@ -300,7 +311,7 @@ public class MainController extends CoreController {
 		selectedGame.setPlayerLetterFromDatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
-
+		addButtonListener();
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
 		frame.repaint();
