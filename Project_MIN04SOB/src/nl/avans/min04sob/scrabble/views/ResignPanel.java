@@ -22,7 +22,7 @@ public class ResignPanel extends CorePanel {
 		this.setName("");
 		setLayout(new MigLayout("", "[][][134.00px][134.00px][]", "[14px][][][]"));
 		
-		JLabel areYouSureLabel = new JLabel("Are you sure you want to resign?");
+		JLabel areYouSureLabel = new JLabel("weet je zeker dat je wilt opgeven?");
 		add(areYouSureLabel, "cell 2 0 2 1,alignx left,aligny top");
 		
 		yesButton = new JButton("Yes");
