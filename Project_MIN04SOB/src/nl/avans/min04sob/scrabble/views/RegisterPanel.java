@@ -35,8 +35,8 @@ public class RegisterPanel extends CorePanel {
 	}
 	
 	public RegisterPanel(){
-		setPreferredSize(new Dimension(636, 281));
-		setLayout(new MigLayout("", "[][1px][165.00px][20px:50px][115px]", "[][19px][19px][19px][24px][25px][]"));
+		setPreferredSize(new Dimension(636, 170));
+		setLayout(new MigLayout("", "[][1px][165.00px][20px:50px][115px][][125.00]", "[][19px][19px][19px][24px][25px]"));
 		usernameLabel = new JLabel("Gebruikers naam");
 		usernameLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		add(usernameLabel, "cell 1 1,alignx right,aligny center");
@@ -46,6 +46,9 @@ public class RegisterPanel extends CorePanel {
 		add(passwordLabel1, "cell 1 2,alignx right,aligny center");
 		passwordField1 = new JPasswordField();
 		add(passwordField1, "cell 2 2 3 1,growx,aligny center");
+		
+		errorLabel = new JLabel("");
+		add(errorLabel, "cell 5 2 2 1");
 		passwordLabel2 = new JLabel("Herhaal wachtwoord");
 		add(passwordLabel2, "cell 1 3,alignx right,aligny center");
 		passwordField2 = new JPasswordField();
@@ -66,9 +69,6 @@ public class RegisterPanel extends CorePanel {
 		add(registerButton, "cell 2 5,growx,aligny center");
 		cancelButton = new JButton("Annuleren");
 		add(cancelButton, "cell 4 5,growx,aligny center");
-		
-		errorLabel = new JLabel();
-		add(errorLabel, "cell 2 6 3 1");
 	}
 	
 	public void addActionListenerCancel(ActionListener listener){
