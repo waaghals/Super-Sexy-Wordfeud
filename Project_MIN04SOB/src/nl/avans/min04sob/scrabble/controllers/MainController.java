@@ -38,14 +38,13 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private GameModel currentGame;
-	
+
 	private Boolean observer;
-	private CompetitionController competitioncontroller; 
+	private CompetitionController competitioncontroller;
 	private ResignController resigncontroller;
 
 	public MainController() {
-		
-		
+
 		initialize();
 		addListeners();
 
@@ -61,7 +60,8 @@ public class MainController extends CoreController {
 
 		frame.setJMenuBar(menu);
 
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+		frame.getContentPane().add(currGamePanel,
+				"cell 4 0 6 6,growx,aligny top");
 
 		frame.getContentPane().add(chatPanel,
 				"cell 0 0 4 6,alignx left,aligny top");
@@ -94,7 +94,7 @@ public class MainController extends CoreController {
 
 	@Override
 	public void addListeners() {
-		
+
 		menu.viewChallengeItemActionListener(new ActionListener() {
 
 			@Override
@@ -149,7 +149,7 @@ public class MainController extends CoreController {
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
-				//addLoginListener();
+				// addLoginListener();
 			}
 		});
 
@@ -161,25 +161,27 @@ public class MainController extends CoreController {
 				login.loginToRegister();
 			}
 		});
-		
+
 		menu.addOpenGamesListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JMenuItem source = (JMenuItem) e.getSource();
-				GameModel clickedGame = (GameModel) source.getClientProperty("game");
+				GameModel clickedGame = (GameModel) source
+						.getClientProperty("game");
 				openGame(clickedGame);
 			}
 		});
-		
+
 		menu.addViewGamesListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JMenuItem source = (JMenuItem) e.getSource();
-				GameModel clickedGame = (GameModel) source.getClientProperty("game");
-				
-				//TODO open game as observer
+				GameModel clickedGame = (GameModel) source
+						.getClientProperty("game");
+
+				// TODO open game as observer
 				openGame(clickedGame);
 			}
 		});
@@ -209,9 +211,9 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
-		
+
 	}
-	
+
 	private void addButtonListener() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
@@ -221,35 +223,33 @@ public class MainController extends CoreController {
 			}
 		});
 
-		
 		currGamePanel.addNextActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentobserveturn++;
+				currentGame.setCurrentobserveturn(currentGame
+						.getCurrentobserveturn() + 1);
 				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
-				updateboardfromdatabasetoturn(currentobserveturn);
+				currentGame.updateboardfromdatabasetoturn(currentGame
+						.getCurrentobserveturn());
 
 			}
 
 		});
-		currGamePanel.addPreviousActionListener(
-				new ActionListener() {
+		currGamePanel.addPreviousActionListener(new ActionListener() {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						currentobserveturn--;
-						for (int x = 0; currentobserveturn > x
-								|| currentobserveturn == x; x++) {
-							updateboardfromdatabasetoturn(x);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentGame.setCurrentobserveturn(currentGame
+						.getCurrentobserveturn() - 1);
+				for (int x = 0; currentGame.getCurrentobserveturn() > x
+						|| currentGame.getCurrentobserveturn() == x; x++) {
+					currentGame.updateboardfromdatabasetoturn(x);
 
-						}
-					}
+				}
+			}
 
-				});
-	}
-
-		
+		});
 	}
 
 	private void addLoginListener() {
@@ -275,35 +275,23 @@ public class MainController extends CoreController {
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
 
 		currGamePanel.setPlayerTiles(letters);
-		if (observer) {
-			games = account.getObserverAbleGames();
-		} else {
 
-			games = account.getOpenGames();
-		}
-		for (int x = 0; games.size() > x; x++) {
+		games = account.getObserverAbleGames();
 
-			if (games.get(x).getGameId() == selectedGame.getGameId()) {
+		System.out.println("test");
+		boolean yourTurn = selectedGame.yourturn();
+		currGamePanel.setYourTurn(yourTurn);
 
-				System.out.println("test");
-				boolean yourTurn = games.get(x).yourturn();
-				currGamePanel.setYourTurn(yourTurn);
-				
+		// score.setText(games.get(x).score());
+		currGamePanel = selectedGame.getBoardcontroller().getBpv();
+		boardModel = selectedGame.getBoardcontroller().getBpm();
+		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+		currGamePanel.setModel(boardModel);
 
-				// score.setText(games.get(x).score());
-				currGamePanel = games.get(x).getBoardcontroller().getBpv();
-				boardModel = games.get(x).getBoardcontroller().getBpm();
-				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(
-						boardModel));
-				currGamePanel.setModel(boardModel);
-
-				addModel(boardModel);
-				games.get(x).setPlayerLetterFromDatabase();
-				games.get(x).getBoardFromDatabase();
-				games.get(x).update();
-			}
-		}
-
+		addModel(boardModel);
+		selectedGame.setPlayerLetterFromDatabase();
+		selectedGame.getBoardFromDatabase();
+		selectedGame.update();
 
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
