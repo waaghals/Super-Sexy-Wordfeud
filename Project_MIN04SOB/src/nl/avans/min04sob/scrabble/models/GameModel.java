@@ -45,7 +45,7 @@ public class GameModel extends CoreModel {
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
-
+	private final String getPlayerTiles = "Select " ;
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
 	
 	public GameModel() {
@@ -601,5 +601,4 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 		}
 	}
 	
-
 }
