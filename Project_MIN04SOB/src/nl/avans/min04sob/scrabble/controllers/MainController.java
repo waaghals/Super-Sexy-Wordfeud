@@ -38,9 +38,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
-	private JLabel turn;
 
-	private JLabel score;
 	private Boolean observer;
 	private CompetitionController competitioncontroller; 
 	private ResignController resigncontroller;
@@ -63,18 +61,11 @@ public class MainController extends CoreController {
 		frame.setJMenuBar(menu);
 
 		frame.getContentPane().add(gamesPanel,
-				"cell 0 0 2 1,alignx left,aligny top");
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+				"cell 0 0 4 1,alignx left,aligny top");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,growx,aligny bottom");
 
 		frame.getContentPane().add(chatPanel,
-				"cell 0 1 4 8,alignx left,aligny top");
-
-		// TODO positienering moet beter maar snap niet veel van die cell 0 0 0
-		// 0
-		frame.getContentPane().add(turn,
-				"cell 0 0 3 2,alignx right , aligny top");
-		frame.getContentPane()
-				.add(score, "cell 4 0 3 3,alignx left,aligny top");
+				"cell 0 1 4 6,alignx left,aligny bottom");
 
 		frame.pack();
 
@@ -88,12 +79,6 @@ public class MainController extends CoreController {
 		menu = new MenuView();
 		competitioncontroller = new CompetitionController();
 		account = new AccountModel();
-		turn = new JLabel();
-		turn.setText("TEEEEST");
-
-		score = new JLabel();
-		score.setText("teeeeest");
-
 
 		crtl = new ChallengeController(account.getUsername());
 
@@ -293,11 +278,9 @@ public class MainController extends CoreController {
 			if (games.get(x).getGameId() == selectedGame.getGameId()) {
 
 				System.out.println("test");
-				if (games.get(x).yourturn()) {
-					turn.setText("you turn");
-				} else {
-					turn.setText("openentturn");
-				}
+				boolean yourTurn = games.get(x).yourturn();
+				currGamePanel.setYourTurn(yourTurn);
+				
 
 				// score.setText(games.get(x).score());
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
@@ -328,15 +311,9 @@ public class MainController extends CoreController {
 	private void changePass() {
 		frame.remove(chatPanel);
 		frame.remove(currGamePanel);
-		frame.add(accountcontroller.getchangepasspanel(),
+		frame.getContentPane().add(accountcontroller.getchangepasspanel(),
 				"cell 0 1 4 8,alignx left,aligny top");
 		frame.repaint();
-	}
-
-	public boolean yourturn() {
-
-		return false;
-
 	}
 
 	public void sendChat() {

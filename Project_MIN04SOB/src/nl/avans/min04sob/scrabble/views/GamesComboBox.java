@@ -31,8 +31,7 @@ public class GamesComboBox extends CorePanel {
 
 	public void initialize() {
 
-		setLayout(new MigLayout("", "[75px:100px:150px][75px:100px:150px][75px:100px:150px]",
-				"[20px:30px:30px][20px:30px:30px]"));
+		setLayout(new MigLayout("", "[100px][100px][250px]", "[20px:30px:30px][30px][30px]"));
 
 
 		JLabel selectLabel = new JLabel("Selecteer een spel");
@@ -42,7 +41,7 @@ public class GamesComboBox extends CorePanel {
 		add(gameList, "cell 0 1 2 1,grow");
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
-
+		add(observer,"cell 2 1,grow");
 	}
 
 	public void addGameListListener(ActionListener listenener) {

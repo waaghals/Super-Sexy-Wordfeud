@@ -551,10 +551,11 @@ oardcurrent = new String[boardcontroller.getBpm().tileData.length][boardcontroll
 				int y = rs.getInt(3) - 1;// y
 				if(x > -1 && y > -1){
 					if (rs.getString(1).equals("?")) {
-						boardcontroller.getBpm().setValueAt(rs.getString(4), y, x);
+						boardcontroller.getBpm().setValueAt(new Tile(rs.getString(4), 0, Tile.NOT_MUTATABLE), y, x);
 						
 					} else {
-						boardcontroller.getBpm().setValueAt(rs.getString(1), y, x);
+						//TODO add letter value in query
+						boardcontroller.getBpm().setValueAt(new Tile(rs.getString(4), 0, Tile.NOT_MUTATABLE), y, x);
 					}
 				}
 			}
