@@ -596,9 +596,9 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void Resign(int i) {
+	public void Resign() {
 		try {
-			new Query(resignQuery).set(STATE_RESIGNED).set(i).exec();
+			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId()).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

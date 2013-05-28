@@ -66,7 +66,6 @@ public class MainController extends CoreController {
 
 
 		frame.pack();
-
 	}
 
 	@Override
@@ -144,7 +143,7 @@ public class MainController extends CoreController {
 
 		addLoginListener();
 
-		addButtonListener();
+		
 
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -317,7 +316,7 @@ public class MainController extends CoreController {
 
 			frame.getContentPane().add(chatPanel,
 					"cell 0 0 4 6,alignx left,aligny top");
-			
+			addButtonListener();
 		}
 	}
 }
