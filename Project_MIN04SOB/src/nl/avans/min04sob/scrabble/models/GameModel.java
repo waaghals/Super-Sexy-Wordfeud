@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import nl.avans.min04sob.scrabble.controllers.AccountController;
 import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.MatrixUtils;
@@ -46,10 +47,11 @@ public class GameModel extends CoreModel {
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
 	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
 
-	private final String getPlayerTiles = "Select " ;
+	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ?  ORDER BY Beurt_ID DESC " ;
 
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
-
+	
+	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
 	private final String resignQuery = "INSERT INTO `spel` (toestand_type) VALUES (?) WHERE `id` = ?";
 	private final String scoreQuery = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 	
@@ -600,6 +602,21 @@ public class GameModel extends CoreModel {
 	public void Resign() {
 		try {
 			new Query(resignQuery).set(STATE_RESIGNED).set(getGameId()).exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+	public void setPlayerLetterFromDatabase(){
+		try {
+			ResultSet res = new Query(getPlayerTiles).set(getGameId()).set(currentUser.getUsername()).select();
+			
+			String[] letters = res.getString(2).split(",");
+			Tile[] tiles = new Tile[letters.length];
+			for(int x = 0;letters.length > x; x++){
+				ResultSet tilewaarde = new Query(getTileValue).set(letters[x]).set(letterSet).select();
+				tiles[x] = new Tile(letters[x],tilewaarde.getInt(1),true);
+			}
+			boardcontroller.getBpv().setPlayerTiles(tiles);
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
