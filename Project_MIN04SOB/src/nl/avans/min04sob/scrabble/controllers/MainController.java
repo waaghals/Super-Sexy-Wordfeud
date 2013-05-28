@@ -43,6 +43,8 @@ public class MainController extends CoreController {
 	private ResignController resigncontroller;
 
 	public MainController() {
+		
+		
 		initialize();
 		addListeners();
 
