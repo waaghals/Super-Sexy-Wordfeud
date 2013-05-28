@@ -41,14 +41,13 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private GameModel currentGame;
-	
+
 	private Boolean observer;
-	private CompetitionController competitioncontroller; 
+	private CompetitionController competitioncontroller;
 	private ResignController resigncontroller;
 
 	public MainController() {
-		
-		
+
 		initialize();
 		addListeners();
 
@@ -63,8 +62,6 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
-		
-
 
 		frame.pack();
 	}
@@ -92,12 +89,12 @@ public class MainController extends CoreController {
 
 	@Override
 	public void addListeners() {
-		
+
 		menu.viewChallengeItemActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 crtl.challengers();
+				crtl.challengers();
 				// TODO stops program from running
 
 			}
@@ -121,8 +118,6 @@ public class MainController extends CoreController {
 				new CompetitionController(account);
 			}
 		});
-		
-		
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -144,12 +139,10 @@ public class MainController extends CoreController {
 
 		addLoginListener();
 
-		
-
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
-				//addLoginListener();
+				// addLoginListener();
 			}
 		});
 
@@ -161,25 +154,27 @@ public class MainController extends CoreController {
 				login.loginToRegister();
 			}
 		});
-		
+
 		menu.addOpenGamesListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JMenuItem source = (JMenuItem) e.getSource();
-				GameModel clickedGame = (GameModel) source.getClientProperty("game");
+				GameModel clickedGame = (GameModel) source
+						.getClientProperty("game");
 				openGame(clickedGame);
 			}
 		});
-		
+
 		menu.addViewGamesListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JMenuItem source = (JMenuItem) e.getSource();
-				GameModel clickedGame = (GameModel) source.getClientProperty("game");
-				
-				//TODO open game as observer
+				GameModel clickedGame = (GameModel) source
+						.getClientProperty("game");
+
+				// TODO open game as observer
 				openGame(clickedGame);
 			}
 		});
@@ -209,10 +204,10 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
-		
+
 	}
-	
-	private void addButtonListener() {
+
+	private void addResignButtonListener() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -220,7 +215,7 @@ public class MainController extends CoreController {
 				System.out.println("Testresign");
 			}
 		});
-		
+
 	}
 
 	private void addLoginListener() {
@@ -238,7 +233,7 @@ public class MainController extends CoreController {
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-
+		
 		frame.remove(currGamePanel);
 
 		ArrayList<GameModel> games;
@@ -259,7 +254,6 @@ public class MainController extends CoreController {
 				System.out.println("test");
 				boolean yourTurn = games.get(x).yourturn();
 				currGamePanel.setYourTurn(yourTurn);
-				
 
 				// score.setText(games.get(x).score());
 				currGamePanel = games.get(x).getBoardcontroller().getBpv();
@@ -267,7 +261,7 @@ public class MainController extends CoreController {
 				currGamePanel.setRenderer(new ScrabbleTableCellRenderer(
 						boardModel));
 				currGamePanel.setModel(boardModel);
-
+				addResignButtonListener();
 				addModel(boardModel);
 				games.get(x).setPlayerLetterFromDatabase();
 				games.get(x).getBoardFromDatabase();
@@ -275,11 +269,10 @@ public class MainController extends CoreController {
 			}
 		}
 
-
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
 		frame.repaint();
-
+		
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -310,15 +303,17 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
+
 	public void propertyChange(PropertyChangeEvent evt) {
-		switch(evt.getPropertyName()) {
+		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
-			frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
+			frame.getContentPane().add(currGamePanel,
+					"cell 4 0 6 6,growx,aligny top");
 
 			frame.getContentPane().add(chatPanel,
 					"cell 0 0 4 6,alignx left,aligny top");
-			addButtonListener();
 			frame.repaint();
+
 			break;
 		case Event.LOGOUT:
 			frame.getContentPane().remove(currGamePanel);
