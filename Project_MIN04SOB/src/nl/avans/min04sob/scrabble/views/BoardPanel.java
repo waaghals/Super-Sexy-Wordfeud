@@ -34,6 +34,8 @@ public class BoardPanel extends CorePanel {
 	private JTable playBoard;
 	private JTable playerTilesField;
 	
+	private ActionListener resignActionListener;
+	
 	private boolean isObserver;
 
 	public BoardPanel() {
@@ -125,7 +127,7 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void addResignActionListener(ActionListener listener) {
-		resign.addActionListener(listener);
+		resignActionListener = listener;
 	}
 
 	@Override
@@ -133,6 +135,7 @@ public class BoardPanel extends CorePanel {
 		switch(evt.getPropertyName()){
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
+			resign.addActionListener(resignActionListener);
 			if(account.isRole(Role.OBSERVER)){
 				
 			}

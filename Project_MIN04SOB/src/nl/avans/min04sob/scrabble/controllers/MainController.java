@@ -161,7 +161,7 @@ public class MainController extends CoreController {
 		});
 
 		addLoginListener();
-		addResignListener();
+		
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
@@ -248,16 +248,18 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
-		
+		addResignListener();
 	}
 	
 	private void addResignListener() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				resigncontroller = new ResignController();
+				resigncontroller = new ResignController(gamesPanel.getSelectedGame());
+				System.out.println("Testresign");
 			}
 		});
+		
 	}
 
 	private void addLoginListener() {

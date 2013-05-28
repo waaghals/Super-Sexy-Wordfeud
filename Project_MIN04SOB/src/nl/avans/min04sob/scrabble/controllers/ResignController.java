@@ -13,10 +13,11 @@ public class ResignController extends CoreController {
 
 	private ResignPanel resignPanel;
 	private JFrame frame;
-	private GameModel gameModel = new GameModel();
+	private GameModel gameModel;
+	private String labelName;
 	
-	public ResignController() {
-		
+	public ResignController(GameModel game) {
+		gameModel = game;
 		frame = new JFrame();
 		
 		resignPanel = new ResignPanel();
@@ -40,11 +41,20 @@ public class ResignController extends CoreController {
 				cancelResign();
 			}
 		});
+		setLabelName();
+		resignPanel.setResignLabelName(getLabelName());
 		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
-		
+	}
+	
+	public void setLabelName() {
+		labelName = "Are you sure you want to resign from your current game?";
+	}
+	
+	public String getLabelName() {
+		return labelName;
 	}
 	
 	@Override
@@ -60,7 +70,7 @@ public class ResignController extends CoreController {
 	}
 	
 	private void doResign() {
-		gameModel.Resign();
+		gameModel.Resign(gameModel.getGameId());
 		frame.dispose();
 		frame = null;
 	}
