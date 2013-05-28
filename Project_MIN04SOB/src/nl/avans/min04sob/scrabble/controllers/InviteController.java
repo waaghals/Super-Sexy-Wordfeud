@@ -9,11 +9,11 @@ import javax.swing.JFrame;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.InviteModel;
-import nl.avans.min04sob.scrabble.views.InviteView;
+import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class InviteController extends CoreController {
 
-	private InviteView inviteView;
+	private JoinCompetitionView inviteView;
 	private JFrame window;
 	private InviteModel inviteModel;
 
@@ -28,7 +28,7 @@ public class InviteController extends CoreController {
 		inviteModel = new InviteModel();
 		addModel(inviteModel);
 
-		inviteView = new InviteView();
+		inviteView = new JoinCompetitionView();
 		addView(inviteView);
 
 		window.add(inviteView);
@@ -64,7 +64,7 @@ public class InviteController extends CoreController {
 	}
 
 	public static void main(String[] arg) {
-		new InviteView();
+		new JoinCompetitionView();
 
 	}
 

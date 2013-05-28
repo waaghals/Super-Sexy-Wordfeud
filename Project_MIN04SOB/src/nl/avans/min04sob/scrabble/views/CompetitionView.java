@@ -25,38 +25,42 @@ public class CompetitionView extends CorePanel{
 	private JButton btnSpelerUitdagen;
 	
 	public CompetitionView(){
-		setLayout(new MigLayout("", "[100px:75.00px:120px,grow][100px:115.00px:100px,grow][100px:117.00px:100px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+		setLayout(new MigLayout("", "[100px:117.00px:120px][200px:260.00px:220px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
 		
 		IngeschrevenCompetitiesLabel = new JLabel("Ingeschreven competities");
-		add(IngeschrevenCompetitiesLabel, "cell 0 0");
+		add(IngeschrevenCompetitiesLabel, "cell 0 0,alignx left");
 		
 		SpelersInDeCompetitieLabel = new JLabel("Spelers in de competitie");
-		add(SpelersInDeCompetitieLabel, "cell 1 0 2 1,alignx center");
+		add(SpelersInDeCompetitieLabel, "cell 1 0,alignx right");
 		
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1 1 3,grow");
+		add(scrollPane, "cell 0 1,grow");
 		
 		competitions = new JList<CompetitionModel>();
 		scrollPane.setViewportView(competitions);
 		
 		scrollPane_1 = new JScrollPane();
-		add(scrollPane_1, "cell 1 1 2 3,grow");
+		add(scrollPane_1, "cell 1 1,grow");
 		
 		playerList = new JList<AccountModel>();
 		scrollPane_1.setViewportView(playerList);
 		
 		terugButton = new JButton("Terug");
-		add(terugButton, "cell 0 4,growx");
+		add(terugButton, "cell 0 2,growx");
 		
-		btnSpelerUitdagen = new JButton("Speler Uitdagen");
+		btnSpelerUitdagen = new JButton("Speler uitdagen");
 		btnSpelerUitdagen.setEnabled(false);
-		add(btnSpelerUitdagen, "cell 2 4");
+		add(btnSpelerUitdagen, "cell 1 2,alignx right");
 	}
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void addListener(ActionListener listener){
+		terugButton.addActionListener(listener);
 	}
 
 	public void fillCompitions(CompetitionModel[] comp_ids) {

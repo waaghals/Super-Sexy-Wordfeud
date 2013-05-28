@@ -10,16 +10,19 @@ import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.models.AccountModel;
+import nl.avans.min04sob.scrabble.models.CompetitionModel;
+
 import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class InviteView extends CorePanel {
+public class JoinCompetitionView extends CorePanel {
 
 	private JScrollPane scrollPane;
-	private JList competitionList;
+	private JList<CompetitionModel> competitionList;
 	private JScrollPane scrollPane_2;
-	private JList playerList;
+	private JList<AccountModel> playerList;
 	private JButton actieButton;
 	private JButton annuleerButton;
 	private JLabel competitionLabel;
@@ -28,35 +31,32 @@ public class InviteView extends CorePanel {
 	private String spelersLabelText;
 	private String actieButtonText;
 
-	public InviteView() {
-		setLayout(new MigLayout(
-				"",
-				"[100px:120px:120px,grow][100px:142.00px:100px,grow][100px:100px:100px]",
-				"[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+	public JoinCompetitionView() {
+		setLayout(new MigLayout("", "[100px:120px:120px,grow][200px:200px:220px,grow]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
-		competitionLabel = new JLabel(competitionLabelText);
-		add(competitionLabel, "cell 0 0");
+		competitionLabel = new JLabel("Beschikbare Competities");
+		add(competitionLabel, "cell 0 0,alignx left");
 
-		spelersLabel = new JLabel(spelersLabelText); 
-		add(spelersLabel, "cell 1 0");
+		spelersLabel = new JLabel("Spelers in de competitie"); 
+		add(spelersLabel, "cell 1 0,alignx right");
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
 
-		competitionList = new JList();
+		competitionList = new JList<CompetitionModel>();
 		scrollPane.setViewportView(competitionList);
 
 		scrollPane_2 = new JScrollPane();
-		add(scrollPane_2, "cell 1 1 2 3,grow");
+		add(scrollPane_2, "cell 1 1 1 3,grow");
 
-		playerList = new JList();
+		playerList = new JList<AccountModel>();
 		scrollPane_2.setViewportView(playerList);
 
 		annuleerButton = new JButton("Annuleer");
 		add(annuleerButton, "cell 0 4,alignx left,aligny top");
-
-		actieButton = new JButton(actieButtonText);
-		add(actieButton, "cell 2 4,growx,aligny top");
+		
+		actieButton = new JButton("Deelnemen");
+		add(actieButton, "cell 1 4,alignx right,growy");
 	}
 
 	public void addActionListenerActieButton(ActionListener listener) {
