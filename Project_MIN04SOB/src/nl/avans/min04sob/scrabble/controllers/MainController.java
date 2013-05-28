@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -33,7 +33,6 @@ public class MainController extends CoreController {
 	private AccountModel account;
 	private ChallengeController crtl;
 	private AccountController accountcontroller;
-	private GamesComboBox gamesPanel;
 	private BoardPanel currGamePanel;
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
@@ -48,7 +47,6 @@ public class MainController extends CoreController {
 		addListeners();
 
 		addView(menu);
-		addView(gamesPanel);
 		addModel(boardModel);
 		addModel(account);
 		addView(chatPanel);
@@ -60,12 +58,10 @@ public class MainController extends CoreController {
 
 		frame.setJMenuBar(menu);
 
-		frame.getContentPane().add(gamesPanel,
-				"cell 0 0 4 1,alignx left,aligny top");
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,growx,aligny bottom");
+		frame.getContentPane().add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
 		frame.getContentPane().add(chatPanel,
-				"cell 0 1 4 6,alignx left,aligny bottom");
+				"cell 0 0 4 6,alignx left,aligny top");
 
 		frame.pack();
 
@@ -81,8 +77,6 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 
 		crtl = new ChallengeController(account.getUsername());
-
-		gamesPanel = new GamesComboBox();
 
 		currGamePanel = new BoardPanel();
 
@@ -162,49 +156,28 @@ public class MainController extends CoreController {
 				login.loginToRegister();
 			}
 		});
-
-		gamesPanel.addGameListListener(new ActionListener() {
+		
+		menu.addOpenGamesListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GameModel selectedGame = gamesPanel.getSelectedGame();
-
-				openGame(selectedGame);
-
+				JMenuItem source = (JMenuItem) e.getSource();
+				GameModel clickedGame = (GameModel) source.getClientProperty("game");
+				openGame(clickedGame);
 			}
-
-
 		});
+		
+		menu.addViewGamesListener(new ActionListener() {
 
-		//if (account.isRole(Role.OBSERVER)) {
-			gamesPanel.addObserverCheckBoxListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					if (gamesPanel.checkBoxIsSelected()) {
-
-						ArrayList<GameModel> firstGames = account.getObserverAbleGames();
-						Object[] games =  firstGames.toArray();
-						
-						System.out.println(Arrays.deepToString(games));
-						
-						
-						gamesPanel.addGames(firstGames);
-						observer = true;
-						gamesPanel.repaint();
-						gamesPanel.revalidate();
-
-					} else {
-						gamesPanel.addGames(account.getOpenGames());
-						observer = false;
-						gamesPanel.repaint();
-						gamesPanel.revalidate();
-					}
-				}
-			});
-
-	//	}
-
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JMenuItem source = (JMenuItem) e.getSource();
+				GameModel clickedGame = (GameModel) source.getClientProperty("game");
+				
+				//TODO open game as observer
+				openGame(clickedGame);
+			}
+		});
 
 		chatPanel.addListenerChatField(new KeyListener() {
 
@@ -248,7 +221,6 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);
-				
 			}
 		});
 	}
@@ -327,6 +299,4 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
-	
-
 }

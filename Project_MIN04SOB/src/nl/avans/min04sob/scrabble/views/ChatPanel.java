@@ -23,7 +23,7 @@ public class ChatPanel extends CorePanel {
 	private JScrollPane chatScroll;
 
 	public ChatPanel() {
-		setLayout(new MigLayout("", "[::300px][300px][100px][100px]", "[::300px][300px][100px:150px:200px][30px]"));
+		setLayout(new MigLayout("", "[::300px][300px][100px][100px]", "[::300px][400px][100px:150px:200px][30px]"));
 		chatField = new JTextArea();
 		chatField.setEnabled(false);
 		chatField.setDisabledTextColor(Color.BLACK);
@@ -57,7 +57,6 @@ public class ChatPanel extends CorePanel {
 		case Event.LOGOUT:
 			chatFieldSend.setEnabled(false);
 			break;
-
 		default:
 			break;
 		}

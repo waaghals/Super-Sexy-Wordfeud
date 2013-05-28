@@ -216,12 +216,13 @@ public class BoardPanel extends CorePanel {
 		playBoard.setModel(bpm);
 	}
 
-	public void setOpponent() {
+	public void setOpponent(String name) {
+		opponentNameLabel.setText(name)
 
 	}
 
-	public void setPlayer() {
-
+	public void setPlayer(String name) {
+		playerNameLabel.setText(name);
 	}
 
 	public void setYourTurn(boolean yourTurn) {
