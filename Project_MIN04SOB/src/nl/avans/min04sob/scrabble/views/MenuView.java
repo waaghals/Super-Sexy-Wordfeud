@@ -128,8 +128,6 @@ public class MenuView extends JMenuBar implements CoreView {
 	}
 
 	private void createModeratorMenu() {
-		//moderaterMenu = new JMenu("Modereer");
-		//moderaterMenu.setMnemonic('M');
 		viewWords = new JMenuItem("Woorden beheren");
 		viewWords.setMnemonic('W');
 		moderaterMenu.add(viewWords);
