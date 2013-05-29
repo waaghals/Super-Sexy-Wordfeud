@@ -22,6 +22,7 @@ public class ChallengeController extends CoreController  {
 		challengeview = new ChallengeView();
 		try {
 			challengemodel= new ChallengeModel("jager684");
+			challengemodel.update();
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
