@@ -32,7 +32,6 @@ public class CompetitionController extends CoreController {
 		addModel(cm);
 		addView(jcv);
 		
-		//getCompetitions(am.toString());	
 	}
 
 	@Override
@@ -58,6 +57,8 @@ public class CompetitionController extends CoreController {
 				window.dispose();
 			}	
 		});
+		
+		getCompetitions(am.toString());
 	}
 	
 	public void openJoinCompetitionView() {

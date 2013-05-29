@@ -70,9 +70,6 @@ public class JoinCompetitionView extends CorePanel {
 	}
 	
 	public CompetitionModel selectedCompetition(){
-		if(competitionList.getValueIsAdjusting()){
-			competitionList.getSelectedValue();
-		}
 		return competitionList.getSelectedValue();
 		
 	}
