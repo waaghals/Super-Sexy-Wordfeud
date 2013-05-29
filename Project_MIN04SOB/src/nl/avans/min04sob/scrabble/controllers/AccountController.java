@@ -46,7 +46,6 @@ public class AccountController extends CoreController {
 		loginPanel.addActionListenerLogin(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkLogin();
-				 
 			}
 		});
 
@@ -60,6 +59,14 @@ public class AccountController extends CoreController {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					checkLogin();
+				}
+			}
+		});
+		
+		loginPanel.addKeyListenerUsername(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					loginPanel.getPasswordField().requestFocus();
 				}
 			}
 		});
@@ -132,7 +139,8 @@ public class AccountController extends CoreController {
 			return -1;
 		} else if (length > maxpass_userLength) {
 			return 1;
-		} else {
+		} else {// TODO Automatisch gegenereerde methodestub
+			
 			return 0;
 		}
 	}
@@ -197,8 +205,7 @@ public class AccountController extends CoreController {
 		String oldpass = changepasspanel.getOldPass();
 		String newpass1 = changepasspanel.getNewPass1();
 		String newpass2 = changepasspanel.getNewPass2();
-		System.out.println("new : "+accountModel.getpass());
-		System.out.println("old : "+oldpass);
+
 		if (oldpass.equals(accountModel.getpass())) {
 			if (validateLength(newpass1.length()) == -1) {
 				changepasspanel.setNewPass1Good(false, "Te Kort");
@@ -248,5 +255,11 @@ public class AccountController extends CoreController {
 	public void addListeners() {
 		// TODO Automatisch gegenereerde methodestub
 
+	}
+
+	public void setChangePassPanel() {
+		frame.removeAll();
+		frame.add(changepasspanel);
+		frame.revalidate();
 	}
 }

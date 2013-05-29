@@ -8,4 +8,5 @@ public class Event {
 	public final static String CHATUPDATE = "chatupdate";
 	public final static String OPPONENTTURN = "opponentturn";
 	public final static String LOGINFAIL = "loginfail";
+	public final static String NEWWORD = "newword";
 }

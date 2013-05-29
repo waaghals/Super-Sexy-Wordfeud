@@ -28,7 +28,8 @@ public class GameModel extends CoreModel {
 
 	private StashModel stash = new StashModel();
 
-	private BoardController boardcontroller;
+	//private BoardController boardcontroller;
+	private BoardModel boardModel;
 
 	@Deprecated
 	private String[][] boardData;
@@ -42,8 +43,10 @@ public class GameModel extends CoreModel {
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
-	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID > ? ORDER BY beurt_ID ASC;";
-	private final String getBoardQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID =? ORDER BY beurt_ID ASC;";
+	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
+	private final String getBoardQuery = "select 	`gl`.`Letter_Spel_ID`,	`gl`.`Beurt_ID` ,	 `l`.`LetterType_karakter`	 ,`gl`.`Tegel_X`,	 `gl`.`Tegel_Y`	  , `gl`.`BlancoLetterKarakter` from `gelegdeletter` AS `gl` join `letter` AS `l` on ((`l`.`Spel_ID` = `gl`.`Letter_Spel_ID`) and (`l`.`ID` = `gl`.`Letter_ID`) )JOIN `spel` `s`ON `s`.`id` = `gl`.`Letter_Spel_ID`JOIN `letterset` AS `ls` ON `ls`.`code` = `s`.`LetterSet_naam` where gl.letter_Spel_ID = ?";
+
+
 
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC " ;
 
@@ -54,16 +57,11 @@ public class GameModel extends CoreModel {
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 	private final String scoreQuery = "SELECT score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 
-	public GameModel() {
-		boardcontroller = new BoardController(false);
-		boardcontroller.getBpv().setPreferredSize(new Dimension(300, 300));
-		lastTurn = 0;
-		boardData = new String[15][15];
-	}
+	
 
-	public GameModel(int gameId, AccountModel user, BoardController board,
+	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
 			boolean observer) {
-		boardcontroller = board;
+		this.boardModel = boardModel;
 		currentUser = user;
 		currentobserveturn = 0;
 		try {
@@ -98,7 +96,7 @@ public class GameModel extends CoreModel {
 					iamchallenger = false;
 					
 				}
-				addlistenerobserver();
+
 			}
 
 		} catch (SQLException e) {
@@ -119,33 +117,6 @@ public class GameModel extends CoreModel {
 		return false;
 	}
 
-	private void addlistenerobserver() {
-		boardcontroller.getBpv().addNextActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				currentobserveturn++;
-				System.out.println("teseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
-				updateboardfromdatabasetoturn(currentobserveturn);
-
-			}
-
-		});
-		boardcontroller.getBpv().addPreviousActionListener(
-				new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						currentobserveturn--;
-						for (int x = 0; currentobserveturn > x
-								|| currentobserveturn == x; x++) {
-							updateboardfromdatabasetoturn(x);
-
-						}
-					}
-
-				});
-	}
 
 	public String[][] compareArrays(String[][] bord, String[][] database) {
 		String[][] returns = new String[7][3];
@@ -200,8 +171,8 @@ public class GameModel extends CoreModel {
 	}
 
 	public String toString() {
-		return gameId + "";
-		// return competition.getDesc() + " - " + opponent.getUsername();
+		//return gameId + "";
+		return "(" + gameId + ") " + competition.getDesc() + " - " + opponent.getUsername();
 	}
 
 	public CompetitionModel getCompetition() {
@@ -455,8 +426,8 @@ public class GameModel extends CoreModel {
 		// Everything went better than expected.jpg :)
 	}
 
-	public BoardController getBoardcontroller() {
-		return boardcontroller;
+	public BoardModel getBoardModel() {
+		return boardModel;
 	}
 
 	public boolean yourturn() {
@@ -543,20 +514,24 @@ public class GameModel extends CoreModel {
 		try {
 			ResultSet rs = new Query(getBoardQuery).set(gameId).select();
 			while (rs.next()) {
-				int x = rs.getInt(2) - 1;// x
-				int y = rs.getInt(3) - 1;// y
+				int x = rs.getInt(4) - 1;// x
+				int y = rs.getInt(5) - 1;// y
 				if (x > -1 && y > -1) {
-					if (rs.getString(1).equals("?")) {
-						boardcontroller.getBpm()
-								.setValueAt(
-										new Tile(rs.getString(4), 0,
+					if (rs.getString(3).equals("?")) {
+						ResultSet tilewaarde = new Query(getTileValue).set(rs.getString(6))
+								.set(letterSet).select();
+						tilewaarde.next();
+						boardModel.setValueAt(
+										new Tile(rs.getString(6), tilewaarde.getInt(1),
 												Tile.NOT_MUTATABLE), y, x);
 
 					} else {
 						// TODO add letter value in query
-						boardcontroller.getBpm()
-								.setValueAt(
-										new Tile(rs.getString(4), 0,
+						ResultSet tilewaarde = new Query(getTileValue).set(rs.getString(3))
+								.set(letterSet).select();
+						tilewaarde.next();
+						boardModel.setValueAt(
+										new Tile(rs.getString(3), tilewaarde.getInt(1),
 												Tile.NOT_MUTATABLE), y, x);
 					}
 				}
@@ -569,7 +544,7 @@ public class GameModel extends CoreModel {
 	}
 
 	public void updateboardfromdatabasetoturn(int turn_id) {
-		try {
+		try { // "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 			ResultSet rs = new Query(getTurnQuery).set(gameId).set(turn_id)
 					.select();
 			while (rs.next()) {
@@ -577,11 +552,23 @@ public class GameModel extends CoreModel {
 				int y = rs.getInt(3) - 1;// y
 				lastTurn = rs.getInt(5);
 				if (rs.getString(1).equals("?")) {
-					boardData[y][x] = rs.getString(4);
+					ResultSet tilewaarde = new Query(getTileValue).set(rs.getString(4))
+							.set(letterSet).select();
+					tilewaarde.next();
+					boardModel.setValueAt(
+									new Tile(rs.getString(4), tilewaarde.getInt(1),
+											Tile.NOT_MUTATABLE), y, x);
+
 				} else {
-					boardData[y][x] = rs.getString(1);
+					ResultSet tilewaarde = new Query(getTileValue).set(rs.getString(1))
+							.set(letterSet).select();
+					tilewaarde.next();
+					boardModel.setValueAt(
+							new Tile(rs.getString(1), tilewaarde.getInt(1),
+									Tile.NOT_MUTATABLE), y, x);
 				}
 			}
+			boardModel.update();
 
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -593,12 +580,13 @@ public class GameModel extends CoreModel {
 	}
 
 	public void setCurrentobserveturn(int currentobserveturn) {
+		System.out.println(currentobserveturn);
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void Resign(int i) {
+	public void Resign() {
 		try {
-			new Query(resignQuery).set(STATE_RESIGNED).set(i).exec();
+			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId()).exec();
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -609,18 +597,17 @@ public class GameModel extends CoreModel {
 			ResultSet res = new Query(getPlayerTiles).set(getGameId())
 					.set(currentUser.getUsername()).select();
 			String[] letters;
-			Tile[] tiles = new Tile[0];
 			if(!(Query.getNumRows(res) == 0)){
 			letters = res.getString(2).split(",");
-			tiles = new Tile[letters.length];
 			for (int x = 0; letters.length > x; x++) {
 				ResultSet tilewaarde = new Query(getTileValue).set(letters[x])
 						.set(letterSet).select();
-				tiles[x] = new Tile(letters[x], tilewaarde.getInt(1), true);
+				tilewaarde.next();
+				
+				boardModel.setPlayetTile(x, new Tile(letters[x], tilewaarde.getInt(1), Tile.MUTATABLE));
+			}
+			}
 			
-			}
-			}
-			boardcontroller.getBpv().setPlayerTiles(tiles);
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

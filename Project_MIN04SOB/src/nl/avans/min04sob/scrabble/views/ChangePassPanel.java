@@ -23,32 +23,32 @@ public class ChangePassPanel extends CorePanel{
 	private JButton btnChange;
 	
 	public ChangePassPanel(){
-		setPreferredSize(new Dimension(365,180));
-		setLayout(new MigLayout("", "[115.00px][115.00px][115.00px]", "[20px][20px][20px][][]"));
-		oldPassLabel = new JLabel("Old password :");
-		add(oldPassLabel, "cell 0 0,alignx center,aligny center");
+		setPreferredSize(new Dimension(532, 180));
+		setLayout(new MigLayout("", "[120px][100.00px][115.00px][100px]", "[30px][30px][30px][30px]"));
+		oldPassLabel = new JLabel("Oude wachtwoord");
+		add(oldPassLabel, "cell 0 0,alignx right,aligny center");
 		oldPass = new JPasswordField(11);
-		add(oldPass, "cell 1 0,growx,aligny center");
+		add(oldPass, "cell 1 0 2 1,grow");
 		oldPassResult = new JLabel("");
-		add(oldPassResult, "cell 2 0,alignx center,aligny center");
-		newPass1Label = new JLabel("New pass :");
-		add(newPass1Label, "cell 0 1,alignx center,aligny center");
+		add(oldPassResult, "cell 3 0,alignx center,aligny center");
+		newPass1Label = new JLabel("Nieuwe wachtwoord");
+		add(newPass1Label, "cell 0 1,alignx right,aligny center");
 		newPass1 = new JPasswordField(11);
-		add(newPass1, "cell 1 1,growx,aligny center");
+		add(newPass1, "cell 1 1 2 1,grow");
 		newPass1Result = new JLabel("");
-		add(newPass1Result, "cell 2 1,alignx center,aligny center");
-		newPass2Label = new JLabel("Confirm :");
-		add(newPass2Label, "cell 0 2,alignx center,aligny center");
+		add(newPass1Result, "cell 3 1,alignx center,aligny center");
+		newPass2Label = new JLabel("Herhaal wachtwoord");
+		add(newPass2Label, "cell 0 2,alignx right,aligny center");
 		newPass2 = new JPasswordField(11);
-		add(newPass2, "cell 1 2,growx,aligny center");
+		add(newPass2, "cell 1 2 2 1,grow");
 		newPass2Result = new JLabel("");
-		add(newPass2Result, "cell 2 2,alignx center,aligny center");
+		add(newPass2Result, "cell 3 2,alignx center,aligny center");
 		
-		btnCancel = new JButton("Cancel");
-		add(btnCancel, "cell 0 4,growx");
+		btnChange = new JButton("Veranderen");
+		add(btnChange, "cell 0 3,grow");
 		
-		btnChange = new JButton("Change");
-		add(btnChange, "cell 2 4,growx");
+		btnCancel = new JButton("Annuleren");
+		add(btnCancel, "flowy,cell 2 3,grow");
 	}
 
 	public void addCancelActionListener(ActionListener listener){

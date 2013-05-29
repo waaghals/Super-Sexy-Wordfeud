@@ -183,6 +183,7 @@ public class BoardPanel extends CorePanel {
 
 	public void addResignActionListener(ActionListener listener) {
 		resignActionListener = listener;
+		resignButton.addActionListener(resignActionListener);
 	}
 
 	@Override
@@ -190,7 +191,6 @@ public class BoardPanel extends CorePanel {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
-			resignButton.addActionListener(resignActionListener);
 			if(account.isRole(Role.OBSERVER)){
 
 			}
@@ -223,6 +223,10 @@ public class BoardPanel extends CorePanel {
 
 	public void setPlayer(String name) {
 		playerNameLabel.setText(name);
+	}
+	public void update(){
+		
+		this.repaint();
 	}
 
 	public void setYourTurn(boolean yourTurn) {

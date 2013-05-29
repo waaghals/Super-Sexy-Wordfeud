@@ -13,10 +13,14 @@ public class TileTable extends JTable {
 		// Locate the renderer under the event location
 		int colIndex = columnAtPoint(p);
 		int rowIndex = rowAtPoint(p);
+		
 		Tile tile = (Tile) getModel().getValueAt(rowIndex, colIndex);
+		
 		if (tile != null) {
 			return "Waarde: " + tile.getValue();
 		}
+
 		return "";
+		
 	}
 }
