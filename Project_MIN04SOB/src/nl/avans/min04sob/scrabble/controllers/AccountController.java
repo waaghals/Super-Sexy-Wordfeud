@@ -219,7 +219,7 @@ public class AccountController extends CoreController {
 					changepasspanel.passwordChange();
 					frame.dispose();
 				} else {
-					changepasspanel.setNewPass2Good(false, "wrong");
+					changepasspanel.setNewPass2Good(false, "Verkeerd");
 				}
 			}
 		} else {
