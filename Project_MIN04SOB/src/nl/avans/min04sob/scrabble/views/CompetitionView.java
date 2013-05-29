@@ -15,23 +15,23 @@ import javax.swing.JLabel;
 
 public class CompetitionView extends CorePanel{
 	
-	private JLabel IngeschrevenCompetitiesLabel;
-	private JLabel SpelersInDeCompetitieLabel;
+	private JLabel subscribedCompetitionsLabel;
+	private JLabel playersInCompetitonLabel;
 	private JScrollPane scrollPane;
 	private JList<CompetitionModel> competitions;
 	private JScrollPane scrollPane_1;
 	private JList<AccountModel> playerList;
 	private JButton backButton;
-	private JButton btnSpelerUitdagen;
+	private JButton challengePlayerButton;
 	
 	public CompetitionView(){
 		setLayout(new MigLayout("", "[100px:117.00px:120px][200px:260.00px:220px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
 		
-		IngeschrevenCompetitiesLabel = new JLabel("Ingeschreven competities");
-		add(IngeschrevenCompetitiesLabel, "cell 0 0,alignx left");
+		subscribedCompetitionsLabel = new JLabel("Ingeschreven competities");
+		add(subscribedCompetitionsLabel, "cell 0 0,alignx left");
 		
-		SpelersInDeCompetitieLabel = new JLabel("Spelers in de competitie");
-		add(SpelersInDeCompetitieLabel, "cell 1 0,alignx right");
+		playersInCompetitonLabel = new JLabel("Spelers in de competitie");
+		add(playersInCompetitonLabel, "cell 1 0,alignx right");
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
@@ -48,9 +48,9 @@ public class CompetitionView extends CorePanel{
 		backButton = new JButton("Terug");
 		add(backButton, "cell 0 2,growx");
 		
-		btnSpelerUitdagen = new JButton("Speler uitdagen");
-		btnSpelerUitdagen.setEnabled(false);
-		add(btnSpelerUitdagen, "cell 1 2,alignx right");
+		challengePlayerButton = new JButton("Speler uitdagen");
+		challengePlayerButton.setEnabled(false);
+		add(challengePlayerButton, "cell 1 2,alignx right");
 	}
 
 	@Override
@@ -69,6 +69,6 @@ public class CompetitionView extends CorePanel{
 
 	public void fillPlayerList(AccountModel[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
-		btnSpelerUitdagen.setEnabled(true);
+		challengePlayerButton.setEnabled(true);
 	}
 }

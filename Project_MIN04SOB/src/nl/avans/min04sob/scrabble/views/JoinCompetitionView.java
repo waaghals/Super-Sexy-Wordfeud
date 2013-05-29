@@ -24,10 +24,10 @@ public class JoinCompetitionView extends CorePanel {
 	private JList<CompetitionModel> competitionList;
 	private JScrollPane scrollPane_2;
 	private JList<AccountModel> playerList;
-	private JButton actieButton;
-	private JButton annuleerButton;
+	private JButton actionButton;
+	private JButton cancelButton;
 	private JLabel competitionLabel;
-	private JLabel spelersLabel;
+	private JLabel playersLabel;
 	private String competitionLabelText;
 	private String buttonText;
 	private JFrame myFrame;
@@ -38,8 +38,8 @@ public class JoinCompetitionView extends CorePanel {
 		competitionLabel = new JLabel();
 		add(competitionLabel, "cell 0 0,alignx left");
 
-		spelersLabel = new JLabel("Spelers in de competitie"); 
-		add(spelersLabel, "cell 1 0,alignx right");
+		playersLabel = new JLabel("Spelers in de competitie"); 
+		add(playersLabel, "cell 1 0,alignx right");
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
@@ -53,20 +53,20 @@ public class JoinCompetitionView extends CorePanel {
 		playerList = new JList<AccountModel>();
 		scrollPane_2.setViewportView(playerList);
 
-		annuleerButton = new JButton("Annuleer");
-		add(annuleerButton, "cell 0 4,alignx left,aligny top");
+		cancelButton = new JButton("Annuleer");
+		add(cancelButton, "cell 0 4,alignx left,aligny top");
 		
-		actieButton = new JButton();
-		add(actieButton, "cell 1 4,alignx right,growy");
+		actionButton = new JButton();
+		add(actionButton, "cell 1 4,alignx right,growy");
 
 	}
 
 	public void addActionListenerActieButton(ActionListener listener) {
-		actieButton.addActionListener(listener);
+		actionButton.addActionListener(listener);
 	}
 
 	public void addActionListenerAnnuleerButton(ActionListener listener) {
-		annuleerButton.addActionListener(listener);
+		cancelButton.addActionListener(listener);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class JoinCompetitionView extends CorePanel {
 
 	public void setText(String labelText, String button) {
 		competitionLabel.setText(labelText);
-		actieButton.setText(button);
+		actionButton.setText(button);
 		revalidate();
 	}
 
