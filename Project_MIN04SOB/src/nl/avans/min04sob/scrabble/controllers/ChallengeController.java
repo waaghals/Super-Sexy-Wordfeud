@@ -18,9 +18,10 @@ public class ChallengeController extends CoreController  {
  
 	public ChallengeController (final String name)
 	{
+		 System.out.println(name+"d");
 		challengeview = new ChallengeView();
 		try {
-			challengemodel= new ChallengeModel(name);
+			challengemodel= new ChallengeModel("jager684");
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -36,7 +37,7 @@ public class ChallengeController extends CoreController  {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				challengeview.javaFrame().dispose();
+			 
 				 
 			}
 		});
@@ -44,7 +45,7 @@ public class ChallengeController extends CoreController  {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.respondChallenge(challengeview.getSelectedChallenge(),false);
-					challengeview.javaFrame().dispose();
+				 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -56,19 +57,20 @@ public class ChallengeController extends CoreController  {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.controle(name,  challengeview.getUsername());
-					challengeview.javaFrame().dispose();
+				 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				challengeview.javaFrame().dispose();
+			 
 			}
 		});
 	}
  
-	public void propertyChange(String evt)  {
-	String x =  evt;
-	 switch(x)
+	public void propertyChange(PropertyChangeEvent evt)  {
+	 
+	System.out.println(evt.getPropertyName());
+	 switch(evt.getPropertyName())
 		 {
 		 case "1": challengers();break;
 		 case "2": challengeview.response("challenge denied");break;
