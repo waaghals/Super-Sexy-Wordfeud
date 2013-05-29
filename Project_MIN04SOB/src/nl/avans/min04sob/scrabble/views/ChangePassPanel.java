@@ -60,15 +60,15 @@ public class ChangePassPanel extends CorePanel{
 	}
 	
 	public String getOldPass(){
-		return oldPass.toString();
+		return new String(oldPass.getPassword());
 	}
 	
 	public String getNewPass1(){
-		return newPass1.toString();
+		return new String(newPass1.getPassword());
 	}
 	
 	public String getNewPass2(){
-		return newPass2.toString();
+		return new String(newPass2.getPassword());
 	}
 	
 	public void setOldPassGood(boolean good, String discription){
@@ -102,6 +102,10 @@ public class ChangePassPanel extends CorePanel{
 			newPass2Result.setText(discription);
 		}
 		
+	}
+	
+	public void passwordChange(){
+		btnChange.setEnabled(false);
 	}
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
