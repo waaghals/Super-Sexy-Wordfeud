@@ -23,21 +23,21 @@ public class ChangePassPanel extends CorePanel{
 	private JButton btnChange;
 	
 	public ChangePassPanel(){
-		setPreferredSize(new Dimension(532, 180));
+		setPreferredSize(new Dimension(460, 140));
 		setLayout(new MigLayout("", "[120px][100.00px][115.00px][100px]", "[30px][30px][30px][30px]"));
-		oldPassLabel = new JLabel("Oude wachtwoord");
+		oldPassLabel = new JLabel("Oud wachtwoord");
 		add(oldPassLabel, "cell 0 0,alignx right,aligny center");
 		oldPass = new JPasswordField(11);
 		add(oldPass, "cell 1 0 2 1,grow");
 		oldPassResult = new JLabel("");
 		add(oldPassResult, "cell 3 0,alignx center,aligny center");
-		newPass1Label = new JLabel("Nieuwe wachtwoord");
+		newPass1Label = new JLabel("Nieuw wachtwoord");
 		add(newPass1Label, "cell 0 1,alignx right,aligny center");
 		newPass1 = new JPasswordField(11);
 		add(newPass1, "cell 1 1 2 1,grow");
 		newPass1Result = new JLabel("");
 		add(newPass1Result, "cell 3 1,alignx center,aligny center");
-		newPass2Label = new JLabel("Herhaal wachtwoord");
+		newPass2Label = new JLabel("Herhaal nieuw wachtwoord");
 		add(newPass2Label, "cell 0 2,alignx right,aligny center");
 		newPass2 = new JPasswordField(11);
 		add(newPass2, "cell 1 2 2 1,grow");
