@@ -19,7 +19,7 @@ public class ResignController extends CoreController {
 	public ResignController(GameModel game) {
 		gameModel = game;
 		frame = new JFrame();
-		
+		frame.setAlwaysOnTop(true);
 		resignPanel = new ResignPanel();
 		
 		frame.add(resignPanel);

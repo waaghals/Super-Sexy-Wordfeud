@@ -37,7 +37,7 @@ public class ChangePassPanel extends CorePanel{
 		add(newPass1, "cell 1 1 2 1,grow");
 		newPass1Result = new JLabel("");
 		add(newPass1Result, "cell 3 1,alignx center,aligny center");
-		newPass2Label = new JLabel("Herhaal wachtwoord");
+		newPass2Label = new JLabel("Herhaal nieuw wachtwoord");
 		add(newPass2Label, "cell 0 2,alignx right,aligny center");
 		newPass2 = new JPasswordField(11);
 		add(newPass2, "cell 1 2 2 1,grow");
