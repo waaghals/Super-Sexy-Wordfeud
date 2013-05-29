@@ -36,20 +36,25 @@ public class ChallengeModel extends CoreModel  {
 
 	public ChallengeModel(String name) throws SQLException  
 	{
-		yourname=name;
+	 
+	 
 	}
 
 	public void controle(String Challengername,String  challegendname) throws SQLException//uitdager
 	{
 		///  zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
+
 		boolean error = false;
+		/*/ 
 		String queryy = "SELECT COUNT(*)   FROM Spel ";
 		result =  new Query(queryy).select();
+		result.next();
 		if(result.getInt(1)>0)
 		{
 			result =  new Query(selectQuery) .select();
 			while(result.next()){
-				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(5).equals(challegendname))
+				//result.getString(7).equals(STATE_UNKNOWN)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN))||
+				if(result.getString(5).equals(result.getString(3)))  // hier ziet een fout in
 				{
 					error = true;
 					commandsToChallengeview("4");
@@ -57,9 +62,13 @@ public class ChallengeModel extends CoreModel  {
 				}
 			}
 		}
-		if(error==false){
-			createChallenge(Challengername, challegendname);
-		}
+				/*/ 
+	 if(error!=true)
+	 {
+		
+		createChallenge(Challengername, challegendname);
+	 }	
+	 
 	} 
 		
 	 
@@ -69,10 +78,10 @@ public class ChallengeModel extends CoreModel  {
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);	
 			//standard
-	            
+	            System.out.println(Challengername);
 				String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
 				try {
-					new Query(query).set(2).set(STATE_REQUEST).set(Challengername).set(challegendname).set(currentdate).set(STATE_UNKNOWN).set(currentdate).set("standard").set("NL"). exec();
+					new Query(query).set(1).set(STATE_REQUEST).set(Challengername).set(challegendname).set(currentdate).set(STATE_UNKNOWN).set(currentdate).set("standard").set("NL"). exec();
 				} catch (SQLException sql) {
 					System.out.println(query);
 					sql.printStackTrace();
@@ -130,7 +139,9 @@ public class ChallengeModel extends CoreModel  {
  
 	public void commandsToChallengeview(String commando)
 	{	
-		firePropertyChange(null, null, commando);
+		System.out.println(commando+commando);
+		firePropertyChange(commando, null,  null);
+		
 	}
 	
 	public ArrayList<String> challengeArray() 

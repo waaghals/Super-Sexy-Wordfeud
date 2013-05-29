@@ -36,6 +36,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private GameModel currentGame;
+	private InviteController invController;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
@@ -71,7 +72,7 @@ public class MainController extends CoreController {
 		//competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
-		crtl = new ChallengeController(account.getUsername());
+	
 
 		currGamePanel = new BoardPanel();
 
@@ -121,7 +122,11 @@ public class MainController extends CoreController {
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				new CompetitionController(account).openJoinCompetitionView();
+
+				//invController = new InviteController();
+				//invController.setButtonsJoin();
 			}
 		});
 
@@ -329,6 +334,7 @@ public class MainController extends CoreController {
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
+			crtl = new ChallengeController(account.getUsername());
 			frame.getContentPane().add(currGamePanel,
 					"cell 4 0 6 6,growx,aligny top");
 

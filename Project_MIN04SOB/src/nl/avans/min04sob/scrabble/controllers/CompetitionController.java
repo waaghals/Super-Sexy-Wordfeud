@@ -19,8 +19,10 @@ public class CompetitionController extends CoreController {
 	private CoreWindow window;
 	private CoreWindow window1;
 	private AccountModel am;
+
 	public CompetitionController(AccountModel user)
 	{
+
 		am = user;
 		//cm = new CompetitionModel(800);
 		cv = new CompetitionView();
@@ -30,9 +32,7 @@ public class CompetitionController extends CoreController {
 		addModel(cm);
 		addView(jcv);
 		
-		//getCompetitions(am.toString());
-		
-		
+		//getCompetitions(am.toString());	
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class CompetitionController extends CoreController {
 		window.setPreferredSize(new Dimension(375,350));
 		window.pack();
 		
-		cv.addListener(new ActionListener(){
+		cv.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
