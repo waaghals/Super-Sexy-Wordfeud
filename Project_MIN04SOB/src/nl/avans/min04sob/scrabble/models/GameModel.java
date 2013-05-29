@@ -358,7 +358,7 @@ public class GameModel extends CoreModel {
 
 	public static void main2(String[] args) {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel().test();
+		new GameModel(0, null,null,false).test();
 	}
 
 	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)

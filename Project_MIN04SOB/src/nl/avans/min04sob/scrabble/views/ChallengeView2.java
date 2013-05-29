@@ -39,7 +39,7 @@ public class ChallengeView2 extends CorePanel {
 		acceptButton = new JButton("Accepteer");
 		add(acceptButton, "cell 1 1,alignx center");
 		
-		declineButton = new JButton("Negeer");
+		declineButton = new JButton("Weiger");
 		add(declineButton, "cell 1 2,alignx center");
 		
 		backButton = new JButton("Ga terug");

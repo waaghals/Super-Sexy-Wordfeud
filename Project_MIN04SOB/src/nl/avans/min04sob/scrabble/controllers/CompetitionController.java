@@ -85,7 +85,7 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void getCompetitions(String username){
-		competitionView.fillCompitions(accountModel.getCompitions(username));
+		competitionView.fillCompetitions(accountModel.getCompetitions(username));
 	}
 	
 	public void getParticipants(int competition_id){

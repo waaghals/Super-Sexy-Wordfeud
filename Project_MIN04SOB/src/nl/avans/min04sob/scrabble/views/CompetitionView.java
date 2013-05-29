@@ -63,7 +63,7 @@ public class CompetitionView extends CorePanel{
 		backButton.addActionListener(listener);
 	}
 
-	public void fillCompitions(CompetitionModel[] comp_ids) {
+	public void fillCompetitions(CompetitionModel[] comp_ids) {
 		competitions.setListData(comp_ids);
 	}
 

@@ -122,7 +122,7 @@ public class AccountModel extends CoreModel {
 		return false;
 	}
 	
-	public CompetitionModel[] getCompitions(String username){
+	public CompetitionModel[] getCompetitions(String username){
 		CompetitionModel[] comp_ids = new CompetitionModel[0];
 		int x = 0;
 		try {
