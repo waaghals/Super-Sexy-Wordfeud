@@ -116,14 +116,17 @@ public class MainController extends CoreController {
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account);
+				new CompetitionController(account).openCompetitionView();
 			}
 		});
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				invController = new InviteController();
-				invController.setButtonsJoin();
+
+				new CompetitionController(account).openJoinCompetitionView();
+
+				//invController = new InviteController();
+				//invController.setButtonsJoin();
 			}
 		});
 
@@ -135,7 +138,8 @@ public class MainController extends CoreController {
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				invController = new InviteController();
+				invController.setButtonsRemove();
 			}
 		});
 

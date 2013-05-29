@@ -40,7 +40,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public ChallengeView()
 		{
 			jframe.setTitle("Challenge");
-			jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 		/// pas aan
 		public void viewArraylistRemove()

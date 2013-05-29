@@ -74,4 +74,8 @@ public class InviteController extends CoreController {
 	public void setButtonsJoin() {
 		joinView.setText("Beschikbare competities", "Deelnemen");
 	}
+	
+	public void setButtonsRemove() {
+		joinView.setText("Aangemaakte competities", "Verwijderen");
+	}
 }
