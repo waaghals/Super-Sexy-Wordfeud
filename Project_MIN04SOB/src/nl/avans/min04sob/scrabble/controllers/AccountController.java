@@ -205,7 +205,8 @@ public class AccountController extends CoreController {
 		String oldpass = changepasspanel.getOldPass();
 		String newpass1 = changepasspanel.getNewPass1();
 		String newpass2 = changepasspanel.getNewPass2();
-		if (oldpcompass.equals(accountModel.getpass())) {
+
+		if (oldpass.equals(accountModel.getpass())) {
 			if (validateLength(newpass1.length()) == -1) {
 				changepasspanel.setNewPass1Good(false, "Te Kort");
 			} else if (validateLength(newpass1.length()) == 1) {
@@ -213,6 +214,10 @@ public class AccountController extends CoreController {
 			} else {
 				if (newpass2.equals(newpass1)) {
 					accountModel.changePass(changepasspanel.getNewPass1());
+					changepasspanel.setOldPassGood(true, "");
+					changepasspanel.setNewPass1Good(true, "");
+					changepasspanel.setNewPass2Good(true, "");
+					changepasspanel.passwordChange();
 				} else {
 					changepasspanel.setNewPass2Good(false, "wrong");
 				}
