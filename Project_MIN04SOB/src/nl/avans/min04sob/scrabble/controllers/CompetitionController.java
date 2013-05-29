@@ -17,16 +17,14 @@ public class CompetitionController extends CoreController {
 	private CompetitionView cv;
 	private JoinCompetitionView jcv;
 	private CoreWindow window;
+	private CoreWindow window1;
 	private AccountModel am;
 	public CompetitionController(AccountModel user)
 	{
 		am = user;
-		cm = new CompetitionModel(800);
+		//cm = new CompetitionModel(800);
 		cv = new CompetitionView();
 		jcv = new JoinCompetitionView();
-		window = new CoreWindow();
-		
-		window.add(cv);
 		
 		addView(cv);
 		addModel(cm);
@@ -34,7 +32,24 @@ public class CompetitionController extends CoreController {
 		
 		//getCompetitions(am.toString());
 		
-		window.setPreferredSize(new Dimension(400,375));
+		
+	}
+
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Auto-generated method stub
+	}
+	
+	public void openCompetitionView(){
+		window = new CoreWindow();
+		window.add(cv);
+		
+		window.setPreferredSize(new Dimension(375,350));
 		window.pack();
 		
 		cv.addListener(new ActionListener(){
@@ -44,14 +59,27 @@ public class CompetitionController extends CoreController {
 			}	
 		});
 	}
-	@Override
-	public void initialize() {
-		// TODO Auto-generated method stub
-	}
+	
+	public void openJoinCompetitionView() {
+		window1 = new CoreWindow();
+		window1.add(jcv);
+		
+		window1.setPreferredSize(new Dimension(375,350));
+		window1.pack();
+		
+		jcv.addActionListenerAnnuleerButton(new ActionListener(){
 
-	@Override
-	public void addListeners() {
-		// TODO Auto-generated method stub
+			public void actionPerformed(ActionEvent e) {
+				window1.dispose();			
+			}
+		});
+		
+		jcv.addActionListenerActieButton(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {	
+				cm.join(jcv.selectedCompetition().getCompId(),am.toString());		
+			}	
+		});
 		
 	}
 	
@@ -62,5 +90,7 @@ public class CompetitionController extends CoreController {
 	public void getParticipants(int competition_id){
 		cv.fillPlayerList(cm.getUsersFromCompetition(competition_id));
 	}
+
+	
 
 }

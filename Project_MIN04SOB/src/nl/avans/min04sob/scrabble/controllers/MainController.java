@@ -115,13 +115,13 @@ public class MainController extends CoreController {
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account);
+				new CompetitionController(account).openCompetitionView();
 			}
 		});
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new CompetitionController(account).openJoinCompetitionView();
 			}
 		});
 
