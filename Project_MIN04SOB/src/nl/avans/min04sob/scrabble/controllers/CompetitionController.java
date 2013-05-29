@@ -13,31 +13,31 @@ import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class CompetitionController extends CoreController {
 
-	private CompetitionModel cm;
-	private CompetitionView cv;
-	private JoinCompetitionView jcv;
+	private CompetitionModel competitionModel;
+	private CompetitionView competitionView;
+	private JoinCompetitionView joinCompetitionView;
 	private CoreWindow window;
-	private AccountModel am;
+	private AccountModel accountModel;
 	public CompetitionController(AccountModel user)
 	{
-		am = user;
-		cm = new CompetitionModel(800);
-		cv = new CompetitionView();
-		jcv = new JoinCompetitionView();
+		accountModel = user;
+		competitionModel = new CompetitionModel(1);
+		competitionView = new CompetitionView();
+		joinCompetitionView = new JoinCompetitionView();
 		window = new CoreWindow();
 		
-		window.add(cv);
+		window.add(competitionView);
 		
-		addView(cv);
-		addModel(cm);
-		addView(jcv);
+		addView(competitionView);
+		addModel(competitionModel);
+		addView(joinCompetitionView);
 		
 		//getCompetitions(am.toString());
 		
 		window.setPreferredSize(new Dimension(400,375));
 		window.pack();
 		
-		cv.addListener(new ActionListener(){
+		competitionView.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
@@ -56,11 +56,11 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void getCompetitions(String username){
-		cv.fillCompitions(am.getCompitions(username));
+		competitionView.fillCompitions(accountModel.getCompitions(username));
 	}
 	
 	public void getParticipants(int competition_id){
-		cv.fillPlayerList(cm.getUsersFromCompetition(competition_id));
+		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
 	}
 
 }

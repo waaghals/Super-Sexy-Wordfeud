@@ -21,7 +21,7 @@ public class CompetitionView extends CorePanel{
 	private JList<CompetitionModel> competitions;
 	private JScrollPane scrollPane_1;
 	private JList<AccountModel> playerList;
-	private JButton terugButton;
+	private JButton backButton;
 	private JButton btnSpelerUitdagen;
 	
 	public CompetitionView(){
@@ -45,8 +45,8 @@ public class CompetitionView extends CorePanel{
 		playerList = new JList<AccountModel>();
 		scrollPane_1.setViewportView(playerList);
 		
-		terugButton = new JButton("Terug");
-		add(terugButton, "cell 0 2,growx");
+		backButton = new JButton("Terug");
+		add(backButton, "cell 0 2,growx");
 		
 		btnSpelerUitdagen = new JButton("Speler uitdagen");
 		btnSpelerUitdagen.setEnabled(false);
@@ -59,8 +59,8 @@ public class CompetitionView extends CorePanel{
 		
 	}
 	
-	public void addListener(ActionListener listener){
-		terugButton.addActionListener(listener);
+	public void addBackListener(ActionListener listener){
+		backButton.addActionListener(listener);
 	}
 
 	public void fillCompitions(CompetitionModel[] comp_ids) {

@@ -36,6 +36,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private GameModel currentGame;
+	private InviteController invController;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
@@ -121,7 +122,8 @@ public class MainController extends CoreController {
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				invController = new InviteController();
+				invController.setButtonsJoin();
 			}
 		});
 

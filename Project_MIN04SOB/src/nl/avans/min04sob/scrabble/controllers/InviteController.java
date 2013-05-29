@@ -4,6 +4,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.sound.sampled.ReverbType;
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
@@ -30,8 +31,12 @@ public class InviteController extends CoreController {
 
 		joinView = new JoinCompetitionView();
 		addView(joinView);
-
+				
 		window.add(joinView);
+		window.pack();
+		window.setVisible(true);
+		
+		setButtonsJoin();
 
 		// actiondinges
 
@@ -53,7 +58,7 @@ public class InviteController extends CoreController {
 	}
 
 	public void annuleerButton() {
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.dispose();
 	}
 
 	@Override

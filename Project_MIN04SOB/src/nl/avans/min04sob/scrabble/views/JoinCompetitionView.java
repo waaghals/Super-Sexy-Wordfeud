@@ -3,6 +3,7 @@ package nl.avans.min04sob.scrabble.views;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,11 +30,12 @@ public class JoinCompetitionView extends CorePanel {
 	private JLabel spelersLabel;
 	private String competitionLabelText;
 	private String buttonText;
+	private JFrame myFrame;
 
 	public JoinCompetitionView() {
 		setLayout(new MigLayout("", "[100px:120px:120px,grow][200px:200px:220px,grow]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
-		competitionLabel = new JLabel(competitionLabelText);
+		competitionLabel = new JLabel();
 		add(competitionLabel, "cell 0 0,alignx left");
 
 		spelersLabel = new JLabel("Spelers in de competitie"); 
@@ -54,8 +56,9 @@ public class JoinCompetitionView extends CorePanel {
 		annuleerButton = new JButton("Annuleer");
 		add(annuleerButton, "cell 0 4,alignx left,aligny top");
 		
-		actieButton = new JButton(buttonText);
+		actieButton = new JButton();
 		add(actieButton, "cell 1 4,alignx right,growy");
+
 	}
 
 	public void addActionListenerActieButton(ActionListener listener) {
@@ -73,8 +76,9 @@ public class JoinCompetitionView extends CorePanel {
 	}
 
 	public void setText(String labelText, String button) {
-		competitionLabelText = labelText;
-		buttonText = button;
+		competitionLabel.setText(labelText);
+		actieButton.setText(button);
+		revalidate();
 	}
 
 }
