@@ -29,14 +29,14 @@ public class ChallengeModel extends CoreModel  {
 	public static final String STATE_PLAYING = "Playing";
 	private final String selectQuery = "SELECT * FROM `Spel`; "; 
 	public ResultSet result;
-	public String yourname=""; 
+	//public String yourname=""; 
 	public Timer timer = new Timer();
 	public ArrayList <String> challenge = new ArrayList<String>();
 	
 
-	public ChallengeModel(String name) throws SQLException  
+	public ChallengeModel()//String name) throws SQLException  
 	{
-	 yourname=name;
+	// yourname=name;
 	}
 
 	public void controle(String Challengername,String  challegendname) throws SQLException//uitdager

@@ -13,24 +13,24 @@ import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class CompetitionController extends CoreController {
 
-	private CompetitionModel cm;
-	private CompetitionView cv;
-	private JoinCompetitionView jcv;
+	private CompetitionModel competitionModel;
+	private CompetitionView competitionView;
+	private JoinCompetitionView joinCompetitionView;
 	private CoreWindow window;
 	private CoreWindow window1;
-	private AccountModel am;
+	private AccountModel accountModel;
 
 	public CompetitionController(AccountModel user)
 	{
 
-		am = user;
+		accountModel = user;
 		//cm = new CompetitionModel(800);
-		cv = new CompetitionView();
-		jcv = new JoinCompetitionView();
+		competitionView = new CompetitionView();
+		joinCompetitionView = new JoinCompetitionView();
 		
-		addView(cv);
-		addModel(cm);
-		addView(jcv);
+		addView(competitionView);
+		addModel(competitionModel);
+		addView(joinCompetitionView);
 		
 	}
 
@@ -46,50 +46,50 @@ public class CompetitionController extends CoreController {
 	
 	public void openCompetitionView(){
 		window = new CoreWindow();
-		window.add(cv);
+		window.add(competitionView);
 		
 		window.setPreferredSize(new Dimension(375,350));
 		window.pack();
 		
-		cv.addBackListener(new ActionListener(){
+		competitionView.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
 		});
 		
-		getCompetitions(am.toString());
+		getCompetitions(accountModel.toString());
 	}
 	
 	public void openJoinCompetitionView() {
 		window1 = new CoreWindow();
-		window1.add(jcv);
+		window1.add(joinCompetitionView);
 		
 		window1.setPreferredSize(new Dimension(375,350));
 		window1.pack();
 		
-		jcv.addActionListenerAnnuleerButton(new ActionListener(){
+		joinCompetitionView.addActionListenerAnnuleerButton(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				window1.dispose();			
 			}
 		});
 		
-		jcv.addActionListenerActieButton(new ActionListener(){
+		joinCompetitionView.addActionListenerActieButton(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {	
-				cm.join(jcv.selectedCompetition().getCompId(),am.toString());		
+				competitionModel.join(joinCompetitionView.selectedCompetition().getCompId(),accountModel.toString());		
 			}	
 		});
 		
 	}
 	
 	public void getCompetitions(String username){
-		cv.fillCompitions(am.getCompitions(username));
+		competitionView.fillCompitions(accountModel.getCompitions(username));
 	}
 	
 	public void getParticipants(int competition_id){
-		cv.fillPlayerList(cm.getUsersFromCompetition(competition_id));
+		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
 	}
 
 	
