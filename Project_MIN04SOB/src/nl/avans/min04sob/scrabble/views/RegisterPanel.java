@@ -71,6 +71,14 @@ public class RegisterPanel extends CorePanel {
 		add(cancelButton, "cell 4 5,growx,aligny center");
 	}
 	
+	public void addKeyListenerUsername(KeyAdapter listener) {
+		usernameField.addKeyListener(listener);
+	}
+	
+	public void addKeyListenerPassword1(KeyAdapter listener){
+		passwordField1.addKeyListener(listener);
+	}
+	
 	public void addActionListenerCancel(ActionListener listener){
 		cancelButton.addActionListener(listener);
 	}
@@ -79,7 +87,7 @@ public class RegisterPanel extends CorePanel {
 		registerButton.addActionListener(listener);
 	}
 	
-	public void addKeyListenerPassword(KeyAdapter listener) {
+	public void addKeyListenerPassword2(KeyAdapter listener) {
 		passwordField2.addKeyListener(listener);
 	}
 	
@@ -136,6 +144,14 @@ public class RegisterPanel extends CorePanel {
 	
 	public Role getRole(){
 		return (Role) roleBox.getSelectedItem();
+	}
+	
+	public JPasswordField getPasswordField1() {
+		return passwordField1;
+	}
+	
+	public JPasswordField getPasswordField2() {
+		return passwordField2;
 	}
 
 }

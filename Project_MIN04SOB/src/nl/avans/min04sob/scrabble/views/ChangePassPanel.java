@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JLabel;
@@ -55,6 +56,18 @@ public class ChangePassPanel extends CorePanel{
 		btnCancel.addActionListener(listener);
 	}
 	
+	public void addKeyListenerOldPass(KeyAdapter listener) {
+		oldPass.addKeyListener(listener);
+	}
+	
+	public void addKeyListenerNewPass1(KeyAdapter listener) {
+		newPass1.addKeyListener(listener);
+	}
+	
+	public void addKeyListenerNewPass2(KeyAdapter listener) {
+		newPass2.addKeyListener(listener);
+	}
+	
 	public void addChangeActionListener(ActionListener listener){
 		btnChange.addActionListener(listener);
 	}
@@ -102,6 +115,14 @@ public class ChangePassPanel extends CorePanel{
 			newPass2Result.setText(discription);
 		}
 		
+	}
+	
+	public JPasswordField get1NewPass() {
+		return newPass1;
+	}
+	
+	public JPasswordField get2NewPass() {
+		return newPass2;
 	}
 	
 	public void passwordChange(){

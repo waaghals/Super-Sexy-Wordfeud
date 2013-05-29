@@ -20,7 +20,7 @@ public class AccountController extends CoreController {
 	private LoginPanel loginPanel;
 	private RegisterPanel registerPanel;
 	private AccountModel accountModel;
-	private ChangePassPanel changepasspanel;
+	private ChangePassPanel changepassPanel;
 	private JFrame frame;
 	private final int maxpass_userLength, minpass_userLength;
 
@@ -34,13 +34,13 @@ public class AccountController extends CoreController {
 		loginPanel = new LoginPanel();
 		accountModel = account;
 		registerPanel = new RegisterPanel();
-		changepasspanel = new ChangePassPanel();
+		changepassPanel = new ChangePassPanel();
 
 		frame.add(loginPanel);
 
 		addView(registerPanel);
 		addView(loginPanel);
-		addView(changepasspanel);
+		addView(changepassPanel);
 		addModel(accountModel);
 
 		loginPanel.addActionListenerLogin(new ActionListener() {
@@ -71,7 +71,7 @@ public class AccountController extends CoreController {
 			}
 		});
 
-		registerPanel.addKeyListenerPassword(new KeyAdapter() {
+		registerPanel.addKeyListenerPassword2(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					tryToRegister();
@@ -79,6 +79,23 @@ public class AccountController extends CoreController {
 			}
 		});
 
+		registerPanel.addKeyListenerUsername(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					registerPanel.getPasswordField1().requestFocus();
+				}
+			}
+		});
+		
+		registerPanel.addKeyListenerPassword1(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					registerPanel.getPasswordField2().requestFocus();
+				}
+			}
+		});
+		
+		
 		registerPanel.addActionListenerCancel(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				registerToLogin();
@@ -91,13 +108,37 @@ public class AccountController extends CoreController {
 			}
 		});
 
-		changepasspanel.addCancelActionListener(new ActionListener() {
+		changepassPanel.addCancelActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
+		
+		changepassPanel.addKeyListenerOldPass(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					changepassPanel.get1NewPass().requestFocus();
+				}
+			}
+		});
+		
+		changepassPanel.addKeyListenerNewPass1(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					changepassPanel.get2NewPass().requestFocus();
+				}
+			}
+		});
+		
+		changepassPanel.addKeyListenerNewPass2(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					changePass();
+				}
+			}
+		});
 
-		changepasspanel.addChangeActionListener(new ActionListener() {
+		changepassPanel.addChangeActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePass();
 			}
@@ -197,33 +238,33 @@ public class AccountController extends CoreController {
 	}
 
 	public ChangePassPanel getchangepasspanel() {
-		return changepasspanel;
+		return changepassPanel;
 	}
 
 	public void changePass() {
-		String oldpass = changepasspanel.getOldPass();
-		String newpass1 = changepasspanel.getNewPass1();
-		String newpass2 = changepasspanel.getNewPass2();
+		String oldpass = changepassPanel.getOldPass();
+		String newpass1 = changepassPanel.getNewPass1();
+		String newpass2 = changepassPanel.getNewPass2();
 
 		if (oldpass.equals(accountModel.getpass())) {
 			if (validateLength(newpass1.length()) == -1) {
-				changepasspanel.setNewPass1Good(false, "Te Kort");
+				changepassPanel.setNewPass1Good(false, "Te Kort");
 			} else if (validateLength(newpass1.length()) == 1) {
-				changepasspanel.setNewPass1Good(false, "Te Lang");
+				changepassPanel.setNewPass1Good(false, "Te Lang");
 			} else {
 				if (newpass2.equals(newpass1)) {
-					accountModel.changePass(changepasspanel.getNewPass1());
-					changepasspanel.setOldPassGood(true, "");
-					changepasspanel.setNewPass1Good(true, "");
-					changepasspanel.setNewPass2Good(true, "");
-					changepasspanel.passwordChange();
+					accountModel.changePass(changepassPanel.getNewPass1());
+					changepassPanel.setOldPassGood(true, "");
+					changepassPanel.setNewPass1Good(true, "");
+					changepassPanel.setNewPass2Good(true, "");
+					changepassPanel.passwordChange();
 					frame.dispose();
 				} else {
-					changepasspanel.setNewPass2Good(false, "Verkeerd");
+					changepassPanel.setNewPass2Good(false, "Verkeerd");
 				}
 			}
 		} else {
-			changepasspanel.setOldPassGood(false, "Fout");
+			changepassPanel.setOldPassGood(false, "Fout");
 		}
 	}
 
@@ -259,7 +300,7 @@ public class AccountController extends CoreController {
 
 	public void setChangePassPanel() {
 		frame.remove(loginPanel);
-		frame.add(changepasspanel);
+		frame.add(changepassPanel);
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();
