@@ -35,20 +35,30 @@ public class BoardPanel extends CorePanel {
 
 	private JTable playBoard;
 	private JTable playerTilesField;
-	
+
 	private ActionListener resignActionListener;
-	
+
 	private boolean isObserver;
-	private JLabel exploreText;
-	private JLabel turnTextLabel;
-	private JLabel turnLabel;
-	private JLabel lblTegenstander;
-	private JLabel opponentNameLabel;
-	private JLabel turnScoreText;
-	private JLabel opponentScoreLabel;
+	
+	private final JLabel turnScoreText;
+	private final JLabel browseText;
+	private final JLabel turnTextLabel;
+	private final JLabel spelersLabel;
+	
+	
 	private JLabel turnScoreLabel;
-	private JLabel playerScoreLabel;
+	
+	private JLabel turnLabel;
+	
+	private JLabel opponentNameLabel;
+	
+	private JLabel opponentScoreLabel;
+	
 	private JLabel playerNameLabel;
+	
+	private JLabel playerScoreLabel;
+	
+	
 
 	public BoardPanel() {
 		setLayout(new MigLayout(
@@ -70,8 +80,8 @@ public class BoardPanel extends CorePanel {
 		playBoard.setEnabled(true);
 		playBoard.validate();
 
-		lblTegenstander = new JLabel("Spelers");
-		add(lblTegenstander, "cell 5 0,alignx left");
+		spelersLabel = new JLabel("Spelers");
+		add(spelersLabel, "cell 5 0,alignx left");
 
 		add(playBoard, "cell 0 0 5 4");
 
@@ -101,7 +111,6 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setRowHeight(30);
 		playerTilesField.setCellSelectionEnabled(true);
-		
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
@@ -145,11 +154,9 @@ public class BoardPanel extends CorePanel {
 
 		nextButton = new JButton();
 		nextButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-		
 
 		prevButton = new JButton();
 		prevButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-		
 
 		turnScoreText = new JLabel("Score");
 		add(turnScoreText, "cell 0 6,alignx right");
@@ -157,8 +164,8 @@ public class BoardPanel extends CorePanel {
 		turnScoreLabel = new JLabel("<score>");
 		add(turnScoreLabel, "cell 1 6");
 
-		exploreText = new JLabel("Bladeren");
-		add(exploreText, "cell 2 6,alignx right");
+		browseText = new JLabel("Bladeren");
+		add(browseText, "cell 2 6,alignx right");
 		prevButton.setText("Vorige");
 
 		add(prevButton, "cell 3 6,grow");
@@ -191,7 +198,7 @@ public class BoardPanel extends CorePanel {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
-			if(account.isRole(Role.OBSERVER)){
+			if (account.isRole(Role.OBSERVER)) {
 
 			}
 			revalidate();
@@ -202,10 +209,10 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
-		if(!(playerTiles.length == 0)){
-		for (int y = 0; playerTiles.length > y + 1; y++) {
-			playerTilesField.setValueAt(playerTiles[y], 0, y);
-		}
+		if (!(playerTiles.length == 0)) {
+			for (int y = 0; playerTiles.length > y + 1; y++) {
+				playerTilesField.setValueAt(playerTiles[y], 0, y);
+			}
 		}
 	}
 
@@ -224,17 +231,25 @@ public class BoardPanel extends CorePanel {
 	public void setPlayer(String name) {
 		playerNameLabel.setText(name);
 	}
-	public void update(){
-		
+
+	public void update() {
+
 		this.repaint();
 	}
 
-	public void setYourTurn(boolean yourTurn) {
-		if (yourTurn) {
-			turnLabel.setText("Aan jouw");
-		} else {
-			turnLabel.setText("Tegenstander");
-		}
+	public void setLabelsNamesScores(String playerName, String playerScore,
+			String opponentName, String opponentscore) {
+		this.playerNameLabel.setText(playerName);
+		this.playerScoreLabel.setText(playerScore);
+		this.opponentNameLabel.setText(opponentName);
+		this.opponentScoreLabel.setText(opponentscore);
 	}
+	public void setLabelPlayerTurn(String currTurnPlayerName){
+		this.turnLabel.setText(currTurnPlayerName);
+	}
+	public void setLabelScore(int currTurnScore){
+		this.playerScoreLabel.setText(Integer.toString(currTurnScore));
+	}
+	
 
 }

@@ -20,12 +20,18 @@ public class AccountModel extends CoreModel {
 		initialize();
 	}
 
-	public AccountModel(String username) {
+	public AccountModel(String username , boolean iamobservingthis) {
 		initialize();
-		if (checkUsernameAvailable(username)) {
+		if(!(iamobservingthis)){
+			if (checkUsernameAvailable(username)) {
+				this.username = username;
+			}
+		}else{
 			this.username = username;
 		}
 	}
+	
+	
 
 	public AccountModel(String username, char[] password) {
 		initialize();

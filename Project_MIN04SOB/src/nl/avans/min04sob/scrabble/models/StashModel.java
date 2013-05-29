@@ -40,7 +40,7 @@ public class StashModel extends CoreModel {
 		int gameId = game.getGameId();
 		int numRows;
 		try {
-			ResultSet res = new Query(Queries.CURRENT_TILES).set(username)
+			ResultSet res = new Query(Queries.CURRENT_TILES).set(user.getUsername())
 					.set(gameId).select();
 			numRows = Query.getNumRows(res);
 
@@ -49,7 +49,8 @@ public class StashModel extends CoreModel {
 			while (res.next()) {
 				String character = res.getString("letter");
 				int charValue = res.getInt("waarde");
-				tiles[i] = new Tile(character, charValue, Tile.NOT_MUTATABLE);
+				tiles[i] = new Tile(character, charValue, Tile.MUTATABLE);
+				i++;
 			}
 
 			return tiles;
