@@ -35,7 +35,7 @@ public class JoinCompetitionView extends CorePanel {
 	public JoinCompetitionView() {
 		setLayout(new MigLayout("", "[100px:120px:120px,grow][200px:200px:220px,grow]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
-		competitionLabel = new JLabel();
+		competitionLabel = new JLabel("Beschikbare competities");
 		add(competitionLabel, "cell 0 0,alignx left");
 
 		playersLabel = new JLabel("Spelers in de competitie"); 
@@ -56,7 +56,7 @@ public class JoinCompetitionView extends CorePanel {
 		cancelButton = new JButton("Annuleer");
 		add(cancelButton, "cell 0 4,alignx left,aligny top");
 		
-		actionButton = new JButton();
+		actionButton = new JButton("Competitie deelnemen");
 		add(actionButton, "cell 1 4,alignx right,growy");
 
 	}
@@ -67,6 +67,11 @@ public class JoinCompetitionView extends CorePanel {
 
 	public void addActionListenerAnnuleerButton(ActionListener listener) {
 		cancelButton.addActionListener(listener);
+	}
+	
+	public CompetitionModel selectedCompetition(){
+		return competitionList.getSelectedValue();
+		
 	}
 
 	@Override

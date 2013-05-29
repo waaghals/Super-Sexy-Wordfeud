@@ -13,37 +13,27 @@ import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class CompetitionController extends CoreController {
 
-	private CompetitionModel competitionModel;
-	private CompetitionView competitionView;
-	private JoinCompetitionView joinCompetitionView;
+	private CompetitionModel cm;
+	private CompetitionView cv;
+	private JoinCompetitionView jcv;
 	private CoreWindow window;
-	private AccountModel accountModel;
+	private CoreWindow window1;
+	private AccountModel am;
+
 	public CompetitionController(AccountModel user)
 	{
-		accountModel = user;
-		competitionModel = new CompetitionModel(1);
-		competitionView = new CompetitionView();
-		joinCompetitionView = new JoinCompetitionView();
-		window = new CoreWindow();
-		
-		window.add(competitionView);
-		
-		addView(competitionView);
-		addModel(competitionModel);
-		addView(joinCompetitionView);
-		
-		//getCompetitions(am.toString());
-		
-		window.setPreferredSize(new Dimension(400,375));
-		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
 
-			public void actionPerformed(ActionEvent arg0) {
-				window.dispose();
-			}	
-		});
+		am = user;
+		//cm = new CompetitionModel(800);
+		cv = new CompetitionView();
+		jcv = new JoinCompetitionView();
+		
+		addView(cv);
+		addModel(cm);
+		addView(jcv);
+		
 	}
+
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
@@ -52,15 +42,56 @@ public class CompetitionController extends CoreController {
 	@Override
 	public void addListeners() {
 		// TODO Auto-generated method stub
+	}
+	
+	public void openCompetitionView(){
+		window = new CoreWindow();
+		window.add(cv);
+		
+		window.setPreferredSize(new Dimension(375,350));
+		window.pack();
+		
+		cv.addBackListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
+			}	
+		});
+		
+		getCompetitions(am.toString());
+	}
+	
+	public void openJoinCompetitionView() {
+		window1 = new CoreWindow();
+		window1.add(jcv);
+		
+		window1.setPreferredSize(new Dimension(375,350));
+		window1.pack();
+		
+		jcv.addActionListenerAnnuleerButton(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				window1.dispose();			
+			}
+		});
+		
+		jcv.addActionListenerActieButton(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {	
+				cm.join(jcv.selectedCompetition().getCompId(),am.toString());		
+			}	
+		});
 		
 	}
 	
 	public void getCompetitions(String username){
-		competitionView.fillCompitions(accountModel.getCompitions(username));
+		cv.fillCompitions(am.getCompitions(username));
 	}
 	
 	public void getParticipants(int competition_id){
-		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
+		cv.fillPlayerList(cm.getUsersFromCompetition(competition_id));
 	}
+
+	
 
 }

@@ -55,6 +55,8 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		
 		public void showChallenge()//gui 
 		{ 
+			chpanel= null;
+			chpanel=new JPanel();
 			jframe.setVisible(true);
 			jframe.setContentPane(chpanel);
 			chpanel.setLayout(new BoxLayout(chpanel, BoxLayout.PAGE_AXIS));
@@ -76,12 +78,15 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 	
 		public void toChallenge()//gui
 		{	
+			tochallenge=null;
+			tochallenge=new JPanel();
 			jframe.setVisible(true);
 			jframe.setContentPane(tochallenge);
 			tochallenge.setLayout(new BoxLayout(tochallenge, BoxLayout.PAGE_AXIS));
 			tochallenge.setPreferredSize(new Dimension(210,80));
 			tochallenge.add(new JLabel("insert opponent"));
 			tochallenge.add(nameChallenged);
+			
 			jframe.add(oke);
 			jframe.setResizable(false);
 			jframe.pack();
@@ -90,11 +95,15 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		
 		public void response(String msg)//gui
 		{
+		 
+			response=null;
+			response=new JPanel();
+			jframe.setContentPane(response);
 			jframe.setResizable(false);
 			jframe.setVisible(true);
 			jframe.setContentPane(response);
 			response.setPreferredSize(new Dimension(130,70));
-			response.add(new JLabel("msg"));
+			response.add(new JLabel(msg));
 			response.add(oke2);
 			jframe.pack();
 		}
@@ -126,4 +135,5 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			// TODO Auto-generated method stub
 			
 		}
+		
 	}
