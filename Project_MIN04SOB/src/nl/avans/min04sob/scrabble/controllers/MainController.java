@@ -6,12 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -25,7 +22,6 @@ import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
-import nl.avans.min04sob.scrabble.views.GamesComboBox;
 import nl.avans.min04sob.scrabble.views.MenuView;
 
 public class MainController extends CoreController {
@@ -40,6 +36,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private GameModel currentGame;
+	private InviteController invController;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
@@ -54,6 +51,7 @@ public class MainController extends CoreController {
 		addModel(boardModel);
 		addModel(account);
 		addView(chatPanel);
+		addView(frame);
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -75,7 +73,6 @@ public class MainController extends CoreController {
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
-		crtl = new ChallengeController(account.getUsername());
 
 		currGamePanel = new BoardPanel();
 
@@ -111,19 +108,25 @@ public class MainController extends CoreController {
 		});
 		menu.addChangePassItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changePass();
+				//changePass();
+				AccountController accountController = new AccountController(account);
+				accountController.setChangePassPanel();
 			}
 		});
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account);
+				new CompetitionController(account).openCompetitionView();
 			}
 		});
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				new CompetitionController(account).openJoinCompetitionView();
+
+				//invController = new InviteController();
+				//invController.setButtonsJoin();
 			}
 		});
 
@@ -135,7 +138,8 @@ public class MainController extends CoreController {
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				invController = new InviteController();
+				invController.setButtonsRemove();
 			}
 		});
 
@@ -214,7 +218,6 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resigncontroller = new ResignController(currentGame);
-				System.out.println("Testresign");
 			}
 		});
 
@@ -338,14 +341,6 @@ public class MainController extends CoreController {
 		setTurnLabel();
 	}
 
-	private void changePass() {
-		frame.remove(chatPanel);
-		frame.remove(currGamePanel);
-		frame.getContentPane().add(accountcontroller.getchangepasspanel(),
-				"cell 0 1 4 8,alignx left,aligny top");
-		frame.repaint();
-	}
-
 	public void sendChat() {
 		String message = chatPanel.getChatFieldSendText();
 
@@ -361,6 +356,7 @@ public class MainController extends CoreController {
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
+			crtl = new ChallengeController(account.getUsername());
 			frame.getContentPane().add(currGamePanel,
 					"cell 4 0 6 6,growx,aligny top");
 

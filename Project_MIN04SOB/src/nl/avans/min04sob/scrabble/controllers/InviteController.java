@@ -4,6 +4,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.sound.sampled.ReverbType;
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
@@ -13,7 +14,7 @@ import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class InviteController extends CoreController {
 
-	private JoinCompetitionView inviteView;
+	private JoinCompetitionView joinView;
 	private JFrame window;
 	private InviteModel inviteModel;
 
@@ -28,21 +29,24 @@ public class InviteController extends CoreController {
 		inviteModel = new InviteModel();
 		addModel(inviteModel);
 
-		inviteView = new JoinCompetitionView();
-		addView(inviteView);
-
-		window.add(inviteView);
-		setButtons();
+		joinView = new JoinCompetitionView();
+		addView(joinView);
+				
+		window.add(joinView);
+		window.pack();
+		window.setVisible(true);
+		
+		setButtonsJoin();
 
 		// actiondinges
 
-		inviteView.addActionListenerActieButton(new ActionListener() {
+		joinView.addActionListenerActieButton(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actieButton();
 			}
 		});
 
-		inviteView.addActionListenerAnnuleerButton(new ActionListener() {
+		joinView.addActionListenerAnnuleerButton(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				annuleerButton();
 			}
@@ -54,7 +58,7 @@ public class InviteController extends CoreController {
 	}
 
 	public void annuleerButton() {
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.dispose();
 	}
 
 	@Override
@@ -63,13 +67,15 @@ public class InviteController extends CoreController {
 
 	}
 
-	public static void main(String[] arg) {
-		new JoinCompetitionView();
-
+	public void setButtonsChallenge() {
+		joinView.setText("Ingeschreven competities", "Uitdagen");
 	}
-
-	public void setButtons() {
-		inviteView.setButtons("Ingeschreven competities",
-				"Spelers in de competitie", "Uitdagen");
+	
+	public void setButtonsJoin() {
+		joinView.setText("Beschikbare competities", "Deelnemen");
+	}
+	
+	public void setButtonsRemove() {
+		joinView.setText("Aangemaakte competities", "Verwijderen");
 	}
 }

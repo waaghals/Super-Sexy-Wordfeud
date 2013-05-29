@@ -21,6 +21,7 @@ public class ChallengeController extends CoreController  {
 		challengeview = new ChallengeView();
 		try {
 			challengemodel= new ChallengeModel(name);
+			challengemodel.update();
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -30,45 +31,53 @@ public class ChallengeController extends CoreController  {
 		challengeview.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.respondChallenge( name,true);//??
+					challengemodel.respondChallenge(name,true);//??
 					 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				} 
 				challengeview.javaFrame().dispose();
-				 
 			}
 		});
 		challengeview.addActionListenerDecline (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.respondChallenge(challengeview.getSelectedChallenge(),false);
-					challengeview.javaFrame().dispose();
+				 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				challengeview.javaFrame().dispose();
 			}
+		});
+		challengeview.addActionListenerOke2(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				challengeview.javaFrame().dispose();
+			}
+			
 		});
 		challengeview.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.controle(name,  challengeview.getUsername());
-					challengeview.javaFrame().dispose();
+					challengemodel.controle(name,challengeview.getUsername());
+				 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				challengeview.javaFrame().dispose();
 			}
 		});
 	}
  
-	public void propertyChange(String evt)  {
-	String x =  evt;
-	 switch(x)
+	public void propertyChange(PropertyChangeEvent evt)  {
+	 
+	System.out.println(evt.getPropertyName());
+	 switch(evt.getPropertyName())
 		 {
 		 case "1": challengers();break;
 		 case "2": challengeview.response("challenge denied");break;

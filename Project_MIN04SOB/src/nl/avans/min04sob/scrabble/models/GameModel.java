@@ -358,6 +358,12 @@ public class GameModel extends CoreModel {
 		System.out.println(Arrays.deepToString(newMatrix));
 	}
 
+
+	public static void main2(String[] args) {
+		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
+		new GameModel(0, null,null,false).test();
+	}
+
 	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
 

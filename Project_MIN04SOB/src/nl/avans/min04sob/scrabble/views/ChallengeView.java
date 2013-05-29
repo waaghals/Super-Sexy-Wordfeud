@@ -40,7 +40,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public ChallengeView()
 		{
 			jframe.setTitle("Challenge");
-			jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 		/// pas aan
 		public void viewArraylistRemove()
@@ -55,11 +55,11 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		
 		public void showChallenge()//gui 
 		{ 
+			chpanel= null;
+			chpanel=new JPanel();
 			jframe.setVisible(true);
 			jframe.setContentPane(chpanel);
 			chpanel.setLayout(new BoxLayout(chpanel, BoxLayout.PAGE_AXIS));
-			 
-		 
 			int index=0;
 			while(index < challenge.size())
 			{
@@ -76,12 +76,15 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 	
 		public void toChallenge()//gui
 		{	
+			tochallenge=null;
+			tochallenge=new JPanel();
 			jframe.setVisible(true);
 			jframe.setContentPane(tochallenge);
 			tochallenge.setLayout(new BoxLayout(tochallenge, BoxLayout.PAGE_AXIS));
 			tochallenge.setPreferredSize(new Dimension(210,80));
 			tochallenge.add(new JLabel("insert opponent"));
 			tochallenge.add(nameChallenged);
+			
 			jframe.add(oke);
 			jframe.setResizable(false);
 			jframe.pack();
@@ -90,11 +93,14 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		
 		public void response(String msg)//gui
 		{
+			response=null;
+			response=new JPanel();
+			jframe.setContentPane(response);
 			jframe.setResizable(false);
 			jframe.setVisible(true);
 			jframe.setContentPane(response);
 			response.setPreferredSize(new Dimension(130,70));
-			response.add(new JLabel("msg"));
+			response.add(new JLabel(msg));
 			response.add(oke2);
 			jframe.pack();
 		}
@@ -114,6 +120,10 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
 		} 
+		public void addActionListenerOke2(ActionListener listener) {
+			oke2.addActionListener(listener);
+		}
+		 
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
 		}
@@ -126,4 +136,5 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			// TODO Auto-generated method stub
 			
 		}
+		
 	}

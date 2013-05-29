@@ -56,6 +56,10 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public int getCompId(){
+		return competitieId;
+	}
 
 	@Override
 	public void update() {
@@ -76,25 +80,6 @@ public class CompetitionModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return all;
-	}
-
-	public CompetitionModel[] getCompitions(String username) {
-		CompetitionModel[] comp_ids = new CompetitionModel[0];
-		int x = 0;
-		try {
-			ResultSet dbResult = new Query(
-					"SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?")
-					.set(username).select();
-			comp_ids = new CompetitionModel[Query.getNumRows(dbResult)];
-			while (dbResult.next() && x < comp_ids.length) {
-				comp_ids[x] = new CompetitionModel(
-						dbResult.getInt("competitie_id"));
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return comp_ids;
 	}
 
 	public AccountModel[] getUsersFromCompetition(int competition_id) {
@@ -298,8 +283,7 @@ public class CompetitionModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
 					.set(username).select();
-			if (db// TODO Automatisch gegenereerde methodestub
-					return null;Result.next()) {
+			if (dbResult.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}
 		} catch (SQLException sql) {
