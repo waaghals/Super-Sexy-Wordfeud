@@ -86,4 +86,8 @@ public class JoinCompetitionView extends CorePanel {
 		revalidate();
 	}
 
+	public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
+		competitionList.setListData(availableCompetitions);
+	}
+
 }

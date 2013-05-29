@@ -91,6 +91,10 @@ public class CompetitionController extends CoreController {
 	public void getParticipants(int competition_id){
 		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
 	}
+	
+	public void getAvailable(String username){
+		joinCompetitionView.fillAvailableCompetitions(accountModel.getAvailableCompetitions(username));
+	}
 
 	
 

@@ -137,6 +137,23 @@ public class AccountModel extends CoreModel {
 		}
 		return comp_ids;
 	}
+	
+	public CompetitionModel[] getAvailableCompetitions(String username){
+		CompetitionModel[] comp_ids = new CompetitionModel[0];
+		int x = 0;
+		try {
+			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft
+			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` <> ? GROUP BY `competitie_id`").set(username).select();
+			comp_ids = new CompetitionModel[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < comp_ids.length){
+				comp_ids[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+				x++;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return comp_ids;
+	}
 
 	public ArrayList<GameModel> getOpenGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
