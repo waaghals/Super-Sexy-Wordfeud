@@ -28,13 +28,12 @@ public class JoinCompetitionView extends CorePanel {
 	private JLabel competitionLabel;
 	private JLabel spelersLabel;
 	private String competitionLabelText;
-	private String spelersLabelText;
-	private String actieButtonText;
+	private String buttonText;
 
 	public JoinCompetitionView() {
 		setLayout(new MigLayout("", "[100px:120px:120px,grow][200px:200px:220px,grow]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
-		competitionLabel = new JLabel("Beschikbare Competities");
+		competitionLabel = new JLabel(competitionLabelText);
 		add(competitionLabel, "cell 0 0,alignx left");
 
 		spelersLabel = new JLabel("Spelers in de competitie"); 
@@ -55,7 +54,7 @@ public class JoinCompetitionView extends CorePanel {
 		annuleerButton = new JButton("Annuleer");
 		add(annuleerButton, "cell 0 4,alignx left,aligny top");
 		
-		actieButton = new JButton("Deelnemen");
+		actieButton = new JButton(buttonText);
 		add(actieButton, "cell 1 4,alignx right,growy");
 	}
 
@@ -73,11 +72,9 @@ public class JoinCompetitionView extends CorePanel {
 
 	}
 
-	public void setButtons(String competitionLabelText,
-			String spelersLabelText, String actieButtonText) {
-		this.competitionLabelText = competitionLabelText;
-		this.spelersLabelText = spelersLabelText;
-		this.actieButtonText = actieButtonText;
+	public void setText(String labelText, String button) {
+		competitionLabelText = labelText;
+		buttonText = button;
 	}
 
 }
