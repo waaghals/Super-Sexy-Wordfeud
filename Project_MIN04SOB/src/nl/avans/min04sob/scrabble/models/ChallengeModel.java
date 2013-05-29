@@ -48,22 +48,21 @@ public class ChallengeModel extends CoreModel  {
 		String queryy = "SELECT COUNT(*)   FROM Spel ";
 		result =  new Query(queryy).select();
 		result.next();
-		/*/
+	 /*/
 		if(result.getInt(1)>0)
 		{
 			result =  new Query(selectQuery) .select();
 			while(result.next()){
-				//result.getString(7).equals(STATE_UKNOWN)&&result.getString(4).equals(Challengername)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN))||
-				if(Challengername.equals(challegendname))  // hier ziet een fout in
+				 
+				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(4).equals(Challengername)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN)||Challengername.equals(challegendname))  // hier ziet een fout in
 				{
 					error = true;
-					 
 					commandsToChallengeview("4");
 					break;
 				}
 			}
 		} 
-		/*/
+		  /*/
 	 if(error!=true)
 	 {
 		createChallenge(Challengername, challegendname);
@@ -74,6 +73,8 @@ public class ChallengeModel extends CoreModel  {
 	 
 	public void createChallenge(String Challengername,String  challegendname) throws SQLException//uitdager
 	{	
+		System.out.println(Challengername+"c");
+		System.out.println(challegendname+"x");
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);	
@@ -97,7 +98,7 @@ public class ChallengeModel extends CoreModel  {
 			ResultSet dbResult = new Query(selectQuery).select();
 			while (dbResult.next()){
 				 if(!challenge.contains(dbResult.getString(4))){
-					if(dbResult.getString(5).equals(yourname) &&dbResult.getString(3).equals(STATE_REQUEST)) {
+					if(dbResult.getString(5).equals(yourname)&&dbResult.getString(3).equals(STATE_REQUEST)&&dbResult.getString(7).equals(STATE_UNKNOWN)) {
 					challenge.add(dbResult.getString(4));
 					}
 				 }
@@ -117,29 +118,28 @@ public class ChallengeModel extends CoreModel  {
 		String currentdate = dateFormat.format(date);
 		 
 		
-		 String query  = "SELECT * `Spel` WHERE (`Account_naam_uitdager`, `Account_naam_tegenstander`) VALUES ('" 
-		        + "jager684" + "','" + yourname + "');";
+		String query  = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=?";
 		
-		
-		
-		
-		ResultSet resultset = new Query(query).select();
+
+		ResultSet resultset = new Query(query).set(nameuitdager).set(yourname).select(); /// VERANDER
 		String query2 ="";
-		new Query(query).select();
+ 
 			 
 			if(accepted==true){
-				query2 = "UPDATE Spel SET Toestand_type=? ,  Reaktie_type=? ,   moment_reaktie=?  WHERE `Account_naam_uitdager` = 'nameuitdager' AND `Account_naam_tegenstander=`yourname` ;";
-				new Query(query2).set(STATE_REJECTED).set(STATE_ACCEPTED).set( currentdate).exec(); 
+				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+				new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED).set( currentdate).set(yourname).set(yourname).exec(); 
 			}
 			else{
-				query2 = "UPDATE Spel SET  ,  Reaktie_type=? ,   moment_reaktie=?  WHERE `Account_naam_uitdager` = 'nameuitdager' AND `Account_naam_tegenstander=`yourname` ;";
-				  new Query(query2).set(STATE_ACCEPTED).set( currentdate).exec(); 
+				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+				new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED).set( currentdate).set(yourname).set(yourname).exec();
 			}
+			resultset.next();
 			for(int index=0;index < challenge.size();index++ ){	
-				String xx=   resultset.getString(4) ;
+				String xx=   resultset.getString(4);
 				if(xx.equals(challenge.get(index)))
 				{
 					challenge.remove(index);
+					System.out.println("oke");
 				}
 			}	
 	}
