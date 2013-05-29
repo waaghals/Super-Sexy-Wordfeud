@@ -62,6 +62,14 @@ public class AccountController extends CoreController {
 				}
 			}
 		});
+		
+		loginPanel.addKeyListenerUsername(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					loginPanel.getPasswordField().requestFocus();
+				}
+			}
+		});
 
 		registerPanel.addKeyListenerPassword(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
