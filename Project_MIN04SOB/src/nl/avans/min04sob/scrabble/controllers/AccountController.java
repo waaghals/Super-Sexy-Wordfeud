@@ -30,7 +30,7 @@ public class AccountController extends CoreController {
 		minpass_userLength = 5;
 
 		frame = new JFrame();
-
+		frame.setAlwaysOnTop(true);
 		loginPanel = new LoginPanel();
 		accountModel = account;
 		registerPanel = new RegisterPanel();
@@ -93,14 +93,13 @@ public class AccountController extends CoreController {
 
 		changepasspanel.addCancelActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO go back to normal view ;
+				frame.dispose();
 			}
 		});
 
 		changepasspanel.addChangeActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changePass();
-				// TODO go back too normal view ;
 			}
 		});
 
@@ -218,6 +217,7 @@ public class AccountController extends CoreController {
 					changepasspanel.setNewPass1Good(true, "");
 					changepasspanel.setNewPass2Good(true, "");
 					changepasspanel.passwordChange();
+					frame.dispose();
 				} else {
 					changepasspanel.setNewPass2Good(false, "wrong");
 				}
@@ -258,8 +258,10 @@ public class AccountController extends CoreController {
 	}
 
 	public void setChangePassPanel() {
-		frame.removeAll();
+		frame.remove(loginPanel);
 		frame.add(changepasspanel);
 		frame.revalidate();
+		frame.repaint();
+		frame.pack();
 	}
 }
