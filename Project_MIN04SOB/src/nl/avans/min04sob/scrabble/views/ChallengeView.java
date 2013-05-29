@@ -60,8 +60,6 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jframe.setVisible(true);
 			jframe.setContentPane(chpanel);
 			chpanel.setLayout(new BoxLayout(chpanel, BoxLayout.PAGE_AXIS));
-			 
-		 
 			int index=0;
 			while(index < challenge.size())
 			{
@@ -95,7 +93,6 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		
 		public void response(String msg)//gui
 		{
-		 
 			response=null;
 			response=new JPanel();
 			jframe.setContentPane(response);
@@ -123,6 +120,10 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public void addActionListenerOke(ActionListener listener) {
 			oke.addActionListener(listener);
 		} 
+		public void addActionListenerOke2(ActionListener listener) {
+			oke2.addActionListener(listener);
+		}
+		 
 		public void addActionListenerDecline(ActionListener listener) {
 			decline.addActionListener(listener);
 		}

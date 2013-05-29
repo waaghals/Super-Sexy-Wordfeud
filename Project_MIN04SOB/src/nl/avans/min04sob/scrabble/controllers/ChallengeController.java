@@ -18,10 +18,9 @@ public class ChallengeController extends CoreController  {
  
 	public ChallengeController (final String name)
 	{
-		 System.out.println(name+"d");
 		challengeview = new ChallengeView();
 		try {
-			challengemodel= new ChallengeModel("jager684");
+			challengemodel= new ChallengeModel(name);
 			challengemodel.update();
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
@@ -32,14 +31,13 @@ public class ChallengeController extends CoreController  {
 		challengeview.addActionListenerAccept (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.respondChallenge( name,true);//??
+					challengemodel.respondChallenge(name,true);//??
 					 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-			 
-				 
+				} 
+				challengeview.javaFrame().dispose();
 			}
 		});
 		challengeview.addActionListenerDecline (new ActionListener() {
@@ -54,16 +52,24 @@ public class ChallengeController extends CoreController  {
 				challengeview.javaFrame().dispose();
 			}
 		});
+		challengeview.addActionListenerOke2(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				challengeview.javaFrame().dispose();
+			}
+			
+		});
 		challengeview.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.controle(name,  challengeview.getUsername());
+					challengemodel.controle(name,challengeview.getUsername());
 				 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			 
 			}
 		});
 	}
