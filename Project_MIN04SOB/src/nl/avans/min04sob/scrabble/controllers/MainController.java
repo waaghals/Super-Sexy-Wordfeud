@@ -72,7 +72,7 @@ public class MainController extends CoreController {
 		//competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
-		crtl = new ChallengeController(account.getUsername());
+	
 
 		currGamePanel = new BoardPanel();
 
@@ -331,6 +331,7 @@ public class MainController extends CoreController {
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
+			crtl = new ChallengeController(account.getUsername());
 			frame.getContentPane().add(currGamePanel,
 					"cell 4 0 6 6,growx,aligny top");
 
