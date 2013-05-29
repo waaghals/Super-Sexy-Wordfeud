@@ -208,12 +208,11 @@ public class MainController extends CoreController {
 	}
 
 
-	private void addButtonListeners() {
+	private void addResignButtonListener() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resigncontroller = new ResignController(currentGame);
-				System.out.println("Testresign");
 			}
 		});
 
@@ -298,7 +297,7 @@ public class MainController extends CoreController {
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 
-		addButtonListeners();
+		addResignButtonListener();
 
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
