@@ -20,7 +20,7 @@ public class CompetitionView extends CorePanel{
 	private JScrollPane scrollPane;
 	private JList<String> competitionsList;
 	private JScrollPane scrollPane_1;
-	private JList<AccountModel> playerList;
+	private JList<String> playerList;
 	private JButton backButton;
 	private JButton actionButton;
 	
@@ -43,7 +43,7 @@ public class CompetitionView extends CorePanel{
 		scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 1 1,grow");
 		
-		playerList = new JList<AccountModel>();
+		playerList = new JList<String>();
 		scrollPane_1.setViewportView(playerList);
 		
 		backButton = new JButton("Terug");
@@ -80,7 +80,7 @@ public class CompetitionView extends CorePanel{
 		competitionsList.setListData(comp_desc);
 	}
 
-	public void fillPlayerList(AccountModel[] usersFromCompetition) {
+	public void fillPlayerList(String[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
 		actionButton.setEnabled(true);
 	}
@@ -92,5 +92,10 @@ public class CompetitionView extends CorePanel{
 
 	public void fillAllCompetitions(String[] allCompetitions) {
 		competitionsList.setListData(allCompetitions);
+	}
+	
+	public String getSelectedPlayer(){
+		String s = playerList.getSelectedValue();
+		return s;
 	}
 }

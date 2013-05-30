@@ -3,10 +3,12 @@ package nl.avans.min04sob.scrabble.controllers;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
+import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.views.CompetitionView;
 import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
@@ -18,6 +20,7 @@ public class CompetitionController extends CoreController {
 	private JoinCompetitionView joinCompetitionView;
 	private CoreWindow window;
 	private AccountModel accountModel;
+	private ChallengeModel challengeModel;
 
 	public CompetitionController(AccountModel user)
 	{
@@ -26,6 +29,7 @@ public class CompetitionController extends CoreController {
 		//cm = new CompetitionModel(800);
 		competitionView = new CompetitionView();
 		joinCompetitionView = new JoinCompetitionView();
+		challengeModel = new ChallengeModel();
 		
 		addView(competitionView);
 		addModel(competitionModel);
@@ -60,8 +64,13 @@ public class CompetitionController extends CoreController {
 		
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				
-			}	
+				try {
+					challengeModel.controle(competitionView.getSelectedPlayer());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		});
 		
 		competitionView.setText("Ingeschreven competities", "Spelers in competitie", "Speler uitdagen", true);
