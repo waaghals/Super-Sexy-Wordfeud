@@ -48,6 +48,7 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		
 		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
 		window.pack();
 		
 		competitionView.addBackListener(new ActionListener(){
@@ -56,6 +57,13 @@ public class CompetitionController extends CoreController {
 				window.dispose();
 			}	
 		});
+		
+		competitionView.addActionButtonListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}	
+		});
+		
 		competitionView.setText("Ingeschreven competities", "Spelers in competitie", "Speler uitdagen", true);
 		
 		getCompetitions(accountModel.toString());
@@ -66,12 +74,19 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		
 		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
 		window.pack();
 		
 		competitionView.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+			}	
+		});
+		
+		competitionView.addActionButtonListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}	
 		});
 		
@@ -86,12 +101,19 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		
 		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
 		window.pack();
 		
 		competitionView.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+			}	
+		});
+		
+		competitionView.addActionButtonListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}	
 		});
 		
@@ -106,12 +128,19 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		
 		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
 		window.pack();
 		
 		competitionView.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+			}	
+		});
+		
+		competitionView.addActionButtonListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}	
 		});
 		
@@ -125,12 +154,19 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		
 		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
 		window.pack();
 		
 		competitionView.addBackListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+			}	
+		});
+		
+		competitionView.addActionButtonListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}	
 		});
 		
