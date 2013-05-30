@@ -93,6 +93,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				crtl = new ChallengeController(account.getUsername());
 				crtl.challengers();
 				// TODO stops program from running
 
