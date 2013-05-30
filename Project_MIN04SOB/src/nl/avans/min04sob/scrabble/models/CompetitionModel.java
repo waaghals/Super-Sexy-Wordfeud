@@ -85,6 +85,7 @@ public class CompetitionModel extends CoreModel {
 			ResultSet dbResult = new Query(
 					"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?")
 					.set(competition_id).select();
+			accounts = new AccountModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
 						dbResult.getString("account_naam"),false);
@@ -93,6 +94,21 @@ public class CompetitionModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return accounts;
+	}
+	
+	public String[] getAllCompetitions(){
+		String[] allComp = new String[0];
+		int x = 0;
+		try {
+			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `competitie`").select();
+			allComp = new String[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < allComp.length){
+				allComp[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return allComp;		
 	}
 
 	public void join(int competitionID, String username) {

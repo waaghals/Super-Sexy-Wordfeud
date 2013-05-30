@@ -59,9 +59,11 @@ public class CompetitionView extends CorePanel{
 		
 	}
 	
-	public void setText(String labelText, String button) {
+	public void setText(String labelText,String labelText2, String button, boolean visible) {
+		playersInCompetitonLabel.setText(labelText2);
 		competitionsLabel.setText(labelText);
 		actionButton.setText(button);
+		actionButton.setVisible(visible);
 		revalidate();
 	}
 	
@@ -84,5 +86,9 @@ public class CompetitionView extends CorePanel{
 	
 	public void fillAvailableCompetitions(String[] availableCompetitions) {
 		competitionsList.setListData(availableCompetitions);
+	}
+
+	public void fillAllCompetitions(String[] allCompetitions) {
+		competitionsList.setListData(allCompetitions);
 	}
 }
