@@ -56,10 +56,6 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-	
-	public int getCompId(){
-		return competitieId;
-	}
 
 	@Override
 	public void update() {
@@ -321,5 +317,9 @@ public class CompetitionModel extends CoreModel {
 	
 	public Date getEndData(){
 		return end;
+	}
+	
+	public int getCompId(){
+		return competitieId;
 	}
 }

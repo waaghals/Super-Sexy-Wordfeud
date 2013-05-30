@@ -128,31 +128,40 @@ public class AccountModel extends CoreModel {
 		return false;
 	}
 	
-	public CompetitionModel[] getCompetitions(String username){
-		CompetitionModel[] comp_ids = new CompetitionModel[0];
+	public String[] getCompetitions(String username){
+		String[] comp_desc = new String[0];
 		int x = 0;
 		try {
 			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
-			comp_ids = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < comp_ids.length){
-				comp_ids[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+			comp_desc = new String[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < comp_desc.length){
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
 				x++;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-		return comp_ids;
+		return comp_desc;
 	}
 	
-	public CompetitionModel[] getAvailableCompetitions(String username){
+	/*public CompetitionModel[] getAvailableCompetitions(String username){
 		CompetitionModel[] comp_ids = new CompetitionModel[0];
+		ArrayList<Integer> comp_ints = new ArrayList<Integer>();
 		int x = 0;
 		try {
 			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft
-			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` <> ? GROUP BY `competitie_id`").set(username).select();
+			ResultSet dbResult = new Query("SELECT DISTINCT(`competitie_id`) FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
+			while(dbResult.next()){
+				comp_ints.add(dbResult.getInt("competitie_id"));
+			}
+			for(Integer i: comp_ints){
+			ResultSet dbResult1 = new Query("")
+			}
+			
+			
 			comp_ids = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < comp_ids.length){
-				comp_ids[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+			while(dbResult1.next() && x < comp_ids.length){
+				comp_ids[x] = new CompetitionModel(dbResult1.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -160,6 +169,7 @@ public class AccountModel extends CoreModel {
 		}
 		return comp_ids;
 	}
+	*/
 
 	public ArrayList<GameModel> getOpenGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();

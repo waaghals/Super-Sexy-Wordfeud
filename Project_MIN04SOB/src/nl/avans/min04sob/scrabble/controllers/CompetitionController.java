@@ -48,7 +48,7 @@ public class CompetitionController extends CoreController {
 		window = new CoreWindow();
 		window.add(competitionView);
 		
-		window.setPreferredSize(new Dimension(375,350));
+		window.setPreferredSize(new Dimension(400,320));
 		window.pack();
 		
 		competitionView.addBackListener(new ActionListener(){
@@ -61,7 +61,7 @@ public class CompetitionController extends CoreController {
 		getCompetitions(accountModel.toString());
 	}
 	
-	public void openJoinCompetitionView() {
+	/*public void openJoinCompetitionView() {
 		window1 = new CoreWindow();
 		window1.add(joinCompetitionView);
 		
@@ -83,6 +83,7 @@ public class CompetitionController extends CoreController {
 		});
 		
 	}
+	*/
 	
 	public void getCompetitions(String username){
 		competitionView.fillCompetitions(accountModel.getCompetitions(username));
@@ -93,7 +94,7 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void getAvailable(String username){
-		joinCompetitionView.fillAvailableCompetitions(accountModel.getAvailableCompetitions(username));
+		//joinCompetitionView.fillAvailableCompetitions(accountModel.getAvailableCompetitions(username));
 	}
 
 	

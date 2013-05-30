@@ -18,14 +18,14 @@ public class CompetitionView extends CorePanel{
 	private JLabel subscribedCompetitionsLabel;
 	private JLabel playersInCompetitonLabel;
 	private JScrollPane scrollPane;
-	private JList<CompetitionModel> competitions;
+	private JList<String> competitions;
 	private JScrollPane scrollPane_1;
 	private JList<AccountModel> playerList;
 	private JButton backButton;
 	private JButton challengePlayerButton;
 	
 	public CompetitionView(){
-		setLayout(new MigLayout("", "[100px:117.00px:120px][200px:260.00px:220px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
+		setLayout(new MigLayout("", "[200px:220px:260px][150px:160.00px:170px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
 		
 		subscribedCompetitionsLabel = new JLabel("Ingeschreven competities");
 		add(subscribedCompetitionsLabel, "cell 0 0,alignx left");
@@ -36,7 +36,7 @@ public class CompetitionView extends CorePanel{
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 		
-		competitions = new JList<CompetitionModel>();
+		competitions = new JList<String>();
 		scrollPane.setViewportView(competitions);
 		
 		scrollPane_1 = new JScrollPane();
@@ -46,7 +46,7 @@ public class CompetitionView extends CorePanel{
 		scrollPane_1.setViewportView(playerList);
 		
 		backButton = new JButton("Terug");
-		add(backButton, "cell 0 2,growx");
+		add(backButton, "cell 0 2,alignx left");
 		
 		challengePlayerButton = new JButton("Speler uitdagen");
 		challengePlayerButton.setEnabled(false);
@@ -63,8 +63,8 @@ public class CompetitionView extends CorePanel{
 		backButton.addActionListener(listener);
 	}
 
-	public void fillCompetitions(CompetitionModel[] comp_ids) {
-		competitions.setListData(comp_ids);
+	public void fillCompetitions(String[] comp_desc) {
+		competitions.setListData(comp_desc);
 	}
 
 	public void fillPlayerList(AccountModel[] usersFromCompetition) {
