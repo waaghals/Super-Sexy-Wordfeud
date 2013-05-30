@@ -47,10 +47,11 @@ public class MainController extends CoreController {
 		addListeners();
 
 		addView(menu);
-		addModel(boardModel);
-		addModel(account);
 		addView(chatPanel);
 		addView(frame);
+		addModel(boardModel);
+		addModel(account);
+		
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -133,7 +134,6 @@ public class MainController extends CoreController {
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 			}
 		});
 
@@ -201,6 +201,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				sendChat();
 			}
 		});
@@ -246,7 +247,6 @@ public class MainController extends CoreController {
 				for (int x = 0; currentGame.getCurrentobserveturn() > x
 						|| currentGame.getCurrentobserveturn() == x; x++) {
 					currentGame.updateboardfromdatabasetoturn(x);
-
 				}
 				
 			}
@@ -261,12 +261,13 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);
+				accountcontroller.addView(chatPanel);
 			}
 		});
 	}
 
 	protected void openGame(GameModel selectedGame) {
-		removeModel(chatModel);
+		//removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
@@ -303,12 +304,14 @@ public class MainController extends CoreController {
 		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
 		frame.revalidate();
 		frame.repaint();
-
+		chatPanel.setEnabled(true);
+		
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
 			chatPanel.addToChatField(message);
 		}
+		chatModel.update();
 	}
 
 	private void setCurrentGame(GameModel selectedGame) {
@@ -319,6 +322,7 @@ public class MainController extends CoreController {
 		String message = chatPanel.getChatFieldSendText();
 
 		if (!message.equals("") && !message.equals(" ")) {
+			
 			chatModel.send(message);
 			chatModel.update();
 

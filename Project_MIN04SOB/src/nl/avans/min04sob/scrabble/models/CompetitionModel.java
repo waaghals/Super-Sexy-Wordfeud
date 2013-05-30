@@ -299,7 +299,8 @@ public class CompetitionModel extends CoreModel {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
 					.set(username).select();
 			if (db// TODO Automatisch gegenereerde methodestub
-					return null;Result.next()) {
+					return null;
+			Result.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}
 		} catch (SQLException sql) {

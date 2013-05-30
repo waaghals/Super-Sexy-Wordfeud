@@ -70,7 +70,7 @@ public class ResignController extends CoreController {
 	}
 	
 	private void doResign() {
-		gameModel.Resign();
+		gameModel.resign();
 		frame.dispose();
 		frame = null;
 	}
