@@ -95,22 +95,6 @@ public class CompetitionModel extends CoreModel {
 		}
 		return accounts;
 	}
-	
-	public String[] getAllCompetitions(){
-		String[] allComp = new String[0];
-		int x = 0;
-		try {
-			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `competitie`").select();
-			allComp = new String[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < allComp.length){
-				allComp[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return allComp;		
-	}
 
 	public void join(int competitionID, String username) {
 		try {
