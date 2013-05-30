@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JLabel;
@@ -23,21 +24,21 @@ public class ChangePassPanel extends CorePanel{
 	private JButton btnChange;
 	
 	public ChangePassPanel(){
-		setPreferredSize(new Dimension(532, 180));
+		setPreferredSize(new Dimension(460, 140));
 		setLayout(new MigLayout("", "[120px][100.00px][115.00px][100px]", "[30px][30px][30px][30px]"));
-		oldPassLabel = new JLabel("Oude wachtwoord");
+		oldPassLabel = new JLabel("Oud wachtwoord");
 		add(oldPassLabel, "cell 0 0,alignx right,aligny center");
 		oldPass = new JPasswordField(11);
 		add(oldPass, "cell 1 0 2 1,grow");
 		oldPassResult = new JLabel("");
 		add(oldPassResult, "cell 3 0,alignx center,aligny center");
-		newPass1Label = new JLabel("Nieuwe wachtwoord");
+		newPass1Label = new JLabel("Nieuw wachtwoord");
 		add(newPass1Label, "cell 0 1,alignx right,aligny center");
 		newPass1 = new JPasswordField(11);
 		add(newPass1, "cell 1 1 2 1,grow");
 		newPass1Result = new JLabel("");
 		add(newPass1Result, "cell 3 1,alignx center,aligny center");
-		newPass2Label = new JLabel("Herhaal wachtwoord");
+		newPass2Label = new JLabel("Herhaal nieuw wachtwoord");
 		add(newPass2Label, "cell 0 2,alignx right,aligny center");
 		newPass2 = new JPasswordField(11);
 		add(newPass2, "cell 1 2 2 1,grow");
@@ -55,20 +56,32 @@ public class ChangePassPanel extends CorePanel{
 		btnCancel.addActionListener(listener);
 	}
 	
+	public void addKeyListenerOldPass(KeyAdapter listener) {
+		oldPass.addKeyListener(listener);
+	}
+	
+	public void addKeyListenerNewPass1(KeyAdapter listener) {
+		newPass1.addKeyListener(listener);
+	}
+	
+	public void addKeyListenerNewPass2(KeyAdapter listener) {
+		newPass2.addKeyListener(listener);
+	}
+	
 	public void addChangeActionListener(ActionListener listener){
 		btnChange.addActionListener(listener);
 	}
 	
 	public String getOldPass(){
-		return oldPass.toString();
+		return new String(oldPass.getPassword());
 	}
 	
 	public String getNewPass1(){
-		return newPass1.toString();
+		return new String(newPass1.getPassword());
 	}
 	
 	public String getNewPass2(){
-		return newPass2.toString();
+		return new String(newPass2.getPassword());
 	}
 	
 	public void setOldPassGood(boolean good, String discription){
@@ -102,6 +115,18 @@ public class ChangePassPanel extends CorePanel{
 			newPass2Result.setText(discription);
 		}
 		
+	}
+	
+	public JPasswordField get1NewPass() {
+		return newPass1;
+	}
+	
+	public JPasswordField get2NewPass() {
+		return newPass2;
+	}
+	
+	public void passwordChange(){
+		btnChange.setEnabled(false);
 	}
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}

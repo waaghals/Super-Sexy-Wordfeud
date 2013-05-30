@@ -36,6 +36,7 @@ public class MainController extends CoreController {
 	private ChatModel chatModel;
 	private BoardModel boardModel;
 	private GameModel currentGame;
+	private InviteController invController;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
@@ -51,7 +52,6 @@ public class MainController extends CoreController {
 		addView(frame);
 		addModel(boardModel);
 		addModel(account);
-		
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -59,6 +59,7 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
+
 		frame.pack();
 	}
 
@@ -69,10 +70,8 @@ public class MainController extends CoreController {
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
 
-		//competitioncontroller = new CompetitionController();
+		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
-
-		crtl = new ChallengeController(account.getUsername());
 
 		currGamePanel = new BoardPanel();
 
@@ -83,7 +82,7 @@ public class MainController extends CoreController {
 		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
-		
+
 	}
 
 	@Override
@@ -116,13 +115,17 @@ public class MainController extends CoreController {
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account);
+				new CompetitionController(account).openCompetitionView();
 			}
 		});
 
 		menu.joinCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				new CompetitionController(account).openJoinCompetitionView();
+
+				//invController = new InviteController();
+				//invController.setButtonsJoin();
 			}
 		});
 
@@ -134,6 +137,10 @@ public class MainController extends CoreController {
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				invController = new InviteController();
+				invController.setButtonsRemove();
+
 			}
 		});
 
@@ -205,16 +212,14 @@ public class MainController extends CoreController {
 				sendChat();
 			}
 		});
-		
-	}
 
+	}
 
 	private void addButtonListeners() {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resigncontroller = new ResignController(currentGame);
-				System.out.println("Testresign");
 			}
 		});
 
@@ -222,36 +227,41 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentGame.setCurrentobserveturn(currentGame
-						.getCurrentobserveturn() + 1);
-				
-				currGamePanel.update();
+				if (currentGame.getCurrentobserveturn() < currentGame
+						.getNumberOfTotalTurns() + 1) {
+					currentGame.setCurrentobserveturn(currentGame
+							.getCurrentobserveturn() + 1);
 
-				
+					currGamePanel.update();
+
 					currentGame.updateboardfromdatabasetoturn(currentGame
 							.getCurrentobserveturn());
 
-				
 					currentGame.getBoardModel().update();
-			}
 
+					updatelabels(currentGame.getCurrentobserveturn());
+				}
+			}
 		});
 		currGamePanel.addPreviousActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentGame.setCurrentobserveturn(currentGame
-						.getCurrentobserveturn() - 1);
-				currentGame.getBoardModel().setBoardToDefault();
-				currGamePanel.update();
-				for (int x = 0; currentGame.getCurrentobserveturn() > x
-						|| currentGame.getCurrentobserveturn() == x; x++) {
-					currentGame.updateboardfromdatabasetoturn(x);
-				}
-				
-			}
-			
 
+				if (currentGame.getCurrentobserveturn() > 0) {
+					currentGame.setCurrentobserveturn(currentGame
+							.getCurrentobserveturn() - 1);
+					currentGame.getBoardModel().setBoardToDefault();
+					currGamePanel.update();
+					for (int x = 0; currentGame.getCurrentobserveturn() > x
+							|| currentGame.getCurrentobserveturn() == x; x++) {
+						currentGame.updateboardfromdatabasetoturn(x);
+
+					}
+					updatelabels(currentGame.getCurrentobserveturn());
+
+				}
+			}
 
 		});
 	}
@@ -267,12 +277,13 @@ public class MainController extends CoreController {
 	}
 
 	protected void openGame(GameModel selectedGame) {
-		//removeModel(chatModel);
+		// removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-
+		chatPanel.setEnabled(true);
+		chatPanel.getChatFieldSend().setEnabled(true);
 		frame.remove(currGamePanel);
 
 		ArrayList<GameModel> games;
@@ -285,15 +296,16 @@ public class MainController extends CoreController {
 
 		System.out.println("test");
 		boolean yourTurn = selectedGame.yourturn();
-		currGamePanel.setYourTurn(yourTurn);
 
-
-		// score.setText(games.get(x).score());
 		currGamePanel = new BoardPanel();
 		boardModel = selectedGame.getBoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
-		
+		AccountModel accountTurn;
+
+		updatelabels(selectedGame.getCurrentobserveturn());
+
+		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
 		selectedGame.setPlayerLetterFromDatabase();
 		selectedGame.getBoardFromDatabase();
@@ -305,7 +317,7 @@ public class MainController extends CoreController {
 		frame.revalidate();
 		frame.repaint();
 		chatPanel.setEnabled(true);
-		
+
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -318,11 +330,28 @@ public class MainController extends CoreController {
 		currentGame = selectedGame;
 	}
 
+	private void updatelabels(int toTurn) {
+		if (currentGame.isIamchallenger()) {
+			currGamePanel.setLabelsNamesScores(currentGame.getChallenger()
+					.getUsername(), currentGame.score(toTurn).split(",")[0],
+					currentGame.getOpponent().getUsername(),
+					currentGame.score(toTurn).split(",")[1]);
+
+		} else {
+			currGamePanel.setLabelsNamesScores(currentGame.getOpponent()
+					.getUsername(), currentGame.score(toTurn).split(",")[0],
+					currentGame.getChallenger().getUsername(), currentGame
+							.score(toTurn).split(",")[1]);
+
+		}
+		setTurnLabel();
+	}
+
 	public void sendChat() {
 		String message = chatPanel.getChatFieldSendText();
 
 		if (!message.equals("") && !message.equals(" ")) {
-			
+
 			chatModel.send(message);
 			chatModel.update();
 
@@ -334,6 +363,7 @@ public class MainController extends CoreController {
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
+			crtl = new ChallengeController(account.getUsername());
 			frame.getContentPane().add(currGamePanel,
 					"cell 4 0 6 6,growx,aligny top");
 
@@ -348,6 +378,18 @@ public class MainController extends CoreController {
 			frame.repaint();
 			break;
 
+		}
+	}
+
+	public void setTurnLabel() {
+		if (currentGame.isObserver()) {
+			if (currentGame.whosturn()) {
+				currGamePanel.setLabelPlayerTurn(" van "
+						+ currentGame.getChallenger().getUsername());
+			} else {
+				currGamePanel.setLabelPlayerTurn(" van "
+						+ currentGame.getOpponent().getUsername());
+			}
 		}
 	}
 }

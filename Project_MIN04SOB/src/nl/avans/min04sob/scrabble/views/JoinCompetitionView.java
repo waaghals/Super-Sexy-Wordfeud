@@ -3,6 +3,7 @@ package nl.avans.min04sob.scrabble.views;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,22 +24,22 @@ public class JoinCompetitionView extends CorePanel {
 	private JList<CompetitionModel> competitionList;
 	private JScrollPane scrollPane_2;
 	private JList<AccountModel> playerList;
-	private JButton actieButton;
-	private JButton annuleerButton;
+	private JButton actionButton;
+	private JButton cancelButton;
 	private JLabel competitionLabel;
-	private JLabel spelersLabel;
+	private JLabel playersLabel;
 	private String competitionLabelText;
-	private String spelersLabelText;
-	private String actieButtonText;
+	private String buttonText;
+	private JFrame myFrame;
 
 	public JoinCompetitionView() {
 		setLayout(new MigLayout("", "[100px:120px:120px,grow][200px:200px:220px,grow]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
-		competitionLabel = new JLabel("Beschikbare Competities");
+		competitionLabel = new JLabel("Beschikbare competities");
 		add(competitionLabel, "cell 0 0,alignx left");
 
-		spelersLabel = new JLabel("Spelers in de competitie"); 
-		add(spelersLabel, "cell 1 0,alignx right");
+		playersLabel = new JLabel("Spelers in de competitie"); 
+		add(playersLabel, "cell 1 0,alignx right");
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
@@ -52,19 +53,25 @@ public class JoinCompetitionView extends CorePanel {
 		playerList = new JList<AccountModel>();
 		scrollPane_2.setViewportView(playerList);
 
-		annuleerButton = new JButton("Annuleer");
-		add(annuleerButton, "cell 0 4,alignx left,aligny top");
+		cancelButton = new JButton("Annuleer");
+		add(cancelButton, "cell 0 4,alignx left,aligny top");
 		
-		actieButton = new JButton("Deelnemen");
-		add(actieButton, "cell 1 4,alignx right,growy");
+		actionButton = new JButton("Competitie deelnemen");
+		add(actionButton, "cell 1 4,alignx right,growy");
+
 	}
 
 	public void addActionListenerActieButton(ActionListener listener) {
-		actieButton.addActionListener(listener);
+		actionButton.addActionListener(listener);
 	}
 
 	public void addActionListenerAnnuleerButton(ActionListener listener) {
-		annuleerButton.addActionListener(listener);
+		cancelButton.addActionListener(listener);
+	}
+	
+	public CompetitionModel selectedCompetition(){
+		return competitionList.getSelectedValue();
+		
 	}
 
 	@Override
@@ -73,11 +80,14 @@ public class JoinCompetitionView extends CorePanel {
 
 	}
 
-	public void setButtons(String competitionLabelText,
-			String spelersLabelText, String actieButtonText) {
-		this.competitionLabelText = competitionLabelText;
-		this.spelersLabelText = spelersLabelText;
-		this.actieButtonText = actieButtonText;
+	public void setText(String labelText, String button) {
+		competitionLabel.setText(labelText);
+		actionButton.setText(button);
+		revalidate();
+	}
+
+	public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
+		competitionList.setListData(availableCompetitions);
 	}
 
 }

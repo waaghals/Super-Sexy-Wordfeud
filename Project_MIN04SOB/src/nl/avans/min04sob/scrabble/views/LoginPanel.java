@@ -54,6 +54,11 @@ public class LoginPanel extends CorePanel {
 		//add(registerButton, "cell 5 2 2 1,grow");
 	}
 
+	
+	public JTextField getPasswordField() {
+		return passwordField;
+	}
+	
 	public String getUsername() {
 		return usernameField.getText();
 	}
@@ -68,6 +73,10 @@ public class LoginPanel extends CorePanel {
 	
 	public void addKeyListenerPassword(KeyAdapter listener) {
 		passwordField.addKeyListener(listener);
+	}
+	
+	public void addKeyListenerUsername(KeyAdapter listener) {
+		usernameField.addKeyListener(listener);
 	}
 	
 	public void addActionListenerRegister(ActionListener listener) {

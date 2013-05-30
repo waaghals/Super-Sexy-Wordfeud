@@ -45,7 +45,7 @@ public class CompetitionModel extends CoreModel {
 			if (Query.getNumRows(res) == 1) {
 				res.next();
 				competitieId = res.getInt("id");
-				owner = new AccountModel(res.getString("account_naam_eigenaar"));
+				owner = new AccountModel(res.getString("account_naam_eigenaar"), false);
 				start = res.getDate("start");
 				end = res.getDate("einde");
 				desc = res.getString("omschrijving");
@@ -78,25 +78,6 @@ public class CompetitionModel extends CoreModel {
 		return all;
 	}
 
-	public CompetitionModel[] getCompitions(String username) {
-		CompetitionModel[] comp_ids = new CompetitionModel[0];
-		int x = 0;
-		try {
-			ResultSet dbResult = new Query(
-					"SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?")
-					.set(username).select();
-			comp_ids = new CompetitionModel[Query.getNumRows(dbResult)];
-			while (dbResult.next() && x < comp_ids.length) {
-				comp_ids[x] = new CompetitionModel(
-						dbResult.getInt("competitie_id"));
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return comp_ids;
-	}
-
 	public AccountModel[] getUsersFromCompetition(int competition_id) {
 		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
@@ -106,7 +87,7 @@ public class CompetitionModel extends CoreModel {
 					.set(competition_id).select();
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
-						dbResult.getString("account_naam"));
+						dbResult.getString("account_naam"),false);
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -298,9 +279,8 @@ public class CompetitionModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
 					.set(username).select();
-			if (db// TODO Automatisch gegenereerde methodestub
-					return null;
-			Result.next()) {
+
+			if (dbResult.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}
 		} catch (SQLException sql) {
@@ -338,5 +318,9 @@ public class CompetitionModel extends CoreModel {
 	
 	public Date getEndData(){
 		return end;
+	}
+	
+	public int getCompId(){
+		return competitieId;
 	}
 }

@@ -17,32 +17,16 @@ public class ResignController extends CoreController {
 	private String labelName;
 	
 	public ResignController(GameModel game) {
+		initialize();
+		addListeners();
+		
 		gameModel = game;
-		frame = new JFrame();
 		
-		resignPanel = new ResignPanel();
-		
+		frame.setAlwaysOnTop(true);
 		frame.add(resignPanel);
 		
 		addView(resignPanel);
 		addModel(gameModel);
-		
-		
-		resignPanel.addResignActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				doResign();
-			}
-		});
-		
-		resignPanel.addNoResignActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cancelResign();
-			}
-		});
-		setLabelName();
-		resignPanel.setResignLabelName(getLabelName());
 		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,14 +43,27 @@ public class ResignController extends CoreController {
 	
 	@Override
 	public void initialize() {
-		
-		
+		frame = new JFrame();
+		setLabelName();
+		resignPanel = new ResignPanel();
+		resignPanel.setResignLabelName(getLabelName());
 	}
 
 	@Override
 	public void addListeners() {
+		resignPanel.addResignActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				doResign();
+			}
+		});
 		
-		
+		resignPanel.addNoResignActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cancelResign();
+			}
+		});
 	}
 	
 	private void doResign() {
