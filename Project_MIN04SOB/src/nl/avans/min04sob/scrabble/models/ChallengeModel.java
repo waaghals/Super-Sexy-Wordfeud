@@ -32,14 +32,15 @@ public class ChallengeModel extends CoreModel  {
 	public String yourname=""; 
 	public Timer timer = new Timer();
 	public ArrayList <String> challenge = new ArrayList<String>();
+	private AccountModel accountModel = new AccountModel();
 	
 
-	public ChallengeModel(String name) throws SQLException  
+	public ChallengeModel() 
 	{
-	 yourname=name;
+		yourname = accountModel.getUsername();
 	}
 
-	public void controle(String Challengername,String  challegendname) throws SQLException//uitdager
+	public void controle(String  challegendname) throws SQLException//uitdager
 	{
 		///  zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
 
@@ -54,7 +55,7 @@ public class ChallengeModel extends CoreModel  {
 			result =  new Query(selectQuery) .select();
 			while(result.next()){
 				 
-				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(4).equals(Challengername)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN)||Challengername.equals(challegendname))  // hier ziet een fout in
+				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(4).equals(yourname)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN)||yourname.equals(challegendname))  // hier ziet een fout in
 				{
 					error = true;
 					commandsToChallengeview("4");
@@ -65,7 +66,7 @@ public class ChallengeModel extends CoreModel  {
 		 
 	 if(error!=true)
 	 {
-		createChallenge(Challengername, challegendname);
+		createChallenge(yourname, challegendname);
 	 }	
 	 
 	} 
@@ -73,8 +74,6 @@ public class ChallengeModel extends CoreModel  {
 	 
 	public void createChallenge(String Challengername,String  challegendname) throws SQLException//uitdager
 	{	
-		System.out.println(Challengername+"c");
-		System.out.println(challegendname+"x");
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);	

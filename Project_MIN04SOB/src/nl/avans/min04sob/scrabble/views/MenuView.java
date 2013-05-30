@@ -134,16 +134,16 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private void createCompetitionMenu() {
 		// create the menuItems
-		seeCompetitionsItem = new JMenuItem("Competitie's bekijken");
-		joinCompetitionItem = new JMenuItem("Deelnemen aan competitie's");
+		seeCompetitionsItem = new JMenuItem("Competities bekijken");
+		joinCompetitionItem = new JMenuItem("Deelnemen aan competities");
 		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
 		deleteCompetitionItem = new JMenuItem("verwijder competitie");
 		// add the menu and the menuItems
 
 		competitionMenu.add(seeCompetitionsItem);
 		competitionMenu.add(joinCompetitionItem);
-		competitionMenu.add(deleteFromCompetitionItem);
-		competitionMenu.add(deleteCompetitionItem);
+		//competitionMenu.add(deleteFromCompetitionItem);
+		//competitionMenu.add(deleteCompetitionItem);
 	}
 
 	private void setLoggedOutState() {
