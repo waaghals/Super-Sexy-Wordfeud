@@ -48,7 +48,7 @@ public class ChallengeModel extends CoreModel  {
 		String queryy = "SELECT COUNT(*)   FROM Spel ";
 		result =  new Query(queryy).select();
 		result.next();
-	 /*/
+	 
 		if(result.getInt(1)>0)
 		{
 			result =  new Query(selectQuery) .select();
@@ -62,7 +62,7 @@ public class ChallengeModel extends CoreModel  {
 				}
 			}
 		} 
-		  /*/
+		 
 	 if(error!=true)
 	 {
 		createChallenge(Challengername, challegendname);
@@ -127,11 +127,11 @@ public class ChallengeModel extends CoreModel  {
 			 
 			if(accepted==true){
 				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-				new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED).set( currentdate).set(yourname).set(yourname).exec(); 
+				new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED).set( currentdate).set(nameuitdager).set(yourname).exec(); 
 			}
 			else{
 				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-				new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED).set( currentdate).set(yourname).set(yourname).exec();
+				new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED).set( currentdate).set(nameuitdager).set(yourname).exec();
 			}
 			resultset.next();
 			for(int index=0;index < challenge.size();index++ ){	
