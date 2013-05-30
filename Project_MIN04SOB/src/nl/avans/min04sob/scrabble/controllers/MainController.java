@@ -101,6 +101,8 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				crtl
+				= new ChallengeController(account.getUsername());
 				crtl.toChallenge();
 
 			}
@@ -149,6 +151,7 @@ public class MainController extends CoreController {
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
+				closePanels();
 				// addLoginListener();
 			}
 		});
@@ -277,14 +280,15 @@ public class MainController extends CoreController {
 	}
 
 	protected void openGame(GameModel selectedGame) {
-		// removeModel(chatModel);
+		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-		chatPanel.setEnabled(true);
+		//chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
-		frame.remove(currGamePanel);
+		//frame.remove(currGamePanel);
+		openPanels();
 
 		ArrayList<GameModel> games;
 		StashModel stash = new StashModel();
@@ -313,11 +317,12 @@ public class MainController extends CoreController {
 
 		addButtonListeners();
 
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-		frame.revalidate();
-		frame.repaint();
-		chatPanel.setEnabled(true);
+		//frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		//frame.revalidate();
+		//frame.repaint();
+		//chatPanel.setEnabled(true);
 
+		
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -359,26 +364,22 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
+	
+	public void openPanels(){
+		crtl = new ChallengeController(account.getUsername());
+		frame.add(currGamePanel,
+				"cell 4 0 6 6,growx,aligny top");
 
-	public void propertyChange(PropertyChangeEvent evt) {
-		switch (evt.getPropertyName()) {
-		case Event.LOGIN:
-			crtl = new ChallengeController(account.getUsername());
-			frame.getContentPane().add(currGamePanel,
-					"cell 4 0 6 6,growx,aligny top");
-
-			frame.getContentPane().add(chatPanel,
-					"cell 0 0 4 6,alignx left,aligny top");
-			frame.repaint();
-
-			break;
-		case Event.LOGOUT:
-			frame.getContentPane().remove(currGamePanel);
-			frame.getContentPane().remove(chatPanel);
-			frame.repaint();
-			break;
-
-		}
+		frame.add(chatPanel,
+				"cell 0 0 4 6,alignx left,aligny top");
+		frame.revalidate();
+		frame.repaint();
+	}
+	
+	public void closePanels(){
+		frame.remove(currGamePanel);
+		frame.remove(chatPanel);
+		frame.repaint();
 	}
 
 	public void setTurnLabel() {
