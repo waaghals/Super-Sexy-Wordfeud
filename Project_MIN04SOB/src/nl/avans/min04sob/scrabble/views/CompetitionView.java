@@ -15,20 +15,20 @@ import javax.swing.JLabel;
 
 public class CompetitionView extends CorePanel{
 	
-	private JLabel subscribedCompetitionsLabel;
+	private JLabel competitionsLabel;
 	private JLabel playersInCompetitonLabel;
 	private JScrollPane scrollPane;
-	private JList<String> competitions;
+	private JList<String> competitionsList;
 	private JScrollPane scrollPane_1;
 	private JList<AccountModel> playerList;
 	private JButton backButton;
-	private JButton challengePlayerButton;
+	private JButton actionButton;
 	
 	public CompetitionView(){
-		setLayout(new MigLayout("", "[200px:220px:260px][150px:160.00px:170px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
+		setLayout(new MigLayout("", "[200px:220px:260px][155px:160.00px:170px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
 		
-		subscribedCompetitionsLabel = new JLabel("Ingeschreven competities");
-		add(subscribedCompetitionsLabel, "cell 0 0,alignx left");
+		competitionsLabel = new JLabel("Ingeschreven competities");
+		add(competitionsLabel, "cell 0 0,alignx left");
 		
 		playersInCompetitonLabel = new JLabel("Spelers in de competitie");
 		add(playersInCompetitonLabel, "cell 1 0,alignx right");
@@ -36,8 +36,8 @@ public class CompetitionView extends CorePanel{
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 		
-		competitions = new JList<String>();
-		scrollPane.setViewportView(competitions);
+		competitionsList = new JList<String>();
+		scrollPane.setViewportView(competitionsList);
 		
 		scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 1 1,grow");
@@ -48,9 +48,9 @@ public class CompetitionView extends CorePanel{
 		backButton = new JButton("Terug");
 		add(backButton, "cell 0 2,alignx left");
 		
-		challengePlayerButton = new JButton("Speler uitdagen");
-		challengePlayerButton.setEnabled(false);
-		add(challengePlayerButton, "cell 1 2,alignx right");
+		actionButton = new JButton("Speler uitdagen");
+		actionButton.setEnabled(false);
+		add(actionButton, "cell 1 2,alignx right");
 	}
 
 	@Override
@@ -59,16 +59,37 @@ public class CompetitionView extends CorePanel{
 		
 	}
 	
+	public void setText(String labelText,String labelText2, String button, boolean visible) {
+		playersInCompetitonLabel.setText(labelText2);
+		competitionsLabel.setText(labelText);
+		actionButton.setText(button);
+		actionButton.setVisible(visible);
+		revalidate();
+	}
+	
 	public void addBackListener(ActionListener listener){
 		backButton.addActionListener(listener);
 	}
+	
+	public void addActionButtonListener(ActionListener listener){
+		actionButton.addActionListener(listener);
+	}
 
 	public void fillCompetitions(String[] comp_desc) {
-		competitions.setListData(comp_desc);
+		competitionsList.setListData(comp_desc);
 	}
 
 	public void fillPlayerList(AccountModel[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
-		challengePlayerButton.setEnabled(true);
+		actionButton.setEnabled(true);
+	}
+	
+	public void fillAvailableCompetitions(String[] availableCompetitions) {
+		competitionsList.setListData(availableCompetitions);
+		actionButton.setEnabled(true);
+	}
+
+	public void fillAllCompetitions(String[] allCompetitions) {
+		competitionsList.setListData(allCompetitions);
 	}
 }
