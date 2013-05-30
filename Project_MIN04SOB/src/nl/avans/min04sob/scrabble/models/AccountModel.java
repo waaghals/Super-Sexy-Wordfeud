@@ -129,6 +129,22 @@ public class AccountModel extends CoreModel {
 		return false;
 	}
 	
+	public String[] getAllCompetitions(){
+		String[] allComps = new String[0];
+		int x = 0;
+		try {
+			ResultSet dbResult = new Query("SELECT DISTINCT(`competitie_id`) FROM `deelnemer`").select();
+			allComps = new String[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < allComps.length){
+				allComps[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+				x++;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return allComps;		
+	}
+	
 	public String[] getCompetitions(String username){
 		String[] comp_desc = new String[0];
 		int x = 0;

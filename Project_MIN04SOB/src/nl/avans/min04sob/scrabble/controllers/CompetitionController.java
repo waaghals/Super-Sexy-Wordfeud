@@ -112,6 +112,8 @@ public class CompetitionController extends CoreController {
 		window.setPreferredSize(new Dimension(400,320));
 		window.setResizable(false);
 		window.pack();
+	
+		competitionView.setText("Competities", "Spelers in competitie", "hoi",false);
 		
 		competitionView.addBackListener(new ActionListener(){
 
@@ -120,17 +122,27 @@ public class CompetitionController extends CoreController {
 			}	
 		});
 		
-		competitionView.addActionButtonListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}	
-		});
-		
-		competitionView.setText("Competities", "Spelers in competitie", "",false);
-		
 		getAllCompetitions();
 		
 	}
+	
+	public void getCompetitions(String username){
+		competitionView.fillCompetitions(accountModel.getCompetitions(username));
+	}
+	
+	public void getParticipants(int competition_id){
+		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
+	}
+	
+	public void getAvailable(String username){
+		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
+	}
+	
+	public void getAllCompetitions(){
+		competitionView.fillCompetitions(accountModel.getAllCompetitions());
+	}
+	
+	
 	
 	public void openDeleteCompetitionView() {
 		window = new CoreWindow();
@@ -154,8 +166,7 @@ public class CompetitionController extends CoreController {
 		});
 		
 		competitionView.setText("Competities", "Spelers in competitie", "Verwijder Competitie",true);
-		
-		getAllCompetitions();	
+			
 	}
 	
 	public void openDeleteFromCompetitionView() {
@@ -183,21 +194,4 @@ public class CompetitionController extends CoreController {
 		
 		getAvailable(accountModel.toString());	
 	}
-	
-	public void getCompetitions(String username){
-		competitionView.fillCompetitions(accountModel.getCompetitions(username));
-	}
-	
-	public void getParticipants(int competition_id){
-		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
-	}
-	
-	public void getAvailable(String username){
-		competitionView.fillAvailableCompetitions(accountModel.getAvailableCompetitions(username));
-	}
-	
-	public void getAllCompetitions(){
-		competitionView.fillAllCompetitions(competitionModel.getAllCompetitions());
-	}
-
 }
