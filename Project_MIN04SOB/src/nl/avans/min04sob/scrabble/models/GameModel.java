@@ -425,7 +425,7 @@ public class GameModel extends CoreModel {
 				max = letterPos.getX();
 			}
 		}
-
+	
 		// Everything went better than expected.jpg :)
 	}
 
