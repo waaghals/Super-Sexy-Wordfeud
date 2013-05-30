@@ -136,7 +136,7 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query("SELECT DISTINCT(`competitie_id`) FROM `deelnemer`").select();
 			allComps = new String[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < allComps.length){
-				allComps[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+				allComps[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -152,7 +152,7 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
 			comp_desc = new String[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -169,7 +169,7 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = new Query(availableCompetitionQuery).set(username).select();
 			comp_desc = new String[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
 				x++;
 			}
 		} catch (SQLException sql) {
