@@ -430,9 +430,12 @@ public class GameModel extends CoreModel {
 	}
 
 	public void checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
-		//verticaal woord
-		if(true){
-			ArrayList[] horzontalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
+		// verticaal woord
+		if (true) {
+			ArrayList[] horzontalenwoorden = { new ArrayList<Tile>(),
+					new ArrayList<Tile>(), new ArrayList<Tile>(),
+					new ArrayList<Tile>(), new ArrayList<Tile>(),
+					new ArrayList<Tile>(), new ArrayList<Tile>() };
 			ArrayList<Tile> verticalLetters = new ArrayList<Tile>();
 			int holdX = 100;
 			boolean hasNotBeenDown = true;
@@ -442,16 +445,16 @@ public class GameModel extends CoreModel {
 						int counterX = x;
 						holdX = x;
 						boolean hasNotBeenLeft = true;
-						while(counterX > 0) {
-							if (newBoard[y][counterX] != null
-									&& hasNotBeenLeft) {
+						while (counterX > 0) {
+							if (newBoard[y][counterX] != null && hasNotBeenLeft) {
 								counterX--;
-							} else if (newBoard[y][counterX] != null) {		
-								horzontalenwoorden[y].add(newBoard[y][counterX]);
+							} else if (newBoard[y][counterX] != null) {
+								horzontalenwoorden[y]
+										.add(newBoard[y][counterX]);
 								counterX++;
 							} else {
 								counterX++;
-								if(!hasNotBeenLeft){
+								if (!hasNotBeenLeft) {
 									break;
 								}
 								hasNotBeenLeft = false;
@@ -459,31 +462,34 @@ public class GameModel extends CoreModel {
 						}
 					}
 				}
-				if(holdX!=100){
-					if(playedLetters[y][holdX] == null){
+				if (holdX != 100) {
+					if (playedLetters[y][holdX] == null) {
 						hasNotBeenDown = false;
 					}
-					if(hasNotBeenDown){
-						verticalLetters.add(playedLetters[y][holdX]);		
+					if (hasNotBeenDown) {
+						verticalLetters.add(playedLetters[y][holdX]);
 					}
 				}
 			}
-			for(ArrayList<Tile> array : horzontalenwoorden){
-				if(array.size()>1){
-					for(Tile t : array){
+			for (ArrayList<Tile> array : horzontalenwoorden) {
+				if (array.size() > 1) {
+					for (Tile t : array) {
 						System.out.println(t.getLetter());
 					}
 				}
-				
+
 			}
-			
-			for(Tile t : verticalLetters){
+
+			for (Tile t : verticalLetters) {
 				System.out.println(t.getLetter());
 			}
 		}
-		//horizontaal woord
-		else if(false){
-			ArrayList[] verticalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
+		// horizontaal woord
+		else if (false) {
+			ArrayList[] verticalenwoorden = { new ArrayList<Tile>(),
+					new ArrayList<Tile>(), new ArrayList<Tile>(),
+					new ArrayList<Tile>(), new ArrayList<Tile>(),
+					new ArrayList<Tile>(), new ArrayList<Tile>() };
 			ArrayList<Tile> horizontalenLetters = new ArrayList<Tile>();
 			int holdY = 100;
 			boolean hasNotBeenRight = true;
@@ -534,6 +540,73 @@ public class GameModel extends CoreModel {
 		return (Boolean) null;
 
 	}
+
+	public int getScore(Tile[][] playedLetters,ArrayList[] woorden, BoardModel currentBoard){
+		int Score = 0;
+		for(int wordCounter = 0 ;woorden.length < wordCounter+1;wordCounter++){
+			int scoreofcurrentword = 0;
+			boolean times3 = false;
+			boolean times2 = false;
+			for(int letterCounter = 0; woorden[wordCounter].size() < letterCounter; letterCounter++){
+				int scoreofcurrentletter = 0;
+				scoreofcurrentletter = ((Tile) woorden[wordCounter].get(letterCounter)).getValue();
+				// check if any played letter are on special tiles
+				
+				for(int xpos = 0;playedLetters.length > xpos;xpos++){
+					for(int ypos = 0;playedLetters[xpos].length > ypos; ypos++){
+						if(((Tile) woorden[wordCounter].get(letterCounter) == playedLetters[xpos][ypos])){
+							
+						
+						switch (currentBoard.getMultiplier(new Point(xpos,ypos))){
+						case 4:
+							//Triple letter 
+							scoreofcurrentletter = scoreofcurrentletter * 3;
+							break;
+						case 3:
+							//dubbel letter
+							scoreofcurrentletter = scoreofcurrentletter * 2;
+							break;
+						case 2:
+							//tripple woord
+							times3 = true;
+							
+							break;
+						case 1:
+							//dubble woord
+							times2 = true;
+							
+						
+							break;
+						}
+						}
+						if(currentBoard.getMultiplier(new Point(xpos,ypos)) ==  1 ){
+							
+						}
+						
+						
+					}
+				}
+				scoreofcurrentword =+ scoreofcurrentletter;
+				
+				
+			}
+		if(times3){
+			scoreofcurrentword = scoreofcurrentword * 3;
+			
+		}else if(times2){
+			scoreofcurrentword = scoreofcurrentword * 2;
+		}
+		
+			
+		Score =+ scoreofcurrentword;
+			
+		}
+		
+		
+		return Score;
+	}
+
+	
 
 	public boolean whosturn() {
 		// dont use unless observing
