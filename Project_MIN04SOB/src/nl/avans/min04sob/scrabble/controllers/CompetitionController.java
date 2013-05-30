@@ -42,7 +42,7 @@ public class CompetitionController extends CoreController {
 	public void addListeners() {
 		// TODO Auto-generated method stub
 	}
-	
+	//speler uitdagen
 	public void openCompetitionView(){
 		window = new CoreWindow();
 		window.add(competitionView);
@@ -68,7 +68,7 @@ public class CompetitionController extends CoreController {
 		
 		getCompetitions(accountModel.toString());
 	}
-	
+	//deelnemen aan competities
 	public void openJoinCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
@@ -95,7 +95,7 @@ public class CompetitionController extends CoreController {
 		getAvailable(accountModel.toString());
 		
 	}
-	
+	//competities bekijken
 	public void openCompetitionScores(){
 		window = new CoreWindow();
 		window.add(competitionView);
@@ -190,11 +190,5 @@ public class CompetitionController extends CoreController {
 	public void getAllCompetitions(){
 		competitionView.fillAllCompetitions(competitionModel.getAllCompetitions());
 	}
-
-
-
-
-
-	
 
 }
