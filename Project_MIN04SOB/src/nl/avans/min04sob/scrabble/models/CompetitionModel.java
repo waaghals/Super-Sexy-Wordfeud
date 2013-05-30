@@ -104,6 +104,7 @@ public class CompetitionModel extends CoreModel {
 			allComp = new String[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < allComp.length){
 				allComp[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+				x++;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();

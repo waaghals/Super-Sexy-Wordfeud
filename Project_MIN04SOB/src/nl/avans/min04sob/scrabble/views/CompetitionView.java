@@ -25,7 +25,7 @@ public class CompetitionView extends CorePanel{
 	private JButton actionButton;
 	
 	public CompetitionView(){
-		setLayout(new MigLayout("", "[200px:220px:260px][150px:160.00px:170px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
+		setLayout(new MigLayout("", "[200px:220px:260px][155px:160.00px:170px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
 		
 		competitionsLabel = new JLabel("Ingeschreven competities");
 		add(competitionsLabel, "cell 0 0,alignx left");
@@ -86,6 +86,7 @@ public class CompetitionView extends CorePanel{
 	
 	public void fillAvailableCompetitions(String[] availableCompetitions) {
 		competitionsList.setListData(availableCompetitions);
+		actionButton.setEnabled(true);
 	}
 
 	public void fillAllCompetitions(String[] allCompetitions) {

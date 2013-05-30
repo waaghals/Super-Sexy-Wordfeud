@@ -120,6 +120,25 @@ public class CompetitionController extends CoreController {
 		getAllCompetitions();	
 	}
 	
+	public void openDeleteFromCompetitionView() {
+		window = new CoreWindow();
+		window.add(competitionView);
+		
+		window.setPreferredSize(new Dimension(400,320));
+		window.pack();
+		
+		competitionView.addBackListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
+			}	
+		});
+		
+		competitionView.setText("Ingeschreven Competities", "Spelers in competitie", "Verwijderen uit Competitie",true);
+		
+		getAvailable(accountModel.toString());	
+	}
+	
 	public void getCompetitions(String username){
 		competitionView.fillCompetitions(accountModel.getCompetitions(username));
 	}
@@ -135,6 +154,8 @@ public class CompetitionController extends CoreController {
 	public void getAllCompetitions(){
 		competitionView.fillAllCompetitions(competitionModel.getAllCompetitions());
 	}
+
+
 
 
 

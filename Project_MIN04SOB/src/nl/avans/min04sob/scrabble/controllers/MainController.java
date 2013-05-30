@@ -137,6 +137,12 @@ public class MainController extends CoreController {
 				new AcceptDeclineController();
 			}
 		});
+		
+		menu.deleteFromCompetitionItem(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new CompetitionController(account).openDeleteFromCompetitionView();
+			}
+		});
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
