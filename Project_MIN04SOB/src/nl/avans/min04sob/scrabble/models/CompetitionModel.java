@@ -302,6 +302,10 @@ public class CompetitionModel extends CoreModel {
 		return average;
 
 	}
+	
+	public String toString(){
+		return desc +" : "+ owner;
+	}
 
 	public String getDesc() {
 		return desc;
