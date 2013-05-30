@@ -54,7 +54,7 @@ public class InviteController extends CoreController {
 	}
 
 	public void actieButton() {
-
+		//code voor uitdagen van een speler
 	}
 
 	public void annuleerButton() {

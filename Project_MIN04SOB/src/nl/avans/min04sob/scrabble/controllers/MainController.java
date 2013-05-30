@@ -1,3 +1,4 @@
+
 package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
@@ -102,7 +103,8 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				crtl.toChallenge();
+				new CompetitionController(account).openCompetitionView();
+				//crtl.toChallenge();
 
 			}
 		});
@@ -116,7 +118,7 @@ public class MainController extends CoreController {
 
 		menu.seeCompetitionsItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openCompetitionView();
+				new CompetitionController(account).openCompetitionScores();
 			}
 		});
 
@@ -135,11 +137,19 @@ public class MainController extends CoreController {
 				new AcceptDeclineController();
 			}
 		});
+		
+		menu.deleteFromCompetitionItem(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new CompetitionController(account).openDeleteFromCompetitionView();
+			}
+		});
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				invController = new InviteController();
-				invController.setButtonsRemove();
+				new CompetitionController(account).openDeleteCompetitionView();
+				
+				//invController = new InviteController();
+				//invController.setButtonsRemove();
 			}
 		});
 
@@ -386,3 +396,4 @@ public class MainController extends CoreController {
 		}
 	}
 }
+

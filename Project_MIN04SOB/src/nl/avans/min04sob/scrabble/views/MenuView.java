@@ -35,6 +35,7 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private JMenuItem seeCompetitionsItem;
 	private JMenuItem joinCompetitionItem;
+	private JMenuItem deleteFromCompetitionItem;
 	private JMenuItem deleteCompetitionItem;
 
 	private JMenuItem viewWords;
@@ -135,11 +136,13 @@ public class MenuView extends JMenuBar implements CoreView {
 		// create the menuItems
 		seeCompetitionsItem = new JMenuItem("Competitie's bekijken");
 		joinCompetitionItem = new JMenuItem("Deelnemen aan competitie's");
+		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
 		deleteCompetitionItem = new JMenuItem("verwijder competitie");
 		// add the menu and the menuItems
 
 		competitionMenu.add(seeCompetitionsItem);
 		competitionMenu.add(joinCompetitionItem);
+		competitionMenu.add(deleteFromCompetitionItem);
 		competitionMenu.add(deleteCompetitionItem);
 	}
 
@@ -246,6 +249,10 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	public void joinCompetitionItem(ActionListener listener) {
 		joinCompetitionItem.addActionListener(listener);
+	}
+	
+	public void deleteFromCompetitionItem(ActionListener listener){
+		deleteFromCompetitionItem.addActionListener(listener);
 	}
 
 	public void viewWords(ActionListener listener) {

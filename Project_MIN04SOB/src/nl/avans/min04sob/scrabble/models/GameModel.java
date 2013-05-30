@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import nl.avans.min04sob.scrabble.controllers.BoardController;
@@ -358,10 +359,9 @@ public class GameModel extends CoreModel {
 		System.out.println(Arrays.deepToString(newMatrix));
 	}
 
-
 	public static void main2(String[] args) {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel(0, null,null,false).test();
+		new GameModel(0, null, null, false).test();
 	}
 
 	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
@@ -429,6 +429,67 @@ public class GameModel extends CoreModel {
 		// Everything went better than expected.jpg :)
 	}
 
+	public void checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
+		//verticaal woord
+		if(true){
+			ArrayList[] horzontalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
+			ArrayList<Tile> verticalLetters = new ArrayList<Tile>();
+			int holdX = 100;
+			boolean hasNotBeenDown = true;
+			for (int y = 0; y < 15; y++) {
+				for (int x = 0; x < 15; x++) {
+					if (playedLetters[y][x] != null) {
+						int counterX = x;
+						holdX = x;
+						boolean hasNotBeenLeft = true;
+						while(counterX > 0) {
+							if (newBoard[y][counterX] != null
+									&& hasNotBeenLeft) {
+								counterX--;
+							} else if (newBoard[y][counterX] != null) {		
+								horzontalenwoorden[y].add(newBoard[y][counterX]);
+								counterX++;
+							} else {
+								counterX++;
+								if(!hasNotBeenLeft){
+									break;
+								}
+								hasNotBeenLeft = false;
+							}
+						}
+					}
+				}
+				if(holdX!=100){
+					if(playedLetters[y][holdX] == null){
+						hasNotBeenDown = false;
+					}
+					if(hasNotBeenDown){
+						verticalLetters.add(playedLetters[y][holdX]);		
+					}
+				}
+			}
+			for(ArrayList<Tile> array : horzontalenwoorden){
+				if(array.size()>1){
+					for(Tile t : array){
+						System.out.println(t.getLetter());
+					}
+				}
+				
+			}
+			
+			for(Tile t : verticalLetters){
+				System.out.println(t.getLetter());
+			}
+		}
+		//horizontaal woord
+		else if(false){
+			ArrayList[] verticalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
+			ArrayList<Tile> horizontalenLetters = new ArrayList<Tile>();
+			int holdY = 100;
+			boolean hasNotBeenRight = true;
+		}
+	}
+
 	public BoardModel getBoardModel() {
 		return boardModel;
 	}
@@ -480,18 +541,17 @@ public class GameModel extends CoreModel {
 		if (observer) {
 			ResultSet res;
 			try {
-				res = new Query(whosTurnAtTurn).set(getGameId()).set(currentobserveturn).select();
-				
+				res = new Query(whosTurnAtTurn).set(getGameId())
+						.set(currentobserveturn).select();
 
 				res.next();
 				String lastturnplayername = res.getString("account_naam");
-				
+
 				if (lastturnplayername.equals(challenger.getUsername())) {
 					return false;
 				} else {
 					return true;
 				}
-				
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -502,7 +562,8 @@ public class GameModel extends CoreModel {
 		return (Boolean) null;
 
 	}
-	public boolean isObserver(){
+
+	public boolean isObserver() {
 		return observer;
 	}
 
@@ -539,7 +600,7 @@ public class GameModel extends CoreModel {
 					counter += s.getInt(2);
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
