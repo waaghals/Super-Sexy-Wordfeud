@@ -57,8 +57,7 @@ public class BoardPanel extends CorePanel {
 	private JLabel playerNameLabel;
 	
 	private JLabel playerScoreLabel;
-	
-	
+
 
 	public BoardPanel() {
 		setLayout(new MigLayout(
@@ -250,6 +249,7 @@ public class BoardPanel extends CorePanel {
 	public void setLabelScore(int currTurnScore){
 		this.playerScoreLabel.setText(Integer.toString(currTurnScore));
 	}
+	
 	
 
 }
