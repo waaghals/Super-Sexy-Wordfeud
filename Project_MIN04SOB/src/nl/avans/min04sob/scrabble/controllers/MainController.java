@@ -289,6 +289,7 @@ public class MainController extends CoreController {
 	}
 
 	protected void openGame(GameModel selectedGame) {
+		
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
@@ -297,7 +298,8 @@ public class MainController extends CoreController {
 		//chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
 		//frame.remove(currGamePanel);
-		openPanels();
+		closePanels();
+		
 
 		ArrayList<GameModel> games;
 		StashModel stash = new StashModel();
@@ -330,7 +332,7 @@ public class MainController extends CoreController {
 		//frame.revalidate();
 		//frame.repaint();
 		//chatPanel.setEnabled(true);
-
+		openPanels();
 		
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
@@ -375,7 +377,6 @@ public class MainController extends CoreController {
 	}
 	
 	public void openPanels(){
-		crtl = new ChallengeController(account.getUsername());
 		frame.add(currGamePanel,
 				"cell 4 0 6 6,growx,aligny top");
 
