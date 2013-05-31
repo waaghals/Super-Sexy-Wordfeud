@@ -56,6 +56,10 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public CompetitionModel(){
+		
+	}
 
 	@Override
 	public void update() {
@@ -99,21 +103,25 @@ public class CompetitionModel extends CoreModel {
 	public int getCompetitionID(String desc){
 		int id = 0;
 		try {
+
 			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
-			if(dbResult.next()){
+			while(dbResult.next()){
 				id = dbResult.getInt("id");
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+
 		return id;
+		
+
 	}
 
 	public void join(int competitionID, String username) {
 		try {
 			// zorgt dat de deelnemer niet kan inschrijven omdat hij al
 			// ingeschreven is
-			boolean ingeschreven = false;
+			/*boolean ingeschreven = false;
 			ResultSet dbResult = new Query(query).select();
 			while (dbResult.next()) {
 				if (dbResult.getString("account_naam").equals(username)) {
@@ -121,10 +129,10 @@ public class CompetitionModel extends CoreModel {
 					break;
 				}
 			}
-			if (ingeschreven == false) {
+			if (ingeschreven == false) {*/
 				new Query(joinQuery).set(competitionID).set(username)
 						.set(ranking).exec();
-			}
+			
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

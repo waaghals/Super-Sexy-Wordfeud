@@ -28,22 +28,23 @@ public class ChallengeModel extends CoreModel  {
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
 	private final String selectQuery = "SELECT * FROM `Spel`; "; 
-	public ResultSet result;
-	public String yourname=""; 
-	public Timer timer = new Timer();
-	public ArrayList <String> challenge = new ArrayList<String>();
-	private AccountModel accountModel = new AccountModel();
+	private ResultSet result;
+	private String yourname; 
+	private Timer timer = new Timer();
+	private ArrayList <String> challenge = new ArrayList<String>();
+	private AccountModel accountModel;
 	
 
-	public ChallengeModel() 
+	public ChallengeModel(AccountModel user) 
 	{
+		accountModel = user;
 		yourname = accountModel.getUsername();
 	}
 
 	public void controle(String  challegendname) throws SQLException//uitdager
 	{
 		///  zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
-
+		yourname = accountModel.getUsername();
 		boolean error = false;
  
 		String queryy = "SELECT COUNT(*)   FROM Spel ";
@@ -58,7 +59,6 @@ public class ChallengeModel extends CoreModel  {
 				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(4).equals(yourname)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN)||yourname.equals(challegendname))  // hier ziet een fout in
 				{
 					error = true;
-					commandsToChallengeview("4");
 					break;
 				}
 			}
@@ -77,8 +77,7 @@ public class ChallengeModel extends CoreModel  {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);	
-	 
-	            System.out.println(Challengername);
+
 				String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
 				try {
 					new Query(query).set(1).set(STATE_REQUEST).set(Challengername).set(challegendname).set(currentdate).set(STATE_UNKNOWN).set(currentdate).set("standard").set("NL"). exec();
@@ -94,6 +93,7 @@ public class ChallengeModel extends CoreModel  {
  ///// receive challenge    your name = challenged ///// ///// ///// ///// ///// ///// /////
 ///array list add alleen als challend= yourname;;		
 		try {
+			yourname = accountModel.getUsername();
 			ResultSet dbResult = new Query(selectQuery).select();
 			while (dbResult.next()){
 				 if(!challenge.contains(dbResult.getString(4))){
@@ -108,22 +108,17 @@ public class ChallengeModel extends CoreModel  {
 	 
 	}
 	 
-	public void respondChallenge(String nameuitdager,boolean accepted) throws SQLException // uitdgedaagde
+	public void respondChallenge(String nameuitdager, boolean accepted) throws SQLException // uitdgedaagde
 	{
 		//where
-	 
+		yourname = accountModel.getUsername();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
-		 
-		
 		String query  = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=?";
-		
-
-		ResultSet resultset = new Query(query).set(nameuitdager).set(yourname).select(); /// VERANDER
+		ResultSet resultset = new Query(query).set(yourname).set(yourname).select(); /// VERANDER
 		String query2 ="";
- 
-			 
+
 			if(accepted==true){
 				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
 				new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED).set( currentdate).set(nameuitdager).set(yourname).exec(); 
@@ -141,13 +136,6 @@ public class ChallengeModel extends CoreModel  {
 					System.out.println("oke");
 				}
 			}	
-	}
- 
-	public void commandsToChallengeview(String commando)
-	{	
-		System.out.println(commando+commando);
-		firePropertyChange(commando, null,  null);
-		
 	}
 	
 	public ArrayList<String> challengeArray() 
