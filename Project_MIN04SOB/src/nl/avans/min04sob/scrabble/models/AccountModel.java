@@ -125,14 +125,14 @@ public class AccountModel extends CoreModel {
 		return false;
 	}
 	
-	public String[] getCompetitions(String username){
-		String[] comp_desc = new String[0];
+	public CompetitionModel[] getCompetitions(String username){
+		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
 			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
-			comp_desc = new String[Query.getNumRows(dbResult)];
+			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -141,15 +141,15 @@ public class AccountModel extends CoreModel {
 		return comp_desc;
 	}
 	
-	public String[] getAvailableCompetitions(String username){
-		String[] comp_desc = new String[0];
+	public CompetitionModel[] getAvailableCompetitions(String username){
+		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
 			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft		
 			ResultSet dbResult = new Query(availableCompetitionQuery).set(username).select();
-			comp_desc = new String[Query.getNumRows(dbResult)];
+			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException sql) {

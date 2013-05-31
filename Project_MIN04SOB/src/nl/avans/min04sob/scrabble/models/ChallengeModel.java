@@ -39,7 +39,7 @@ public class ChallengeModel extends CoreModel {
 		yourname = accountModel.getUsername();
 	}
 
-	public void controle(String challegendname) throws SQLException// uitdager
+	public void controle(AccountModel challegendname) throws SQLException// uitdager
 	{
 
 		/// zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
@@ -56,9 +56,9 @@ public class ChallengeModel extends CoreModel {
 
 				if (result.getString(7).equals(STATE_UNKNOWN)
 						&& result.getString(4).equals(yourname)
-						&& result.getString(5).equals(challegendname)
+						&& result.getString(5).equals(challegendname.getUsername())
 						&& result.getString(3).equals(STATE_UNKNOWN)
-						|| yourname.equals(challegendname)) // hier ziet een
+						|| yourname.equals(challegendname.getUsername())) // hier ziet een
 															// fout in
 				{
 					error = true;
@@ -68,7 +68,7 @@ public class ChallengeModel extends CoreModel {
 		}
 
 		if (!error) {
-			createChallenge(yourname, challegendname);
+			createChallenge(yourname, challegendname.getUsername());
 		}
 
 	}

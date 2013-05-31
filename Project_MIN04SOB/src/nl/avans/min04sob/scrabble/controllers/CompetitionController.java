@@ -7,17 +7,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.views.CompetitionView;
-import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class CompetitionController extends CoreController {
 
@@ -78,9 +73,8 @@ public class CompetitionController extends CoreController {
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
-					String desc = competitionView.getSelectedCompetition();
-					int index = competitionModel.getCompetitionID(desc);
-					getParticipants(index);
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
 				}
 			}
 		});
@@ -108,8 +102,8 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if(competitionView.getSelectedCompetition() != null){
-					String desc = competitionView.getSelectedCompetition();
-					competitionModel.join(competitionModel.getCompetitionID(desc), accountModel.toString());
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
 					//competitionView.removeIndex(competitionView.getIndex());
 				}
 				else{
@@ -122,9 +116,8 @@ public class CompetitionController extends CoreController {
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
-					String desc = competitionView.getSelectedCompetition();
-					int index = competitionModel.getCompetitionID(desc);
-					getParticipants(index);
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
 				}
 			}
 		});
@@ -153,9 +146,8 @@ public class CompetitionController extends CoreController {
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
-					String desc = competitionView.getSelectedCompetition();
-					int index = competitionModel.getCompetitionID(desc);
-					getParticipants(index);
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
 				}
 			}
 		});
@@ -214,11 +206,11 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void getAvailable(String username){
-		competitionView.fillAvailableCompetitions(accountModel.getAvailableCompetitions(username));
+		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
 	}
 	
 	public void getAllCompetitions(){
-		competitionView.fillAllCompetitions(competitionModel.getAllCompetitions());
+		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
 	}
 
 }

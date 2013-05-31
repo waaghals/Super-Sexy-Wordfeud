@@ -83,17 +83,17 @@ public class CompetitionModel extends CoreModel {
 		return all;
 	}
 
-	public String[] getUsersFromCompetition(int competition_id) {
-		String[] accounts = new String[0];
+	public AccountModel[] getUsersFromCompetition(int competition_id) {
+		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
 		try {
 			ResultSet dbResult = new Query(
 					"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?")
 					.set(competition_id).select();
-			accounts = new String[Query.getNumRows(dbResult)];
+			accounts = new AccountModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
-						dbResult.getString("account_naam")).toString();
+						dbResult.getString("account_naam"));
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -117,17 +117,17 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public String[] getAllCompetitions() {
-		String[] allComps = new String[0];
+	public CompetitionModel[] getAllCompetitions() {
+		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
 		try {
 			ResultSet dbResult = new Query(
 					"SELECT DISTINCT(`competitie_id`) FROM `deelnemer`")
 					.select();
-			allComps = new String[Query.getNumRows(dbResult)];
+			allComps = new CompetitionModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < allComps.length) {
 				allComps[x] = new CompetitionModel(
-						dbResult.getInt("competitie_id")).getDesc();
+						dbResult.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException sql) {
