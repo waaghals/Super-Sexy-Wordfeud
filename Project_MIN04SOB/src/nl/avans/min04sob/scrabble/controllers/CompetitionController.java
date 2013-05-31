@@ -29,7 +29,7 @@ public class CompetitionController extends CoreController {
 		//cm = new CompetitionModel(800);
 		competitionView = new CompetitionView();
 		joinCompetitionView = new JoinCompetitionView();
-		challengeModel = new ChallengeModel();
+		challengeModel = new ChallengeModel(accountModel);
 		
 		addView(competitionView);
 		addModel(competitionModel);
@@ -65,7 +65,7 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					challengeModel.controle(competitionView.getSelectedPlayer());
+					challengeModel.controle("schaap"/*competitionView.getSelectedPlayer()*/);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

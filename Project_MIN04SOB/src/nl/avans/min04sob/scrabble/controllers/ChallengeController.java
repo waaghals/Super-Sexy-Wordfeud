@@ -19,7 +19,7 @@ public class ChallengeController extends CoreController  {
 	public ChallengeController (final String name)
 	{
 		challengeview = new ChallengeView();
-		challengemodel= new ChallengeModel();
+		challengemodel= new ChallengeModel(new AccountModel(name, false));
 		challengemodel.update();
 		addView(challengeview);
 		addModel(challengemodel);
