@@ -90,17 +90,17 @@ public class MainController extends CoreController {
 	@Override
 	public void addListeners() {
 
-		menu.viewChallengeItemActionListener(new ActionListener() {
+		menu.viewChallengeItemActionListener(new ActionListener() {	//uitdagingen bekijken
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//crtl.challengers();
-				//new ChallengeController2();
-				new ChallengeController(account.getUsername());
+				new ChallengeController2();
+				//new ChallengeController(account.getUsername());
 
 			}
 		});
-		menu.adddoChallengeItemActionListener(new ActionListener() {
+		menu.adddoChallengeItemActionListener(new ActionListener() { //uitdagen
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
