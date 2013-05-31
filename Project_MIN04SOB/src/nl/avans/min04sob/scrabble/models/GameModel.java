@@ -40,7 +40,10 @@ public class GameModel extends CoreModel {
 	public static final String STATE_PLAYING = "Playing";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_RESIGNED = "Resigned";
-
+	public static final String STATE_DENIED = "woord is geweigerd";
+	public static final String STATE_PENDING = "woord is al voorgesteld";
+	public static final String STATE_SETPENDING = "woord wordt voorgesteld";
+	
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
@@ -56,6 +59,9 @@ public class GameModel extends CoreModel {
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
+	
+	private final String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
+	
 	private final boolean observer;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
@@ -431,108 +437,125 @@ public class GameModel extends CoreModel {
 
 	public void checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		// verticaal woord
-		if (true) {
-			ArrayList[] horzontalenwoorden = { new ArrayList<Tile>(),
-					new ArrayList<Tile>(), new ArrayList<Tile>(),
-					new ArrayList<Tile>(), new ArrayList<Tile>(),
-					new ArrayList<Tile>(), new ArrayList<Tile>() };
-			ArrayList<Tile> verticalLetters = new ArrayList<Tile>();
-			int holdX = 100;
-			boolean hasNotBeenDown = true;
-			for (int y = 0; y < 15; y++) {
-				for (int x = 0; x < 15; x++) {
-					if (playedLetters[y][x] != null) {
-						int counterX = x;
-						holdX = x;
-						boolean hasNotBeenLeft = true;
-						while (counterX > 0) {
-							if (newBoard[y][counterX] != null && hasNotBeenLeft) {
-								counterX--;
-							} else if (newBoard[y][counterX] != null) {
-								horzontalenwoorden[y]
-										.add(newBoard[y][counterX]);
-								counterX++;
-							} else {
-								counterX++;
-								if (!hasNotBeenLeft) {
-									break;
-								}
-								hasNotBeenLeft = false;
-							}
+		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
+		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
+		for(int y = 0; y <15;y++){
+			for(int x = 0 ; x < 15; x++){
+				if(playedLetters[y][x] != null){
+					//er is op dit coordinaat een letter neergelegd en de x en de y worden opgeslagen.
+					int counterY = y;
+					int counterX = x;
+					boolean beenLeft = false;
+					ArrayList<Tile> verticaalWoord = new ArrayList<Tile>();
+					ArrayList<Tile> horizontaalWoord = new ArrayList<Tile>();
+					while(counterX >0){
+						//hij gaat een letter naar links tot hij een lege plaats tegenkomt.
+						if(newBoard[counterY][counterX-1] != null && (!beenLeft)){
+							counterX--;
+						}else if(newBoard[counterY][counterX+1] != null && newBoard[counterY][counterX] != null){
+							beenLeft = true;
+							// als hij nog niet terug rechts is slaat hij de letter op in de array en telt hij en gaat hij naar de volgende;
+							horizontaalWoord.add(newBoard[counterY][counterX]);
+							counterX++;
+						}else if(newBoard[counterY][counterX] != null){
+							horizontaalWoord.add(newBoard[counterY][counterX]);
+							break;
+						}
+					}
+					counterY = y;
+					counterX = x;
+					boolean beenTop = false;
+					while(counterY > 0){
+						if(newBoard[counterY-1][counterX] != null && (!beenTop)){
+							counterY--;
+						}else if(newBoard[counterY+1][counterX] != null && newBoard[counterY][counterX] != null){
+							beenTop = true;
+							verticaalWoord.add(newBoard[counterY][counterX]);
+							counterY++;
+						}else if(newBoard[counterY][counterX] != null){
+							verticaalWoord.add(newBoard[counterY][counterX]);
+							break;
+						}
+					}
+					if(!verticalenWoorden.contains(verticaalWoord)){
+						if(verticaalWoord.size() > 1){
+							verticalenWoorden.add(verticaalWoord);
+						}
+					}
+					if(!horizontalenWoorden.contains(horizontaalWoord)){
+						if(horizontaalWoord.size() > 1){
+							horizontalenWoorden.add(horizontaalWoord);
 						}
 					}
 				}
-				if (holdX != 100) {
-					if (playedLetters[y][holdX] == null) {
-						hasNotBeenDown = false;
-					}
-					if (hasNotBeenDown) {
-						verticalLetters.add(playedLetters[y][holdX]);
-					}
-				}
-			}
-			for (ArrayList<Tile> array : horzontalenwoorden) {
-				if (array.size() > 1) {
-					for (Tile t : array) {
-						System.out.println(t.getLetter());
-					}
-				}
-
-			}
-
-			for (Tile t : verticalLetters) {
-				System.out.println(t.getLetter());
 			}
 		}
-		//horizontaal woord
-		else if (false) {
-			ArrayList[] verticalenwoorden = { new ArrayList<Tile>(),
-					new ArrayList<Tile>(), new ArrayList<Tile>(),
-					new ArrayList<Tile>(), new ArrayList<Tile>(),
-					new ArrayList<Tile>(), new ArrayList<Tile>() };
-			ArrayList<Tile> horizontalenLetters = new ArrayList<Tile>();
-			int holdY = 100;
-			boolean hasNotBeenRight = true;
-			for(int x = 0; x<15;x++){
-				for(int y = 0; y < 15; y++){
-					if (playedLetters[y][x] != null) {
-						int counterY = y;
-						holdY = y;
-						boolean hasNotBeenTop = true;
-						while(counterY > 0) {
-							if (newBoard[counterY][x] != null
-									&& hasNotBeenTop) {
-								counterY--;
-							}else if (newBoard[counterY][x] != null) {		
-								verticalenwoorden[x].add(newBoard[counterY][x]);
-								counterY++;
-							}else {
-								counterY++;
-								if(!hasNotBeenTop){
-									break;
-								}
-								hasNotBeenTop = false;
-						
-							}
-						}
-					}
+		ArrayList<String> teVergelijkenWoorden = new ArrayList<String>();
+		for(ArrayList<Tile> tiles: verticalenWoorden){
+			if(tiles.size() > 1){
+				String output = "";
+				for(Tile t :tiles){
+					output += t.getLetter();
 				}
-			}
-			for(ArrayList<Tile> array : verticalenwoorden){
-				if(array.size()>1){
-					for(Tile t : array){
-						System.out.println(t.getLetter());
-					}
+				teVergelijkenWoorden.add(output);
+			}	
+		}
+		for(ArrayList<Tile> tiles: horizontalenWoorden){
+			if(tiles.size() > 1){
+				String output = "";
+				for(Tile t :tiles){
+					output += t.getLetter();
 				}
-				
+				teVergelijkenWoorden.add(output);
 			}
 			
-			for(Tile t : horizontalenLetters){
-				System.out.println(t.getLetter());
-			}
 		}
+		for (String s:teVergelijkenWoorden){
+			System.out.println(s);
+		}
+		/*try {
+			checkWordsInDatabase(teVergelijkenWoorden);
+			for(int y = 0; y < 15;y++){
+				for(int x = 0;x<15;x++){
+					
+					if(playedLetters[y][x] !=null){
+						//String query = "INSERT INTO gelegdeletter(Letter_ID, Letter_Spel_ID,Beurt_ID,Tegel_X, Tegel_Y,Tegel_Bord_naam, BlancoLetterKarakter) VALUES(1, 1, 1, 1, 1,'Standard','')";
+						//new Query(query).set(1).set(511).set(1).set(1).set(1).exec();
+						System.out.print("De query moet nog gefixt worden");
+						//TODO De query moet nog gefixt worden;
+					}
+				}
+			}
+		} catch (Exception e) {	
+			System.out.println(e.getMessage());
+		}*/
 	}
 
+	private void checkWordsInDatabase(ArrayList<String> words) throws Exception{
+		for(String s:words){
+			System.out.println(s);
+			try {
+				String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
+				ResultSet wordresult = new Query(getWordFromDatabase).set(s).select();
+				if(Query.getNumRows(wordresult) == 0){
+					new Query(query).set(s).exec();
+					throw new Exception(STATE_SETPENDING);
+				}else if(wordresult.next()){
+					String statusString = wordresult.getString("status");
+					if(statusString.equals("Denied")){
+						throw new Exception(STATE_DENIED);
+					}else if(statusString.equals("Pending")){
+						throw new Exception(STATE_PENDING);
+					}else if(statusString.equals("Accepted")){
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	public BoardModel getBoardModel() {
 		return boardModel;
 	}
