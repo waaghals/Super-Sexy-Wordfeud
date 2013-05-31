@@ -52,7 +52,7 @@ public class GameModel extends CoreModel {
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
 
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
-	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`beurt`.`id`) AS `last_turn`, `account_naam_uitdager` AS `challenger` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `beurt`.`spel_id` = ? GROUP BY `spel_id` ORDER BY `beurt`.`id`";
 	private final String whosTurnAtTurn = "SELECT account_naam FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
 
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
@@ -801,7 +801,11 @@ public class GameModel extends CoreModel {
 				System.out.println(getGameId()+ "  " +currentobserveturn );
 				ResultSet res = new Query(whosTurnAtTurn).set(getGameId())
 						.set(currentobserveturn).select();
+				int numRows = Query.getNumRows(res);
 				
+				if(numRows == 0){
+					return true;
+				}
 				res.next();
 				String lastturnplayername = res.getString(1);
 
@@ -815,16 +819,13 @@ public class GameModel extends CoreModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return null;
+			
+		
+		return false;
 
 	}
 
 	public boolean yourturn() {
-
-		// String query =
-		// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-		// String query =
-		// "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 		try {
 			ResultSet res = new Query(yourTurnQuery).set(getGameId()).select();
 
@@ -837,27 +838,14 @@ public class GameModel extends CoreModel {
 			}
 			res.next();
 			String lastturnplayername = res.getString("account_naam");
-
-			// Get the last turn made
-			// The challenger makes the first move
-
-			if (lastturnplayername.equals(currentUser.getUsername())) {
-				// If he is challenger
-				if (iamchallenger) {
-					return false;
-				}
-				return true;
-			} else if (iamchallenger) {
-				return true;
-
-			}
-			return false;
+			
+			//A user has the move is he is not the last person who made a move
+			return !lastturnplayername.equals(currentUser.getUsername());
 
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 		return false;
-
 	}
 
 }
