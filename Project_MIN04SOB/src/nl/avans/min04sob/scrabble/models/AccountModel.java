@@ -169,7 +169,7 @@ public class AccountModel extends CoreModel {
 		try {
 			ResultSet rs = new Query(query).set(username).select();
 			while (rs.next()) {
-				if (rs.getString(1).equals(role.toString())) {
+				if (rs.getString(1).equalsIgnoreCase(role.toString())) {
 					return true;
 				}
 			}
@@ -220,7 +220,7 @@ public class AccountModel extends CoreModel {
 			int numRows = Query.getNumRows(result);
 			CompetitionModel[] competitions = new CompetitionModel[numRows];
 			while(result.next()){
-				competitions[numRows] = new CompetitionModel(result.getInt(1));
+				competitions[numRows-1] = new CompetitionModel(result.getInt(1));
 				numRows--;
 			}
 		} catch (SQLException e) {
