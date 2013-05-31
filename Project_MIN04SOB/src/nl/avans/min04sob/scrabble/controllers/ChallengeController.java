@@ -19,13 +19,8 @@ public class ChallengeController extends CoreController  {
 	public ChallengeController (final String name)
 	{
 		challengeview = new ChallengeView();
-		try {
-			challengemodel= new ChallengeModel(name);
-			challengemodel.update();
-		} catch (SQLException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		challengemodel= new ChallengeModel(new AccountModel(name, false));
+		challengemodel.update();
 		addView(challengeview);
 		addModel(challengemodel);
 		challengeview.addActionListenerAccept (new ActionListener() {
@@ -64,7 +59,7 @@ public class ChallengeController extends CoreController  {
 		challengeview.addActionListenerOke (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					challengemodel.controle(name,challengeview.getUsername());
+					challengemodel.controle(challengeview.getUsername());
 				 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

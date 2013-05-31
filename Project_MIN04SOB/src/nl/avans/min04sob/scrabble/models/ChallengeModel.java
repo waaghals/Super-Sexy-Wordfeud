@@ -28,18 +28,20 @@ public class ChallengeModel extends CoreModel  {
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
 	private final String selectQuery = "SELECT * FROM `Spel`; "; 
-	public ResultSet result;
-	public String yourname=""; 
-	public Timer timer = new Timer();
-	public ArrayList <String> challenge = new ArrayList<String>();
+	private ResultSet result;
+	private String yourname; 
+	private Timer timer = new Timer();
+	private ArrayList <String> challenge = new ArrayList<String>();
+	private AccountModel accountModel;
 	
 
-	public ChallengeModel(String name) throws SQLException  
+	public ChallengeModel(AccountModel user) 
 	{
-	 yourname=name;
+		accountModel = user;
+		yourname = accountModel.getUsername();
 	}
 
-	public void controle(String Challengername,String  challegendname) throws SQLException//uitdager
+	public void controle(String  challegendname) throws SQLException//uitdager
 	{
 		///  zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
 
@@ -54,7 +56,7 @@ public class ChallengeModel extends CoreModel  {
 			result =  new Query(selectQuery) .select();
 			while(result.next()){
 				 
-				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(4).equals(Challengername)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN)||Challengername.equals(challegendname))  // hier ziet een fout in
+				if(result.getString(7).equals(STATE_UNKNOWN)&&result.getString(4).equals(yourname)&&result.getString(5).equals(challegendname)&&result.getString(3).equals(STATE_UNKNOWN)||yourname.equals(challegendname))  // hier ziet een fout in
 				{
 					error = true;
 					commandsToChallengeview("4");
@@ -65,7 +67,7 @@ public class ChallengeModel extends CoreModel  {
 		 
 	 if(error!=true)
 	 {
-		createChallenge(Challengername, challegendname);
+		createChallenge(yourname, challegendname);
 	 }	
 	 
 	} 
@@ -73,13 +75,10 @@ public class ChallengeModel extends CoreModel  {
 	 
 	public void createChallenge(String Challengername,String  challegendname) throws SQLException//uitdager
 	{	
-		System.out.println(Challengername+"c");
-		System.out.println(challegendname+"x");
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);	
-	 
-	            System.out.println(Challengername);
+
 				String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
 				try {
 					new Query(query).set(1).set(STATE_REQUEST).set(Challengername).set(challegendname).set(currentdate).set(STATE_UNKNOWN).set(currentdate).set("standard").set("NL"). exec();

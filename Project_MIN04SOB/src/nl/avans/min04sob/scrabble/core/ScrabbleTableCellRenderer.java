@@ -2,8 +2,13 @@ package nl.avans.min04sob.scrabble.core;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -19,6 +24,17 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private Color blue;
 	private Color lightBlue;
 	private Color beige;
+	private ImageIcon dlImage;
+	private ImageIcon tlImage;
+	private ImageIcon dwImage;
+	private ImageIcon twImage;
+	private ImageIcon starImage;
+	private String dlURL = "/images/dl.png";
+	private String tlURL = "/images/tl.png";
+	private String dwURL = "/images/dw.png";
+	private String twURL = "/images/tw.png";
+	private String starURL = "/images/star.png";
+	
 
 	public ScrabbleTableCellRenderer(BoardModel model) {
 		super();
@@ -36,7 +52,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
-
+		setImages();
 		Component c = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);		
 		JLabel label = (JLabel) c;
@@ -52,28 +68,26 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 			switch (multiplier) {
 			case BoardModel.DL:
-				c.setBackground(lightBlue);
-				c.setForeground(blue);
+				c = new JLabel(dlImage);
 				boardModel.setValueAt(new Tile("DL", true), row, col);
 				break;
 			case BoardModel.TL:
-				c.setBackground(blue);
+				/*c.setBackground(blue);
 				c.setForeground(lightBlue);
+				*/
+				c = new JLabel(tlImage);
 				boardModel.setValueAt(new Tile("TL", true), row, col);
 				break;
 			case BoardModel.DW:
-				c.setBackground(lightRed);
-				c.setForeground(red);
+				c = new JLabel(dwImage);
 				boardModel.setValueAt(new Tile("DW", true), row, col);
 				break;
 			case BoardModel.TW:
-				c.setBackground(red);
-				c.setForeground(lightRed);
+				c = new JLabel(twImage);
 				boardModel.setValueAt(new Tile("TW", true), row, col);
 				break;
 			case BoardModel.STAR:
-				c.setBackground(Color.WHITE);
-				c.setForeground(Color.GREEN);
+				c = new JLabel(starImage);
 				boardModel.setValueAt(new Tile("*", true), row, col);
 				break;
 			case BoardModel.EMPTY:
@@ -87,5 +101,24 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		}
 
 		return c;
+	}
+	
+	private void setImages() {
+			dlImage = createImageIcon(dlURL, "dl");
+			tlImage = createImageIcon(tlURL, "tl");
+			dwImage = createImageIcon(dwURL, "dw");
+			twImage = createImageIcon(twURL, "tw");
+			starImage = createImageIcon(starURL, "star");
+	}
+	
+	protected ImageIcon createImageIcon(String path,
+            String description) {
+		URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
 	}
 }
