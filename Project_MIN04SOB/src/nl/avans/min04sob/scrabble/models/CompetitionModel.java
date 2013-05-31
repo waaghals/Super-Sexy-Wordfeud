@@ -104,16 +104,15 @@ public class CompetitionModel extends CoreModel {
 	public int getCompetitionID(String desc) {
 		int id = 0;
 		try {
-			ResultSet dbResult = new Query(
-					"SELECT `id` FROM `competitie` WHERE `omschrijving` = ?")
-					.set(desc).select();
-			while (dbResult.next()) {
+			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
+			while(dbResult.next()){
 				id = dbResult.getInt("id");
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 		return id;
+
 
 	}
 
@@ -134,6 +133,7 @@ public class CompetitionModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return allComps;
+
 	}
 
 	public void join(int competitionID, String username) {
@@ -308,6 +308,7 @@ public class CompetitionModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
 					.set(username).select();
+
 			if (dbResult.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}

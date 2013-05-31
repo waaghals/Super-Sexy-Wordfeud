@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -68,33 +69,56 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 			switch (multiplier) {
 			case BoardModel.DL:
-				c = new JLabel(dlImage);
+				c = new JLabel() {
+					public void paintComponent(Graphics g) {
+						g.drawImage(dlImage.getImage(), 0, 0, null);
+					}
+				};
+				((JLabel) c).setOpaque(false);
 				boardModel.setValueAt(new Tile("DL", true), row, col);
 				break;
 			case BoardModel.TL:
-				/*c.setBackground(blue);
-				c.setForeground(lightBlue);
-				*/
-				c = new JLabel(tlImage);
+				c = new JLabel(){
+					public void paintComponent(Graphics g) {
+						g.drawImage(tlImage.getImage(), 0, 0, null);
+					}
+				};
+				((JLabel) c).setOpaque(false);
 				boardModel.setValueAt(new Tile("TL", true), row, col);
 				break;
 			case BoardModel.DW:
-				c = new JLabel(dwImage);
+				c = new JLabel(){
+					public void paintComponent(Graphics g) {
+						g.drawImage(dwImage.getImage(), 0, 0, null);
+					}
+				};
+				((JLabel) c).setOpaque(false);
 				boardModel.setValueAt(new Tile("DW", true), row, col);
 				break;
 			case BoardModel.TW:
-				c = new JLabel(twImage);
+				c = new JLabel(){
+					public void paintComponent(Graphics g) {
+						g.drawImage(twImage.getImage(), 0, 0, null);
+					}
+				};
+				((JLabel) c).setOpaque(false);
+				
 				boardModel.setValueAt(new Tile("TW", true), row, col);
 				break;
 			case BoardModel.STAR:
-				c = new JLabel(starImage);
+				c = new JLabel(){
+					public void paintComponent(Graphics g) {
+						g.drawImage(starImage.getImage(), 0, 0, null);
+					}
+				};
+				((JLabel) c).setOpaque(false);
 				boardModel.setValueAt(new Tile("*", true), row, col);
 				break;
 			case BoardModel.EMPTY:
 			default:
 				c.setBackground(Color.WHITE);
 				c.setForeground(Color.BLACK);
-				// boardModel.setValueAt(" ", row, col);
+				boardModel.setValueAt(" ", row, col);
 				break;
 			}
 

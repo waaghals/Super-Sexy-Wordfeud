@@ -56,7 +56,7 @@ public class CompetitionView extends CorePanel{
 		add(backButton, "cell 0 2,alignx left");
 		
 		actionButton = new JButton();
-		actionButton.setEnabled(false);
+		actionButton.setEnabled(true); //test
 
 		add(actionButton, "cell 1 2,alignx right");
 	}
