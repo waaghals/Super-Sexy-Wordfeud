@@ -78,63 +78,43 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			c.setForeground(Color.BLACK);
 		} else {
 
-			switch (multiplier) {
-			case BoardModel.DL:
-				c = new JLabel() {
-					@Override
-					public void paintComponent(Graphics g) {
-						g.drawImage(dlImage.getImage(), 0, 0, null);
-					}
-				};
-				((JLabel) c).setOpaque(false);
-				boardModel.setValueAt(new Tile("DL", true), row, col);
-				break;
-			case BoardModel.TL:
-				c = new JLabel(){
-					@Override
-					public void paintComponent(Graphics g) {
-						g.drawImage(tlImage.getImage(), 0, 0, null);
-					}
-				};
-				((JLabel) c).setOpaque(false);
-				boardModel.setValueAt(new Tile("TL", true), row, col);
-				break;
-			case BoardModel.DW:
-				c = new JLabel(){
-					@Override
-					public void paintComponent(Graphics g) {
-						g.drawImage(dwImage.getImage(), 0, 0, null);
-					}
-				};
-				((JLabel) c).setOpaque(false);
-				boardModel.setValueAt(new Tile("DW", true), row, col);
-				break;
-			case BoardModel.TW:
-				c = new JLabel(){
-					@Override
-					public void paintComponent(Graphics g) {
-						g.drawImage(twImage.getImage(), 0, 0, null);
-					}
-				};
-				((JLabel) c).setOpaque(false);
-				
-				boardModel.setValueAt(new Tile("TW", true), row, col);
-				break;
-			case BoardModel.STAR:
-				c = new JLabel(){
-					@Override
-					public void paintComponent(Graphics g) {
-						g.drawImage(starImage.getImage(), 0, 0, null);
-					}
-				};
-				((JLabel) c).setOpaque(false);
-				boardModel.setValueAt(new Tile("*", true), row, col);
-				break;
-			case BoardModel.EMPTY:
+			 switch (multiplier) {
+		       case BoardModel.DL:
+		        c.setBackground(lightBlue);
+		        c.setForeground(blue);
+		     //   c = new JLabel(dlImage);
+		     //    boardModel.setValueAt(new Tile("DL", true), row, col);
+		         break;
+		       case BoardModel.TL:
+		        c.setBackground(blue);
+		         c.setForeground(lightBlue);
+		        
+		    //    c = new JLabel(tlImage);
+		    //     boardModel.setValueAt(new Tile("TL", true), row, col);
+		         break;
+		       case BoardModel.DW:
+		        c.setBackground(lightRed);
+		        c.setForeground(red);
+		        //c = new JLabel(dwImage);
+		        // boardModel.setValueAt(new Tile("DW", true), row, col);
+		         break;
+		       case BoardModel.TW:
+		        c.setBackground(red);
+		        c.setForeground(lightRed);
+		        //c = new JLabel(twImage);
+		        // boardModel.setValueAt(new Tile("TW", true), row, col);
+		         break;
+		       case BoardModel.STAR:
+		        c.setBackground(Color.WHITE);
+		        c.setForeground(Color.GREEN);
+		        //c = new JLabel(starImage);
+		        // boardModel.setValueAt(new Tile("*", true), row, col);
+		         break;
+		       case BoardModel.EMPTY:
 			default:
 				c.setBackground(Color.WHITE);
 				c.setForeground(Color.BLACK);
-				boardModel.setValueAt(" ", row, col);
+				//boardModel.setValueAt(new Tile(null, 0, Tile.MUTATABLE), row, col);
 				break;
 			}
 
