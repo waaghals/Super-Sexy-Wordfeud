@@ -60,6 +60,89 @@ public class MenuView extends JMenuBar implements CoreView {
 		setLoggedOutState();
 	}
 
+	public void addChangePassItemActionListener(ActionListener listener) {
+		changePassItem.addActionListener(listener);
+	}
+
+	public void adddoChallengeItemActionListener(ActionListener listener) {
+		doChallengeItem.addActionListener(listener);
+	}
+
+	private void addGamesToMenu(JMenu menu, ArrayList<GameModel> games) {
+		for (GameModel game : games) {
+			JMenuItem item = new JMenuItem(game.toString());
+			item.putClientProperty("game", game);
+			menu.add(item);
+		}
+	}
+
+	public void addLoginItemActionListener(ActionListener listener) {
+		loginItem.addActionListener(listener);
+	}
+
+	public void addLogoutItemActionListener(ActionListener listener) {
+		logoutItem.addActionListener(listener);
+	}
+
+	private void addMenuItemListeners(JMenu menu, ActionListener listener) {
+		for (int i = 0; i < menu.getItemCount(); i++) {
+			JMenuItem menuItem = menu.getItem(i);
+			menuItem.addActionListener(listener);
+		}
+	}
+
+	public void addOpenGamesListener(ActionListener listener) {
+		openGameListener = listener;
+		addMenuItemListeners(gameMenuOpen, openGameListener);
+	}
+
+	public void addRegisterListener(ActionListener listener) {
+		registerItem.addActionListener(listener);
+	}
+
+	public void addViewGamesListener(ActionListener listener) {
+		viewGameListener = listener;
+		addMenuItemListeners(gameMenuView, viewGameListener);
+	}
+
+	private void createAccountMenu() {
+		registerItem = new JMenuItem("Registreren");
+		registerItem.setMnemonic('R');
+
+		loginItem = new JMenuItem("Inloggen");
+		loginItem.setMnemonic('I');
+
+		logoutItem = new JMenuItem("Logout");
+		logoutItem.setMnemonic('O');
+		logoutItem.setEnabled(true);
+
+		changePassItem = new JMenuItem("Wachtwoord veranderen");
+		changePassItem.setMnemonic('W');
+	}
+
+	private void createChallengeMenu() {
+		doChallengeItem = new JMenuItem("Spelers uitdagen");
+		viewChallengeItem = new JMenuItem("Bekijk uitdagingen ( "
+				+ numChallenge + " )");
+
+		challengeMenu.add(doChallengeItem);
+		challengeMenu.add(viewChallengeItem);
+	}
+
+	private void createCompetitionMenu() {
+		// create the menuItems
+		seeCompetitionsItem = new JMenuItem("Competities bekijken");
+		joinCompetitionItem = new JMenuItem("Deelnemen aan competities");
+		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
+		deleteCompetitionItem = new JMenuItem("verwijder competitie");
+		// add the menu and the menuItems
+
+		competitionMenu.add(seeCompetitionsItem);
+		competitionMenu.add(joinCompetitionItem);
+		//competitionMenu.add(deleteFromCompetitionItem);
+		//competitionMenu.add(deleteCompetitionItem);
+	}
+
 	private void createMenus() {
 		accountMenu = new JMenu("Account");
 		accountMenu.setMnemonic('A');
@@ -100,75 +183,22 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	}
 
-	private void createChallengeMenu() {
-		doChallengeItem = new JMenuItem("Spelers uitdagen");
-		viewChallengeItem = new JMenuItem("Bekijk uitdagingen ( "
-				+ numChallenge + " )");
-
-		challengeMenu.add(doChallengeItem);
-		challengeMenu.add(viewChallengeItem);
-	}
-
-	private void createAccountMenu() {
-		registerItem = new JMenuItem("Registreren");
-		registerItem.setMnemonic('R');
-
-		loginItem = new JMenuItem("Inloggen");
-		loginItem.setMnemonic('I');
-
-		logoutItem = new JMenuItem("Logout");
-		logoutItem.setMnemonic('O');
-		logoutItem.setEnabled(true);
-
-		changePassItem = new JMenuItem("Wachtwoord veranderen");
-		changePassItem.setMnemonic('W');
-	}
-
-	private void addGamesToMenu(JMenu menu, ArrayList<GameModel> games) {
-		for (GameModel game : games) {
-			JMenuItem item = new JMenuItem(game.toString());
-			item.putClientProperty("game", game);
-			menu.add(item);
-		}
-	}
-
-	private void createCompetitionMenu() {
-		// create the menuItems
-		seeCompetitionsItem = new JMenuItem("Competities bekijken");
-		joinCompetitionItem = new JMenuItem("Deelnemen aan competities");
-		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
-		deleteCompetitionItem = new JMenuItem("verwijder competitie");
-		// add the menu and the menuItems
-
-		competitionMenu.add(seeCompetitionsItem);
-		competitionMenu.add(joinCompetitionItem);
-		//competitionMenu.add(deleteFromCompetitionItem);
-		//competitionMenu.add(deleteCompetitionItem);
-	}
-
-	private void setLoggedOutState() {
-		accountMenu.removeAll();
-		accountMenu.add(loginItem);
-		accountMenu.add(registerItem);
-		challengeMenu.setEnabled(false);
-		competitionMenu.setEnabled(false);
-		moderaterMenu.setEnabled(false);
-		gameMenu.setEnabled(false);
-		
-		gameMenuOpen.removeAll();
-		gameMenuView.removeAll();
-	}
-
-	private void setLoggedInState() {
-		accountMenu.removeAll();
-		accountMenu.add(changePassItem);
-		accountMenu.add(logoutItem);
-	}
-
 	private void createModeratorMenu() {
 		viewWords = new JMenuItem("Woorden beheren");
 		viewWords.setMnemonic('W');
 		moderaterMenu.add(viewWords);
+	}
+
+	public void deleteCompetitionItem(ActionListener listener) {
+		deleteCompetitionItem.addActionListener(listener);
+	}
+
+	public void deleteFromCompetitionItem(ActionListener listener){
+		deleteFromCompetitionItem.addActionListener(listener);
+	}
+	
+	public void joinCompetitionItem(ActionListener listener) {
+		joinCompetitionItem.addActionListener(listener);
 	}
 
 	@Override
@@ -223,48 +253,8 @@ public class MenuView extends JMenuBar implements CoreView {
 		}
 	}
 
-	public void addLoginItemActionListener(ActionListener listener) {
-		loginItem.addActionListener(listener);
-	}
-
-	public void addLogoutItemActionListener(ActionListener listener) {
-		logoutItem.addActionListener(listener);
-	}
-
-	public void addChangePassItemActionListener(ActionListener listener) {
-		changePassItem.addActionListener(listener);
-	}
-
-	public void adddoChallengeItemActionListener(ActionListener listener) {
-		doChallengeItem.addActionListener(listener);
-	}
-
-	public void viewChallengeItemActionListener(ActionListener listener) {
-		viewChallengeItem.addActionListener(listener);
-	}
-
 	public void seeCompetitionsItem(ActionListener listener) {
 		seeCompetitionsItem.addActionListener(listener);
-	}
-
-	public void joinCompetitionItem(ActionListener listener) {
-		joinCompetitionItem.addActionListener(listener);
-	}
-	
-	public void deleteFromCompetitionItem(ActionListener listener){
-		deleteFromCompetitionItem.addActionListener(listener);
-	}
-
-	public void viewWords(ActionListener listener) {
-		viewWords.addActionListener(listener);
-	}
-
-	public void deleteCompetitionItem(ActionListener listener) {
-		deleteCompetitionItem.addActionListener(listener);
-	}
-
-	public void addRegisterListener(ActionListener listener) {
-		registerItem.addActionListener(listener);
 	}
 
 	public void setChallengeCount(int count) {
@@ -276,21 +266,31 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	}
 
-	public void addOpenGamesListener(ActionListener listener) {
-		openGameListener = listener;
-		addMenuItemListeners(gameMenuOpen, openGameListener);
+	private void setLoggedInState() {
+		accountMenu.removeAll();
+		accountMenu.add(changePassItem);
+		accountMenu.add(logoutItem);
 	}
 
-	public void addViewGamesListener(ActionListener listener) {
-		viewGameListener = listener;
-		addMenuItemListeners(gameMenuView, viewGameListener);
+	private void setLoggedOutState() {
+		accountMenu.removeAll();
+		accountMenu.add(loginItem);
+		accountMenu.add(registerItem);
+		challengeMenu.setEnabled(false);
+		competitionMenu.setEnabled(false);
+		moderaterMenu.setEnabled(false);
+		gameMenu.setEnabled(false);
+		
+		gameMenuOpen.removeAll();
+		gameMenuView.removeAll();
 	}
 
-	private void addMenuItemListeners(JMenu menu, ActionListener listener) {
-		for (int i = 0; i < menu.getItemCount(); i++) {
-			JMenuItem menuItem = menu.getItem(i);
-			menuItem.addActionListener(listener);
-		}
+	public void viewChallengeItemActionListener(ActionListener listener) {
+		viewChallengeItem.addActionListener(listener);
+	}
+
+	public void viewWords(ActionListener listener) {
+		viewWords.addActionListener(listener);
 	}
 
 }

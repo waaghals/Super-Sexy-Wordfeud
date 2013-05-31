@@ -19,6 +19,20 @@ public class InviteController extends CoreController {
 		initialize();
 	}
 
+	public void actieButton() {
+		//code voor uitdagen van een speler
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void annuleerButton() {
+		window.dispose();
+	}
+
 	@Override
 	public void initialize() {
 		window = new JFrame();
@@ -50,20 +64,6 @@ public class InviteController extends CoreController {
 				annuleerButton();
 			}
 		});
-	}
-
-	public void actieButton() {
-		//code voor uitdagen van een speler
-	}
-
-	public void annuleerButton() {
-		window.dispose();
-	}
-
-	@Override
-	public void addListeners() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setButtonsChallenge() {

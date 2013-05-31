@@ -60,11 +60,6 @@ public class AcceptDeclineView extends CorePanel {
 		myFrame.setVisible(true);
 	}
 
-	public void fillWordList(String[] list) {
-		wordList.removeAll();
-		wordList.setListData(list);
-	}
-
 	public void addAcceptActionListener(ActionListener listener) {
 		acceptButton.addActionListener(listener);
 	}
@@ -76,9 +71,14 @@ public class AcceptDeclineView extends CorePanel {
 	public void addDeniedActionListener(ActionListener listener) {
 		deniedButton.addActionListener(listener);
 	}
-	
+
 	public void addListSelectionListener(ListSelectionListener listener){
 		wordList.addListSelectionListener(listener);
+	}
+	
+	public void fillWordList(String[] list) {
+		wordList.removeAll();
+		wordList.setListData(list);
 	}
 
 	public String getSelectedWord() {

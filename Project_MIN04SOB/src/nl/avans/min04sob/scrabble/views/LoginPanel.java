@@ -22,11 +22,6 @@ public class LoginPanel extends CorePanel {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-	}
-
 	public LoginPanel() {
 		setPreferredSize(new Dimension(507, 117));
 		setLayout(new MigLayout("", "[65px][50px:100px:100px,grow][100px:n]", "[20px][23px][]"));
@@ -53,6 +48,33 @@ public class LoginPanel extends CorePanel {
 		//add(registerButton, "cell 5 2 2 1,grow");
 	}
 
+	public void addActionListenerLogin(ActionListener listener) {
+		loginButton.addActionListener(listener);
+	}
+
+	
+	public void addActionListenerRegister(ActionListener listener) {
+		registerButton.addActionListener(listener);
+	}
+	
+	public void addKeyListenerPassword(KeyAdapter listener) {
+		passwordField.addKeyListener(listener);
+	}
+
+	public void addKeyListenerUsername(KeyAdapter listener) {
+		usernameField.addKeyListener(listener);
+	}
+
+	public void clearFields(){
+		usernameField.setText("");
+		setUsernameMistake(true);
+		passwordField.setText("");
+		setPasswordMistake(true);
+	}
+	
+	public char[] getPassword() {
+		return passwordField.getPassword();
+	}
 	
 	public JTextField getPasswordField() {
 		return passwordField;
@@ -61,33 +83,10 @@ public class LoginPanel extends CorePanel {
 	public String getUsername() {
 		return usernameField.getText();
 	}
-
-	public char[] getPassword() {
-		return passwordField.getPassword();
-	}
-
-	public void addActionListenerLogin(ActionListener listener) {
-		loginButton.addActionListener(listener);
-	}
 	
-	public void addKeyListenerPassword(KeyAdapter listener) {
-		passwordField.addKeyListener(listener);
-	}
-	
-	public void addKeyListenerUsername(KeyAdapter listener) {
-		usernameField.addKeyListener(listener);
-	}
-	
-	public void addActionListenerRegister(ActionListener listener) {
-		registerButton.addActionListener(listener);
-	}
-	
-	public void setUsernameMistake(boolean mistake){
-		if(mistake){
-			usernameField.setBackground(Color.WHITE);
-		}else{
-			usernameField.setBackground(Color.RED);
-		}
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 	}
 	
 	public void setPasswordMistake(boolean mistake){
@@ -98,14 +97,15 @@ public class LoginPanel extends CorePanel {
 		}
 	}
 	
-	public void clearFields(){
-		usernameField.setText("");
-		setUsernameMistake(true);
-		passwordField.setText("");
-		setPasswordMistake(true);
-	}
-	
 	public void setUsernameField(String username){
 		usernameField.setText(username);
+	}
+	
+	public void setUsernameMistake(boolean mistake){
+		if(mistake){
+			usernameField.setBackground(Color.WHITE);
+		}else{
+			usernameField.setBackground(Color.RED);
+		}
 	}
 }

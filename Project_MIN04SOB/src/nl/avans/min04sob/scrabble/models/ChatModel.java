@@ -29,16 +29,8 @@ public class ChatModel extends CoreModel {
 
 	}
 
-	public void send(String newMessage) {
-		try {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date date = new Date();
-			String currentdate = dateFormat.format(date);
-			new Query(insertQuery).set(account.getUsername()).set(gameId)
-					.set(currentdate).set(newMessage).exec();
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
+	public ArrayList<String> getMessages() {
+		return messages;
 	}
 
 	private ArrayList<String> getNewMessages() {
@@ -63,8 +55,16 @@ public class ChatModel extends CoreModel {
 		return messages;
 	}
 
-	public ArrayList<String> getMessages() {
-		return messages;
+	public void send(String newMessage) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			String currentdate = dateFormat.format(date);
+			new Query(insertQuery).set(account.getUsername()).set(gameId)
+					.set(currentdate).set(newMessage).exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
 	}
 
 	@Override

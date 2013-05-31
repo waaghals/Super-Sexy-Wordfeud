@@ -51,12 +51,33 @@ public class ChallengeView2 extends CorePanel {
 		acceptButton.addActionListener(listener);
 	}
 	
+	public void addActionListenerBack(ActionListener listener) {
+		backButton.addActionListener(listener);
+	}
+	
 	public void addActionListenerDecline(ActionListener listener) {
 		declineButton.addActionListener(listener);
 	}
 	
-	public void addActionListenerBack(ActionListener listener) {
-		backButton.addActionListener(listener);
+	public String getSelectedChallenge()
+	{
+		return selectedChallenge;
+	}
+	
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void receiveChallenge(String challenge)
+	{
+		checkbox.add(new JCheckBox(challenge));
+	}
+	
+	public void setSelectedChallenge( String challenge)
+	{
+		selectedChallenge = challenge;
 	}
 	
 	public void showChallenge(){
@@ -86,26 +107,5 @@ public class ChallengeView2 extends CorePanel {
 				index++;
 			}
 		} 
-	}
-	
-	public void receiveChallenge(String challenge)
-	{
-		checkbox.add(new JCheckBox(challenge));
-	}
-	
-	public void setSelectedChallenge( String challenge)
-	{
-		selectedChallenge = challenge;
-	}
-	
-	public String getSelectedChallenge()
-	{
-		return selectedChallenge;
-	}
-	
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
 	}
 }

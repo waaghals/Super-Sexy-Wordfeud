@@ -34,18 +34,18 @@ public class ResignPanel extends CorePanel {
 		
 	}
 
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
+	public void addNoResignActionListener(ActionListener listener) {
+		noButton.addActionListener(listener);
 	}
 	
 	public void addResignActionListener(ActionListener listener) {
 		yesButton.addActionListener(listener);
 	}
 	
-	public void addNoResignActionListener(ActionListener listener) {
-		noButton.addActionListener(listener);
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void setResignLabelName(String labelname) {

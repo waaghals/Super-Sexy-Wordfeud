@@ -20,12 +20,6 @@ public class BoardPanelt extends CorePanel {
 	 Tile[] tilearray = new Tile[16];
 		
 
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public BoardPanelt() {
 		
 
@@ -119,6 +113,12 @@ public class BoardPanelt extends CorePanel {
 		JButton resign = new JButton();
 		resign.setText("Resign");
 		add(resign, "cell 8 3,alignx center,growy");
+
+	}
+
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 
 	}
 }

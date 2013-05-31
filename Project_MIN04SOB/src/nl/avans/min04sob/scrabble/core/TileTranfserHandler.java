@@ -24,26 +24,28 @@ public class TileTranfserHandler extends TransferHandler implements
 	}
 
 	@Override
-	public Object getTransferData(DataFlavor flavor) {
-		if (isDataFlavorSupported(flavor)) {
-			return sourceTile;
+	public boolean canImport(TransferSupport support) {
+		if(sourceTile != null && !sourceTile.isMutatable()){
+			return false;
 		}
-		return null;
-	}
+		support.setShowDropLocation(true);
+		JTable table = (JTable) support.getComponent();
+		TableModel model = table.getModel();
+		int row = table.getSelectedRow();
+		int col = table.getSelectedColumn();
+		if(row == -1 || col == -1){
+			return true;
+		}
 
-	@Override
-	public DataFlavor[] getTransferDataFlavors() {
-		return flavors;
-	}
-
-	@Override
-	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		return flavors[0].equals(flavor);
-	}
-
-	@Override
-	public int getSourceActions(JComponent c) {
-		return MOVE;
+		Tile tile = (Tile) model.getValueAt(row, col);
+		
+		if (tile == sourceTile) {
+			return true;
+		}
+		if (tile == null) {
+			return true;
+		}
+		return tile.isMutatable();
 	}
 
 	@Override
@@ -69,28 +71,21 @@ public class TileTranfserHandler extends TransferHandler implements
 	}
 
 	@Override
-	public boolean canImport(TransferSupport support) {
-		if(sourceTile != null && !sourceTile.isMutatable()){
-			return false;
-		}
-		support.setShowDropLocation(true);
-		JTable table = (JTable) support.getComponent();
-		TableModel model = table.getModel();
-		int row = table.getSelectedRow();
-		int col = table.getSelectedColumn();
-		if(row == -1 || col == -1){
-			return true;
-		}
+	public int getSourceActions(JComponent c) {
+		return MOVE;
+	}
 
-		Tile tile = (Tile) model.getValueAt(row, col);
-		
-		if (tile == sourceTile) {
-			return true;
+	@Override
+	public Object getTransferData(DataFlavor flavor) {
+		if (isDataFlavorSupported(flavor)) {
+			return sourceTile;
 		}
-		if (tile == null) {
-			return true;
-		}
-		return tile.isMutatable();
+		return null;
+	}
+
+	@Override
+	public DataFlavor[] getTransferDataFlavors() {
+		return flavors;
 	}
 
 	@Override
@@ -117,5 +112,10 @@ public class TileTranfserHandler extends TransferHandler implements
 		table.setValueAt(newTile, row, col);
 
 		return super.importData(support);
+	}
+
+	@Override
+	public boolean isDataFlavorSupported(DataFlavor flavor) {
+		return flavors[0].equals(flavor);
 	}
 }

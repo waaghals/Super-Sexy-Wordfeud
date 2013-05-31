@@ -37,13 +37,63 @@ public class CompetitionController extends CoreController {
 	}
 
 	@Override
-	public void initialize() {
+	public void addListeners() {
 		// TODO Auto-generated method stub
 	}
 
+	public void getAllCompetitions(){
+		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
+	}
+	
+	public void getAvailable(String username){
+		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
+	}
+	
+	public void getCompetitions(String username){
+		competitionView.fillCompetitions(accountModel.getCompetitions(username));
+	}
+	
+	public int getCompID(){ //competition ID meegeven
+		return index;
+	}
+	public void getParticipants(int competition_id){
+		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
+	}
 	@Override
-	public void addListeners() {
+	public void initialize() {
 		// TODO Auto-generated method stub
+	}
+	
+	public void openCompetitionScores(){
+		window = new CoreWindow();
+		window.add(competitionView);
+		
+		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
+		window.pack();
+		
+		competitionView.addBackListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
+			}	
+		});
+		
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
+				}
+			}
+		});
+		
+		competitionView.setText("Competities", "Spelers in competitie", "",false);
+		
+		getAllCompetitions();
+		
 	}
 	
 	public void openCompetitionView(){
@@ -86,6 +136,49 @@ public class CompetitionController extends CoreController {
 		competitionView.setText("Ingeschreven competities", "Spelers in competitie", "Speler uitdagen", true);
 		
 		getCompetitions(accountModel.toString());
+	}
+	
+	//wordt niet gebruikt
+	public void openDeleteCompetitionView() {
+		window = new CoreWindow();
+		window.add(competitionView);
+		
+		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
+		window.pack();
+		
+		competitionView.addBackListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
+			}	
+		});
+		
+		competitionView.setText("Competities", "Spelers in competitie", "Verwijder Competitie",true);
+		
+		getAllCompetitions();	
+	}
+	
+	//wordt niet gebruikt
+	public void openDeleteFromCompetitionView() {
+		window = new CoreWindow();
+		window.add(competitionView);
+		
+		window.setPreferredSize(new Dimension(400,320));
+		window.pack();
+		
+		competitionView.addBackListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
+			}	
+		});
+		
+		competitionView.setText("Ingeschreven Competities", "Spelers in competitie", "Verwijderen uit Competitie",true);
+		
+		getAvailable(accountModel.toString());	
 	}
 	
 	public void openJoinCompetitionView() {
@@ -133,99 +226,6 @@ public class CompetitionController extends CoreController {
 		
 		getAvailable(accountModel.toString());
 		
-	}
-	
-	public void openCompetitionScores(){
-		window = new CoreWindow();
-		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
-		window.setResizable(false);
-		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				window.dispose();
-			}	
-		});
-		
-		competitionView.addCompetitionListListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getClickCount()==1){
-					int id = competitionView.getSelectedCompetition().getCompId();
-					getParticipants(id);
-				}
-			}
-		});
-		
-		competitionView.setText("Competities", "Spelers in competitie", "",false);
-		
-		getAllCompetitions();
-		
-	}
-	//wordt niet gebruikt
-	public void openDeleteCompetitionView() {
-		window = new CoreWindow();
-		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
-		window.setResizable(false);
-		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				window.dispose();
-			}	
-		});
-		
-		competitionView.setText("Competities", "Spelers in competitie", "Verwijder Competitie",true);
-		
-		getAllCompetitions();	
-	}
-	//wordt niet gebruikt
-	public void openDeleteFromCompetitionView() {
-		window = new CoreWindow();
-		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
-		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				window.dispose();
-			}	
-		});
-		
-		competitionView.setText("Ingeschreven Competities", "Spelers in competitie", "Verwijderen uit Competitie",true);
-		
-		getAvailable(accountModel.toString());	
-	}
-	
-	public void getCompetitions(String username){
-		competitionView.fillCompetitions(accountModel.getCompetitions(username));
-	}
-	
-	public void getParticipants(int competition_id){
-		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
-	}
-	
-	public void getAvailable(String username){
-		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
-	}
-	
-	public void getAllCompetitions(){
-		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
-	}
-	
-	public int getCompID(){ //competition ID meegeven
-		return index;
 	}
 
 }

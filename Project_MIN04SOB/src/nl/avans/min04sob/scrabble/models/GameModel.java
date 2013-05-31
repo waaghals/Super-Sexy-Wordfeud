@@ -16,6 +16,10 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class GameModel extends CoreModel {
 
+	public static void main2(String[] args) {
+		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
+		new GameModel(0, null, null, false).test();
+	}
 	private CompetitionModel competition;
 	private AccountModel opponent;
 	private AccountModel challenger;
@@ -25,34 +29,35 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 	private boolean iamchallenger;
+
 	private int currentobserveturn;
 
 	private StashModel stash = new StashModel();
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
-
 	@Deprecated
 	private String[][] boardData;
-	private int lastTurn;
 
+	private int lastTurn;
 	public static final String STATE_FINISHED = "Finished";
 	public static final String STATE_PLAYING = "Playing";
 	public static final String STATE_REQUEST = "Request";
-	public static final String STATE_RESIGNED = "Resigned";
 
+	public static final String STATE_RESIGNED = "Resigned";
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
+
 	private final String getBoardQuery = "select 	`gl`.`Letter_Spel_ID`,	`gl`.`Beurt_ID` ,	 `l`.`LetterType_karakter`	 ,`gl`.`Tegel_X`,	 `gl`.`Tegel_Y`	  , `gl`.`BlancoLetterKarakter` from `gelegdeletter` AS `gl` join `letter` AS `l` on ((`l`.`Spel_ID` = `gl`.`Letter_Spel_ID`) and (`l`.`ID` = `gl`.`Letter_ID`) )JOIN `spel` `s`ON `s`.`id` = `gl`.`Letter_Spel_ID`JOIN `letterset` AS `ls` ON `ls`.`code` = `s`.`LetterSet_naam` where gl.letter_Spel_ID = ?";
 
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
 
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
-
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 	private final String whosTurnAtTurn = "SELECT account_naam FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
+
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
@@ -109,264 +114,6 @@ public class GameModel extends CoreModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public boolean isFree(int x, int y) {
-		try {
-			ResultSet rs = new Query(getOpenQuery).set(y + 1).set(x)
-					.set(gameId).select();
-			if (Query.getNumRows(rs) == 0) {
-				return true;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return false;
-	}
-
-	public String[][] compareArrays(String[][] bord, String[][] database) {
-		String[][] returns = new String[7][3];
-		int counter = 0;
-		for (int y = 0; y < 15; y++) {
-			for (int x = 0; x < 15; x++) {
-				if (bord[y][x].equals(database[y][x])) {
-				} else {
-					returns[counter][0] = bord[y][x];
-					returns[counter][1] = new String(x + "");
-					returns[counter][2] = new String(y + "");
-				}
-			}
-		}
-		return returns;
-	}
-
-	public Tile[] getTiles() {
-
-		return null;
-	}
-
-	/*
-	 * TODO public void playWord(HashMap<Point, Tile> tiles) { String[][]
-	 * Bnaam_uitdagers; String challengeeName =
-	 * dbResult.getString("account_naam_tegenstander"); oardcurrent = new
-	 * String[boardcontroller.getBpm().tileData.length][boardcontroller
-	 * .getBpm().tileData[1].length]; for (int y = 0;
-	 * boardcontroller.getBpm().tileData.length > y; y++) { for (int x = 0;
-	 * boardcontroller.getBpm().tileData[y].length > x; x++) {
-	 * Boardcurrent[y][x] = boardcontroller.getBpm().tileData[y][x]
-	 * .getLetter();
-	 * 
-	 * } }
-	 * 
-	 * String[][] compared = compareArrays(compared, Boardcurrent); String
-	 * oldnumberx = compared[0][1]; boolean verticalLine = true; for (String[] s
-	 * : compared) { if (!oldnumberx.equals(s[1])) {
-	 * 
-	 * verticalLine = false; } } String oldnumbery = compared[0][2]; boolean
-	 * horizontalLine = true; for (String[] s : compared) { if
-	 * (!oldnumberx.equals(s[1])) {
-	 * 
-	 * horizontalLine = false; } } }
-	 */
-	@Override
-	public void update() {
-		// TODO fire property change for new games and changed game states
-		// TODO also fire property change for a when the player needs to make a
-		// new move,
-		// and only update the board when the opponent actually plays a word.
-	}
-
-	@Override
-	public String toString() {
-		// return gameId + "";
-		return "(" + gameId + ") " + competition.getDesc() + " - "
-				+ opponent.getUsername();
-	}
-
-	public CompetitionModel getCompetition() {
-		return competition;
-	}
-
-	public AccountModel getOpponent() {
-		return opponent;
-	}
-
-	public int getGameId() {
-		return gameId;
-	}
-
-	@Deprecated
-	public String[][] getboardData() {
-		return this.boardData;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public String getBoardName() {
-		return boardName;
-	}
-
-	public String getLetterSet() {
-		return letterSet;
-	}
-
-	public AccountModel getChallenger() {
-		return challenger;
-	}
-
-	public int getScore(String userName) {
-		try {
-			ResultSet rs = new Query(getScoreQuery).set(gameId).set(userName)
-					.select();
-			rs.next();
-			return rs.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-	public void getlastrunFromDatabase() {
-		try {
-			ResultSet rs = new Query(getTurnQuery).set(gameId).set(lastTurn)
-					.select();
-			while (rs.next()) {
-				int x = rs.getInt(2) - 1;// x
-				int y = rs.getInt(3) - 1;// y
-				lastTurn = rs.getInt(5);
-				if (rs.getString(1).equals("?")) {
-					boardData[y][x] = rs.getString(4);
-				} else {
-					boardData[y][x] = rs.getString(1);
-				}
-			}
-
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-	}
-
-	public void requestWord(String word) {
-		String status = "pending";
-
-		String query = "INSERT INTO `woordenboek` (`woord`, `status`) VALUES (?, ?)";
-		try {
-			new Query(query).set(word).set(status).exec();
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-	}
-
-	public String[] getRequestedWords() {
-		String[] words = null;
-		String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-		try {
-			ResultSet res = new Query(query).select();
-			int numRows = Query.getNumRows(res);
-
-			words = new String[numRows];
-			int i = 0;
-			while (res.next()) {
-				words[i] = res.getString(1);
-				i++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-
-		return words;
-	}
-
-	private void test() {
-		Integer[][] matrix = new Integer[][] {
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) } };
-
-		Integer[][] matrix2 = new Integer[][] {
-				{ new Integer(1), new Integer(99), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(99), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(99) } };
-
-		Object[][] newMatrix = MatrixUtils.xor(matrix, matrix2);
-		System.out.println(Arrays.deepToString(newMatrix));
-		System.out.println();
-		newMatrix = MatrixUtils.crop(newMatrix);
-		System.out.println();
-		System.out.println(Arrays.deepToString(newMatrix));
-	}
-
-	public static void main2(String[] args) {
-		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel(0, null, null, false).test();
 	}
 
 	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
@@ -538,49 +285,172 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public BoardModel getBoardModel() {
-		return boardModel;
+	public String[][] compareArrays(String[][] bord, String[][] database) {
+		String[][] returns = new String[7][3];
+		int counter = 0;
+		for (int y = 0; y < 15; y++) {
+			for (int x = 0; x < 15; x++) {
+				if (bord[y][x].equals(database[y][x])) {
+				} else {
+					returns[counter][0] = bord[y][x];
+					returns[counter][1] = new String(x + "");
+					returns[counter][2] = new String(y + "");
+				}
+			}
+		}
+		return returns;
 	}
 
-	public boolean yourturn() {
+	@Deprecated
+	public String[][] getboardData() {
+		return this.boardData;
+	}
 
-		// String query =
-		// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
-		// String query =
-		// "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+	public void getBoardFromDatabase() {
 		try {
-			ResultSet res = new Query(yourTurnQuery).set(getGameId()).select();
+			ResultSet rs = new Query(getBoardQuery).set(gameId).select();
+			while (rs.next()) {
+				int x = rs.getInt(4) - 1;// x
+				int y = rs.getInt(5) - 1;// y
+				if (x > -1 && y > -1) {
+					if (rs.getString(3).equals("?")) {
+						ResultSet tilewaarde = new Query(getTileValue)
+								.set(rs.getString(6)).set(letterSet).select();
+						tilewaarde.next();
+						boardModel
+								.setValueAt(new Tile(rs.getString(6),
+										tilewaarde.getInt(1),
+										Tile.NOT_MUTATABLE), y, x);
 
-			int turnCount = Query.getNumRows(res);
-
-			// If it is the first turn
-			if (turnCount == 0) {
-				// If the currentUser is the challenger return true else false
-				return iamchallenger;
-			}
-			res.next();
-			String lastturnplayername = res.getString("account_naam");
-
-			// Get the last turn made
-			// The challenger makes the first move
-
-			if (lastturnplayername.equals(currentUser.getUsername())) {
-				// If he is challenger
-				if (iamchallenger) {
-					return false;
+					} else {
+						// TODO add letter value in query
+						ResultSet tilewaarde = new Query(getTileValue)
+								.set(rs.getString(3)).set(letterSet).select();
+						tilewaarde.next();
+						boardModel
+								.setValueAt(new Tile(rs.getString(3),
+										tilewaarde.getInt(1),
+										Tile.NOT_MUTATABLE), y, x);
+					}
 				}
-				return true;
-			} else if (iamchallenger) {
-				return true;
-
 			}
-			return false;
 
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-		return null;
 
+	}
+
+	public BoardModel getBoardModel() {
+		return boardModel;
+	}
+
+	public String getBoardName() {
+		return boardName;
+	}
+
+	public AccountModel getChallenger() {
+		return challenger;
+	}
+
+	public CompetitionModel getCompetition() {
+		return competition;
+	}
+
+	public int getCurrentobserveturn() {
+		return currentobserveturn;
+	}
+
+	public int getCurrentValueForThisTurn() {
+
+		// Tile[][] oldData = (Tile[][]) boardModel.getData();
+		// Tile[][] newData = (Tile[][]) getBoardFromDatabase();
+
+		// First find out which letters where played
+		// Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData,
+		// newData);
+		// Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
+		// TODO deze methode maken
+		// kan pas als woordleggen werkt
+		return 0;
+	}
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void getlastrunFromDatabase() {
+		try {
+			ResultSet rs = new Query(getTurnQuery).set(gameId).set(lastTurn)
+					.select();
+			while (rs.next()) {
+				int x = rs.getInt(2) - 1;// x
+				int y = rs.getInt(3) - 1;// y
+				lastTurn = rs.getInt(5);
+				if (rs.getString(1).equals("?")) {
+					boardData[y][x] = rs.getString(4);
+				} else {
+					boardData[y][x] = rs.getString(1);
+				}
+			}
+
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+
+	public String getLetterSet() {
+		return letterSet;
+	}
+
+	public int getNumberOfTotalTurns() {
+
+		try {
+			ResultSet dbResultamountofturns = new Query(getnumberofturns).set(
+					gameId).select();
+			dbResultamountofturns.next();
+			return dbResultamountofturns.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public AccountModel getOpponent() {
+		return opponent;
+	}
+
+	public String[] getRequestedWords() {
+		String[] words = null;
+		String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
+		try {
+			ResultSet res = new Query(query).select();
+			int numRows = Query.getNumRows(res);
+
+			words = new String[numRows];
+			int i = 0;
+			while (res.next()) {
+				words[i] = res.getString(1);
+				i++;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+
+		return words;
+	}
+
+	public int getScore(String userName) {
+		try {
+			ResultSet rs = new Query(getScoreQuery).set(gameId).set(userName)
+					.select();
+			rs.next();
+			return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	public int getScore(Tile[][] playedLetters,ArrayList[] woorden, BoardModel currentBoard){
@@ -648,37 +518,56 @@ public class GameModel extends CoreModel {
 		return Score;
 	}
 
-	
-
-	public boolean whosturn() {
-		// dont use unless observing
-		// use yourturn instead
-	
-		
-			try {
-				System.out.println(getGameId()+ "  " +currentobserveturn );
-				ResultSet res = new Query(whosTurnAtTurn).set(getGameId())
-						.set(currentobserveturn).select();
-				
-				res.next();
-				String lastturnplayername = res.getString(1);
-
-				if (lastturnplayername.equals(challenger.getUsername())) {
-					return false;
-				} else {
-					return true;
-				}
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		return null;
-
+	public String getState() {
+		return state;
 	}
+
+	public Tile[] getTiles() {
+
+		return null;
+	}
+
+	public boolean isFree(int x, int y) {
+		try {
+			ResultSet rs = new Query(getOpenQuery).set(y + 1).set(x)
+					.set(gameId).select();
+			if (Query.getNumRows(rs) == 0) {
+				return true;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean isIamchallenger() {
+		return iamchallenger;
+	}
+
+	
 
 	public boolean isObserver() {
 		return observer;
+	}
+
+	public void requestWord(String word) {
+		String status = "pending";
+
+		String query = "INSERT INTO `woordenboek` (`woord`, `status`) VALUES (?, ?)";
+		try {
+			new Query(query).set(word).set(status).exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+
+	public void resign() {
+		try {
+			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId())
+					.exec();
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
 	}
 
 	public String score(int toTurn) {
@@ -721,53 +610,157 @@ public class GameModel extends CoreModel {
 		return counter;
 	}
 
-	public int getCurrentValueForThisTurn() {
-
-		// Tile[][] oldData = (Tile[][]) boardModel.getData();
-		// Tile[][] newData = (Tile[][]) getBoardFromDatabase();
-
-		// First find out which letters where played
-		// Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData,
-		// newData);
-		// Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
-		// TODO deze methode maken
-		// kan pas als woordleggen werkt
-		return 0;
+	public void setCurrentobserveturn(int currentobserveturn) {
+		System.out.println(currentobserveturn);
+		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void getBoardFromDatabase() {
+	public void setPlayerLetterFromDatabase() {
 		try {
-			ResultSet rs = new Query(getBoardQuery).set(gameId).select();
-			while (rs.next()) {
-				int x = rs.getInt(4) - 1;// x
-				int y = rs.getInt(5) - 1;// y
-				if (x > -1 && y > -1) {
-					if (rs.getString(3).equals("?")) {
-						ResultSet tilewaarde = new Query(getTileValue)
-								.set(rs.getString(6)).set(letterSet).select();
-						tilewaarde.next();
-						boardModel
-								.setValueAt(new Tile(rs.getString(6),
-										tilewaarde.getInt(1),
-										Tile.NOT_MUTATABLE), y, x);
+			ResultSet res = new Query(getPlayerTiles).set(getGameId())
+					.set(currentUser.getUsername()).select();
+			String[] letters;
+			if (!(Query.getNumRows(res) == 0)) {
+				res.next();
 
-					} else {
-						// TODO add letter value in query
-						ResultSet tilewaarde = new Query(getTileValue)
-								.set(rs.getString(3)).set(letterSet).select();
-						tilewaarde.next();
-						boardModel
-								.setValueAt(new Tile(rs.getString(3),
-										tilewaarde.getInt(1),
-										Tile.NOT_MUTATABLE), y, x);
-					}
+				letters = res.getString(2).split(",");
+				for (int x = 0; letters.length > x; x++) {
+					ResultSet tilewaarde = new Query(getTileValue)
+							.set(letters[x]).set(letterSet).select();
+					tilewaarde.next();
+
+					boardModel.setPlayetTile(x,
+							new Tile(letters[x], tilewaarde.getInt(1),
+									Tile.MUTATABLE));
 				}
 			}
 
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+	}
 
+	private void test() {
+		Integer[][] matrix = new Integer[][] {
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) } };
+
+		Integer[][] matrix2 = new Integer[][] {
+				{ new Integer(1), new Integer(99), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(99), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(99) } };
+
+		Object[][] newMatrix = MatrixUtils.xor(matrix, matrix2);
+		System.out.println(Arrays.deepToString(newMatrix));
+		System.out.println();
+		newMatrix = MatrixUtils.crop(newMatrix);
+		System.out.println();
+		System.out.println(Arrays.deepToString(newMatrix));
+	}
+
+	@Override
+	public String toString() {
+		// return gameId + "";
+		return "(" + gameId + ") " + competition.getDesc() + " - "
+				+ opponent.getUsername();
+	}
+
+	/*
+	 * TODO public void playWord(HashMap<Point, Tile> tiles) { String[][]
+	 * Bnaam_uitdagers; String challengeeName =
+	 * dbResult.getString("account_naam_tegenstander"); oardcurrent = new
+	 * String[boardcontroller.getBpm().tileData.length][boardcontroller
+	 * .getBpm().tileData[1].length]; for (int y = 0;
+	 * boardcontroller.getBpm().tileData.length > y; y++) { for (int x = 0;
+	 * boardcontroller.getBpm().tileData[y].length > x; x++) {
+	 * Boardcurrent[y][x] = boardcontroller.getBpm().tileData[y][x]
+	 * .getLetter();
+	 * 
+	 * } }
+	 * 
+	 * String[][] compared = compareArrays(compared, Boardcurrent); String
+	 * oldnumberx = compared[0][1]; boolean verticalLine = true; for (String[] s
+	 * : compared) { if (!oldnumberx.equals(s[1])) {
+	 * 
+	 * verticalLine = false; } } String oldnumbery = compared[0][2]; boolean
+	 * horizontalLine = true; for (String[] s : compared) { if
+	 * (!oldnumberx.equals(s[1])) {
+	 * 
+	 * horizontalLine = false; } } }
+	 */
+	@Override
+	public void update() {
+		// TODO fire property change for new games and changed game states
+		// TODO also fire property change for a when the player needs to make a
+		// new move,
+		// and only update the board when the opponent actually plays a word.
 	}
 
 	public void updateboardfromdatabasetoturn(int turn_id) {
@@ -802,65 +795,72 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public int getCurrentobserveturn() {
-		return currentobserveturn;
-	}
-
-	public void setCurrentobserveturn(int currentobserveturn) {
-		System.out.println(currentobserveturn);
-		this.currentobserveturn = currentobserveturn;
-	}
-
-	public void resign() {
-		try {
-			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId())
-					.exec();
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-	}
-
-	public int getNumberOfTotalTurns() {
-
-		try {
-			ResultSet dbResultamountofturns = new Query(getnumberofturns).set(
-					gameId).select();
-			dbResultamountofturns.next();
-			return dbResultamountofturns.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-	public void setPlayerLetterFromDatabase() {
-		try {
-			ResultSet res = new Query(getPlayerTiles).set(getGameId())
-					.set(currentUser.getUsername()).select();
-			String[] letters;
-			if (!(Query.getNumRows(res) == 0)) {
+	public boolean whosturn() {
+		// dont use unless observing
+		// use yourturn instead
+	
+		
+			try {
+				System.out.println(getGameId()+ "  " +currentobserveturn );
+				ResultSet res = new Query(whosTurnAtTurn).set(getGameId())
+						.set(currentobserveturn).select();
+				
 				res.next();
+				String lastturnplayername = res.getString(1);
 
-				letters = res.getString(2).split(",");
-				for (int x = 0; letters.length > x; x++) {
-					ResultSet tilewaarde = new Query(getTileValue)
-							.set(letters[x]).set(letterSet).select();
-					tilewaarde.next();
-
-					boardModel.setPlayetTile(x,
-							new Tile(letters[x], tilewaarde.getInt(1),
-									Tile.MUTATABLE));
+				if (lastturnplayername.equals(challenger.getUsername())) {
+					return false;
+				} else {
+					return true;
 				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+		return null;
+
+	}
+
+	public boolean yourturn() {
+
+		// String query =
+		// "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
+		// String query =
+		// "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
+		try {
+			ResultSet res = new Query(yourTurnQuery).set(getGameId()).select();
+
+			int turnCount = Query.getNumRows(res);
+
+			// If it is the first turn
+			if (turnCount == 0) {
+				// If the currentUser is the challenger return true else false
+				return iamchallenger;
+			}
+			res.next();
+			String lastturnplayername = res.getString("account_naam");
+
+			// Get the last turn made
+			// The challenger makes the first move
+
+			if (lastturnplayername.equals(currentUser.getUsername())) {
+				// If he is challenger
+				if (iamchallenger) {
+					return false;
+				}
+				return true;
+			} else if (iamchallenger) {
+				return true;
+
+			}
+			return false;
 
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-	}
+		return null;
 
-	public boolean isIamchallenger() {
-		return iamchallenger;
 	}
 
 }

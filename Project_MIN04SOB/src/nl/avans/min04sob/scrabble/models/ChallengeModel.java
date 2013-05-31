@@ -32,6 +32,10 @@ public class ChallengeModel extends CoreModel {
 		yourname = accountModel.getUsername();
 	}
 
+	public ArrayList<String> challengeArray() {
+		return challenge;
+	}
+
 	public void controle(AccountModel challegendname) throws SQLException// uitdager
 	{
 
@@ -84,30 +88,6 @@ public class ChallengeModel extends CoreModel {
 		}
 	}
 
-	@Override
-	public void update() {
-		// // if your name = tegenstander if your naam = uitdager
-		// /// receive challenge your name = challenged ///// ///// ///// /////
-		// ///// ///// /////
-		// /array list add alleen als challend= yourname;;
-		try {
-			yourname = accountModel.getUsername();
-			ResultSet dbResult = new Query(selectQuery).select();
-			while (dbResult.next()) {
-				if (!challenge.contains(dbResult.getString(4))) {
-					if (dbResult.getString(5).equals(yourname)
-							&& dbResult.getString(3).equals(STATE_REQUEST)
-							&& dbResult.getString(7).equals(STATE_UNKNOWN)) {
-						challenge.add(dbResult.getString(4));
-					}
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public void respondChallenge(String nameuitdager, boolean accepted)
 			throws SQLException // uitdgedaagde
 
@@ -143,7 +123,27 @@ public class ChallengeModel extends CoreModel {
 			}	
 	}
 
-	public ArrayList<String> challengeArray() {
-		return challenge;
+	@Override
+	public void update() {
+		// // if your name = tegenstander if your naam = uitdager
+		// /// receive challenge your name = challenged ///// ///// ///// /////
+		// ///// ///// /////
+		// /array list add alleen als challend= yourname;;
+		try {
+			yourname = accountModel.getUsername();
+			ResultSet dbResult = new Query(selectQuery).select();
+			while (dbResult.next()) {
+				if (!challenge.contains(dbResult.getString(4))) {
+					if (dbResult.getString(5).equals(yourname)
+							&& dbResult.getString(3).equals(STATE_REQUEST)
+							&& dbResult.getString(7).equals(STATE_UNKNOWN)) {
+						challenge.add(dbResult.getString(4));
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

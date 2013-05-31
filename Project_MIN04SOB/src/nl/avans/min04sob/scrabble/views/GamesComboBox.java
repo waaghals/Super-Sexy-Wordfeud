@@ -26,6 +26,42 @@ public class GamesComboBox extends CorePanel {
 		initialize();
 }
 
+	public void addGame(GameModel game) {
+		if (game == null) {
+			return;
+		}
+		gameList.addItem(game);
+	}
+
+	public void addGameListListener(ActionListener listenener) {
+		gameList.addActionListener(listenener);
+	}
+
+	public void addGames(ArrayList<GameModel> arrayList) {
+		if (arrayList == null) {
+			return;
+		}
+		gameList.removeAll();
+		for (GameModel game : arrayList) {
+			gameList.addItem(game);
+		}
+	}
+
+	public void addObserverCheckBoxListener(ActionListener listenener) {
+
+		observer.addActionListener(listenener);
+
+	}
+
+	public boolean checkBoxIsSelected() {
+		return observer.isSelected();
+		
+	}
+
+	public GameModel getSelectedGame() {
+		return (GameModel) gameList.getSelectedItem();
+	}
+
 	public void initialize() {
 
 		setLayout(new MigLayout("", "[100px][100px][250px]", "[20px:30px:30px][30px][30px]"));
@@ -39,33 +75,6 @@ public class GamesComboBox extends CorePanel {
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
 		add(observer,"cell 2 1,grow");
-	}
-
-	public void addGameListListener(ActionListener listenener) {
-		gameList.addActionListener(listenener);
-	}
-
-	public void addObserverCheckBoxListener(ActionListener listenener) {
-
-		observer.addActionListener(listenener);
-
-	}
-
-	public void addGame(GameModel game) {
-		if (game == null) {
-			return;
-		}
-		gameList.addItem(game);
-	}
-
-	public void addGames(ArrayList<GameModel> arrayList) {
-		if (arrayList == null) {
-			return;
-		}
-		gameList.removeAll();
-		for (GameModel game : arrayList) {
-			gameList.addItem(game);
-		}
 	}
 
 	@Override
@@ -104,14 +113,5 @@ public class GamesComboBox extends CorePanel {
 			break;
 		}
 
-	}
-
-	public boolean checkBoxIsSelected() {
-		return observer.isSelected();
-		
-	}
-
-	public GameModel getSelectedGame() {
-		return (GameModel) gameList.getSelectedItem();
 	}
 }

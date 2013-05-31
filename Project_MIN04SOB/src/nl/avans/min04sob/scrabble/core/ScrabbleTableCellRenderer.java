@@ -50,6 +50,17 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		beige = new Color(255, 255, 200);
 	}
 
+	protected ImageIcon createImageIcon(String path,
+            String description) {
+		URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
+	
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
@@ -138,16 +149,5 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			dwImage = createImageIcon(dwURL, "dw");
 			twImage = createImageIcon(twURL, "tw");
 			starImage = createImageIcon(starURL, "star");
-	}
-	
-	protected ImageIcon createImageIcon(String path,
-            String description) {
-		URL imgURL = getClass().getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL, description);
-		} else {
-			System.err.println("Couldn't find file: " + path);
-			return null;
-		}
 	}
 }

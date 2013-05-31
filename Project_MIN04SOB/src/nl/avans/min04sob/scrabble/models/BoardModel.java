@@ -57,10 +57,41 @@ public class BoardModel extends CoreTableModel {
 		return EMPTY; // gewoon vakje
 	}
 
+	public Point getStartPoint() {
+		// odd numbers of tile, meaning we have a center tile
+		// The database is setup in a way that a star tile doesn't need to be in
+		// the
+		// Center tile, so check it from the database
+		int width = getData().length;
+		int height = getData()[0].length;
+		Point coord = null;
+
+		if (height % 2 == 1 && width % 2 == 1) {
+			coord = new Point((height / 2) + 1, (width / 2) + 1);
+			if (getMultiplier(coord) == BoardModel.STAR) {
+				return coord;
+			}
+		}
+
+		// Take the hard approach and find the start tile manually
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				coord = new Point(i, j);
+				if (getMultiplier(coord) == BoardModel.STAR) {
+					return coord;
+				}
+			}
+		}
+
+		return coord;
+	}
+
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if(rowIndex < 15 && columnIndex <15){
+		return data[rowIndex][columnIndex];
+		}
+		return null;
 	}
 
 	@Override
@@ -70,14 +101,6 @@ public class BoardModel extends CoreTableModel {
 		return false;
 		// }
 		// return tile.isMutatable();
-	}
-
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(rowIndex < 15 && columnIndex <15){
-		return data[rowIndex][columnIndex];
-		}
-		return null;
 	}
 	public void setBoardToDefault(){
 		int boardX = 0;
@@ -118,32 +141,9 @@ public class BoardModel extends CoreTableModel {
 		data[rowIndex][columnIndex] = newValue;
 	}
 
-	public Point getStartPoint() {
-		// odd numbers of tile, meaning we have a center tile
-		// The database is setup in a way that a star tile doesn't need to be in
-		// the
-		// Center tile, so check it from the database
-		int width = getData().length;
-		int height = getData()[0].length;
-		Point coord = null;
-
-		if (height % 2 == 1 && width % 2 == 1) {
-			coord = new Point((height / 2) + 1, (width / 2) + 1);
-			if (getMultiplier(coord) == BoardModel.STAR) {
-				return coord;
-			}
-		}
-
-		// Take the hard approach and find the start tile manually
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				coord = new Point(i, j);
-				if (getMultiplier(coord) == BoardModel.STAR) {
-					return coord;
-				}
-			}
-		}
-
-		return coord;
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

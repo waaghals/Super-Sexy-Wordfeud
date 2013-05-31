@@ -26,16 +26,30 @@ private BoardModel bpm;
 		
 	}
 	@Override
-	public void initialize() {
-		ScrabbleTableCellRenderer renderer = new ScrabbleTableCellRenderer(bpm);
-		bpv.setRenderer(renderer);
-	}
-
-	@Override
 	public void addListeners() {
 		
 		// TODO Auto-generated method stub
 		
+	}
+
+	public BoardModel getBpm() {
+		return bpm;
+	}
+	public BoardPanel getBpv() {
+		return bpv;
+	}
+	@Override
+	public void initialize() {
+		ScrabbleTableCellRenderer renderer = new ScrabbleTableCellRenderer(bpm);
+		bpv.setRenderer(renderer);
+	}
+	
+	
+	public void setBpm(BoardModel bpm) {
+		this.bpm = bpm;
+	}
+	public void setBpv(BoardPanel bpv) {
+		this.bpv = bpv;
 	}
 	public void updateBoard(){
 		
@@ -43,20 +57,6 @@ private BoardModel bpm;
 	}
 	public void updatePlayerTiles(){
 	//	bpv.updatePlayerTiles(bpm.getPlayerDataValues());
-	}
-	
-	
-	public BoardPanel getBpv() {
-		return bpv;
-	}
-	public void setBpv(BoardPanel bpv) {
-		this.bpv = bpv;
-	}
-	public BoardModel getBpm() {
-		return bpm;
-	}
-	public void setBpm(BoardModel bpm) {
-		this.bpm = bpm;
 	}
 	
 

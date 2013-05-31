@@ -45,21 +45,21 @@ public class DatabasePool extends CorePool<Connection> implements Runnable {
 	}
 
 	@Override
+	public void run() {
+		try {
+			Class.forName(DRIVER).newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public boolean validate(Connection o) {
 		try {
 			return (!o.isClosed());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return (false);
-		}
-	}
-
-	@Override
-	public void run() {
-		try {
-			Class.forName(DRIVER).newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

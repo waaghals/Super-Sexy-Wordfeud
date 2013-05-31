@@ -163,6 +163,39 @@ public class AccountController extends CoreController {
 		frame.setVisible(true);
 	}
 
+	@Override
+	public void addListeners() {
+		// TODO Automatisch gegenereerde methodestub
+
+	}
+
+	public void changePass() {
+		String oldpass = changepassPanel.getOldPass();
+		String newpass1 = changepassPanel.getNewPass1();
+		String newpass2 = changepassPanel.getNewPass2();
+
+		if (oldpass.equals(accountModel.getpass())) {
+			if (validateLength(newpass1.length()) == -1) {
+				changepassPanel.setNewPass1Good(false, "Te Kort");
+			} else if (validateLength(newpass1.length()) == 1) {
+				changepassPanel.setNewPass1Good(false, "Te Lang");
+			} else {
+				if (newpass2.equals(newpass1)) {
+					accountModel.changePass(changepassPanel.getNewPass1());
+					changepassPanel.setOldPassGood(true, "");
+					changepassPanel.setNewPass1Good(true, "");
+					changepassPanel.setNewPass2Good(true, "");
+					changepassPanel.passwordChange();
+					frame.dispose();
+				} else {
+					changepassPanel.setNewPass2Good(false, "Verkeerd");
+				}
+			}
+		} else {
+			changepassPanel.setOldPassGood(false, "Fout");
+		}
+	}
+
 	private void checkLogin() {
 		accountModel.login(loginPanel.getUsername(), loginPanel.getPassword());
 		 
@@ -175,6 +208,42 @@ public class AccountController extends CoreController {
 			frame = null;
 		}
 
+	}
+
+	public ChangePassPanel getchangepasspanel() {
+		return changepassPanel;
+	}
+
+	@Override
+	public void initialize() {
+		// TODO Automatisch gegenereerde methodestub
+
+	}
+
+	public void loginToRegister() {
+		frame.remove(loginPanel);
+		frame.add(registerPanel);
+		registerPanel.clearFields();
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
+	}
+
+	private void registerToLogin() {
+		frame.remove(registerPanel);
+		loginPanel.clearFields();
+		frame.add(loginPanel);
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
+	}
+
+	public void setChangePassPanel() {
+		frame.remove(loginPanel);
+		frame.add(changepassPanel);
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
 	}
 
 	private void tryToRegister() {
@@ -197,26 +266,6 @@ public class AccountController extends CoreController {
 			
 			return 0;
 		}
-	}
-
-	private boolean validateUsername() {
-		if (validateLength(registerPanel.getUsername().length()) == -1) {
-			registerPanel.setUsernameMistake(false, "Te kort");
-			return false;
-		} else if (validateLength(registerPanel.getUsername().length()) == 1) {
-			registerPanel.setUsernameMistake(false, "Te lang");
-			return false;
-		} else {
-			if (AccountModel
-					.checkUsernameAvailable(registerPanel.getUsername())) {
-				registerPanel.setUsernameMistake(true, "");
-				return true;
-			} else {
-				registerPanel.setUsernameMistake(false, "Al in gebruik");
-				return false;
-			}
-		}
-
 	}
 
 	private boolean validatePassword1() {
@@ -251,72 +300,23 @@ public class AccountController extends CoreController {
 		}
 	}
 
-	public ChangePassPanel getchangepasspanel() {
-		return changepassPanel;
-	}
-
-	public void changePass() {
-		String oldpass = changepassPanel.getOldPass();
-		String newpass1 = changepassPanel.getNewPass1();
-		String newpass2 = changepassPanel.getNewPass2();
-
-		if (oldpass.equals(accountModel.getpass())) {
-			if (validateLength(newpass1.length()) == -1) {
-				changepassPanel.setNewPass1Good(false, "Te Kort");
-			} else if (validateLength(newpass1.length()) == 1) {
-				changepassPanel.setNewPass1Good(false, "Te Lang");
-			} else {
-				if (newpass2.equals(newpass1)) {
-					accountModel.changePass(changepassPanel.getNewPass1());
-					changepassPanel.setOldPassGood(true, "");
-					changepassPanel.setNewPass1Good(true, "");
-					changepassPanel.setNewPass2Good(true, "");
-					changepassPanel.passwordChange();
-					frame.dispose();
-				} else {
-					changepassPanel.setNewPass2Good(false, "Verkeerd");
-				}
-			}
+	private boolean validateUsername() {
+		if (validateLength(registerPanel.getUsername().length()) == -1) {
+			registerPanel.setUsernameMistake(false, "Te kort");
+			return false;
+		} else if (validateLength(registerPanel.getUsername().length()) == 1) {
+			registerPanel.setUsernameMistake(false, "Te lang");
+			return false;
 		} else {
-			changepassPanel.setOldPassGood(false, "Fout");
+			if (AccountModel
+					.checkUsernameAvailable(registerPanel.getUsername())) {
+				registerPanel.setUsernameMistake(true, "");
+				return true;
+			} else {
+				registerPanel.setUsernameMistake(false, "Al in gebruik");
+				return false;
+			}
 		}
-	}
 
-	public void loginToRegister() {
-		frame.remove(loginPanel);
-		frame.add(registerPanel);
-		registerPanel.clearFields();
-		frame.revalidate();
-		frame.repaint();
-		frame.pack();
-	}
-
-	private void registerToLogin() {
-		frame.remove(registerPanel);
-		loginPanel.clearFields();
-		frame.add(loginPanel);
-		frame.revalidate();
-		frame.repaint();
-		frame.pack();
-	}
-
-	@Override
-	public void initialize() {
-		// TODO Automatisch gegenereerde methodestub
-
-	}
-
-	@Override
-	public void addListeners() {
-		// TODO Automatisch gegenereerde methodestub
-
-	}
-
-	public void setChangePassPanel() {
-		frame.remove(loginPanel);
-		frame.add(changepassPanel);
-		frame.revalidate();
-		frame.repaint();
-		frame.pack();
 	}
 }

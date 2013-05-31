@@ -14,11 +14,10 @@ public abstract class CorePool<T> {
 		unlocked = new Hashtable<T, Long>();
 	}
 
-	protected abstract T create();
-
-	public abstract boolean validate(T o);
-
-	public abstract void expire(T o);
+	public synchronized void checkIn(T t) {
+		locked.remove(t);
+		unlocked.put(t, System.currentTimeMillis());
+	}
 
 	public synchronized T checkOut() {
 		long now = System.currentTimeMillis();
@@ -52,8 +51,9 @@ public abstract class CorePool<T> {
 		return (t);
 	}
 
-	public synchronized void checkIn(T t) {
-		locked.remove(t);
-		unlocked.put(t, System.currentTimeMillis());
-	}
+	protected abstract T create();
+
+	public abstract void expire(T o);
+
+	public abstract boolean validate(T o);
 }

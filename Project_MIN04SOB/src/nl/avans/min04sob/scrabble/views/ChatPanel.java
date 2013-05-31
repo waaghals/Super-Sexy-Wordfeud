@@ -40,6 +40,39 @@ public class ChatPanel extends CorePanel {
 	}
 
 
+	public void addListenerChatField(KeyListener key) {
+		chatFieldSend.addKeyListener(key);
+	}
+
+	public void addListenerChatSendButton(ActionListener action) {
+		chatSendButton.addActionListener(action);
+	}
+
+	public void addToChatField(String message) {
+		chatField.append(message);
+		chatField.setCaretPosition(chatField.getDocument().getLength());
+	}
+
+	public void empty() {
+		chatField.setText("");
+	}
+
+	public JTextArea getChatField() {
+		return chatField;
+	}
+
+	public JTextField getChatFieldSend() {
+		return chatFieldSend;
+	}
+
+	public String getChatFieldSendText() {
+		return chatFieldSend.getText();
+	}
+
+	public String getChatFieldText() {
+		return chatField.getText();
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void modelPropertyChange(PropertyChangeEvent evt) {
@@ -62,45 +95,12 @@ public class ChatPanel extends CorePanel {
 		}
 	}
 
-	public void addListenerChatField(KeyListener key) {
-		chatFieldSend.addKeyListener(key);
-	}
-
-	public void addListenerChatSendButton(ActionListener action) {
-		chatSendButton.addActionListener(action);
-	}
-
-	public JTextArea getChatField() {
-		return chatField;
-	}
-
 	public void setChatField(JTextArea chatfield) {
 		this.chatField = chatfield;
 	}
 
-	public JTextField getChatFieldSend() {
-		return chatFieldSend;
-	}
-
 	public void setChatFieldSend(JTextField chatfieldsend) {
 		this.chatFieldSend = chatfieldsend;
-	}
-
-	public void addToChatField(String message) {
-		chatField.append(message);
-		chatField.setCaretPosition(chatField.getDocument().getLength());
-	}
-
-	public void setChatFieldText(String text) {
-		chatField.setText(text);
-	}
-
-	public String getChatFieldText() {
-		return chatField.getText();
-	}
-
-	public String getChatFieldSendText() {
-		return chatFieldSend.getText();
 	}
 
 	public void setChatFieldSendText(String message) {
@@ -108,7 +108,7 @@ public class ChatPanel extends CorePanel {
 	}
 
 
-	public void empty() {
-		chatField.setText("");
+	public void setChatFieldText(String text) {
+		chatField.setText(text);
 	}
 }

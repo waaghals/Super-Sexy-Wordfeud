@@ -65,9 +65,8 @@ public class JoinCompetitionView extends CorePanel {
 		cancelButton.addActionListener(listener);
 	}
 	
-	public CompetitionModel selectedCompetition(){
-		return competitionList.getSelectedValue();
-		
+	public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
+		competitionList.setListData(availableCompetitions);
 	}
 
 	@Override
@@ -76,14 +75,15 @@ public class JoinCompetitionView extends CorePanel {
 
 	}
 
+	public CompetitionModel selectedCompetition(){
+		return competitionList.getSelectedValue();
+		
+	}
+
 	public void setText(String labelText, String button) {
 		competitionLabel.setText(labelText);
 		actionButton.setText(button);
 		revalidate();
-	}
-
-	public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
-		competitionList.setListData(availableCompetitions);
 	}
 
 }

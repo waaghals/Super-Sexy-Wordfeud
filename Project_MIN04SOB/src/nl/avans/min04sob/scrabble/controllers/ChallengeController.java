@@ -73,17 +73,9 @@ public class ChallengeController extends CoreController  {
 	}
  
 	@Override
-	public void propertyChange(PropertyChangeEvent evt)  {
-	 
-	System.out.println(evt.getPropertyName());
-	 switch(evt.getPropertyName())
-		 {
-		 case "1": challengers();break;
-		 case "2": challengeview.response("challenge denied");break;
-		 case "3": challengeview.response("challenge accepted");break;
-		 case "4": challengeview.response("something went wrong");break;
-		 default: break;
-		 }
+	public void addListeners() {
+		// TODO Auto-generated method stub
+		
 	}
 	 
 	public void challengers()
@@ -98,19 +90,27 @@ public class ChallengeController extends CoreController  {
 		challengeview.showChallenge();
 	}
 	
-	public void toChallenge()
-	{
-		challengeview.toChallenge();
-	}
-
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void addListeners() {
-		// TODO Auto-generated method stub
-		
+	public void propertyChange(PropertyChangeEvent evt)  {
+	 
+	System.out.println(evt.getPropertyName());
+	 switch(evt.getPropertyName())
+		 {
+		 case "1": challengers();break;
+		 case "2": challengeview.response("challenge denied");break;
+		 case "3": challengeview.response("challenge accepted");break;
+		 case "4": challengeview.response("something went wrong");break;
+		 default: break;
+		 }
+	}
+
+	public void toChallenge()
+	{
+		challengeview.toChallenge();
 	} 
 }

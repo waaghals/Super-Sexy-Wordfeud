@@ -25,30 +25,10 @@ public class AcceptDeclineController extends CoreController {
 		addListeners();
 	}
 
-	public void fillWordList() {
-		String[] words = modModel.getRequestedWordList();
-		adView.fillWordList(words);
-		adView.revalidate();
-		adView.repaint();
-
-	}
-
 	public void acceptWord() {
 		String word = adView.getSelectedWord();
 		modModel.acceptWord(word);
 		fillWordList();
-	}
-
-	public void deniedWord() {
-		String word = adView.getSelectedWord();
-		modModel.deniedWord(word);
-		fillWordList();
-	}
-
-	@Override
-	public void initialize() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -86,6 +66,26 @@ public class AcceptDeclineController extends CoreController {
 				 }
 			}
 		});
+	}
+
+	public void deniedWord() {
+		String word = adView.getSelectedWord();
+		modModel.deniedWord(word);
+		fillWordList();
+	}
+
+	public void fillWordList() {
+		String[] words = modModel.getRequestedWordList();
+		adView.fillWordList(words);
+		adView.revalidate();
+		adView.repaint();
+
+	}
+
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

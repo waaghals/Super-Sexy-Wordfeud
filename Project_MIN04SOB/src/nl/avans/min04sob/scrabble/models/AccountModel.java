@@ -10,9 +10,34 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class AccountModel extends CoreModel {
 
+	public static boolean checkUsernameAvailable(String username) {
+		String query = "SELECT * FROM account WHERE naam = ?";
+		try {
+			ResultSet check = new Query(query).set(username).select();
+			return !check.first(); // If a first row exists, return true.
+		} catch (SQLException sql) {
+			return false;
+		}
+	}
+	public static void registerAccount(String username, char[] password, Role role) {
+
+		String createAccount = "INSERT INTO `account` (`naam`, `wachtwoord` ) VALUES (?, ?)";
+		String setRole = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?, ?)";
+		try {
+			new Query(createAccount).set(username).set(password).exec();
+			new Query(setRole).set(username).set(role).exec();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	private String username;
+
 	private boolean isLoggedIn;
+
 	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
+	
+	
+	
 
 	public AccountModel() {
 		initialize();
@@ -23,20 +48,135 @@ public class AccountModel extends CoreModel {
 		
 			this.username = username;
 		}
-	
-	
-	
 
 	public AccountModel(String username, char[] password) {
 		initialize();
 		login(username, password);
 	}
 
+	public void changePass(String newPass){
+		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
+		try{
+			new Query(query).set(newPass).set(username).exec();
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+		
+	}
+
+	public CompetitionModel[] getAvailableCompetitions(String username){
+		CompetitionModel[] comp_desc = new CompetitionModel[0];
+		int x = 0;
+		try {
+			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft		
+			ResultSet dbResult = new Query(availableCompetitionQuery).set(username).select();
+			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < comp_desc.length){
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+				x++;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return comp_desc;
+	}
+
+	public int getChallengeCount() {
+		// TODO Automatisch gegenereerde methodestub
+		return 1;
+	}
+
+	public CompetitionModel[] getCompetitions(String username){
+		CompetitionModel[] comp_desc = new CompetitionModel[0];
+		int x = 0;
+		try {
+			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
+			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < comp_desc.length){
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+				x++;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return comp_desc;
+	}
+
+	public ArrayList<GameModel> getObserverAbleGames(){
+		ArrayList<GameModel> games = new ArrayList<GameModel>();
+		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
+		try {
+			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
+			while (dbResult.next()) {
+				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(), true));
+				// Add a new game with the gameId for this account
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return games;
+	}
+	
+	public ArrayList<GameModel> getOpenGames() {
+		ArrayList<GameModel> games = new ArrayList<GameModel>();
+		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
+		try {
+			ResultSet dbResult = new Query(query).set(username).set(username)
+					.set(GameModel.STATE_PLAYING).select();
+			while (dbResult.next()) {
+				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(), false));
+				// Add a new game with the gameId for this account
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return games;
+	}
+
+	public String getpass(){
+		String query="SELECT wachtwoord FROM account WHERE naam=?";
+		String pass = "";
+		try{
+			ResultSet check = new Query(query).set(username).select();
+			check.next();
+			pass = check.getString(1);
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
+		return pass;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+	
 	public void initialize() {
 		username = "Onbekend";
 		isLoggedIn = false;
 	}
+	
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+	
 
+	public boolean isRole(Role role) {
+		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
+		try {
+			ResultSet rs = new Query(query).set(username).select();
+			while (rs.next()) {
+				if (rs.getString(1).equals(role.toString())) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return false;
+	}
 	public void login(String user, char[] password) {
 		try {
 			String query = "SELECT `naam` FROM `account` WHERE `naam` = ? AND `wachtwoord` = ?";
@@ -57,159 +197,19 @@ public class AccountModel extends CoreModel {
 		}
 	}
 
-	public static void registerAccount(String username, char[] password, Role role) {
-
-		String createAccount = "INSERT INTO `account` (`naam`, `wachtwoord` ) VALUES (?, ?)";
-		String setRole = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?, ?)";
-		try {
-			new Query(createAccount).set(username).set(password).exec();
-			new Query(setRole).set(username).set(role).exec();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public boolean isLoggedIn() {
-		return isLoggedIn;
-	}
-
 	public void logout() {
 		isLoggedIn = false;
 		firePropertyChange(Event.LOGOUT, null, this);
 	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void changePass(String newPass){
-		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
-		try{
-			new Query(query).set(newPass).set(username).exec();
-		}catch(SQLException sql){
-			sql.printStackTrace();
-		}
-		
-	}
 	
-	public static boolean checkUsernameAvailable(String username) {
-		String query = "SELECT * FROM account WHERE naam = ?";
-		try {
-			ResultSet check = new Query(query).set(username).select();
-			return !check.first(); // If a first row exists, return true.
-		} catch (SQLException sql) {
-			return false;
-		}
+	@Override
+	public String toString() {
+		return username;
 	}
 
 	@Override
 	public void update() {
 
-	}
-
-	public boolean isRole(Role role) {
-		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
-		try {
-			ResultSet rs = new Query(query).set(username).select();
-			while (rs.next()) {
-				if (rs.getString(1).equals(role.toString())) {
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-		return false;
-	}
-	
-	public CompetitionModel[] getCompetitions(String username){
-		CompetitionModel[] comp_desc = new CompetitionModel[0];
-		int x = 0;
-		try {
-			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
-			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return comp_desc;
-	}
-	
-	public CompetitionModel[] getAvailableCompetitions(String username){
-		CompetitionModel[] comp_desc = new CompetitionModel[0];
-		int x = 0;
-		try {
-			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft		
-			ResultSet dbResult = new Query(availableCompetitionQuery).set(username).select();
-			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return comp_desc;
-	}
-	
-
-	public ArrayList<GameModel> getOpenGames() {
-		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
-		try {
-			ResultSet dbResult = new Query(query).set(username).set(username)
-					.set(GameModel.STATE_PLAYING).select();
-			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(), false));
-				// Add a new game with the gameId for this account
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return games;
-	}
-	public ArrayList<GameModel> getObserverAbleGames(){
-		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
-		try {
-			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
-			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(), true));
-				// Add a new game with the gameId for this account
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return games;
-	}
-
-	@Override
-	public String toString() {
-		return username;
-	}
-	
-	public String getpass(){
-		String query="SELECT wachtwoord FROM account WHERE naam=?";
-		String pass = "";
-		try{
-			ResultSet check = new Query(query).set(username).select();
-			check.next();
-			pass = check.getString(1);
-		}catch(SQLException sql){
-			sql.printStackTrace();
-		}
-		return pass;
-	}
-
-	public int getChallengeCount() {
-		// TODO Automatisch gegenereerde methodestub
-		return 1;
 	}
 	
 }

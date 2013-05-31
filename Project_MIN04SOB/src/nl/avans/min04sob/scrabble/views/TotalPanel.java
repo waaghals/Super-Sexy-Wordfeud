@@ -13,16 +13,16 @@ public class TotalPanel extends CorePanel{
 		setLayout(new BorderLayout());
 	}
 	
-	public void addTopPanel(JPanel panel){
-		add(panel, BorderLayout.NORTH);
-	}
-	
 	public void addCenterPanel(JPanel panel){
 		add(panel, BorderLayout.CENTER);
 	}
 	
 	public void addRightPanel(JPanel panel){
 		add(panel, BorderLayout.EAST);
+	}
+	
+	public void addTopPanel(JPanel panel){
+		add(panel, BorderLayout.NORTH);
 	}
 	
 	@Override

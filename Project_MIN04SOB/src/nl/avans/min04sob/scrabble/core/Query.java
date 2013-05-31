@@ -12,10 +12,22 @@ import nl.avans.min04sob.scrabble.models.Role;
 
 public class Query {
 
+	public static int getNumRows(ResultSet res) {
+		int numRows = 0;
+		try {
+			res.last();
+			numRows = res.getRow();
+			res.beforeFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return numRows;
+	}
 	private PreparedStatement statement;
 	private ResultSet result;
 	private int index;
 	private DatabasePool pool;
+
 	private Connection conn;
 
 	public Query(String q) throws SQLException {
@@ -27,52 +39,14 @@ public class Query {
 		statement = conn.prepareStatement(q);
 	}
 
-	public Query set(String value) throws SQLException {
-		statement.setString(index, value);
-		index++;
-		return this;
-	}
+	public void exec() {
 
-	public Query set(int value) throws SQLException {
-		statement.setInt(index, value);
-		index++;
-		return this;
-	}
-
-	public Query set(Date value) throws SQLException {
-		statement.setDate(index, value);
-		index++;
-		return this;
-	}
-
-	public Query set(boolean value) throws SQLException {
-		statement.setBoolean(index, value);
-		index++;
-		return this;
-	}
-
-	public Query set(Time value) throws SQLException {
-		statement.setTime(index, value);
-		index++;
-		return this;
-	}
-
-	public Query set(char value) throws SQLException {
-		statement.setString(index, value + ""); // Cast to string
-		index++;
-		return this;
-	}
-
-	public Query set(Blob value) throws SQLException {
-		statement.setBlob(index, value); // Cast to string
-		index++;
-		return this;
-	}
-
-	public Query set(char[] value) throws SQLException {
-		statement.setString(index, new String(value)); // Cast to string
-		index++;
-		return this;
+		try {
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		pool.checkIn(conn); // Release the connection back to the pool
 	}
 
 	public ResultSet select() {
@@ -86,29 +60,55 @@ public class Query {
 		return result;
 	}
 
-	public void exec() {
-
-		try {
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		pool.checkIn(conn); // Release the connection back to the pool
+	public Query set(Blob value) throws SQLException {
+		statement.setBlob(index, value); // Cast to string
+		index++;
+		return this;
 	}
 
-	public static int getNumRows(ResultSet res) {
-		int numRows = 0;
-		try {
-			res.last();
-			numRows = res.getRow();
-			res.beforeFirst();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return numRows;
+	public Query set(boolean value) throws SQLException {
+		statement.setBoolean(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(char value) throws SQLException {
+		statement.setString(index, value + ""); // Cast to string
+		index++;
+		return this;
+	}
+
+	public Query set(char[] value) throws SQLException {
+		statement.setString(index, new String(value)); // Cast to string
+		index++;
+		return this;
+	}
+
+	public Query set(Date value) throws SQLException {
+		statement.setDate(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(int value) throws SQLException {
+		statement.setInt(index, value);
+		index++;
+		return this;
 	}
 
 	public Query set(Role role) throws SQLException {
 		return set(role.toString());
+	}
+
+	public Query set(String value) throws SQLException {
+		statement.setString(index, value);
+		index++;
+		return this;
+	}
+
+	public Query set(Time value) throws SQLException {
+		statement.setTime(index, value);
+		index++;
+		return this;
 	}
 }

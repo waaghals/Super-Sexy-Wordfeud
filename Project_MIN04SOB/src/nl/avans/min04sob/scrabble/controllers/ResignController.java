@@ -34,22 +34,6 @@ public class ResignController extends CoreController {
 		frame.setVisible(true);
 	}
 	
-	public void setLabelName() {
-		labelName = "Weet je zeker dat je de huidige game wilt opgeven?";
-	}
-	
-	public String getLabelName() {
-		return labelName;
-	}
-	
-	@Override
-	public void initialize() {
-		frame = new JFrame();
-		setLabelName();
-		resignPanel = new ResignPanel();
-		resignPanel.setResignLabelName(getLabelName());
-	}
-
 	@Override
 	public void addListeners() {
 		resignPanel.addResignActionListener(new ActionListener() {
@@ -67,15 +51,31 @@ public class ResignController extends CoreController {
 		});
 	}
 	
+	private void cancelResign() {
+		frame.dispose();
+		frame = null;
+	}
+	
 	private void doResign() {
 		gameModel.resign();
 		frame.dispose();
 		frame = null;
 	}
+
+	public String getLabelName() {
+		return labelName;
+	}
 	
-	private void cancelResign() {
-		frame.dispose();
-		frame = null;
+	@Override
+	public void initialize() {
+		frame = new JFrame();
+		setLabelName();
+		resignPanel = new ResignPanel();
+		resignPanel.setResignLabelName(getLabelName());
+	}
+	
+	public void setLabelName() {
+		labelName = "Weet je zeker dat je de huidige game wilt opgeven?";
 	}
 
 }

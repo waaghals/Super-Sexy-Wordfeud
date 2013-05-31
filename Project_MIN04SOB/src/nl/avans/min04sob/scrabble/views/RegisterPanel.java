@@ -28,10 +28,6 @@ public class RegisterPanel extends CorePanel {
 	private JComboBox<Role> roleBox;
 	private JLabel errorLabel;
 
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-	}
-	
 	public RegisterPanel(){
 		setPreferredSize(new Dimension(636, 170));
 		setLayout(new MigLayout("", "[][1px][165.00px][20px:50px][115px][][125.00]", "[][19px][19px][19px][24px][25px]"));
@@ -70,14 +66,6 @@ public class RegisterPanel extends CorePanel {
 		add(cancelButton, "cell 4 5,growx,aligny center");
 	}
 	
-	public void addKeyListenerUsername(KeyAdapter listener) {
-		usernameField.addKeyListener(listener);
-	}
-	
-	public void addKeyListenerPassword1(KeyAdapter listener){
-		passwordField1.addKeyListener(listener);
-	}
-	
 	public void addActionListenerCancel(ActionListener listener){
 		cancelButton.addActionListener(listener);
 	}
@@ -86,19 +74,54 @@ public class RegisterPanel extends CorePanel {
 		registerButton.addActionListener(listener);
 	}
 	
+	public void addKeyListenerPassword1(KeyAdapter listener){
+		passwordField1.addKeyListener(listener);
+	}
+	
 	public void addKeyListenerPassword2(KeyAdapter listener) {
 		passwordField2.addKeyListener(listener);
 	}
 	
-	public void setUsernameMistake(boolean good, String discription){
-		if(good){
-			usernameField.setBackground(Color.WHITE);
-			errorLabel.setText("");
-		}else{
-			usernameField.setBackground(Color.RED);
-			errorLabel.setText(discription);
-		}
+	public void addKeyListenerUsername(KeyAdapter listener) {
+		usernameField.addKeyListener(listener);
 	}
+	
+	public void clearFields(){
+		usernameField.setText("");
+		passwordField1.setText("");
+		passwordField2.setText("");
+		setUsernameMistake(true, "");
+		setPassword1Mistake(true, "");
+		setPassword2Mistake(true, "");
+	}
+	
+	public char[] getPassword1(){
+		return passwordField1.getPassword();
+	}
+	public char[] getPassword2(){
+		return passwordField2.getPassword();
+	}
+	
+	public JPasswordField getPasswordField1() {
+		return passwordField1;
+	}
+	
+	public JPasswordField getPasswordField2() {
+		return passwordField2;
+	}
+
+	public Role getRole(){
+		return (Role) roleBox.getSelectedItem();
+	}
+
+	public String getUsername(){
+		return usernameField.getText();
+	}
+	
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+	}
+	
 	//////////////////////////////////////////////////	
 	public void setPassword1Mistake(boolean good, String discription){
 		if(good){
@@ -120,37 +143,14 @@ public class RegisterPanel extends CorePanel {
 		}
 	}
 	
-	public void clearFields(){
-		usernameField.setText("");
-		passwordField1.setText("");
-		passwordField2.setText("");
-		setUsernameMistake(true, "");
-		setPassword1Mistake(true, "");
-		setPassword2Mistake(true, "");
-	}
-
-	public String getUsername(){
-		return usernameField.getText();
-	}
-
-	public char[] getPassword1(){
-		return passwordField1.getPassword();
-	}
-	
-	public char[] getPassword2(){
-		return passwordField2.getPassword();
-	}
-	
-	public Role getRole(){
-		return (Role) roleBox.getSelectedItem();
-	}
-	
-	public JPasswordField getPasswordField1() {
-		return passwordField1;
-	}
-	
-	public JPasswordField getPasswordField2() {
-		return passwordField2;
+	public void setUsernameMistake(boolean good, String discription){
+		if(good){
+			usernameField.setBackground(Color.WHITE);
+			errorLabel.setText("");
+		}else{
+			usernameField.setBackground(Color.RED);
+			errorLabel.setText(discription);
+		}
 	}
 
 }
