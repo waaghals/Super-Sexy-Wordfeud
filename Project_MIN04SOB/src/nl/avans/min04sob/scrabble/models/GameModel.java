@@ -57,7 +57,7 @@ public class GameModel extends CoreModel {
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 
-	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter WHERE Letter_Spel_ID = ?";
+	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Letter_Spel_ID = ?";
 
 	private final boolean observer;
 
@@ -89,17 +89,17 @@ public class GameModel extends CoreModel {
 				letterSet = dbResult.getString(10);
 				if (!(observer)) {
 					if (challengerName.equals(currentUser.getUsername())) {
-						opponent = new AccountModel(challengeeName, false);
-						challenger = currentUser;
+						opponent = new AccountModel(challengeeName);
+						challenger = new AccountModel(challengerName);
 						iamchallenger = true;
 					} else {
-						opponent = new AccountModel(challengerName, false);
-						challenger = opponent;
+						opponent = new AccountModel(challengerName);
+						challenger = new AccountModel(challengeeName);
 						iamchallenger = false;
 					}
 				} else {
-					opponent = new AccountModel(challengeeName, true);
-					challenger = new AccountModel(challengerName, true);
+					opponent = new AccountModel(challengeeName);
+					challenger = new AccountModel(challengerName);
 					iamchallenger = false;
 
 				}

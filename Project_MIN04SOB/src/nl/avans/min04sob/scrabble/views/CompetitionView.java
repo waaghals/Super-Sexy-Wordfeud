@@ -118,4 +118,14 @@ public class CompetitionView extends CorePanel{
 	public JList<String> getList(){
 		return competitionsList;
 	}
+	
+	public void removeIndex(int index){
+		competitionsList.remove(index);
+	}
+	
+	public int getIndex(){
+		return competitionsList.getSelectedIndex();
+	}
+	
+	
 }
