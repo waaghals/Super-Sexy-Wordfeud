@@ -56,7 +56,7 @@ public class GameModel extends CoreModel {
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
-	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Letter_Spel_ID = 511";
+	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Letter_Spel_ID = ?";
 	private final boolean observer;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
@@ -74,7 +74,6 @@ public class GameModel extends CoreModel {
 				dbResult.next();
 				this.gameId = gameId;
 				currentobserveturn = getNumberOfTotalTurns();
-				System.out.println("Blaat: " + currentobserveturn);
 				competition = new CompetitionModel(
 						dbResult.getInt("competitie_id"));
 				state = dbResult.getString("toestand_type");
