@@ -64,13 +64,25 @@ public class CompetitionController extends CoreController {
 				window.dispose();
 			}	
 		});
-		
+		//uitdagen
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					challengeModel.controle("schaap"/*competitionView.getSelectedPlayer()*/);
 				} catch (SQLException e) {
 					e.printStackTrace();
+				}
+			}
+		});
+		
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					String desc = competitionView.getSelectedCompetition();
+					int index = competitionModel.getCompetitionID(desc);
+					System.out.println(index);
+					System.out.println(desc);
+					getParticipants(index);
 				}
 			}
 		});
@@ -94,13 +106,13 @@ public class CompetitionController extends CoreController {
 				window.dispose();
 			}	
 		});
-		
+		//joinCompetition
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if(competitionView.getSelectedCompetition() != null){
 					String desc = competitionView.getSelectedCompetition();
-					System.out.println("-"+ desc +"-");
-					competitionModel.join(accountModel.getCompetitionID(desc), accountModel.toString());					
+					competitionModel.join(competitionModel.getCompetitionID(desc), accountModel.toString());
+					//competitionView.removeIndex(competitionView.getIndex());
 				}
 				else{
 					System.out.println("selecteer een competitie");
@@ -108,6 +120,18 @@ public class CompetitionController extends CoreController {
 			}
 			
 		}); 
+		
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					String desc = competitionView.getSelectedCompetition();
+					int index = competitionModel.getCompetitionID(desc);
+					System.out.println(index);
+					System.out.println(desc);
+					getParticipants(index);
+				}
+			}
+		});
 		
 		competitionView.setText("Beschikbare competities", "Spelers in competitie", "Competitie deelnemen", true);
 		
@@ -134,7 +158,7 @@ public class CompetitionController extends CoreController {
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
 					String desc = competitionView.getSelectedCompetition();
-					int index = accountModel.getCompetitionID(desc);
+					int index = competitionModel.getCompetitionID(desc);
 					System.out.println(index);
 					System.out.println(desc);
 					getParticipants(index);
@@ -200,7 +224,7 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void getAllCompetitions(){
-		competitionView.fillAllCompetitions(accountModel.getAllCompetitions());
+		competitionView.fillAllCompetitions(competitionModel.getAllCompetitions());
 	}
 
 }
