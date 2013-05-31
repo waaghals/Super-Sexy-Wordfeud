@@ -10,4 +10,8 @@ public abstract class CorePanel extends JPanel implements CoreView {
 		setVisible(true);
 		setLayout(new MigLayout());
 	}
+	
+	public String toString(){
+		return this.getClass().getName();
+	}
 }

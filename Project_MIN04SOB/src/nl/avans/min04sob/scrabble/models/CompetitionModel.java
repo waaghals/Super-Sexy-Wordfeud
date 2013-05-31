@@ -301,6 +301,7 @@ public class CompetitionModel extends CoreModel {
 		try {
 			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
 					.set(username).select();
+
 			if (dbResult.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}

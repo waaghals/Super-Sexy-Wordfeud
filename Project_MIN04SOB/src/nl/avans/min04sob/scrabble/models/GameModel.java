@@ -54,8 +54,11 @@ public class GameModel extends CoreModel {
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 	private final String whosTurnAtTurn = "SELECT account_naam FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
+
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
+
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter WHERE Letter_Spel_ID = ?";
+
 	private final boolean observer;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
@@ -68,6 +71,7 @@ public class GameModel extends CoreModel {
 
 			ResultSet dbResult = new Query(getGameQuery).set(gameId).select();
 			int numRows = Query.getNumRows(dbResult);
+			
 			if (numRows == 1) {
 				dbResult.next();
 				this.gameId = gameId;
@@ -668,8 +672,6 @@ public class GameModel extends CoreModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-		
 		return (Boolean) null;
 
 	}
@@ -808,7 +810,7 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void Resign() {
+	public void resign() {
 		try {
 			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId())
 					.exec();
@@ -837,6 +839,8 @@ public class GameModel extends CoreModel {
 					.set(currentUser.getUsername()).select();
 			String[] letters;
 			if (!(Query.getNumRows(res) == 0)) {
+				res.next();
+
 				letters = res.getString(2).split(",");
 				for (int x = 0; letters.length > x; x++) {
 					ResultSet tilewaarde = new Query(getTileValue)

@@ -59,4 +59,8 @@ public class CoreWindow extends JFrame implements CoreView {
 	public void remove(Component component){
 		getContentPane().remove(component);
 	}
+	
+	public String toString(){
+		return this.getClass().getName();
+	}
 }
