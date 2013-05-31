@@ -626,9 +626,9 @@ public class GameModel extends CoreModel {
 							.set(letters[x]).set(letterSet).select();
 					tilewaarde.next();
 
-					boardModel.setPlayetTile(x,
+					/*boardModel.setPlayetTile(x,
 							new Tile(letters[x], tilewaarde.getInt(1),
-									Tile.MUTATABLE));
+									Tile.MUTATABLE));*/
 				}
 			}
 
@@ -856,7 +856,7 @@ public class GameModel extends CoreModel {
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-		return null;
+		return false;
 
 	}
 

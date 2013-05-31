@@ -319,9 +319,9 @@ public class MainController extends CoreController {
 		currGamePanel.setPlayerTiles(stash.getPlayerTiles(account, selectedGame));
 		
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-		while(letters.length < 7){
+		//while(letters.length < 7){
 			
-		}
+		//}
 		currGamePanel.setPlayerTiles(letters);
 
 		games = account.getObserverAbleGames();

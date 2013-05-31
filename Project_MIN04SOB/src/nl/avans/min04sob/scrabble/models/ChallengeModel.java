@@ -29,7 +29,7 @@ public class ChallengeModel extends CoreModel {
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
-		competitionController = new CompetitionController(user);
+	//	competitionController = new CompetitionController(user);
 		yourname = accountModel.getUsername();
 	}
 
