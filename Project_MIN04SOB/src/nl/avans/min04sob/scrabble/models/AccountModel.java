@@ -15,7 +15,7 @@ public class AccountModel extends CoreModel {
 
 	private String username;
 	private boolean isLoggedIn;
-	private final String availableCompetitionQuery = "SELECT DISTINCT(`competitie_id`) FROM `deelnemer` WHERE `competitie_id` <> (SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?)";
+	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
 
 	public AccountModel() {
 		initialize();
@@ -127,36 +127,6 @@ public class AccountModel extends CoreModel {
 
 		}
 		return false;
-	}
-	
-	public String[] getAllCompetitions(){
-		String[] allComps = new String[0];
-		int x = 0;
-		try {
-			ResultSet dbResult = new Query("SELECT DISTINCT(`competitie_id`) FROM `deelnemer`").select();
-			allComps = new String[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < allComps.length){
-				allComps[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return allComps;		
-	}
-	
-	public int getCompetitionID(String desc){
-		int id = 0;
-		try {
-			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
-			while(dbResult.next()){
-				id = dbResult.getInt("id");
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return id;
-		
 	}
 	
 	public String[] getCompetitions(String username){

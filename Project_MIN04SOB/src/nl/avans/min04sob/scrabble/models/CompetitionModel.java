@@ -22,7 +22,7 @@ public class CompetitionModel extends CoreModel {
 	private Date end;
 
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
-	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`, `ranking`) VALUES (?, ?, ?)";
+	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`) VALUES (?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
 	private final String chatsToRemove = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `competitie_id` = ?";
 	private final String removeChats = "DELETE FROM `chatregel` WHERE `spel_id` = ?";
@@ -45,7 +45,8 @@ public class CompetitionModel extends CoreModel {
 			if (Query.getNumRows(res) == 1) {
 				res.next();
 				competitieId = res.getInt("id");
-				owner = new AccountModel(res.getString("account_naam_eigenaar"), false);
+				owner = new AccountModel(
+						res.getString("account_naam_eigenaar"), false);
 				start = res.getDate("start");
 				end = res.getDate("einde");
 				desc = res.getString("omschrijving");
@@ -56,9 +57,9 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-	
-	public CompetitionModel(){
-		
+
+	public CompetitionModel() {
+
 	}
 
 	@Override
@@ -92,18 +93,17 @@ public class CompetitionModel extends CoreModel {
 			accounts = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
-						dbResult.getString("account_naam"),false).toString();
+						dbResult.getString("account_naam"), false).toString();
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 		return accounts;
 	}
-	
-	public int getCompetitionID(String desc){
+
+	public int getCompetitionID(String desc) {
 		int id = 0;
 		try {
-
 			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
 			while(dbResult.next()){
 				id = dbResult.getInt("id");
@@ -111,33 +111,40 @@ public class CompetitionModel extends CoreModel {
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-
 		return id;
-		
+
+
+	}
+
+	public String[] getAllCompetitions() {
+		String[] allComps = new String[0];
+		int x = 0;
+		try {
+			ResultSet dbResult = new Query(
+					"SELECT DISTINCT(`competitie_id`) FROM `deelnemer`")
+					.select();
+			allComps = new String[Query.getNumRows(dbResult)];
+			while (dbResult.next() && x < allComps.length) {
+				allComps[x] = new CompetitionModel(
+						dbResult.getInt("competitie_id")).getDesc();
+				x++;
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return allComps;
 
 	}
 
 	public void join(int competitionID, String username) {
 		try {
-			// zorgt dat de deelnemer niet kan inschrijven omdat hij al
-			// ingeschreven is
-			/*boolean ingeschreven = false;
-			ResultSet dbResult = new Query(query).select();
-			while (dbResult.next()) {
-				if (dbResult.getString("account_naam").equals(username)) {
-					ingeschreven = true;
-					break;
-				}
-			}
-			if (ingeschreven == false) {*/
-				new Query(joinQuery).set(competitionID).set(username)
-						.set(ranking).exec();
-			
+			new Query(joinQuery).set(competitionID).set(username).exec();
+
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 	}
-
+	//wordt niet gebruikt
 	public void remove(int competitionID, String username) {
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		try {
@@ -173,7 +180,7 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-
+	//wordt niet gebruikt
 	public void deleteCompetition(int competitionID) {
 		boolean competition = false; // kijkt of de competitie eerst bestaat.
 		ResultSet res;
@@ -325,28 +332,28 @@ public class CompetitionModel extends CoreModel {
 		return average;
 
 	}
-	
-	public String toString(){
-		return desc +" : "+ owner;
+
+	public String toString() {
+		return desc + " : " + owner;
 	}
 
 	public String getDesc() {
 		return desc;
 	}
-	
-	public AccountModel getOwner(){
+
+	public AccountModel getOwner() {
 		return owner;
 	}
-	
-	public Date getStartDate(){
+
+	public Date getStartDate() {
 		return start;
 	}
-	
-	public Date getEndData(){
+
+	public Date getEndData() {
 		return end;
 	}
-	
-	public int getCompId(){
+
+	public int getCompId() {
 		return competitieId;
 	}
 }
