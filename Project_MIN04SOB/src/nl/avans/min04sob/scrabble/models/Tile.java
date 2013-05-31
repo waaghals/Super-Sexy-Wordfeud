@@ -76,7 +76,7 @@ public class Tile implements Transferable {
 
 	@Override
 	public String toString() {
-		return letter;
+		return letter.toUpperCase();
 	}
 
 	@Override
