@@ -28,15 +28,16 @@ public class ChallengeModel extends CoreModel  {
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
 	private final String selectQuery = "SELECT * FROM `Spel`; "; 
-	public ResultSet result;
-	public String yourname=""; 
-	public Timer timer = new Timer();
-	public ArrayList <String> challenge = new ArrayList<String>();
-	private AccountModel accountModel = new AccountModel();
+	private ResultSet result;
+	private String yourname; 
+	private Timer timer = new Timer();
+	private ArrayList <String> challenge = new ArrayList<String>();
+	private AccountModel accountModel;
 	
 
-	public ChallengeModel() 
+	public ChallengeModel(AccountModel user) 
 	{
+		accountModel = user;
 		yourname = accountModel.getUsername();
 	}
 
@@ -77,8 +78,7 @@ public class ChallengeModel extends CoreModel  {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);	
-	 
-	            System.out.println(Challengername);
+
 				String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
 				try {
 					new Query(query).set(1).set(STATE_REQUEST).set(Challengername).set(challegendname).set(currentdate).set(STATE_UNKNOWN).set(currentdate).set("standard").set("NL"). exec();

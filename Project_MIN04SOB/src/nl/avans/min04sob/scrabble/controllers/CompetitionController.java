@@ -33,7 +33,7 @@ public class CompetitionController extends CoreController {
 		accountModel = user;
 		competitionModel = new CompetitionModel();
 		competitionView = new CompetitionView();
-		challengeModel = new ChallengeModel();
+		challengeModel = new ChallengeModel(accountModel);
 		
 		addView(competitionView);
 		addModel(competitionModel);
@@ -68,7 +68,7 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					challengeModel.controle(competitionView.getSelectedPlayer());
+					challengeModel.controle("schaap"/*competitionView.getSelectedPlayer()*/);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
