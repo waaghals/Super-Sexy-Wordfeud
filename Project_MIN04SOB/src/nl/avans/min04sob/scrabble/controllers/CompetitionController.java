@@ -21,6 +21,7 @@ public class CompetitionController extends CoreController {
 	private CoreWindow window;
 	private AccountModel accountModel;
 	private ChallengeModel challengeModel;
+	private int index; //competitie id meegeven
 
 	public CompetitionController(AccountModel user)
 	{
@@ -211,6 +212,10 @@ public class CompetitionController extends CoreController {
 	
 	public void getAllCompetitions(){
 		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
+	}
+	
+	public int getCompID(){ //competition ID meegeven
+		return index;
 	}
 
 }
