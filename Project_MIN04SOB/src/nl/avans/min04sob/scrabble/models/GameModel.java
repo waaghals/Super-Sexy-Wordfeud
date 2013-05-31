@@ -56,7 +56,11 @@ public class GameModel extends CoreModel {
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
+<<<<<<< HEAD
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Letter_Spel_ID = ?";
+=======
+	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter WHERE Letter_Spel_ID = ?";
+>>>>>>> refs/remotes/origin/master
 	private final boolean observer;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
@@ -650,14 +654,15 @@ public class GameModel extends CoreModel {
 	public boolean whosturn() {
 		// dont use unless observing
 		// use yourturn instead
-		if (observer) {
-			ResultSet res;
+	
+		
 			try {
-				res = new Query(whosTurnAtTurn).set(getGameId())
+				System.out.println(getGameId()+ "  " +currentobserveturn );
+				ResultSet res = new Query(whosTurnAtTurn).set(getGameId())
 						.set(currentobserveturn).select();
-
+				
 				res.next();
-				String lastturnplayername = res.getString("account_naam");
+				String lastturnplayername = res.getString(1);
 
 				if (lastturnplayername.equals(challenger.getUsername())) {
 					return false;
@@ -669,7 +674,6 @@ public class GameModel extends CoreModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
 		return (Boolean) null;
 
 	}
