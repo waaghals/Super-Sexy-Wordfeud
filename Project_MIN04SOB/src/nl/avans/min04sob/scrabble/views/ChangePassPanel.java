@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JButton;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 
 public class ChangePassPanel extends CorePanel{
 	

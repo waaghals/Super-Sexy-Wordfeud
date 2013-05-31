@@ -2,6 +2,7 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
@@ -11,9 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.ActionEvent;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 //GUI checked
 public class LoginPanel extends CorePanel {
 

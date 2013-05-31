@@ -1,18 +1,18 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
+
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
-
-import javax.swing.JList;
-import java.awt.event.ActionListener;
 
 public class JoinCompetitionView extends CorePanel {
 

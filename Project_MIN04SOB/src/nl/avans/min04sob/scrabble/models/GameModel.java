@@ -2,14 +2,11 @@ package nl.avans.min04sob.scrabble.models;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.MatrixUtils;
 import nl.avans.min04sob.scrabble.core.Query;

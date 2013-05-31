@@ -12,11 +12,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
+import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.Role;
-import javax.swing.SwingConstants;
-import net.miginfocom.swing.MigLayout;
 
 //GUI checked
 public class RegisterPanel extends CorePanel {

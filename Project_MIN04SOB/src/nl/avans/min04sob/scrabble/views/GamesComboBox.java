@@ -4,9 +4,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
@@ -14,8 +14,6 @@ import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.models.Role;
-
-import javax.swing.JLabel;
 
 public class GamesComboBox extends CorePanel {
 

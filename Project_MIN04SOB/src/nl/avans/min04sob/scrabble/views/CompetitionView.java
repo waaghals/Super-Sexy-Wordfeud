@@ -4,16 +4,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
-
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.ListSelectionModel;
 
 public class CompetitionView extends CorePanel{
 	

@@ -5,16 +5,16 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JButton;
+
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 
 public class ChallengeView2 extends CorePanel {
 

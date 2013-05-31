@@ -1,12 +1,13 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
-import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+
+import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 
 
 

@@ -4,11 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.sql.SQLException;
-import java.util.Observable;
-import java.util.Observer;
 
-import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.views.ChallengeView;
 
