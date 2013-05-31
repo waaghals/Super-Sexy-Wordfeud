@@ -45,8 +45,8 @@ public class CompetitionModel extends CoreModel {
 			if (Query.getNumRows(res) == 1) {
 				res.next();
 				competitieId = res.getInt("id");
-				owner = new AccountModel(
-						res.getString("account_naam_eigenaar"), false);
+				owner = new AccountModel(res.getString("account_naam_eigenaar"));
+
 				start = res.getDate("start");
 				end = res.getDate("einde");
 				desc = res.getString("omschrijving");
@@ -93,7 +93,7 @@ public class CompetitionModel extends CoreModel {
 			accounts = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
-						dbResult.getString("account_naam"), false).toString();
+						dbResult.getString("account_naam")).toString();
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();

@@ -304,8 +304,12 @@ public class MainController extends CoreController {
 
 		ArrayList<GameModel> games;
 		StashModel stash = new StashModel();
+		currGamePanel.setPlayerTiles(stash.getPlayerTiles(account, selectedGame));
+		
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-
+		while(letters.length < 7){
+			
+		}
 		currGamePanel.setPlayerTiles(letters);
 
 		games = account.getObserverAbleGames();

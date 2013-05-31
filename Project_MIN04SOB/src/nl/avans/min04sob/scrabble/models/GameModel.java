@@ -89,17 +89,17 @@ public class GameModel extends CoreModel {
 				letterSet = dbResult.getString(10);
 				if (!(observer)) {
 					if (challengerName.equals(currentUser.getUsername())) {
-						opponent = new AccountModel(challengeeName, false);
-						challenger = currentUser;
+						opponent = new AccountModel(challengeeName);
+						challenger = new AccountModel(challengerName);
 						iamchallenger = true;
 					} else {
-						opponent = new AccountModel(challengerName, false);
-						challenger = opponent;
+						opponent = new AccountModel(challengerName);
+						challenger = new AccountModel(challengeeName);
 						iamchallenger = false;
 					}
 				} else {
-					opponent = new AccountModel(challengeeName, true);
-					challenger = new AccountModel(challengerName, true);
+					opponent = new AccountModel(challengeeName);
+					challenger = new AccountModel(challengerName);
 					iamchallenger = false;
 
 				}
