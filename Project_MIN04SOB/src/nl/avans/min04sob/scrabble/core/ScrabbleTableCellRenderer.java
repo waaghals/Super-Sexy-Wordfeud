@@ -33,11 +33,11 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private String dwURL = "/images/dw.png";
 	private String twURL = "/images/tw.png";
 	private String starURL = "/images/star.png";
-	
+	private static final double BLEND_RATIO = 0.6;
 
 	public ScrabbleTableCellRenderer(BoardModel model) {
 		super();
-		
+
 		setHorizontalAlignment(SwingConstants.CENTER);
 		setVerticalAlignment(SwingConstants.CENTER);
 
@@ -50,8 +50,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		beige = new Color(255, 255, 200);
 	}
 
-	protected ImageIcon createImageIcon(String path,
-            String description) {
+	protected ImageIcon createImageIcon(String path, String description) {
 		URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL, description);
@@ -60,74 +59,109 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
 		setImages();
 		Component c = super.getTableCellRendererComponent(table, value,
-				isSelected, hasFocus, row, col);		
-		JLabel label = (JLabel) c;
-		
+				isSelected, hasFocus, row, col);
+
+		Color tileForeground;
+		Color tileBackground;
+		Color multiplierForeground;
+		Color multiplierBackground;
+
 		Tile tile = (Tile) boardModel.getValueAt(row, col);
-		
+
 		int multiplier = boardModel.getMultiplier(new Point(row, col));
 
-		if (tile != null && !tile.isMutatable()) {
-			c.setBackground(beige);
-			c.setForeground(Color.BLACK);
-		} else {
-
-			 switch (multiplier) {
-		       case BoardModel.DL:
-		        c.setBackground(lightBlue);
-		        c.setForeground(blue);
-		     //   c = new JLabel(dlImage);
-		     //    boardModel.setValueAt(new Tile("DL", true), row, col);
-		         break;
-		       case BoardModel.TL:
-		        c.setBackground(blue);
-		         c.setForeground(lightBlue);
-		        
-		    //    c = new JLabel(tlImage);
-		    //     boardModel.setValueAt(new Tile("TL", true), row, col);
-		         break;
-		       case BoardModel.DW:
-		        c.setBackground(lightRed);
-		        c.setForeground(red);
-		        //c = new JLabel(dwImage);
-		        // boardModel.setValueAt(new Tile("DW", true), row, col);
-		         break;
-		       case BoardModel.TW:
-		        c.setBackground(red);
-		        c.setForeground(lightRed);
-		        //c = new JLabel(twImage);
-		        // boardModel.setValueAt(new Tile("TW", true), row, col);
-		         break;
-		       case BoardModel.STAR:
-		        c.setBackground(Color.WHITE);
-		        c.setForeground(Color.GREEN);
-		        //c = new JLabel(starImage);
-		        // boardModel.setValueAt(new Tile("*", true), row, col);
-		         break;
-		       case BoardModel.EMPTY:
-			default:
-				c.setBackground(Color.WHITE);
-				c.setForeground(Color.BLACK);
-				//boardModel.setValueAt(new Tile(null, 0, Tile.MUTATABLE), row, col);
-				break;
-			}
-
+		switch (multiplier) {
+		case BoardModel.DL:
+			multiplierForeground = blue;
+			multiplierBackground = lightBlue;
+			break;
+		case BoardModel.TL:
+			multiplierForeground = lightBlue;
+			multiplierBackground = blue;
+			break;
+		case BoardModel.DW:
+			multiplierForeground = red;
+			multiplierBackground = lightRed;
+			break;
+		case BoardModel.TW:
+			multiplierForeground = lightRed;
+			multiplierBackground = red;
+			break;
+		case BoardModel.STAR:
+			multiplierForeground = Color.WHITE;
+			multiplierBackground = Color.YELLOW;
+			break;
+		case BoardModel.EMPTY:
+		default:
+			multiplierForeground = Color.BLACK;
+			multiplierBackground = Color.WHITE;
+			break;
 		}
 
+		
+		if (tile != null && !tile.isMutatable()) {
+			//Tiles can't be moved, give them a beige color
+			tileForeground = Color.BLACK;
+			tileBackground = beige;
+		} else if (tile == null) {
+			//No tile is present, keep it the primairy color
+			tileForeground = multiplierForeground;
+			tileBackground = multiplierBackground;
+		} else {
+			//Tile is currently being put
+			tileForeground = Color.BLACK;
+			tileBackground = Color.WHITE;
+		}
+
+		Color foreground = blend(tileForeground, multiplierForeground,
+				BLEND_RATIO);
+		Color background = blend(tileBackground, multiplierBackground,
+				BLEND_RATIO);
+
+		c.setForeground(foreground);
+		c.setBackground(background);
 		return c;
 	}
-	
+
 	private void setImages() {
-			dlImage = createImageIcon(dlURL, "dl");
-			tlImage = createImageIcon(tlURL, "tl");
-			dwImage = createImageIcon(dwURL, "dw");
-			twImage = createImageIcon(twURL, "tw");
-			starImage = createImageIcon(starURL, "star");
+		dlImage = createImageIcon(dlURL, "dl");
+		tlImage = createImageIcon(tlURL, "tl");
+		dwImage = createImageIcon(dwURL, "dw");
+		twImage = createImageIcon(twURL, "tw");
+		starImage = createImageIcon(starURL, "star");
+	}
+
+	/**
+	 * Blend two colors.
+	 * 
+	 * @param first
+	 *            First color to blend.
+	 * @param second
+	 *            Second color to blend.
+	 * @param ratio
+	 *            Blend ratio. 0.5 will give even blend, 1.0 will return first,
+	 *            0.0 will return second and so on.
+	 * @return Blended color.
+	 */
+	public static Color blend(Color first, Color second, double ratio) {
+		float r = (float) ratio;
+		float ir = (float) 1.0 - r;
+
+		float rgb1[] = new float[3];
+		float rgb2[] = new float[3];
+
+		first.getColorComponents(rgb1);
+		second.getColorComponents(rgb2);
+
+		Color color = new Color(rgb1[0] * r + rgb2[0] * ir, rgb1[1] * r
+				+ rgb2[1] * ir, rgb1[2] * r + rgb2[2] * ir);
+
+		return color;
 	}
 }
