@@ -431,7 +431,7 @@ public class GameModel extends CoreModel {
 
 	public void checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		//verticaal woord
-		if(true){
+		if(false){
 			ArrayList[] horzontalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
 			ArrayList<Tile> verticalLetters = new ArrayList<Tile>();
 			int holdX = 100;
@@ -482,11 +482,48 @@ public class GameModel extends CoreModel {
 			}
 		}
 		//horizontaal woord
-		else if(false){
-			ArrayList[] verticalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
+		else if(true){
+			/*ArrayList[] verticalenwoorden = {new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>(),new ArrayList<Tile>()};
 			ArrayList<Tile> horizontalenLetters = new ArrayList<Tile>();
 			int holdY = 100;
 			boolean hasNotBeenRight = true;
+			for(int x = 0; x<15;x++){
+				for(int y = 0; y < 15; y++){
+					if (playedLetters[y][x] != null) {
+						int counterY = y;
+						holdY = y;
+						boolean hasNotBeenTop = true;
+						while(counterY > 0) {
+							if (newBoard[counterY][x] != null
+									&& hasNotBeenTop) {
+								counterY--;
+							}else if (newBoard[counterY][x] != null) {		
+								verticalenwoorden[x].add(newBoard[counterY][x]);
+								counterY++;
+							}else {
+								counterY++;
+								if(!hasNotBeenTop){
+									break;
+								}
+								hasNotBeenTop = false;
+						
+							}
+						}
+					}
+				}
+			}*/
+			for(ArrayList<Tile> array : verticalenwoorden){
+				if(array.size()>1){
+					for(Tile t : array){
+						System.out.println(t.getLetter());
+					}
+				}
+				
+			}
+			
+			for(Tile t : horizontalenLetters){
+				System.out.println(t.getLetter());
+			}
 		}
 	}
 
