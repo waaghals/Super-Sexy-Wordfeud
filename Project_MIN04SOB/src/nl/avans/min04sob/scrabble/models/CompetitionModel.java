@@ -100,15 +100,16 @@ public class CompetitionModel extends CoreModel {
 		String[] allComp = new String[0];
 		int x = 0;
 		try {
-			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `competitie`").select();
+			ResultSet dbResult = new Query("SELECT `id` FROM `competitie`").select();
 			allComp = new String[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < allComp.length){
-				allComp[x] = new CompetitionModel(dbResult.getInt("competitie_id")).toString();
+				allComp[x] = new CompetitionModel(dbResult.getInt("id")).toString();
 				x++;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
+	
 		return allComp;		
 	}
 
