@@ -94,6 +94,7 @@ public class CompetitionModel extends CoreModel {
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
 						dbResult.getString("account_naam")).toString();
+				x++;
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();

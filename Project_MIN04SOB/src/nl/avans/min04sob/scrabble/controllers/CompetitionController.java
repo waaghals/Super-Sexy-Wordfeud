@@ -68,7 +68,7 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					challengeModel.controle("schaap"/*competitionView.getSelectedPlayer()*/);
+					challengeModel.controle(competitionView.getSelectedPlayer());
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -80,8 +80,6 @@ public class CompetitionController extends CoreController {
 				if(e.getClickCount()==1){
 					String desc = competitionView.getSelectedCompetition();
 					int index = competitionModel.getCompetitionID(desc);
-					System.out.println(index);
-					System.out.println(desc);
 					getParticipants(index);
 				}
 			}
@@ -126,8 +124,6 @@ public class CompetitionController extends CoreController {
 				if(e.getClickCount()==1){
 					String desc = competitionView.getSelectedCompetition();
 					int index = competitionModel.getCompetitionID(desc);
-					System.out.println(index);
-					System.out.println(desc);
 					getParticipants(index);
 				}
 			}
@@ -159,8 +155,6 @@ public class CompetitionController extends CoreController {
 				if(e.getClickCount()==1){
 					String desc = competitionView.getSelectedCompetition();
 					int index = competitionModel.getCompetitionID(desc);
-					System.out.println(index);
-					System.out.println(desc);
 					getParticipants(index);
 				}
 			}
