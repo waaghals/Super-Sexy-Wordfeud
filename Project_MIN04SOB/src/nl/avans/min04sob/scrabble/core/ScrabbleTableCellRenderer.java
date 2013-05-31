@@ -39,6 +39,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 	public ScrabbleTableCellRenderer(BoardModel model) {
 		super();
+		
 		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 		setVerticalAlignment(DefaultTableCellRenderer.CENTER);
 
