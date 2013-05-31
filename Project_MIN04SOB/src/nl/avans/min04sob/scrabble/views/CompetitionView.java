@@ -1,6 +1,8 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 
 import net.miginfocom.swing.MigLayout;
@@ -72,8 +74,8 @@ public class CompetitionView extends CorePanel{
 		revalidate();
 	}
 	
-	public void addCompetitionListListener(ListSelectionListener listener){
-		competitionsList.addListSelectionListener(listener);
+	public void addCompetitionListListener(MouseAdapter listener){
+		competitionsList.addMouseListener(listener);
 	}
 	
 	public void addBackListener(ActionListener listener){
@@ -110,5 +112,9 @@ public class CompetitionView extends CorePanel{
 	public String getSelectedPlayer(){
 		String s = playerList.getSelectedValue();
 		return s;
+	}
+	
+	public JList<String> getList(){
+		return competitionsList;
 	}
 }

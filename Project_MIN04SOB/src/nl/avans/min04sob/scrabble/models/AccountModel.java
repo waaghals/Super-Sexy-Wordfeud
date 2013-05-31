@@ -145,6 +145,20 @@ public class AccountModel extends CoreModel {
 		return allComps;		
 	}
 	
+	public int getCompetitionID(String desc){
+		int id = 0;
+		try {
+			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
+			while(dbResult.next()){
+				id = dbResult.getInt("id");
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return id;
+		
+	}
+	
 	public String[] getCompetitions(String username){
 		String[] comp_desc = new String[0];
 		int x = 0;
