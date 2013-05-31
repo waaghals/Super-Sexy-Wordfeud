@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -67,9 +71,14 @@ public class CompetitionController extends CoreController {
 				try {
 					challengeModel.controle("schaap"/*competitionView.getSelectedPlayer()*/);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		});
+		
+		competitionView.addCompetitionListListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				String desc;
 			}
 		});
 		
@@ -93,6 +102,27 @@ public class CompetitionController extends CoreController {
 			}	
 		});
 		
+		competitionView.addActionButtonListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if(competitionView.getSelectedCompetition() != null){
+					String desc = competitionView.getSelectedCompetition();
+					System.out.println("-"+ desc +"-");
+					competitionModel.join(competitionModel.getCompetitionID(desc), accountModel.toString());					
+				}
+				else{
+					System.out.println("selecteer een competitie");
+				}
+			}
+			
+		});
+		
+		competitionView.addCompetitionListListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println(e.getSource());
+				System.out.println(e.toString());
+			}
+		});
+		
 		competitionView.setText("Beschikbare competities", "Spelers in competitie", "Competitie deelnemen", true);
 		
 		getAvailable(accountModel.toString());
@@ -112,6 +142,18 @@ public class CompetitionController extends CoreController {
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
+		});
+		
+		competitionView.addCompetitionListListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting()){
+					getParticipants(competitionModel.getCompetitionID(competitionView.getSelectedCompetition()));
+				}
+				
+				
+			}
 		});
 		
 		competitionView.setText("Competities", "Spelers in competitie", "",false);

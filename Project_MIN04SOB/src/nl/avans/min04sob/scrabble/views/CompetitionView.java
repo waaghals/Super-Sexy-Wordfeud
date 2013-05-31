@@ -12,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 
 public class CompetitionView extends CorePanel{
 	
@@ -28,29 +30,32 @@ public class CompetitionView extends CorePanel{
 		
 		setLayout(new MigLayout("", "[200px:220px:260px][155px:160.00px:170px]", "[20px:20px:20px][200px:200px:200px][25px:25px:25px]"));
 		
-		competitionsLabel = new JLabel("Ingeschreven competities");
+		competitionsLabel = new JLabel();
 		add(competitionsLabel, "cell 0 0,alignx left");
 		
-		playersInCompetitonLabel = new JLabel("Spelers in de competitie");
+		playersInCompetitonLabel = new JLabel();
 		add(playersInCompetitonLabel, "cell 1 0,alignx right");
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 		
 		competitionsList = new JList<String>();
+		competitionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(competitionsList);
 		
 		scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 1 1,grow");
 		
 		playerList = new JList<String>();
+		playerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(playerList);
 		
 		backButton = new JButton("Terug");
 		add(backButton, "cell 0 2,alignx left");
 		
-		actionButton = new JButton("Speler uitdagen");
-		actionButton.setEnabled(true);	//test
+		actionButton = new JButton();
+		actionButton.setEnabled(false);
+
 		add(actionButton, "cell 1 2,alignx right");
 	}
 
@@ -66,6 +71,10 @@ public class CompetitionView extends CorePanel{
 		actionButton.setText(button);
 		actionButton.setVisible(visible);
 		revalidate();
+	}
+	
+	public void addCompetitionListListener(ListSelectionListener listener){
+		competitionsList.addListSelectionListener(listener);
 	}
 	
 	public void addBackListener(ActionListener listener){
@@ -92,6 +101,11 @@ public class CompetitionView extends CorePanel{
 
 	public void fillAllCompetitions(String[] allCompetitions) {
 		competitionsList.setListData(allCompetitions);
+	}
+	
+	public String getSelectedCompetition(){
+		String s = competitionsList.getSelectedValue();
+		return s;
 	}
 	
 	public String getSelectedPlayer(){

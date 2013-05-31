@@ -95,6 +95,19 @@ public class CompetitionModel extends CoreModel {
 		}
 		return accounts;
 	}
+	
+	public int getCompetitionID(String desc){
+		int id = 0;
+		try {
+			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
+			if(dbResult.next()){
+				id = dbResult.getInt("id");
+			}
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+		return id;
+	}
 
 	public void join(int competitionID, String username) {
 		try {
