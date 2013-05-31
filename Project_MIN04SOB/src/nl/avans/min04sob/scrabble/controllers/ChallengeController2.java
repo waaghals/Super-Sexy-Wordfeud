@@ -6,14 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.models.ChallengeModel;
+import nl.avans.min04sob.scrabble.models.ChallengeModel2;
 import nl.avans.min04sob.scrabble.views.ChallengeView2;
 
 
 public class ChallengeController2 extends CoreController {
 
 	private ChallengeView2 challengeView2;
-	private ChallengeModel challengeModel;
+	private ChallengeModel2 challengeModel2;
 	private JFrame frame;
 	
 	public ChallengeController2() {
@@ -24,7 +24,7 @@ public class ChallengeController2 extends CoreController {
 		frame.add(challengeView2);
 		
 		addView(challengeView2);
-		addModel(challengeModel);
+		addModel(challengeModel2);
 		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,7 +36,7 @@ public class ChallengeController2 extends CoreController {
 	public void initialize() {
 		frame = new JFrame();
 		challengeView2 = new ChallengeView2();
-		challengeModel = new ChallengeModel();
+		challengeModel2 = new ChallengeModel2();
 	}
 
 	@Override

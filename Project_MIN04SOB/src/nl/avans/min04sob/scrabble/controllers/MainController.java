@@ -94,8 +94,8 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				crtl.challengers();
-				// TODO stops program from running
+				//crtl.challengers();
+				new ChallengeController2();
 
 			}
 		});
@@ -135,6 +135,12 @@ public class MainController extends CoreController {
 		menu.viewWords(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new AcceptDeclineController();
+			}
+		});
+		
+		menu.deleteFromCompetitionItem(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new CompetitionController(account).openDeleteFromCompetitionView();
 			}
 		});
 
