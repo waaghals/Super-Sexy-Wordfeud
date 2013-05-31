@@ -57,7 +57,7 @@ public class GameModel extends CoreModel {
 
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
 
-	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter WHERE Letter_Spel_ID = ?";
+	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Letter_Spel_ID = ?";
 
 	private final boolean observer;
 
