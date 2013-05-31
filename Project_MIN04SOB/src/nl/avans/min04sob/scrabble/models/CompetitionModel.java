@@ -56,6 +56,10 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public CompetitionModel(){
+		
+	}
 
 	@Override
 	public void update() {
@@ -78,17 +82,17 @@ public class CompetitionModel extends CoreModel {
 		return all;
 	}
 
-	public AccountModel[] getUsersFromCompetition(int competition_id) {
-		AccountModel[] accounts = new AccountModel[0];
+	public String[] getUsersFromCompetition(int competition_id) {
+		String[] accounts = new String[0];
 		int x = 0;
 		try {
 			ResultSet dbResult = new Query(
 					"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?")
 					.set(competition_id).select();
-			accounts = new AccountModel[Query.getNumRows(dbResult)];
+			accounts = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
 				accounts[x] = new AccountModel(
-						dbResult.getString("account_naam"),false);
+						dbResult.getString("account_naam"),false).toString();
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
@@ -96,28 +100,28 @@ public class CompetitionModel extends CoreModel {
 		return accounts;
 	}
 	
-	public String[] getAllCompetitions(){
-		String[] allComp = new String[0];
-		int x = 0;
+	public int getCompetitionID(String desc){
+		int id = 0;
 		try {
-			ResultSet dbResult = new Query("SELECT `id` FROM `competitie`").select();
-			allComp = new String[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < allComp.length){
-				allComp[x] = new CompetitionModel(dbResult.getInt("id")).toString();
-				x++;
+
+			ResultSet dbResult = new Query("SELECT `id` FROM `competitie` WHERE `omschrijving` = ?").set(desc).select();
+			while(dbResult.next()){
+				id = dbResult.getInt("id");
 			}
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-	
-		return allComp;		
+
+		return id;
+		
+
 	}
 
 	public void join(int competitionID, String username) {
 		try {
 			// zorgt dat de deelnemer niet kan inschrijven omdat hij al
 			// ingeschreven is
-			boolean ingeschreven = false;
+			/*boolean ingeschreven = false;
 			ResultSet dbResult = new Query(query).select();
 			while (dbResult.next()) {
 				if (dbResult.getString("account_naam").equals(username)) {
@@ -125,10 +129,10 @@ public class CompetitionModel extends CoreModel {
 					break;
 				}
 			}
-			if (ingeschreven == false) {
+			if (ingeschreven == false) {*/
 				new Query(joinQuery).set(competitionID).set(username)
 						.set(ranking).exec();
-			}
+			
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
