@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -44,18 +44,21 @@ public class AccountController extends CoreController {
 		addModel(accountModel);
 
 		loginPanel.addActionListenerLogin(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				checkLogin();
 			}
 		});
 
 		loginPanel.addActionListenerRegister(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginToRegister();
 			}
 		});
 
 		loginPanel.addKeyListenerPassword(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					checkLogin();
@@ -64,6 +67,7 @@ public class AccountController extends CoreController {
 		});
 		
 		loginPanel.addKeyListenerUsername(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					loginPanel.getPasswordField().requestFocus();
@@ -72,6 +76,7 @@ public class AccountController extends CoreController {
 		});
 
 		registerPanel.addKeyListenerPassword2(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					tryToRegister();
@@ -80,6 +85,7 @@ public class AccountController extends CoreController {
 		});
 
 		registerPanel.addKeyListenerUsername(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					registerPanel.getPasswordField1().requestFocus();
@@ -88,6 +94,7 @@ public class AccountController extends CoreController {
 		});
 		
 		registerPanel.addKeyListenerPassword1(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					registerPanel.getPasswordField2().requestFocus();
@@ -97,24 +104,28 @@ public class AccountController extends CoreController {
 		
 		
 		registerPanel.addActionListenerCancel(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				registerToLogin();
 			}
 		});
 
 		registerPanel.addActionListenerRegister(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				tryToRegister();
 			}
 		});
 
 		changepassPanel.addCancelActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
 		
 		changepassPanel.addKeyListenerOldPass(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					changepassPanel.get1NewPass().requestFocus();
@@ -123,6 +134,7 @@ public class AccountController extends CoreController {
 		});
 		
 		changepassPanel.addKeyListenerNewPass1(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					changepassPanel.get2NewPass().requestFocus();
@@ -131,6 +143,7 @@ public class AccountController extends CoreController {
 		});
 		
 		changepassPanel.addKeyListenerNewPass2(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					changePass();
@@ -139,13 +152,14 @@ public class AccountController extends CoreController {
 		});
 
 		changepassPanel.addChangeActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				changePass();
 			}
 		});
 
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
 

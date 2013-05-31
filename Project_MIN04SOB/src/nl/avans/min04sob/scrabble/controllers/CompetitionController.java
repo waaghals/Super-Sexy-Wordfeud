@@ -56,12 +56,14 @@ public class CompetitionController extends CoreController {
 		
 		competitionView.addBackListener(new ActionListener(){
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
 		});
 		//uitdagen
 		competitionView.addActionButtonListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					challengeModel.controle(competitionView.getSelectedPlayer());
@@ -72,6 +74,7 @@ public class CompetitionController extends CoreController {
 		});
 		
 		competitionView.addCompetitionListListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
 					int id = competitionView.getSelectedCompetition().getCompId();
@@ -95,12 +98,14 @@ public class CompetitionController extends CoreController {
 		
 		competitionView.addBackListener(new ActionListener(){
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
 		});
 		//joinCompetition
 		competitionView.addActionButtonListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(competitionView.getSelectedCompetition() != null){
 					int id = competitionView.getSelectedCompetition().getCompId();
@@ -115,6 +120,7 @@ public class CompetitionController extends CoreController {
 		}); 
 		
 		competitionView.addCompetitionListListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
 					int id = competitionView.getSelectedCompetition().getCompId();
@@ -139,12 +145,14 @@ public class CompetitionController extends CoreController {
 		
 		competitionView.addBackListener(new ActionListener(){
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
 		});
 		
 		competitionView.addCompetitionListListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
 					int id = competitionView.getSelectedCompetition().getCompId();
@@ -169,6 +177,7 @@ public class CompetitionController extends CoreController {
 		
 		competitionView.addBackListener(new ActionListener(){
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
@@ -188,6 +197,7 @@ public class CompetitionController extends CoreController {
 		
 		competitionView.addBackListener(new ActionListener(){
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	

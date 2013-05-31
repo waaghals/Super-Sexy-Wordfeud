@@ -2,7 +2,6 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 
 import net.miginfocom.swing.MigLayout;
@@ -15,7 +14,6 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionListener;
 
 public class CompetitionView extends CorePanel{
 	

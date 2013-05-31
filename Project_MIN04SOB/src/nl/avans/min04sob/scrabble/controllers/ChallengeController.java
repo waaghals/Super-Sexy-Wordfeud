@@ -24,6 +24,7 @@ public class ChallengeController extends CoreController  {
 		addView(challengeview);
 		addModel(challengemodel);
 		challengeview.addActionListenerAccept (new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.respondChallenge(name,true);//??
@@ -36,6 +37,7 @@ public class ChallengeController extends CoreController  {
 			}
 		});
 		challengeview.addActionListenerDecline (new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.respondChallenge(challengeview.getSelectedChallenge(),false);
@@ -57,6 +59,7 @@ public class ChallengeController extends CoreController  {
 			
 		});
 		challengeview.addActionListenerOke (new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					challengemodel.controle(challengeview.getUsername());
@@ -69,6 +72,7 @@ public class ChallengeController extends CoreController  {
 		});
 	}
  
+	@Override
 	public void propertyChange(PropertyChangeEvent evt)  {
 	 
 	System.out.println(evt.getPropertyName());

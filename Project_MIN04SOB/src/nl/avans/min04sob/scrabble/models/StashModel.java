@@ -1,6 +1,5 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;

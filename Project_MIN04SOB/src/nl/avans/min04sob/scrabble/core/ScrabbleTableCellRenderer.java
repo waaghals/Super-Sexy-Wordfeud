@@ -3,15 +3,13 @@ package nl.avans.min04sob.scrabble.core;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -40,8 +38,8 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	public ScrabbleTableCellRenderer(BoardModel model) {
 		super();
 		
-		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		setVerticalAlignment(DefaultTableCellRenderer.CENTER);
+		setHorizontalAlignment(SwingConstants.CENTER);
+		setVerticalAlignment(SwingConstants.CENTER);
 
 		boardModel = model;
 
@@ -52,6 +50,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		beige = new Color(255, 255, 200);
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
 		setImages();
@@ -71,6 +70,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			switch (multiplier) {
 			case BoardModel.DL:
 				c = new JLabel() {
+					@Override
 					public void paintComponent(Graphics g) {
 						g.drawImage(dlImage.getImage(), 0, 0, null);
 					}
@@ -80,6 +80,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 				break;
 			case BoardModel.TL:
 				c = new JLabel(){
+					@Override
 					public void paintComponent(Graphics g) {
 						g.drawImage(tlImage.getImage(), 0, 0, null);
 					}
@@ -89,6 +90,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 				break;
 			case BoardModel.DW:
 				c = new JLabel(){
+					@Override
 					public void paintComponent(Graphics g) {
 						g.drawImage(dwImage.getImage(), 0, 0, null);
 					}
@@ -98,6 +100,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 				break;
 			case BoardModel.TW:
 				c = new JLabel(){
+					@Override
 					public void paintComponent(Graphics g) {
 						g.drawImage(twImage.getImage(), 0, 0, null);
 					}
@@ -108,6 +111,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 				break;
 			case BoardModel.STAR:
 				c = new JLabel(){
+					@Override
 					public void paintComponent(Graphics g) {
 						g.drawImage(starImage.getImage(), 0, 0, null);
 					}

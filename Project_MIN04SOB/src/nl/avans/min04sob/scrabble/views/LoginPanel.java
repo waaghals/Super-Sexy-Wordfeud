@@ -2,8 +2,6 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
@@ -14,7 +12,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import nl.avans.min04sob.scrabble.core.CorePanel;
-import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionEvent;
 //GUI checked
@@ -25,6 +22,7 @@ public class LoginPanel extends CorePanel {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 
+	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 	}
@@ -47,6 +45,7 @@ public class LoginPanel extends CorePanel {
 		add(loginButton, "cell 1 2,aligny center");
 		registerButton = new JButton("Ik heb nog geen account");
 		registerButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});

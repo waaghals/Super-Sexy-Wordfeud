@@ -25,6 +25,7 @@ public class DatabasePool extends CorePool<Connection> implements Runnable {
 		new Thread(this);
 	}
 
+	@Override
 	protected Connection create() {
 		try {
 			return (DriverManager.getConnection(DSN, USER, PASS));
@@ -34,17 +35,19 @@ public class DatabasePool extends CorePool<Connection> implements Runnable {
 		}
 	}
 
+	@Override
 	public void expire(Connection o) {
 		try {
-			((Connection) o).close();
+			o.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Override
 	public boolean validate(Connection o) {
 		try {
-			return (!((Connection) o).isClosed());
+			return (!o.isClosed());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return (false);

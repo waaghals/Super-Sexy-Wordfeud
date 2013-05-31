@@ -8,7 +8,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.models.ModeratorModel;
 import nl.avans.min04sob.scrabble.views.AcceptDeclineView;
 
@@ -55,18 +54,21 @@ public class AcceptDeclineController extends CoreController {
 	@Override
 	public void addListeners() {
 		adView.addAcceptActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				acceptWord();
 			}
 		});
 
 		adView.addDeniedActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				deniedWord();
 			}
 		});
 
 		adView.addBackActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				adView.removeWindow();
 			}

@@ -1,7 +1,5 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Calendar;

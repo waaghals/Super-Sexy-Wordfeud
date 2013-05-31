@@ -5,10 +5,7 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -16,7 +13,6 @@ import nl.avans.min04sob.scrabble.models.CompetitionModel;
 
 import javax.swing.JList;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class JoinCompetitionView extends CorePanel {
 

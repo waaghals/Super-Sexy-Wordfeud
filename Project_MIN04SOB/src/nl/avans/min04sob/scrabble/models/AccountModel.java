@@ -1,13 +1,10 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import nl.avans.min04sob.scrabble.controllers.BoardController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.DatabasePool;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 
@@ -105,6 +102,7 @@ public class AccountModel extends CoreModel {
 		}
 	}
 
+	@Override
 	public void update() {
 
 	}
@@ -191,6 +189,7 @@ public class AccountModel extends CoreModel {
 		return games;
 	}
 
+	@Override
 	public String toString() {
 		return username;
 	}

@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class TileTable extends JTable {
+	@Override
 	public String getToolTipText(MouseEvent event) {
 		Point p = event.getPoint();
 		// Locate the renderer under the event location

@@ -2,9 +2,6 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -31,6 +28,7 @@ public class RegisterPanel extends CorePanel {
 	private JComboBox<Role> roleBox;
 	private JLabel errorLabel;
 
+	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
 	
@@ -63,6 +61,7 @@ public class RegisterPanel extends CorePanel {
 		}
 		registerButton = new JButton("Registreren");
 		registerButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});

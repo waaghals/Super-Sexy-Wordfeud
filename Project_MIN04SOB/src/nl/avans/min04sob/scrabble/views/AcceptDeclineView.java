@@ -5,18 +5,15 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.controllers.AcceptDeclineController;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.Event;
-import nl.avans.min04sob.scrabble.models.GameModel;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionListener;
 
 public class AcceptDeclineView extends CorePanel {
@@ -59,7 +56,7 @@ public class AcceptDeclineView extends CorePanel {
 		backButton = new JButton("Terug");
 		add(backButton, "cell 2 4");
 		myFrame.pack();
-		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		myFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		myFrame.setVisible(true);
 	}
 

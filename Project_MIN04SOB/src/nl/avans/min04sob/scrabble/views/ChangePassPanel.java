@@ -2,9 +2,6 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
@@ -128,6 +125,7 @@ public class ChangePassPanel extends CorePanel{
 	public void passwordChange(){
 		btnChange.setEnabled(false);
 	}
+	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 	}
 }

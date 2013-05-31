@@ -124,6 +124,7 @@ public class BoardPanel extends CorePanel {
 
 		play = new JButton();
 		play.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});

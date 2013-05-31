@@ -176,6 +176,7 @@ public class GameModel extends CoreModel {
 		// and only update the board when the opponent actually plays a word.
 	}
 
+	@Override
 	public String toString() {
 		// return gameId + "";
 		return "(" + gameId + ") " + competition.getDesc() + " - "
@@ -578,7 +579,7 @@ public class GameModel extends CoreModel {
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
-		return (Boolean) null;
+		return null;
 
 	}
 
@@ -672,7 +673,7 @@ public class GameModel extends CoreModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return (Boolean) null;
+		return null;
 
 	}
 

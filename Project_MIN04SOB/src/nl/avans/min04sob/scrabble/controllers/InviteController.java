@@ -1,14 +1,11 @@
 package nl.avans.min04sob.scrabble.controllers;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.sound.sampled.ReverbType;
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.InviteModel;
 import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
@@ -41,12 +38,14 @@ public class InviteController extends CoreController {
 		// actiondinges
 
 		joinView.addActionListenerActieButton(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				actieButton();
 			}
 		});
 
 		joinView.addActionListenerAnnuleerButton(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				annuleerButton();
 			}

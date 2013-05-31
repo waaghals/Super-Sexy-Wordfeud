@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import javax.swing.JMenuItem;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
-import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -110,6 +108,7 @@ public class MainController extends CoreController {
 			}
 		});
 		menu.addChangePassItemActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//changePass();
 				AccountController accountController = new AccountController(account);
@@ -118,12 +117,14 @@ public class MainController extends CoreController {
 		});
 
 		menu.seeCompetitionsItem(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CompetitionController(account).openCompetitionScores();
 			}
 		});
 
 		menu.joinCompetitionItem(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openJoinCompetitionView();
@@ -134,18 +135,21 @@ public class MainController extends CoreController {
 		});
 
 		menu.viewWords(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AcceptDeclineController();
 			}
 		});
 		
 		menu.deleteFromCompetitionItem(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CompetitionController(account).openDeleteFromCompetitionView();
 			}
 		});
 
 		menu.deleteCompetitionItem(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openDeleteCompetitionView();
@@ -159,6 +163,7 @@ public class MainController extends CoreController {
 		addLoginListener();
 
 		menu.addLogoutItemActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
 				closePanels();
@@ -281,6 +286,7 @@ public class MainController extends CoreController {
 
 	private void addLoginListener() {
 		menu.addLoginItemActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);

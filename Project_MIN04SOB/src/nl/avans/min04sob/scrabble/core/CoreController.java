@@ -2,7 +2,6 @@ package nl.avans.min04sob.scrabble.core;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -27,6 +26,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 	}
 
 	//Update all the registered models
+	@Override
 	public void run() {
 		for (CoreModel model : registeredModels) {
 			model.update();
@@ -65,6 +65,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 
 	// Use this to observe property changes from registered models
 	// and propagate them on to all the views.
+	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		for (CoreView view : registeredViews) {
 			System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + " via " + this.toString() + ". Message: " + evt.getPropertyName());
@@ -72,6 +73,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		}
 	}
 	
+	@Override
 	public String toString(){
 		return this.getClass().getName();
 	}

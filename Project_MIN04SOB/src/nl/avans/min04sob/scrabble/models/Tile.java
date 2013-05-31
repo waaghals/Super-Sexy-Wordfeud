@@ -1,7 +1,5 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.util.HashMap;
-
 
 public class Tile {
 	private String letter;
@@ -66,6 +64,7 @@ public class Tile {
 		mutatable = false;
 	}
 	
+	@Override
 	public String toString(){
 		return letter;
 	}

@@ -56,10 +56,12 @@ public class CoreWindow extends JFrame implements CoreView {
 		getContentPane().add(component, constraint);
 	}
 	
+	@Override
 	public void remove(Component component){
 		getContentPane().remove(component);
 	}
 	
+	@Override
 	public String toString(){
 		return this.getClass().getName();
 	}

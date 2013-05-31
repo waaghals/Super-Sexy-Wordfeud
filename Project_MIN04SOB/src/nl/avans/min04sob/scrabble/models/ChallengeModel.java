@@ -1,25 +1,15 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Observable;
 import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.JFrame;
-
-import nl.avans.min04sob.scrabble.controllers.ChallengeController;
 import nl.avans.min04sob.scrabble.controllers.CompetitionController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
-import nl.avans.min04sob.scrabble.views.ChallengeView;
 
 public class ChallengeModel extends CoreModel {
 

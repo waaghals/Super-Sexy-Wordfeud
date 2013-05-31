@@ -23,6 +23,7 @@ public class TileTranfserHandler extends TransferHandler implements
 	public TileTranfserHandler() {
 	}
 
+	@Override
 	public Object getTransferData(DataFlavor flavor) {
 		if (isDataFlavorSupported(flavor)) {
 			return sourceTile;
@@ -30,10 +31,12 @@ public class TileTranfserHandler extends TransferHandler implements
 		return null;
 	}
 
+	@Override
 	public DataFlavor[] getTransferDataFlavors() {
 		return flavors;
 	}
 
+	@Override
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
 		return flavors[0].equals(flavor);
 	}

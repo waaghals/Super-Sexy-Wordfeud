@@ -334,6 +334,7 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
+	@Override
 	public String toString() {
 		return desc + " : " + owner;
 	}
