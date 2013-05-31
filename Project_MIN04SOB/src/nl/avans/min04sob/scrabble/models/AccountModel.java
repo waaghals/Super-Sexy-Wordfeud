@@ -211,7 +211,7 @@ public class AccountModel extends CoreModel {
 	}
 	public ArrayList<GameModel> getObserverAbleGames(){
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT `ID` FROM `spel` WHERE NOT `Toestand_type` = ?";
+		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
 		try {
 			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
 			while (dbResult.next()) {

@@ -94,7 +94,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			default:
 				c.setBackground(Color.WHITE);
 				c.setForeground(Color.BLACK);
-				// boardModel.setValueAt(" ", row, col);
+				boardModel.setValueAt(" ", row, col);
 				break;
 			}
 
