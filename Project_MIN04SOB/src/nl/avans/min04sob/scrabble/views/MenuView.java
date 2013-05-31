@@ -19,7 +19,7 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private JMenu accountMenu;
 	private JMenu challengeMenu;
-	private JMenu moderaterMenu;
+	private JMenu toolboxMenu;
 	private JMenu competitionMenu;
 	private JMenu gameMenu;
 	private JMenu gameMenuView;
@@ -29,6 +29,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem logoutItem;
 	private JMenuItem changePassItem;
 	private JMenuItem registerItem;
+	private JMenuItem viewPlayers;
 
 	private JMenuItem doChallengeItem;
 	private JMenuItem viewChallengeItem;
@@ -39,15 +40,13 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem deleteCompetitionItem;
 
 	private JMenuItem viewWords;
-
-	private JLabel accountName;
-	private JLabel accountText;
-
+	
 	private int numChallenge;
-	private String username;
 
 	private ActionListener openGameListener;
 	private ActionListener viewGameListener;
+	private JMenuItem createCompetitionItem;
+
 
 	public MenuView() {
 		numChallenge = 0;
@@ -114,7 +113,6 @@ public class MenuView extends JMenuBar implements CoreView {
 
 		logoutItem = new JMenuItem("Logout");
 		logoutItem.setMnemonic('O');
-		logoutItem.setEnabled(true);
 
 		changePassItem = new JMenuItem("Wachtwoord veranderen");
 		changePassItem.setMnemonic('W');
@@ -135,6 +133,7 @@ public class MenuView extends JMenuBar implements CoreView {
 		joinCompetitionItem = new JMenuItem("Deelnemen aan competities");
 		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
 		deleteCompetitionItem = new JMenuItem("verwijder competitie");
+		createCompetitionItem = new JMenuItem("Competitie aanmaken");
 		// add the menu and the menuItems
 
 		competitionMenu.add(seeCompetitionsItem);
@@ -156,9 +155,9 @@ public class MenuView extends JMenuBar implements CoreView {
 		competitionMenu.setMnemonic('C');
 		competitionMenu.setEnabled(false);
 
-		moderaterMenu = new JMenu("Modereer");
-		moderaterMenu.setMnemonic('M');
-		moderaterMenu.setEnabled(false);
+		toolboxMenu = new JMenu("Gereedschap");
+		toolboxMenu.setMnemonic('G');
+		toolboxMenu.setEnabled(false);
 
 		gameMenu = new JMenu("Spellen");
 		gameMenu.setMnemonic('S');
@@ -178,7 +177,7 @@ public class MenuView extends JMenuBar implements CoreView {
 		add(accountMenu);
 		add(challengeMenu);
 		add(competitionMenu);
-		add(moderaterMenu);
+		add(toolboxMenu);
 		add(gameMenu);
 
 	}
@@ -186,7 +185,12 @@ public class MenuView extends JMenuBar implements CoreView {
 	private void createModeratorMenu() {
 		viewWords = new JMenuItem("Woorden beheren");
 		viewWords.setMnemonic('W');
-		moderaterMenu.add(viewWords);
+		
+		viewPlayers = new JMenuItem("Gebruikers beheren");
+		viewPlayers.setMnemonic('G');
+		
+		toolboxMenu.add(viewWords);
+		toolboxMenu.add(viewPlayers);
 	}
 
 	public void deleteCompetitionItem(ActionListener listener) {
@@ -211,29 +215,13 @@ public class MenuView extends JMenuBar implements CoreView {
 			challengeMenu.setEnabled(true);
 
 			competitionMenu.setEnabled(true);
-			if (user.isRole(Role.MODERATOR)) {
-				moderaterMenu.setEnabled(true);
-			} else {
-				moderaterMenu.setEnabled(false);
-			}
+			setVisibleMenus(user);
+			
 
 			setChallengeCount(user.getChallengeCount());
-			ArrayList<GameModel> userGames = user.getOpenGames();
-			addGamesToMenu(gameMenuOpen, userGames);
+			
+			addGamesToMenu(gameMenuOpen, user.getOpenGames());
 			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
-
-			if (user.isRole(Role.OBSERVER) || userGames.size() > 0) {
-				gameMenu.setEnabled(true);
-			}
-
-			if (user.isRole(Role.OBSERVER)) {
-				gameMenuView.setEnabled(true);
-			}
-
-			System.out.println("Size: " + userGames.size());
-			if (userGames.size() > 0) {
-				gameMenuOpen.setEnabled(true);
-			}
 
 			addMenuItemListeners(gameMenuOpen, openGameListener);
 			addMenuItemListeners(gameMenuView, viewGameListener);
@@ -250,6 +238,42 @@ public class MenuView extends JMenuBar implements CoreView {
 
 		default:
 			break;
+		}
+	}
+
+	private void setVisibleMenus(AccountModel user) {
+		if (user.isRole(Role.MODERATOR) || user.isRole(Role.ADMINISTRATOR)) {
+			toolboxMenu.setEnabled(true);
+		}
+		
+		if(user.isRole(Role.MODERATOR)){
+			viewWords.setEnabled(true);
+		}
+		
+		if(user.isRole(Role.ADMINISTRATOR)){
+			viewPlayers.setEnabled(true);
+		}
+		
+		int numGames = user.getOpenGames().size();
+		if (user.isRole(Role.OBSERVER) || numGames > 0) {
+			gameMenu.setEnabled(true);
+		}
+
+		if (user.isRole(Role.OBSERVER)) {
+			gameMenuView.setEnabled(true);
+		}
+
+		if(user.isRole(Role.PLAYER)){
+			joinCompetitionItem.setEnabled(true);
+			challengeMenu.setEnabled(true);
+		}
+		
+		if(user.getOwnedCompetitions().length > 0 || user.isRole(Role.ADMINISTRATOR)){
+			deleteCompetitionItem.setEnabled(true);
+		}
+
+		if (numGames > 0) {
+			gameMenuOpen.setEnabled(true);
 		}
 	}
 
@@ -278,7 +302,9 @@ public class MenuView extends JMenuBar implements CoreView {
 		accountMenu.add(registerItem);
 		challengeMenu.setEnabled(false);
 		competitionMenu.setEnabled(false);
-		moderaterMenu.setEnabled(false);
+		toolboxMenu.setEnabled(false);
+		viewWords.setEnabled(false);
+		viewPlayers.setEnabled(false);
 		gameMenu.setEnabled(false);
 		
 		gameMenuOpen.removeAll();
