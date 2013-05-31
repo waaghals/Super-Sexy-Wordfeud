@@ -13,7 +13,7 @@ public class ChallengeModel2 extends CoreModel {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+		// dit wordt waarscijnlijk niet gebrukt
 	}
 
 }

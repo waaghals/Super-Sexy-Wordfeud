@@ -41,7 +41,8 @@ public class ChallengeModel extends CoreModel {
 
 	public void controle(String challegendname) throws SQLException// uitdager
 	{
-		// / zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
+
+		/// zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
 
 		boolean error = false;
 
@@ -61,7 +62,6 @@ public class ChallengeModel extends CoreModel {
 															// fout in
 				{
 					error = true;
-					commandsToChallengeview("4");
 					break;
 				}
 			}
@@ -98,6 +98,7 @@ public class ChallengeModel extends CoreModel {
 		// ///// ///// /////
 		// /array list add alleen als challend= yourname;;
 		try {
+			yourname = accountModel.getUsername();
 			ResultSet dbResult = new Query(selectQuery).select();
 			while (dbResult.next()) {
 				if (!challenge.contains(dbResult.getString(4))) {
@@ -116,6 +117,7 @@ public class ChallengeModel extends CoreModel {
 
 	public void respondChallenge(String nameuitdager, boolean accepted)
 			throws SQLException // uitdgedaagde
+
 	{
 		// where
 
@@ -123,35 +125,29 @@ public class ChallengeModel extends CoreModel {
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
 
-		String query = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=?";
+		String query  = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=?";
+		ResultSet resultset = new Query(query).set(yourname).set(yourname).select(); /// VERANDER
+		String query2 ="";
 
-		ResultSet resultset = new Query(query).set(nameuitdager).set(yourname)
-				.select(); // / VERANDER
-		String query2 = "";
+			if(accepted==true){
+				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+				new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED).set( currentdate).set(nameuitdager).set(yourname).exec(); 
 
-		if (accepted == true) {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-			new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED)
-					.set(currentdate).set(nameuitdager).set(yourname).exec();
-		} else {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-			new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
-					.set(currentdate).set(nameuitdager).set(yourname).exec();
-		}
-		resultset.next();
-		for (int index = 0; index < challenge.size(); index++) {
-			String xx = resultset.getString(4);
-			if (xx.equals(challenge.get(index))) {
-				challenge.remove(index);
-				System.out.println("oke");
 			}
-		}
-	}
 
-	public void commandsToChallengeview(String commando) {
-		System.out.println(commando + commando);
-		firePropertyChange(commando, null, null);
-
+			else{
+				query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+				new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED).set( currentdate).set(nameuitdager).set(yourname).exec();
+			}
+			resultset.next();
+			for(int index=0;index < challenge.size();index++ ){	
+				String xx=   resultset.getString(4);
+				if(xx.equals(challenge.get(index)))
+				{
+					challenge.remove(index);
+					System.out.println("oke");
+				}
+			}	
 	}
 
 	public ArrayList<String> challengeArray() {
