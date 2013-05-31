@@ -15,6 +15,7 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.controllers.ChallengeController;
+import nl.avans.min04sob.scrabble.controllers.CompetitionController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
@@ -33,9 +34,11 @@ public class ChallengeModel extends CoreModel {
 	private Timer timer = new Timer();
 	private ArrayList<String> challenge = new ArrayList<String>();
 	private AccountModel accountModel;
+	private CompetitionController competitionController;
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
+		competitionController = new CompetitionController(user);
 		yourname = accountModel.getUsername();
 	}
 
@@ -82,7 +85,7 @@ public class ChallengeModel extends CoreModel {
 
 		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
 		try {
-			new Query(query).set(1).set(STATE_REQUEST).set(Challengername)
+			new Query(query).set(competitionController.getCompID()).set(STATE_REQUEST).set(Challengername)
 					.set(challegendname).set(currentdate).set(STATE_UNKNOWN)
 					.set(currentdate).set("standard").set("NL").exec();
 		} catch (SQLException sql) {

@@ -26,6 +26,7 @@ public class CompetitionController extends CoreController {
 	private CoreWindow window;
 	private AccountModel accountModel;
 	private ChallengeModel challengeModel;
+	private int index; //competitie id meegeven
 
 	public CompetitionController(AccountModel user)
 	{
@@ -154,7 +155,7 @@ public class CompetitionController extends CoreController {
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
 					String desc = competitionView.getSelectedCompetition();
-					int index = competitionModel.getCompetitionID(desc);
+					index = competitionModel.getCompetitionID(desc);
 					getParticipants(index);
 				}
 			}
@@ -219,6 +220,10 @@ public class CompetitionController extends CoreController {
 	
 	public void getAllCompetitions(){
 		competitionView.fillAllCompetitions(competitionModel.getAllCompetitions());
+	}
+	
+	public int getCompID(){ //competition ID meegeven
+		return index;
 	}
 
 }

@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
-import nl.avans.min04sob.scrabble.models.ChallengeModel2;
 import nl.avans.min04sob.scrabble.views.ChallengeView2;
 
 
