@@ -19,13 +19,15 @@ public class AccountModel extends CoreModel {
 			return false;
 		}
 	}
-	public static void registerAccount(String username, char[] password, Role role) {
+	public static void registerAccount(String username, char[] password, Role[] roles) {
 
 		String createAccount = "INSERT INTO `account` (`naam`, `wachtwoord` ) VALUES (?, ?)";
 		String setRole = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?, ?)";
 		try {
 			new Query(createAccount).set(username).set(password).exec();
-			new Query(setRole).set(username).set(role).exec();
+			for (Role role : roles) {
+				new Query(setRole).set(username).set(role).exec();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -210,6 +212,21 @@ public class AccountModel extends CoreModel {
 	@Override
 	public void update() {
 
+	}
+	public CompetitionModel[] getOwnedCompetitions() {
+		try {
+			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ?";
+			ResultSet result = new Query(query).set(username).select();
+			int numRows = Query.getNumRows(result);
+			CompetitionModel[] competitions = new CompetitionModel[numRows];
+			while(result.next()){
+				competitions[numRows] = new CompetitionModel(result.getInt(1));
+				numRows--;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new CompetitionModel[0];
 	}
 	
 }
