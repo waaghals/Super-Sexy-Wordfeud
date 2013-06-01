@@ -349,12 +349,13 @@ public class CompetitionModel extends CoreModel {
 	public int totalPlayedGames(int competitionID, String username) {
 		int totalGames = 0;
 		try {
-			ResultSet dbResult = new Query(totalPlayedGamesQuery).set(username)
-					.set(username).set(competitionID).select();
+			Future<ResultSet> worker = Db.run(new Query(totalPlayedGamesQuery).set(username)
+					.set(username).set(competitionID));
+			ResultSet dbResult = worker.get();
 			if (dbResult.next()) {
 				totalGames = dbResult.getInt("COUNT(*)");
 			}
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return totalGames;
@@ -363,13 +364,14 @@ public class CompetitionModel extends CoreModel {
 	public int totalPoints(int competitionID, String username) {
 		int total = 0;
 		try {
-			ResultSet dbResult = new Query(totalPointsQuery).set(competitionID)
-					.set(username).select();
-
+			Future<ResultSet> worker = Db.run(new Query(
+					totalPointsQuery)
+					.set(competitionID).set(username));
+			ResultSet dbResult = worker.get();
 			if (dbResult.next()) {
 				total = dbResult.getInt("SUM(score)");
 			}
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return total;
