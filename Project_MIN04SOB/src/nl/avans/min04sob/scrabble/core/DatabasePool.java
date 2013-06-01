@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabasePool extends CorePool<Connection> implements Runnable {
+public class DatabasePool extends CorePool<Connection> {
 
 	private static final String DSN = "jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String USER = "tjmbrouw";
 	private static final String PASS = "8THMJ2S4";
 	private static DatabasePool instance;
+	private int counter = 0;
 
 	public static DatabasePool getInstance() {
 		if (instance == null) {
@@ -22,10 +23,18 @@ public class DatabasePool extends CorePool<Connection> implements Runnable {
 
 	private DatabasePool() {
 		super();
-		new Thread(this);
+		try {
+			Class.forName(DRIVER).newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	protected Connection create() {
+	@Override
+	protected synchronized Connection create() {
+		counter++;
+		System.out.println("(Adding) Number of connections: " + counter);
 		try {
 			return (DriverManager.getConnection(DSN, USER, PASS));
 		} catch (SQLException e) {
@@ -34,29 +43,24 @@ public class DatabasePool extends CorePool<Connection> implements Runnable {
 		}
 	}
 
-	public void expire(Connection o) {
+	@Override
+	public synchronized void expire(Connection o) {
+		counter--;
+		System.out.println("(Dropping) Number of connections: " + counter);
 		try {
-			((Connection) o).close();
+			o.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public boolean validate(Connection o) {
+	
+	@Override
+	public synchronized boolean validate(Connection o) {
 		try {
-			return (!((Connection) o).isClosed());
+			return (!o.isClosed());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return (false);
-		}
-	}
-
-	@Override
-	public void run() {
-		try {
-			Class.forName(DRIVER).newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

@@ -1,22 +1,18 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
-
-import javax.swing.JList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class JoinCompetitionView extends CorePanel {
 
@@ -69,9 +65,8 @@ public class JoinCompetitionView extends CorePanel {
 		cancelButton.addActionListener(listener);
 	}
 	
-	public CompetitionModel selectedCompetition(){
-		return competitionList.getSelectedValue();
-		
+	public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
+		competitionList.setListData(availableCompetitions);
 	}
 
 	@Override
@@ -80,14 +75,15 @@ public class JoinCompetitionView extends CorePanel {
 
 	}
 
+	public CompetitionModel selectedCompetition(){
+		return competitionList.getSelectedValue();
+		
+	}
+
 	public void setText(String labelText, String button) {
 		competitionLabel.setText(labelText);
 		actionButton.setText(button);
 		revalidate();
-	}
-
-	public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
-		competitionList.setListData(availableCompetitions);
 	}
 
 }

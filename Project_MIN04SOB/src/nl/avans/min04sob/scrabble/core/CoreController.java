@@ -2,7 +2,6 @@ package nl.avans.min04sob.scrabble.core;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,18 +19,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		startTimer();
 	}
 
-	private void startTimer() {
-		ScheduledExecutorService exec = Executors
-				.newSingleThreadScheduledExecutor();
-		exec.scheduleAtFixedRate(this, 0, INTERVAL, TimeUnit.SECONDS);
-	}
-
-	//Update all the registered models
-	public void run() {
-		for (CoreModel model : registeredModels) {
-			model.update();
-		}
-	}
+	abstract public void addListeners(); //Add the listeners for the buttons etc..
 
 	public void addModel(CoreModel model) {
 		if(model == null){
@@ -39,6 +27,26 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		}
 		registeredModels.add(model);
 		model.addPropertyChangeListener(this);
+	}
+
+	public void addView(CoreView view) {
+		if(view == null){
+			return;
+		}
+		registeredViews.add(view);
+	}
+
+	//Cleanlyness methods
+	abstract public void initialize(); 	//Init all variables
+
+	// Use this to observe property changes from registered models
+	// and propagate them on to all the views.
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		for (CoreView view : registeredViews) {
+			//System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + " via " + this.toString() + ". Message: " + evt.getPropertyName());
+			view.modelPropertyChange(evt);
+		}
 	}
 
 	public void removeModel(CoreModel model) {
@@ -49,35 +57,29 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 		model.removePropertyChangeListener(this);
 	}
 
-	public void addView(CoreView view) {
-		if(view == null){
-			return;
-		}
-		registeredViews.add(view);
-	}
-
 	public void removeView(CoreView view) {
 		if(view == null){
 			return;
 		}
 		registeredViews.remove(view);
 	}
-
-	// Use this to observe property changes from registered models
-	// and propagate them on to all the views.
-	public void propertyChange(PropertyChangeEvent evt) {
-		for (CoreView view : registeredViews) {
-			System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + " via " + this.toString() + ". Message: " + evt.getPropertyName());
-			view.modelPropertyChange(evt);
+	
+	//Update all the registered models
+	@Override
+	public void run() {
+		for (CoreModel model : registeredModels) {
+			model.update();
 		}
 	}
 	
+	private void startTimer() {
+		ScheduledExecutorService exec = Executors
+				.newSingleThreadScheduledExecutor();
+		exec.scheduleAtFixedRate(this, 0, INTERVAL, TimeUnit.SECONDS);
+	}
+	@Override
 	public String toString(){
 		return this.getClass().getName();
 	}
-	
-	//Cleanlyness methods
-	abstract public void initialize(); 	//Init all variables
-	abstract public void addListeners(); //Add the listeners for the buttons etc..
 
 }

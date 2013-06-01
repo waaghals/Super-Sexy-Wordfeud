@@ -1,16 +1,11 @@
 package nl.avans.min04sob.scrabble.views;
 
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,9 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
-import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.CoreView;
 	public class ChallengeView implements CoreView  {
 		// extends??
@@ -40,19 +34,55 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 		public ChallengeView()
 		{
 			jframe.setTitle("Challenge");
-			jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			jframe.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		}
-		/// pas aan
-		public void viewArraylistRemove()
-		{
-			challenge.removeAll(challenge);
+		public void addActionListenerAccept(ActionListener listener) {
+			accept.addActionListener(listener);
 		}
-		public void viewArrayListadd(String msg)
-		{
-			challenge.add(msg);
-			showChallenge();
+		public void addActionListenerDecline(ActionListener listener) {
+			decline.addActionListener(listener);
 		}
 		
+		public void addActionListenerOke(ActionListener listener) {
+			oke.addActionListener(listener);
+		}
+	
+		public void addActionListenerOke2(ActionListener listener) {
+			oke2.addActionListener(listener);
+		}
+		
+		public String getSelectedChallenge()
+		{
+			return selectChallenge.getText();
+		}
+		public String getUsername() 
+		{
+			return nameChallenged.getText();
+		}
+		public  JFrame javaFrame()		
+		{
+			return jframe;
+		}
+		
+		@Override
+		public void modelPropertyChange(PropertyChangeEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		public void response(String msg)//gui
+		{
+			response=null;
+			response=new JPanel();
+			jframe.setContentPane(response);
+			jframe.setResizable(false);
+			jframe.setVisible(true);
+			jframe.setContentPane(response);
+			response.setPreferredSize(new Dimension(130,70));
+			response.add(new JLabel(msg));
+			response.add(oke2);
+			jframe.pack();
+		} 
 		public void showChallenge()//gui 
 		{ 
 			chpanel= null;
@@ -73,7 +103,7 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			chpanel.add(decline);
 			jframe.pack();
 		}
-	
+		 
 		public void toChallenge()//gui
 		{	
 			tochallenge=null;
@@ -90,51 +120,15 @@ import nl.avans.min04sob.scrabble.core.CoreView;
 			jframe.pack();
 			 
 		}
-		
-		public void response(String msg)//gui
+		public void viewArrayListadd(String msg)
 		{
-			response=null;
-			response=new JPanel();
-			jframe.setContentPane(response);
-			jframe.setResizable(false);
-			jframe.setVisible(true);
-			jframe.setContentPane(response);
-			response.setPreferredSize(new Dimension(130,70));
-			response.add(new JLabel(msg));
-			response.add(oke2);
-			jframe.pack();
+			challenge.add(msg);
+			showChallenge();
 		}
-		public String getUsername() 
+		/// pas aan
+		public void viewArraylistRemove()
 		{
-			return nameChallenged.getText();
-		}
-		public String getSelectedChallenge()
-		{
-			return selectChallenge.getText();
-		}
-		
-		public void addActionListenerAccept(ActionListener listener) {
-			accept.addActionListener(listener);
-		}
-		
-		public void addActionListenerOke(ActionListener listener) {
-			oke.addActionListener(listener);
-		} 
-		public void addActionListenerOke2(ActionListener listener) {
-			oke2.addActionListener(listener);
-		}
-		 
-		public void addActionListenerDecline(ActionListener listener) {
-			decline.addActionListener(listener);
-		}
-		public  JFrame javaFrame()		
-		{
-			return jframe;
-		}
-		@Override
-		public void modelPropertyChange(PropertyChangeEvent evt) {
-			// TODO Auto-generated method stub
-			
+			challenge.removeAll(challenge);
 		}
 		
 	}

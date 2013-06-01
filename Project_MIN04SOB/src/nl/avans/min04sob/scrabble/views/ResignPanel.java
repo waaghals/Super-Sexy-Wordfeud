@@ -1,13 +1,13 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
-import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+
+import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 
 
 
@@ -35,18 +35,18 @@ public class ResignPanel extends CorePanel {
 		
 	}
 
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
+	public void addNoResignActionListener(ActionListener listener) {
+		noButton.addActionListener(listener);
 	}
 	
 	public void addResignActionListener(ActionListener listener) {
 		yesButton.addActionListener(listener);
 	}
 	
-	public void addNoResignActionListener(ActionListener listener) {
-		noButton.addActionListener(listener);
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void setResignLabelName(String labelname) {

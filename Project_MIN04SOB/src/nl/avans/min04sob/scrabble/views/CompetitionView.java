@@ -2,20 +2,18 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
-
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionListener;
 
 public class CompetitionView extends CorePanel{
 	
@@ -61,39 +59,33 @@ public class CompetitionView extends CorePanel{
 		add(actionButton, "cell 1 2,alignx right");
 	}
 
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void setText(String labelText,String labelText2, String button, boolean visible) {
-		playersInCompetitonLabel.setText(labelText2);
-		competitionsLabel.setText(labelText);
-		actionButton.setText(button);
-		actionButton.setVisible(visible);
-		revalidate();
-	}
-	
-	public void addCompetitionListListener(MouseAdapter listener){
-		competitionsList.addMouseListener(listener);
+	public void addActionButtonListener(ActionListener listener){
+		actionButton.addActionListener(listener);
 	}
 	
 	public void addBackListener(ActionListener listener){
 		backButton.addActionListener(listener);
 	}
 	
-	public void addActionButtonListener(ActionListener listener){
-		actionButton.addActionListener(listener);
+	public void addCompetitionListListener(MouseAdapter listener){
+		competitionsList.addMouseListener(listener);
 	}
-
+	
 	public void fillCompetitions(CompetitionModel[] comp) {
 		competitionsList.setListData(comp);
 	}
-
+	
 	public void fillPlayerList(AccountModel[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
 		actionButton.setEnabled(true);
+	}
+
+	public int getIndex(){
+		return competitionsList.getSelectedIndex();
+	}
+
+	public JList<CompetitionModel> getList(){
+		return competitionsList;
 	}
 	
 	/* public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
@@ -114,16 +106,22 @@ public class CompetitionView extends CorePanel{
 		return playerList.getSelectedValue();
 	}
 	
-	public JList<CompetitionModel> getList(){
-		return competitionsList;
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void removeIndex(int index){
 		competitionsList.remove(index);
 	}
 	
-	public int getIndex(){
-		return competitionsList.getSelectedIndex();
+	public void setText(String labelText,String labelText2, String button, boolean visible) {
+		playersInCompetitonLabel.setText(labelText2);
+		competitionsLabel.setText(labelText);
+		actionButton.setText(button);
+		actionButton.setVisible(visible);
+		revalidate();
 	}
 	
 	

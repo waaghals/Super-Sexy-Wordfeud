@@ -15,6 +15,11 @@ public class CoreWindow extends JFrame implements CoreView {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		}
 
+	public CoreWindow(int closeAction) {
+		initialize();
+		setDefaultCloseOperation(closeAction);
+	}
+
 	public CoreWindow(String title) {
 		super(title);
 		initialize();
@@ -27,16 +32,15 @@ public class CoreWindow extends JFrame implements CoreView {
 		setDefaultCloseOperation(closeAction);
 	}
 
-	public CoreWindow(int closeAction) {
-		initialize();
-		setDefaultCloseOperation(closeAction);
+	public void add(Component component, String constraint){
+		getContentPane().add(component, constraint);
 	}
 
 	public void initialize() {
 		setVisible(true);
 		getContentPane().setLayout(new MigLayout("", "[50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px]", "[50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px]"));
 	}
-
+	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
@@ -52,14 +56,12 @@ public class CoreWindow extends JFrame implements CoreView {
 		}
 	}
 	
-	public void add(Component component, String constraint){
-		getContentPane().add(component, constraint);
-	}
-	
+	@Override
 	public void remove(Component component){
 		getContentPane().remove(component);
 	}
 	
+	@Override
 	public String toString(){
 		return this.getClass().getName();
 	}
