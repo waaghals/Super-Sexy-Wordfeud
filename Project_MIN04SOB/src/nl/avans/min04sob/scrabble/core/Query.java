@@ -7,10 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.concurrent.Callable;
+
+import testmains.TestMain;
 
 import nl.avans.min04sob.scrabble.models.Role;
 
-public class Query {
+public class Query implements Callable<ResultSet> {
 
 	public static int getNumRows(ResultSet res) {
 		int numRows = 0;
@@ -23,8 +26,8 @@ public class Query {
 		}
 		return numRows;
 	}
+
 	private PreparedStatement statement;
-	private ResultSet result;
 	private int index;
 	private DatabasePool pool;
 
@@ -33,31 +36,9 @@ public class Query {
 	public Query(String q) throws SQLException {
 		pool = DatabasePool.getInstance();
 		conn = pool.checkOut();
-		result = null;
 		index = 1;
 
 		statement = conn.prepareStatement(q);
-	}
-
-	public void exec() {
-
-		try {
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		pool.checkIn(conn); // Release the connection back to the pool
-	}
-
-	public ResultSet select() {
-		//System.out.println(statement);
-		try {
-			result = statement.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		pool.checkIn(conn); // Release the connection back to the pool
-		return result;
 	}
 
 	public Query set(Blob value) throws SQLException {
@@ -110,5 +91,16 @@ public class Query {
 		statement.setTime(index, value);
 		index++;
 		return this;
+	}
+
+	@Override
+	public ResultSet call() throws Exception {
+		// Returns true on select
+		if (statement.execute()) {
+			pool.checkIn(conn);
+			return statement.getResultSet();
+		}
+		pool.checkIn(conn); // Release the connection back to the pool
+		return null;
 	}
 }

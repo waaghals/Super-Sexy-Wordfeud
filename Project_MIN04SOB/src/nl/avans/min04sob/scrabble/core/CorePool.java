@@ -9,7 +9,7 @@ public abstract class CorePool<T> {
 	private Hashtable<T, Long> locked, unlocked;
 
 	public CorePool() {
-		expirationTime = 30000; // 30 seconds
+		expirationTime = 10000; // 30 seconds
 		locked = new Hashtable<T, Long>();
 		unlocked = new Hashtable<T, Long>();
 	}
@@ -24,6 +24,7 @@ public abstract class CorePool<T> {
 		T t;
 		if (unlocked.size() > 0) {
 			Enumeration<T> e = unlocked.keys();
+			
 			while (e.hasMoreElements()) {
 				t = e.nextElement();
 				if ((now - unlocked.get(t)) > expirationTime) {

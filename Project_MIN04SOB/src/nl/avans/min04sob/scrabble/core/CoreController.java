@@ -44,7 +44,7 @@ public abstract class CoreController implements PropertyChangeListener, Runnable
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		for (CoreView view : registeredViews) {
-			System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + " via " + this.toString() + ". Message: " + evt.getPropertyName());
+			//System.out.println("Update from " + evt.getSource() + " to " + view.getClass().getName() + " via " + this.toString() + ". Message: " + evt.getPropertyName());
 			view.modelPropertyChange(evt);
 		}
 	}
