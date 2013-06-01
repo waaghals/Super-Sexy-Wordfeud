@@ -70,7 +70,7 @@ public class AcceptDeclineController extends CoreController {
 
 	public void deniedWord() {
 		String word = adView.getSelectedWord();
-		modModel.deniedWord(word);
+		modModel.denyWord(word);
 		fillWordList();
 	}
 

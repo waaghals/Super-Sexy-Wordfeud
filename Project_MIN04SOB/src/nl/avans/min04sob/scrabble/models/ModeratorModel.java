@@ -26,7 +26,7 @@ public class ModeratorModel extends CoreModel{
 		}
 	}
 
-	public void deniedWord(String word){
+	public void denyWord(String word){
 		try {
 			Db.run(new Query(deniedWord).set(word));
 		} catch (SQLException e) {
