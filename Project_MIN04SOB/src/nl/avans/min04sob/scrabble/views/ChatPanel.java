@@ -65,7 +65,7 @@ public class ChatPanel extends CorePanel {
 		return chatFieldSend;
 	}
 
-	public String getChatFieldSendText() {
+	public synchronized String getChatFieldSendText() {
 		return chatFieldSend.getText();
 	}
 

@@ -3,19 +3,24 @@ package nl.avans.min04sob.scrabble.models;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.Worker;
 
 public class AccountModel extends CoreModel {
 
 	public static boolean checkUsernameAvailable(String username) {
 		String query = "SELECT * FROM account WHERE naam = ?";
 		try {
-			ResultSet check = new Query(query).set(username).select();
-			return !check.first(); // If a first row exists, return true.
-		} catch (SQLException sql) {
+			Future<ResultSet> worker = Db.run(new Query(query).set(username));
+			ResultSet rs = worker.get();
+			return !rs.first(); // If a first row exists, return true.
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			return false;
 		}
 	}
@@ -24,9 +29,10 @@ public class AccountModel extends CoreModel {
 		String createAccount = "INSERT INTO `account` (`naam`, `wachtwoord` ) VALUES (?, ?)";
 		String setRole = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?, ?)";
 		try {
-			new Query(createAccount).set(username).set(password).exec();
+			
+			Db.run(new Query(createAccount).set(username).set(password));
 			for (Role role : roles) {
-				new Query(setRole).set(username).set(role).exec();
+				Db.run(new Query(setRole).set(username).set(role));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,7 +65,8 @@ public class AccountModel extends CoreModel {
 	public void changePass(String newPass){
 		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
 		try{
-			new Query(query).set(newPass).set(username).exec();
+			
+			Db.run(new Query(query).set(newPass).set(username));
 		}catch(SQLException sql){
 			sql.printStackTrace();
 		}
@@ -71,13 +78,14 @@ public class AccountModel extends CoreModel {
 		int x = 0;
 		try {
 			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft		
-			ResultSet dbResult = new Query(availableCompetitionQuery).set(username).select();
-			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+			Future<ResultSet> worker = Db.run(new Query(availableCompetitionQuery).set(username));
+			ResultSet rs = worker.get();
+			comp_desc = new CompetitionModel[Query.getNumRows(rs)];
+			while(rs.next() && x < comp_desc.length){
+				comp_desc[x] = new CompetitionModel(rs.getInt("competitie_id"));
 				x++;
 			}
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return comp_desc;
@@ -89,32 +97,34 @@ public class AccountModel extends CoreModel {
 	}
 
 	public CompetitionModel[] getCompetitions(String username){
-		CompetitionModel[] comp_desc = new CompetitionModel[0];
+		CompetitionModel[] compDesc = new CompetitionModel[0];
 		int x = 0;
 		try {
-			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
-			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+			Future<ResultSet> worker = Db.run(new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username));
+			ResultSet dbResult = worker.get();
+			compDesc = new CompetitionModel[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < compDesc.length){
+				compDesc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
 				x++;
 			}
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
-		return comp_desc;
+		return compDesc;
 	}
 
 	public ArrayList<GameModel> getObserverAbleGames(){
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
 		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
 		try {
-			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
+			Future<ResultSet> worker = Db.run(new Query(query).set(GameModel.STATE_REQUEST));
+			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
 				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(), true));
 				// Add a new game with the gameId for this account
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return games;
@@ -124,14 +134,15 @@ public class AccountModel extends CoreModel {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
 		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
 		try {
-			ResultSet dbResult = new Query(query).set(username).set(username)
-					.set(GameModel.STATE_PLAYING).select();
+			Future<ResultSet> worker = Db.run(new Query(query).set(username).set(username)
+					.set(GameModel.STATE_PLAYING));
+			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
 				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(), false));
 				// Add a new game with the gameId for this account
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return games;
@@ -141,10 +152,11 @@ public class AccountModel extends CoreModel {
 		String query="SELECT wachtwoord FROM account WHERE naam=?";
 		String pass = "";
 		try{
-			ResultSet check = new Query(query).set(username).select();
+			Future<ResultSet> worker = Db.run(new Query(query).set(username));
+			ResultSet check = worker.get();
 			check.next();
 			pass = check.getString(1);
-		}catch(SQLException sql){
+		}catch(SQLException | InterruptedException | ExecutionException sql){
 			sql.printStackTrace();
 		}
 		return pass;
@@ -167,7 +179,10 @@ public class AccountModel extends CoreModel {
 	public boolean isRole(Role role) {
 		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
 		try {
-			ResultSet rs = new Query(query).set(username).select();
+			Future<ResultSet> worker = Db.run(new Query(query).set(username));
+			
+			//Do something else
+			ResultSet rs = worker.get();
 			while (rs.next()) {
 				if (rs.getString(1).equalsIgnoreCase(role.toString())) {
 					return true;
@@ -182,8 +197,10 @@ public class AccountModel extends CoreModel {
 	public void login(String user, char[] password) {
 		try {
 			String query = "SELECT `naam` FROM `account` WHERE `naam` = ? AND `wachtwoord` = ?";
-			ResultSet result = new Query(query).set(user).set(password)
-					.select();
+			Future<ResultSet> worker = Db.run(new Query(query).set(user).set(password));
+			
+			
+			ResultSet result = worker.get();
 
 			if (Query.getNumRows(result) == 1) {
 				result.next();
@@ -194,7 +211,7 @@ public class AccountModel extends CoreModel {
 			} else {
 				firePropertyChange(Event.LOGINFAIL, null, this);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
@@ -216,14 +233,15 @@ public class AccountModel extends CoreModel {
 	public CompetitionModel[] getOwnedCompetitions() {
 		try {
 			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ?";
-			ResultSet result = new Query(query).set(username).select();
+			Future<ResultSet> worker = Db.run(new Query(query).set(username));
+			ResultSet result = worker.get();
 			int numRows = Query.getNumRows(result);
 			CompetitionModel[] competitions = new CompetitionModel[numRows];
 			while(result.next()){
 				competitions[numRows-1] = new CompetitionModel(result.getInt(1));
 				numRows--;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return new CompetitionModel[0];

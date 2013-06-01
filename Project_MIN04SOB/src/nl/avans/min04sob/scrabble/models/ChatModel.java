@@ -6,8 +6,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 
@@ -36,8 +39,9 @@ public class ChatModel extends CoreModel {
 	private ArrayList<String> getNewMessages() {
 
 		try {
-			ResultSet rs = new Query(selectQuery).set(gameId)
-					.set(timeLastMessage).select();
+			Future<ResultSet> worker = Db.run(new Query(selectQuery).set(gameId)
+					.set(timeLastMessage));
+			ResultSet rs = worker.get();
 			while (rs.next()) {
 				String senderName = rs.getString(1);
 				if (!(senderName.equals(account.getUsername()))) {
@@ -47,10 +51,8 @@ public class ChatModel extends CoreModel {
 				}
 				timeLastMessage = rs.getString(2);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | NullPointerException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
-		} catch (NullPointerException n){
-			n.printStackTrace();
 		}
 		return messages;
 	}
@@ -60,8 +62,8 @@ public class ChatModel extends CoreModel {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			String currentdate = dateFormat.format(date);
-			new Query(insertQuery).set(account.getUsername()).set(gameId)
-					.set(currentdate).set(newMessage).exec();
+			Db.run(new Query(insertQuery).set(account.getUsername()).set(gameId)
+					.set(currentdate).set(newMessage));
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}

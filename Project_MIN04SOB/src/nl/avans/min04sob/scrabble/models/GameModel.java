@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.MatrixUtils;
 import nl.avans.min04sob.scrabble.core.Query;
 
@@ -17,6 +20,7 @@ public class GameModel extends CoreModel {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
 		new GameModel(0, null, null, false).test();
 	}
+
 	private CompetitionModel competition;
 	private AccountModel opponent;
 	private AccountModel challenger;
@@ -70,10 +74,12 @@ public class GameModel extends CoreModel {
 		currentUser = user;
 
 		try {
+			Future<ResultSet> worker = Db.run(new Query(getGameQuery)
+					.set(gameId));
 
-			ResultSet dbResult = new Query(getGameQuery).set(gameId).select();
+			ResultSet dbResult = worker.get();
 			int numRows = Query.getNumRows(dbResult);
-			
+
 			if (numRows == 1) {
 				dbResult.next();
 				this.gameId = gameId;
@@ -108,7 +114,7 @@ public class GameModel extends CoreModel {
 
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
@@ -233,7 +239,7 @@ public class GameModel extends CoreModel {
 				System.out.println(t.getLetter());
 			}
 		}
-		//horizontaal woord
+		// horizontaal woord
 		else if (false) {
 			ArrayList[] verticalenwoorden = { new ArrayList<Tile>(),
 					new ArrayList<Tile>(), new ArrayList<Tile>(),
@@ -242,41 +248,40 @@ public class GameModel extends CoreModel {
 			ArrayList<Tile> horizontalenLetters = new ArrayList<Tile>();
 			int holdY = 100;
 			boolean hasNotBeenRight = true;
-			for(int x = 0; x<15;x++){
-				for(int y = 0; y < 15; y++){
+			for (int x = 0; x < 15; x++) {
+				for (int y = 0; y < 15; y++) {
 					if (playedLetters[y][x] != null) {
 						int counterY = y;
 						holdY = y;
 						boolean hasNotBeenTop = true;
-						while(counterY > 0) {
-							if (newBoard[counterY][x] != null
-									&& hasNotBeenTop) {
+						while (counterY > 0) {
+							if (newBoard[counterY][x] != null && hasNotBeenTop) {
 								counterY--;
-							}else if (newBoard[counterY][x] != null) {		
+							} else if (newBoard[counterY][x] != null) {
 								verticalenwoorden[x].add(newBoard[counterY][x]);
 								counterY++;
-							}else {
+							} else {
 								counterY++;
-								if(!hasNotBeenTop){
+								if (!hasNotBeenTop) {
 									break;
 								}
 								hasNotBeenTop = false;
-						
+
 							}
 						}
 					}
 				}
 			}
-			for(ArrayList<Tile> array : verticalenwoorden){
-				if(array.size()>1){
-					for(Tile t : array){
+			for (ArrayList<Tile> array : verticalenwoorden) {
+				if (array.size() > 1) {
+					for (Tile t : array) {
 						System.out.println(t.getLetter());
 					}
 				}
-				
+
 			}
-			
-			for(Tile t : horizontalenLetters){
+
+			for (Tile t : horizontalenLetters) {
 				System.out.println(t.getLetter());
 			}
 		}
@@ -305,14 +310,20 @@ public class GameModel extends CoreModel {
 
 	public void getBoardFromDatabase() {
 		try {
-			ResultSet rs = new Query(getBoardQuery).set(gameId).select();
+			Future<ResultSet> worker = Db.run(new Query(getBoardQuery)
+					.set(gameId));
+
+			ResultSet rs = worker.get();
 			while (rs.next()) {
 				int x = rs.getInt(4) - 1;// x
 				int y = rs.getInt(5) - 1;// y
 				if (x > -1 && y > -1) {
 					if (rs.getString(3).equals("?")) {
-						ResultSet tilewaarde = new Query(getTileValue)
-								.set(rs.getString(6)).set(letterSet).select();
+
+						Future<ResultSet> worker2 = Db.run(new Query(
+								getTileValue).set(rs.getString(6)).set(
+								letterSet));
+						ResultSet tilewaarde = worker2.get();
 						tilewaarde.next();
 						boardModel
 								.setValueAt(new Tile(rs.getString(6),
@@ -321,8 +332,11 @@ public class GameModel extends CoreModel {
 
 					} else {
 						// TODO add letter value in query
-						ResultSet tilewaarde = new Query(getTileValue)
-								.set(rs.getString(3)).set(letterSet).select();
+
+						Future<ResultSet> worker1 = Db.run(new Query(
+								getTileValue).set(rs.getString(3)).set(
+								letterSet));
+						ResultSet tilewaarde = worker1.get();
 						tilewaarde.next();
 						boardModel
 								.setValueAt(new Tile(rs.getString(3),
@@ -332,7 +346,7 @@ public class GameModel extends CoreModel {
 				}
 			}
 
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 
@@ -378,8 +392,9 @@ public class GameModel extends CoreModel {
 
 	public void getlastrunFromDatabase() {
 		try {
-			ResultSet rs = new Query(getTurnQuery).set(gameId).set(lastTurn)
-					.select();
+			Future<ResultSet> worker = Db.run(new Query(getTurnQuery).set(
+					gameId).set(lastTurn));
+			ResultSet rs = worker.get();
 			while (rs.next()) {
 				int x = rs.getInt(2) - 1;// x
 				int y = rs.getInt(3) - 1;// y
@@ -391,7 +406,7 @@ public class GameModel extends CoreModel {
 				}
 			}
 
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 	}
@@ -403,11 +418,12 @@ public class GameModel extends CoreModel {
 	public int getNumberOfTotalTurns() {
 
 		try {
-			ResultSet dbResultamountofturns = new Query(getnumberofturns).set(
-					gameId).select();
+			Future<ResultSet> worker = Db.run(new Query(getnumberofturns)
+					.set(gameId));
+			ResultSet dbResultamountofturns = worker.get();
 			dbResultamountofturns.next();
 			return dbResultamountofturns.getInt(1);
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -422,7 +438,8 @@ public class GameModel extends CoreModel {
 		String[] words = null;
 		String query = "SELECT `woord` FROM `nieuwwoord` WHERE `status` = `pending`";
 		try {
-			ResultSet res = new Query(query).select();
+			Future<ResultSet> worker = Db.run(new Query(query));
+			ResultSet res = worker.get();
 			int numRows = Query.getNumRows(res);
 
 			words = new String[numRows];
@@ -431,7 +448,7 @@ public class GameModel extends CoreModel {
 				words[i] = res.getString(1);
 				i++;
 			}
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 
@@ -440,78 +457,77 @@ public class GameModel extends CoreModel {
 
 	public int getScore(String userName) {
 		try {
-			ResultSet rs = new Query(getScoreQuery).set(gameId).set(userName)
-					.select();
+			Future<ResultSet> worker = Db.run(new Query(getScoreQuery).set(
+					gameId).set(userName));
+
+			ResultSet rs = worker.get();
 			rs.next();
 			return rs.getInt(1);
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
 
-	public int getScore(Tile[][] playedLetters,ArrayList[] woorden, BoardModel currentBoard){
+	public int getScore(Tile[][] playedLetters, ArrayList[] woorden,
+			BoardModel currentBoard) {
 		int Score = 0;
-		for(int wordCounter = 0 ;woorden.length < wordCounter+1;wordCounter++){
+		for (int wordCounter = 0; woorden.length < wordCounter + 1; wordCounter++) {
 			int scoreofcurrentword = 0;
 			boolean times3 = false;
 			boolean times2 = false;
-			for(int letterCounter = 0; woorden[wordCounter].size() < letterCounter; letterCounter++){
+			for (int letterCounter = 0; woorden[wordCounter].size() < letterCounter; letterCounter++) {
 				int scoreofcurrentletter = 0;
-				scoreofcurrentletter = ((Tile) woorden[wordCounter].get(letterCounter)).getValue();
+				scoreofcurrentletter = ((Tile) woorden[wordCounter]
+						.get(letterCounter)).getValue();
 				// check if any played letter are on special tiles
-				
-				for(int xpos = 0;playedLetters.length > xpos;xpos++){
-					for(int ypos = 0;playedLetters[xpos].length > ypos; ypos++){
-						if(((Tile) woorden[wordCounter].get(letterCounter) == playedLetters[xpos][ypos])){
-							
-						
-						switch (currentBoard.getMultiplier(new Point(xpos,ypos))){
-						case 4:
-							//Triple letter 
-							scoreofcurrentletter = scoreofcurrentletter * 3;
-							break;
-						case 3:
-							//dubbel letter
-							scoreofcurrentletter = scoreofcurrentletter * 2;
-							break;
-						case 2:
-							//tripple woord
-							times3 = true;
-							
-							break;
-						case 1:
-							//dubble woord
-							times2 = true;
-							
-						
-							break;
+
+				for (int xpos = 0; playedLetters.length > xpos; xpos++) {
+					for (int ypos = 0; playedLetters[xpos].length > ypos; ypos++) {
+						if (((Tile) woorden[wordCounter].get(letterCounter) == playedLetters[xpos][ypos])) {
+
+							switch (currentBoard.getMultiplier(new Point(xpos,
+									ypos))) {
+							case 4:
+								// Triple letter
+								scoreofcurrentletter = scoreofcurrentletter * 3;
+								break;
+							case 3:
+								// dubbel letter
+								scoreofcurrentletter = scoreofcurrentletter * 2;
+								break;
+							case 2:
+								// tripple woord
+								times3 = true;
+
+								break;
+							case 1:
+								// dubble woord
+								times2 = true;
+
+								break;
+							}
 						}
+						if (currentBoard.getMultiplier(new Point(xpos, ypos)) == 1) {
+
 						}
-						if(currentBoard.getMultiplier(new Point(xpos,ypos)) ==  1 ){
-							
-						}
-						
-						
+
 					}
 				}
-				scoreofcurrentword =+ scoreofcurrentletter;
-				
-				
+				scoreofcurrentword = +scoreofcurrentletter;
+
 			}
-		if(times3){
-			scoreofcurrentword = scoreofcurrentword * 3;
-			
-		}else if(times2){
-			scoreofcurrentword = scoreofcurrentword * 2;
+			if (times3) {
+				scoreofcurrentword = scoreofcurrentword * 3;
+
+			} else if (times2) {
+				scoreofcurrentword = scoreofcurrentword * 2;
+			}
+
+			Score = +scoreofcurrentword;
+
 		}
-		
-			
-		Score =+ scoreofcurrentword;
-			
-		}
-		
-		
+
 		return Score;
 	}
 
@@ -526,12 +542,13 @@ public class GameModel extends CoreModel {
 
 	public boolean isFree(int x, int y) {
 		try {
-			ResultSet rs = new Query(getOpenQuery).set(y + 1).set(x)
-					.set(gameId).select();
+			Future<ResultSet> worker = Db.run(new Query(getOpenQuery)
+					.set(y + 1).set(x).set(gameId));
+			ResultSet rs = worker.get();
 			if (Query.getNumRows(rs) == 0) {
 				return true;
 			}
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return false;
@@ -540,8 +557,6 @@ public class GameModel extends CoreModel {
 	public boolean isIamchallenger() {
 		return iamchallenger;
 	}
-
-	
 
 	public boolean isObserver() {
 		return observer;
@@ -552,7 +567,7 @@ public class GameModel extends CoreModel {
 
 		String query = "INSERT INTO `woordenboek` (`woord`, `status`) VALUES (?, ?)";
 		try {
-			new Query(query).set(word).set(status).exec();
+			Db.run(new Query(query).set(word).set(status));
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -560,8 +575,8 @@ public class GameModel extends CoreModel {
 
 	public void resign() {
 		try {
-			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId())
-					.exec();
+			Db.run(new Query(resignQuery).set(STATE_RESIGNED).set(
+					this.getGameId()));
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -571,20 +586,21 @@ public class GameModel extends CoreModel {
 		String score = "";
 
 		try {
+			Future<ResultSet> worker = Db.run(new Query(scoreQuery)
+					.set(challenger.getUsername()));
+			int ch = scorecounter(worker.get(), toTurn);
 
-			int ch = scorecounter(
-					new Query(scoreQuery).set(challenger.getUsername())
-							.select(), toTurn);
-
+			
+			Future<ResultSet> worker1 = Db.run(new Query(scoreQuery).set(opponent.getUsername()));
 			int op = scorecounter(
-					new Query(scoreQuery).set(opponent.getUsername()).select(),
+					worker1.get(),
 					toTurn);
 
 			score = ": " + Integer.toString(ch) + " points";
 
 			score += " , : " + Integer.toString(op) + " points";
 
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return score;
@@ -614,25 +630,29 @@ public class GameModel extends CoreModel {
 
 	public void setPlayerLetterFromDatabase() {
 		try {
-			ResultSet res = new Query(getPlayerTiles).set(getGameId())
-					.set(currentUser.getUsername()).select();
+			Future<ResultSet> worker = Db.run(new Query(getPlayerTiles).set(
+					getGameId()).set(currentUser.getUsername()));
+			ResultSet res = worker.get();
 			String[] letters;
 			if (!(Query.getNumRows(res) == 0)) {
 				res.next();
 
 				letters = res.getString(2).split(",");
 				for (int x = 0; letters.length > x; x++) {
-					ResultSet tilewaarde = new Query(getTileValue)
-							.set(letters[x]).set(letterSet).select();
+
+					Future<ResultSet> worker1 = Db.run(new Query(getTileValue)
+							.set(letters[x]).set(letterSet));
+					ResultSet tilewaarde = worker1.get();
 					tilewaarde.next();
 
-					/*boardModel.setPlayetTile(x,
-							new Tile(letters[x], tilewaarde.getInt(1),
-									Tile.MUTATABLE));*/
+					/*
+					 * boardModel.setPlayetTile(x, new Tile(letters[x],
+					 * tilewaarde.getInt(1), Tile.MUTATABLE));
+					 */
 				}
 			}
 
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 	}
@@ -762,23 +782,27 @@ public class GameModel extends CoreModel {
 
 	public void updateboardfromdatabasetoturn(int turn_id) {
 		try { // "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
-			ResultSet rs = new Query(getTurnQuery).set(gameId).set(turn_id)
-					.select();
+
+			Future<ResultSet> worker = Db.run(new Query(getTurnQuery).set(
+					gameId).set(turn_id));
+			ResultSet rs = worker.get();
 			while (rs.next()) {
 				int x = rs.getInt(2) - 1;// x
 				int y = rs.getInt(3) - 1;// y
 				lastTurn = rs.getInt(5);
 				if (rs.getString(1).equals("?")) {
-					ResultSet tilewaarde = new Query(getTileValue)
-							.set(rs.getString(4)).set(letterSet).select();
+					Future<ResultSet> worker1 = Db.run(new Query(getTileValue)
+							.set(rs.getString(4)).set(letterSet));
+					ResultSet tilewaarde = worker1.get();
 					tilewaarde.next();
 					boardModel.setValueAt(
 							new Tile(rs.getString(4), tilewaarde.getInt(1),
 									Tile.NOT_MUTATABLE), y, x);
 
 				} else {
-					ResultSet tilewaarde = new Query(getTileValue)
-							.set(rs.getString(1)).set(letterSet).select();
+					Future<ResultSet> worker2 = Db.run(new Query(getTileValue)
+							.set(rs.getString(1)).set(letterSet));
+					ResultSet tilewaarde = worker2.get();
 					tilewaarde.next();
 					boardModel.setValueAt(
 							new Tile(rs.getString(1), tilewaarde.getInt(1),
@@ -787,7 +811,7 @@ public class GameModel extends CoreModel {
 			}
 			boardModel.update();
 
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 	}
@@ -795,39 +819,40 @@ public class GameModel extends CoreModel {
 	public boolean whosturn() {
 		// dont use unless observing
 		// use yourturn instead
-	
-		
-			try {
-				System.out.println(getGameId()+ "  " +currentobserveturn );
-				ResultSet res = new Query(whosTurnAtTurn).set(getGameId())
-						.set(currentobserveturn).select();
-				int numRows = Query.getNumRows(res);
-				
-				if(numRows == 0){
-					return true;
-				}
-				res.next();
-				String lastturnplayername = res.getString(1);
 
-				if (lastturnplayername.equals(challenger.getUsername())) {
-					return false;
-				} else {
-					return true;
-				}
+		try {
+			System.out.println(getGameId() + "  " + currentobserveturn);
+			Future<ResultSet> worker = Db.run(new Query(whosTurnAtTurn).set(
+					getGameId()).set(currentobserveturn));
+			ResultSet res = worker.get();
+			int numRows = Query.getNumRows(res);
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (numRows == 0) {
+				return true;
 			}
-			
-		
+			res.next();
+			String lastturnplayername = res.getString(1);
+
+			if (lastturnplayername.equals(challenger.getUsername())) {
+				return false;
+			} else {
+				return true;
+			}
+
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return false;
 
 	}
 
 	public boolean yourturn() {
 		try {
-			ResultSet res = new Query(yourTurnQuery).set(getGameId()).select();
+			Future<ResultSet> worker = Db.run(new Query(yourTurnQuery)
+					.set(getGameId()));
+			ResultSet res = worker.get();
 
 			int turnCount = Query.getNumRows(res);
 
@@ -838,11 +863,11 @@ public class GameModel extends CoreModel {
 			}
 			res.next();
 			String lastturnplayername = res.getString("account_naam");
-			
-			//A user has the move is he is not the last person who made a move
+
+			// A user has the move is he is not the last person who made a move
 			return !lastturnplayername.equals(currentUser.getUsername());
 
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return false;

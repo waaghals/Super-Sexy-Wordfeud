@@ -1,5 +1,8 @@
 package testmains;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -7,6 +10,8 @@ import nl.avans.min04sob.scrabble.controllers.MainController;
 
 public class TestMain implements Runnable {
 
+	public static final ExecutorService executor = Executors.newFixedThreadPool(10);
+	
 	/**
 	 * @param args
 	 */
@@ -23,11 +28,14 @@ public class TestMain implements Runnable {
 		} catch (IllegalAccessException e) {
 			// handle exception
 		}
-		new Thread(new MainController()).start();
+		executor.submit(new MainController());
+		//new Thread(new MainController()).start();
+	
 	}
 
 	@Override
 	public void run() {
 		new MainController();
+		executor.shutdown();
 	}
 }
