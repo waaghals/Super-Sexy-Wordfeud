@@ -15,7 +15,6 @@ import nl.avans.min04sob.scrabble.core.Query;
 public class CompetitionModel extends CoreModel {
 
 	private int competitieId;
-	private int ranking = 0;
 	private String desc;
 	private AccountModel owner;
 	private Date start;
