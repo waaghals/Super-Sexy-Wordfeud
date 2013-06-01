@@ -261,8 +261,10 @@ public class MenuView extends JMenuBar implements CoreView {
 		}
 
 		if(user.isRole(Role.PLAYER)){
+			competitionMenu.setEnabled(true);
 			joinCompetitionItem.setEnabled(true);
 			challengeMenu.setEnabled(true);
+			seeCompetitionsItem.setEnabled(true);
 		}
 		
 		if(user.getOwnedCompetitions().length > 0 || user.isRole(Role.ADMINISTRATOR)){

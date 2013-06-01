@@ -29,7 +29,7 @@ public class CompetitionScoreView extends CorePanel {
 	private JTable table;
 
 	public CompetitionScoreView() {
-		setLayout(new MigLayout("", "[100px:120px:120px,grow][800px:800px:800px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+		setLayout(new MigLayout("", "[200px:220px:220px,grow][800px:800px:800px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
 		columnNames = new String[] { "account_naam",
 				"aantal gespeelde webstrijden", "totaal aantal punten",

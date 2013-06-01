@@ -34,6 +34,7 @@ public class CompetitionController extends CoreController {
 		competitionModel = new CompetitionModel();
 		competitionView = new CompetitionView();
 		challengeModel = new ChallengeModel(accountModel);
+		competitionScoreView = new CompetitionScoreView();
 		
 		addView(competitionView);
 		addModel(competitionModel);
