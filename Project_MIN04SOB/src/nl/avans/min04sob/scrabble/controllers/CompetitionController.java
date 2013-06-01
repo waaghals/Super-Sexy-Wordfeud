@@ -12,6 +12,7 @@ import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
+import nl.avans.min04sob.scrabble.views.CompetitionScoreView;
 import nl.avans.min04sob.scrabble.views.CompetitionView;
 
 public class CompetitionController extends CoreController {
@@ -19,9 +20,12 @@ public class CompetitionController extends CoreController {
 	private CompetitionModel competitionModel;
 	private CompetitionView competitionView;
 	private CoreWindow window;
+	private CoreWindow window1;
 	private AccountModel accountModel;
 	private ChallengeModel challengeModel;
+	private CompetitionScoreView competitionScoreView;
 	private int index; //competitie id meegeven
+	private Object[][] data;
 
 	public CompetitionController(AccountModel user)
 	{
@@ -45,6 +49,10 @@ public class CompetitionController extends CoreController {
 		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
 	}
 	
+	public void getAllCompetitionsScore(){
+		competitionScoreView.fillCompetitions(competitionModel.getAllCompetitions());
+	}
+	
 	public void getAvailable(String username){
 		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
 	}
@@ -65,14 +73,14 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void openCompetitionScores(){
-		window = new CoreWindow();
-		window.add(competitionView);
+		window1 = new CoreWindow();
+		window1.add(competitionScoreView);
 		
-		window.setPreferredSize(new Dimension(400,320));
-		window.setResizable(false);
-		window.pack();
+		window1.setPreferredSize(new Dimension(1000,320));
+		window1.setResizable(false);
+		window1.pack();
 		
-		competitionView.addBackListener(new ActionListener(){
+		competitionScoreView.addBackListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -80,21 +88,34 @@ public class CompetitionController extends CoreController {
 			}	
 		});
 		
-		competitionView.addCompetitionListListener(new MouseAdapter() {
+		competitionScoreView.addCompetitionListListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
 					int id = competitionView.getSelectedCompetition().getCompId();
-					getParticipants(id);
+					System.out.println(id);
 				}
 			}
 		});
 		
-		competitionView.setText("Competities", "Spelers in competitie", "",false);
+		competitionScoreView.setTable(data = new Object[][] {
+		    {"Kathy", "Smith",
+		     "Snowboarding", new Integer(5), new Boolean(false), 500},
+		    {"John", "Doe",
+		     "Rowing", new Integer(3), new Boolean(true), 500},
+		    {"Sue", "Black",
+		     "Knitting", new Integer(2), new Boolean(false), 500},
+		    {"Jane", "White",
+		     "Speed reading", new Integer(20), new Boolean(true), 500},
+		    {"Joe", "Brown",
+		     "Pool", new Integer(10), new Boolean(false), 500}
+		});
 		
-		getAllCompetitions();
+		getAllCompetitionsScore();
 		
 	}
+	
+	
 	
 	public void openCompetitionView(){
 		window = new CoreWindow();

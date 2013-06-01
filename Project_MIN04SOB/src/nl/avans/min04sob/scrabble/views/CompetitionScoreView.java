@@ -1,6 +1,7 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
@@ -18,66 +19,52 @@ import javax.swing.JTable;
 public class CompetitionScoreView extends CorePanel {
 
 	private JScrollPane scrollPane;
+	private JScrollPane scrollPane1;
 	private JList<CompetitionModel> competitionList;
-	private JButton actionButton;
-	private JButton cancelButton;
+	private JButton backButton;
 	private JLabel competitionLabel;
 	private JLabel playersLabel;
 	private String[] columnNames;
+	private Object[][] data;
 	private JTable table;
 
 	public CompetitionScoreView() {
-		setLayout(new MigLayout("",
-				"[100px:120px:120px,grow][200px:230.00px:220px,grow]",
-				"[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+		setLayout(new MigLayout("", "[100px:120px:120px,grow][800px:800px:800px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
 		columnNames = new String[] { "account_naam",
 				"aantal gespeelde webstrijden", "totaal aantal punten",
 				"gemiddeld aantal punten per wedstrijd",
 				"aantal webstrijden gewonnen/verloren", "bayesian-average" };
 		
-		Object[][] data = {
-			    {"Kathy", "6",
-			     "7", 250, 600,700},
-			     {"Kathy", "6",
-				     "7", 250, 600,700},
-				     {"Kathy", "6",
-					     "7", 250, 600,700},
-					     {"Kathy", "6",
-						     "7", 250, 600,700},
-						     {"Kathy", "6",
-							     "7", 250, 600,700},
-			};
+		data = new Object[][]{
+				{"jager684",5,1100,245,"7 / 6", "0,67"	}			
+		};
 
-		competitionLabel = new JLabel("Beschikbare competities");
+		competitionLabel = new JLabel("Competities");
 		add(competitionLabel, "cell 0 0,alignx left");
 
-		playersLabel = new JLabel("Spelers in de competitie");
-		add(playersLabel, "cell 1 0,alignx right");
+		playersLabel = new JLabel("Scores van spelers in de competitie");
+		add(playersLabel, "cell 1 0,alignx left");
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
+		
+		scrollPane1 = new JScrollPane();
+		add(scrollPane1, "cell 1 1 1 3,grow");
 
 		competitionList = new JList<CompetitionModel>();
 		scrollPane.setViewportView(competitionList);
 
 		table = new JTable(data, columnNames);
-		add(table, "cell 1 1 1 3,grow");
+		scrollPane1.setViewportView(table);
 
-		cancelButton = new JButton("Annuleer");
-		add(cancelButton, "cell 0 4,alignx left,aligny top");
-
-		actionButton = new JButton("Competitie deelnemen");
-		add(actionButton, "cell 1 4,alignx right,growy");
-
-	}
-
-	public void addActionListenerActieButton(ActionListener listener) {
-		actionButton.addActionListener(listener);
+		backButton = new JButton("Terug");
+		add(backButton, "cell 0 4,alignx left,aligny top");
+		
 	}
 
 	public void addActionListenerAnnuleerButton(ActionListener listener) {
-		cancelButton.addActionListener(listener);
+		backButton.addActionListener(listener);
 	}
 
 	public void fillAvailableCompetitions(
@@ -96,10 +83,25 @@ public class CompetitionScoreView extends CorePanel {
 
 	}
 
-	public void setText(String labelText, String button) {
-		competitionLabel.setText(labelText);
-		actionButton.setText(button);
-		revalidate();
+	public Object[][] getData() {
+		return data;
+	}
+	
+	//naam, aantal spellen, totaal punten, gemiddelde punten, win/lose, bayesian-avg
+	public void setTable(Object[][] data) {
+		this.data = data;
+	}
+	
+	public void addBackListener(ActionListener listener){
+		backButton.addActionListener(listener);
+	}
+	
+	public void addCompetitionListListener(MouseAdapter listener){
+		competitionList.addMouseListener(listener);
+	}
+	
+	public void fillCompetitions(CompetitionModel[] comp) {
+		competitionList.setListData(comp);
 	}
 
 }
