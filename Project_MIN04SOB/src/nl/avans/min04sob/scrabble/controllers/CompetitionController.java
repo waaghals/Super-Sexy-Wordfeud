@@ -115,11 +115,7 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					challengeModel.controle(competitionView.getSelectedPlayer());
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				challengeModel.controle(competitionView.getSelectedPlayer());
 			}
 		});
 		
