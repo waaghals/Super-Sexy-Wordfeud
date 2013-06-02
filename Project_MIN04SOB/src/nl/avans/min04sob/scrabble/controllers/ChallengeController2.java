@@ -27,7 +27,6 @@ public class ChallengeController2 extends CoreController {
 		
 		frame.setAlwaysOnTop(true);
 		frame.add(challengeView2);
-	
 		
 		addView(challengeView2);
 		addModel(challengeModel);
