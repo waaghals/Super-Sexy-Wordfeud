@@ -269,6 +269,7 @@ public class CompetitionController extends CoreController {
 	
 	public void openCreateCompetitionView(){
 		window = new CoreWindow();
+		createCompetitionView= new CreateCompetitionView();
 		window.add(createCompetitionView);
 		
 		window.setPreferredSize(new Dimension(400,320));
