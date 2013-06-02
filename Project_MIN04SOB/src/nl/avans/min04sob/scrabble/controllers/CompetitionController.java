@@ -139,9 +139,11 @@ public class CompetitionController extends CoreController {
 		competitionView.addActionButtonListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				challengeModel.controle(competitionView.getSelectedPlayer());
-				window.dispose();
-				window = null;
+				int id = competitionView.getSelectedCompetition().getCompId();
+				challengeModel.check(accountModel.getUsername(), competitionView.getSelectedPlayer().getUsername(), id);
+				if (challengeModel.isDuplicatedChallenge()) {
+					competitionView.changeActionText();
+				}
 			}
 		});
 		
