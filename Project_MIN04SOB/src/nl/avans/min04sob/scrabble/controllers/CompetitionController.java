@@ -14,6 +14,7 @@ import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.views.CompetitionScoreView;
 import nl.avans.min04sob.scrabble.views.CompetitionView;
+import nl.avans.min04sob.scrabble.views.CreateCompetitionView;
 
 public class CompetitionController extends CoreController {
 
@@ -25,6 +26,7 @@ public class CompetitionController extends CoreController {
 	private ChallengeModel challengeModel;
 	private CompetitionScoreView competitionScoreView;
 	private int index; //competitie id meegeven
+	private CreateCompetitionView createCompetitionView;
 
 	public CompetitionController(AccountModel user)
 	{
@@ -242,6 +244,17 @@ public class CompetitionController extends CoreController {
 		
 		getAvailable(accountModel.toString());
 		
+	}
+	
+	public void openCreateCompetitionView(){
+		window = new CoreWindow();
+		window.add(createCompetitionView);
+		
+		window.setPreferredSize(new Dimension(400,320));
+		window.setResizable(false);
+		window.pack();
+		
+				
 	}
 
 }
