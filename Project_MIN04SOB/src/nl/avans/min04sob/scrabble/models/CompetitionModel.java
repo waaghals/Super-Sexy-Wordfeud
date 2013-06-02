@@ -26,17 +26,17 @@ public class CompetitionModel extends CoreModel {
 	private final String leaderboardQuery = "SELECT `account_naam`, `competitie_id`, `ranking` FROM `deelnemer` WHERE `competitie_id` = ? ORDER BY `ranking`";
 	private final String joinQuery = "INSERT INTO `deelnemer` (`competitie_id`, `account_naam`) VALUES (?, ?)";
 	private final String removeQuery = "DELETE FROM `deelnemer` WHERE `competitie_id` =? AND `account_naam` =? ";
-	private final String chatsToRemove = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `competitie_id` = ?";
+	private final String chatsToRemove = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `competitie_id` = ?";
 	private final String removeChats = "DELETE FROM `chatregel` WHERE `spel_id` = ?";
 	private final String removeScores = "DELETE FROM `beurt` WHERE `spel_id` = ?";
-	private final String removeGames = "DELETE FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `competitie_id` = ?";
+	private final String removeGames = "DELETE FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `competitie_id` = ?";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
 	private final String removeCompetitionQuery = "DELETE FROM `competitie` WHERE `ID` = ?";
-	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
-	private final String totalPointsQuery = "SELECT SUM(`score`) FROM `beurt` as `b` JOIN `spel` as `s` ON `b.spel_id` = `s.id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
-	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) as `avg` FROM `beurt` as `b` JOIN `spel` as `s` ON `s.id` = `b.spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
-	private final String gamefinished = "SELECT `spel_id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstanders` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = finished";
-	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(score) FROM `spel` as `s` JOIN `beurt` as `b` ON `s.id` = `b.spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `s.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
+	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = ?";
+	private final String totalPointsQuery = "SELECT SUM(`score`) as `score` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
+	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) as `avg` FROM `beurt` JOIN `spel` ON `spel`.`id` = `beurt`.`spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
+	private final String gamefinished = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = ?";
+	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(`score`) as `score` FROM `spel` JOIN `beurt` ON `spel`.`id` = `beurt`.`spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `spel.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
 	private final String bayesianAverageQuery = "";
 	private final String query = "SELECT `*` FROM `deelnemer`;";
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
@@ -67,14 +67,14 @@ public class CompetitionModel extends CoreModel {
 
 	public int amountLost(int competitionID, String username) {
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
-		int amountWon = 0;
 		int amountLost = 0;
+		int amountWon = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(gamefinished)
-					.set(username).set(username).set(competitionID));
+					.set(username).set(username).set(competitionID).set("finished"));
 			ResultSet dbResult1 = worker.get();
 			while (dbResult1.next()) {
-				spel_ids.add(dbResult1.getInt("spel_id"));
+				spel_ids.add(dbResult1.getInt("id"));
 			}
 
 			for (Integer id : spel_ids) {
@@ -103,10 +103,10 @@ public class CompetitionModel extends CoreModel {
 		int amountLost = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(gamefinished)
-					.set(username).set(username).set(competitionID));
+					.set(username).set(username).set(competitionID).set("finished"));
 			ResultSet dbResult1 = worker.get();
 			while (dbResult1.next()) {
-				spel_ids.add(dbResult1.getInt("spel_id"));
+				spel_ids.add(dbResult1.getInt("id"));
 			}
 
 			for (Integer id : spel_ids) {
@@ -350,7 +350,7 @@ public class CompetitionModel extends CoreModel {
 		int totalGames = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(totalPlayedGamesQuery).set(username)
-					.set(username).set(competitionID));
+					.set(username).set(competitionID).set("finished"));
 			ResultSet dbResult = worker.get();
 			if (dbResult.next()) {
 				totalGames = dbResult.getInt("COUNT(*)");
@@ -369,7 +369,7 @@ public class CompetitionModel extends CoreModel {
 					.set(competitionID).set(username));
 			ResultSet dbResult = worker.get();
 			if (dbResult.next()) {
-				total = dbResult.getInt("SUM(score)");
+				total = dbResult.getInt("score");
 			}
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();

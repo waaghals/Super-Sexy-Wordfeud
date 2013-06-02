@@ -25,7 +25,6 @@ public class CompetitionController extends CoreController {
 	private ChallengeModel challengeModel;
 	private CompetitionScoreView competitionScoreView;
 	private int index; //competitie id meegeven
-	private Object[][] data;
 
 	public CompetitionController(AccountModel user)
 	{
@@ -77,7 +76,7 @@ public class CompetitionController extends CoreController {
 		window1 = new CoreWindow();
 		window1.add(competitionScoreView);
 		
-		window1.setPreferredSize(new Dimension(1000,320));
+		window1.setPreferredSize(new Dimension(1400,320));
 		window1.setResizable(false);
 		window1.pack();
 		
@@ -93,23 +92,22 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e){
 				if(e.getClickCount()==1){
-					int id = competitionView.getSelectedCompetition().getCompId();
-					System.out.println(id);
+					int id = competitionScoreView.getSelectedCompetition().getCompId();
+					Object[] rowData = new Object[6];
+					int index = 0;
+					//naam, aantal spellen, totaal punten, gemiddelde punten, win/lose, bayesian-
+					for(AccountModel account: competitionModel.getUsersFromCompetition(id)){
+						rowData[0] = account;
+						rowData[1] = competitionModel.totalPlayedGames(id, account.getUsername());
+						rowData[2] = competitionModel.totalPoints(id, account.getUsername());
+						rowData[3] = competitionModel.averagePoints(id, account.getUsername());
+						rowData[4] = competitionModel.amountWon(id, account.getUsername()) +" / " + competitionModel.amountLost(id, account.getUsername());
+						rowData[5] = "bayesian-gemiddelde";
+						competitionScoreView.addRow(rowData);
+						index++;
+					}
 				}
 			}
-		});
-		
-		competitionScoreView.setTable(data = new Object[][] {
-		    {"Kathy", "Smith",
-		     "Snowboarding", new Integer(5), new Boolean(false), 500},
-		    {"John", "Doe",
-		     "Rowing", new Integer(3), new Boolean(true), 500},
-		    {"Sue", "Black",
-		     "Knitting", new Integer(2), new Boolean(false), 500},
-		    {"Jane", "White",
-		     "Speed reading", new Integer(20), new Boolean(true), 500},
-		    {"Joe", "Brown",
-		     "Pool", new Integer(10), new Boolean(false), 500}
 		});
 		
 		getAllCompetitionsScore();

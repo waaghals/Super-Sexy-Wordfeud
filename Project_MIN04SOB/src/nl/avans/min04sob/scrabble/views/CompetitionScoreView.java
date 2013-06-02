@@ -15,6 +15,7 @@ import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class CompetitionScoreView extends CorePanel {
 
@@ -27,6 +28,7 @@ public class CompetitionScoreView extends CorePanel {
 	private String[] columnNames;
 	private Object[][] data;
 	private JTable table;
+	private DefaultTableModel tableModel;
 
 	public CompetitionScoreView() {
 		setLayout(new MigLayout("", "[200px:220px:220px,grow][800px:800px:800px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
@@ -35,10 +37,6 @@ public class CompetitionScoreView extends CorePanel {
 				"aantal gespeelde webstrijden", "totaal aantal punten",
 				"gemiddeld aantal punten per wedstrijd",
 				"aantal webstrijden gewonnen/verloren", "bayesian-average" };
-		
-		data = new Object[][]{
-				{"jager684",5,1100,245,"7 / 6", "0,67"	}			
-		};
 
 		competitionLabel = new JLabel("Competities");
 		add(competitionLabel, "cell 0 0,alignx left");
@@ -55,12 +53,27 @@ public class CompetitionScoreView extends CorePanel {
 		competitionList = new JList<CompetitionModel>();
 		scrollPane.setViewportView(competitionList);
 
-		table = new JTable(data, columnNames);
+		tableModel = new DefaultTableModel();
+		table = new JTable(tableModel);
 		scrollPane1.setViewportView(table);
+		setColumns();
 
 		backButton = new JButton("Terug");
 		add(backButton, "cell 0 4,alignx left,aligny top");
 		
+	}
+
+	public void setColumns() {
+		tableModel.addColumn("account_naam");
+		tableModel.addColumn("aantal gespeelde wedstrijd");
+		tableModel.addColumn("totaal aantal punten");
+		tableModel.addColumn("gemiddeld aantal punten per wedstrijd");
+		tableModel.addColumn("aantal webstrijden gewonnen/verloren");
+		tableModel.addColumn("bayesian-average");		
+	}
+	
+	public void addRow(Object[] dataRow){
+		tableModel.addRow(dataRow);
 	}
 
 	public void addActionListenerAnnuleerButton(ActionListener listener) {
@@ -80,16 +93,6 @@ public class CompetitionScoreView extends CorePanel {
 
 	public CompetitionModel selectedCompetition() {
 		return competitionList.getSelectedValue();
-
-	}
-
-	public Object[][] getData() {
-		return data;
-	}
-	
-	//naam, aantal spellen, totaal punten, gemiddelde punten, win/lose, bayesian-avg
-	public void setTable(Object[][] data) {
-		this.data = data;
 	}
 	
 	public void addBackListener(ActionListener listener){
@@ -103,5 +106,9 @@ public class CompetitionScoreView extends CorePanel {
 	public void fillCompetitions(CompetitionModel[] comp) {
 		competitionList.setListData(comp);
 	}
-
+	
+	
+	public CompetitionModel getSelectedCompetition(){
+		return competitionList.getSelectedValue();
+	}
 }
