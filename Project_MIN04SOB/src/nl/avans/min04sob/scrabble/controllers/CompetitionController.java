@@ -173,6 +173,16 @@ public class CompetitionController extends CoreController {
 			}	
 		});
 		
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
+				}
+			}
+		});
+		
 		competitionView.setText("Competities", "Spelers in competitie", "Verwijder Competitie",true);
 		
 		getAllCompetitions();	
@@ -192,6 +202,16 @@ public class CompetitionController extends CoreController {
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 			}	
+		});
+		
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
+				}
+			}
 		});
 		
 		competitionView.setText("Ingeschreven Competities", "Spelers in competitie", "Verwijderen uit Competitie",true);
