@@ -91,6 +91,7 @@ public class ChallengeModel extends CoreModel {
 	public void createChallenge(String Challengername, String challegendname)
 	// uitdager
 	{
+		competitionController = new CompetitionController(accountModel);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);

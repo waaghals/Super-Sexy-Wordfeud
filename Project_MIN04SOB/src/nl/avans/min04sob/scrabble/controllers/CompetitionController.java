@@ -132,6 +132,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+				window = null;
 			}	
 		});
 		//uitdagen
@@ -139,6 +140,8 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				challengeModel.controle(competitionView.getSelectedPlayer());
+				window.dispose();
+				window = null;
 			}
 		});
 		
@@ -242,6 +245,7 @@ public class CompetitionController extends CoreController {
 				if(competitionView.getSelectedCompetition() != null){
 					int id = competitionView.getSelectedCompetition().getCompId();
 					getParticipants(id);
+					window.dispose();
 					//competitionView.removeIndex(competitionView.getIndex());
 				}
 				else{
