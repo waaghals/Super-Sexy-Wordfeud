@@ -24,13 +24,14 @@ public class ChallengeController2 extends CoreController {
 		account = user;
 		initialize();
 		addListeners();
-		//add array
+		
 		frame.setAlwaysOnTop(true);
 		frame.add(challengeView2);
+	
 		
 		addView(challengeView2);
 		addModel(challengeModel);
-		
+		this.fillChallengeList();
 		frame.pack();
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
@@ -67,8 +68,8 @@ public class ChallengeController2 extends CoreController {
 	
 
 	private void fillChallengeList() {
-		//TODO
 		challengeView2.fillChallengeList(challengeModel.challengeArray());
+		frame.repaint();
 	}
 	
 	
@@ -77,7 +78,6 @@ public class ChallengeController2 extends CoreController {
 		try {
 			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),true);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -87,7 +87,6 @@ public class ChallengeController2 extends CoreController {
 		try {
 			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),false);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

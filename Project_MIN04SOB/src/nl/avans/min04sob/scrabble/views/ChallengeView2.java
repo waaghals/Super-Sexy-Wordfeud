@@ -1,29 +1,23 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 
+@SuppressWarnings("serial")
 public class ChallengeView2 extends CorePanel {
 
 	private JButton acceptButton;
 	private JButton declineButton;
 	private JButton backButton;
 	private JLabel challengeLabel;
-	private JList challengeList;
+	private JList<String> challengeList;
 	private JScrollPane scrollPane;
 	
 	public ChallengeView2() {
@@ -35,7 +29,7 @@ public class ChallengeView2 extends CorePanel {
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
 		
-		challengeList = new JList();
+		challengeList = new JList<String>();
 		scrollPane.setViewportView(challengeList);
 		
 		acceptButton = new JButton("Accepteer");
