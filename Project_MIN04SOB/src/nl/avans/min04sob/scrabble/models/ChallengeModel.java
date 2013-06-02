@@ -34,13 +34,22 @@ public class ChallengeModel extends CoreModel {
 		accountModel = user;
 		// competitionController = new CompetitionController(user);
 		yourname = accountModel.getUsername();
+		
+		System.out.println("contrsturo werkt");
+		int index=0;
+		upddate();
+		while(index<challengeArray().length)
+		{
+			System.out.println(challengeArray()[index]);
+			index++;
+		}
 	}
 
 	public void controle(AccountModel challegendname)// uitdager
 	{
 
 		// / zorgt dat je iemand niet 2 x achterelkaar kunt uitdagne
-
+		System.out.println("controle werkt");
 		boolean error = false;
 
 		String queryy = "SELECT COUNT(*)   FROM Spel ";
@@ -60,17 +69,15 @@ public class ChallengeModel extends CoreModel {
 					e.printStackTrace();
 				}
 				while (result.next()) {
-
-					if (result.getString(7).equals(STATE_UNKNOWN)
+				 
+					if ((result.getString(7).equals(STATE_UNKNOWN)
 							&& result.getString(4).equals(yourname)
 							&& result.getString(5).equals(
 									challegendname.getUsername())
 							&& result.getString(3).equals(STATE_UNKNOWN)
-							|| yourname.equals(challegendname.getUsername())) // hier
-																				// ziet
-																				// een
-					// fout in
+							)|| yourname.equals(challegendname.getUsername())) 
 					{
+						System.out.println("foute challenge");
 						error = true;
 						break;
 					}
@@ -91,19 +98,23 @@ public class ChallengeModel extends CoreModel {
 	public void createChallenge(String Challengername, String challegendname)
 	// uitdager
 	{
+		System.out.println("je zit nu in create challnge");
 		competitionController = new CompetitionController(accountModel);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
-
+		System.out.println(competitionController.getCompID()+" "+STATE_REQUEST+" "+Challengername+" "+challegendname+" "+currentdate+" "+STATE_UNKNOWN);
 		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
-		try {
+		try { 
 			Db.run(new Query(query).set(competitionController.getCompID())
 					.set(STATE_REQUEST).set(Challengername).set(challegendname)
 					.set(currentdate).set(STATE_UNKNOWN).set(currentdate)
 					.set("standard").set("NL"));
+		 
+			System.out.println("uitdaging verstuurd");
 		} catch (SQLException sql) {
 			sql.printStackTrace();
+			System.out.println("error");
 		}
 	}
 
@@ -133,7 +144,6 @@ public class ChallengeModel extends CoreModel {
 			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
 			Db.run(new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
-
 		}
 
 		else {
@@ -157,12 +167,13 @@ public class ChallengeModel extends CoreModel {
 		return tempChallengeArray;
 	}
 
-	@Override
-	public void update() {
+ 
+	public void upddate() {
 		// // if your name = tegenstander if your naam = uitdager
 		// /// receive challenge your name = challenged ///// ///// ///// /////
 		// ///// ///// /////
 		// /array list add alleen als challend= yourname;;
+		System.out.println("update");
 		try {
 			Future<ResultSet> worker = Db.run(new Query(selectQuery));
 			ResultSet dbResult = worker.get();
@@ -172,6 +183,7 @@ public class ChallengeModel extends CoreModel {
 							&& dbResult.getString(3).equals(STATE_REQUEST)
 							&& dbResult.getString(7).equals(STATE_UNKNOWN)) {
 						challenge.add(dbResult.getString(4));
+						System.out.println(dbResult.getString(4));
 					}
 				}
 			}
@@ -180,5 +192,11 @@ public class ChallengeModel extends CoreModel {
 		}
 
 
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -34,6 +34,7 @@ public class ChallengeController2 extends CoreController {
 		frame.pack();
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+		fillChallengeList();
 	}
 	
 	
