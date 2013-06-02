@@ -49,10 +49,10 @@ public class MainController extends CoreController {
 		addListeners();
 
 		addView(menu);
-		addModel(boardModel);
-		addModel(account);
 		addView(chatPanel);
 		addView(frame);
+		addModel(boardModel);
+		addModel(account);
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -74,7 +74,6 @@ public class MainController extends CoreController {
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
-
 		currGamePanel = new BoardPanel();
 
 		boardModel = new BoardModel();
@@ -90,16 +89,18 @@ public class MainController extends CoreController {
 	@Override
 	public void addListeners() {
 
-		menu.viewChallengeItemActionListener(new ActionListener() {
+		menu.viewChallengeItemActionListener(new ActionListener() {	//uitdagingen bekijken
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//crtl.challengers();
-				new ChallengeController2();
+				new ChallengeController2(account);
+				//new ChallengeController(account.getUsername());
+
 
 			}
 		});
-		menu.adddoChallengeItemActionListener(new ActionListener() {
+		menu.adddoChallengeItemActionListener(new ActionListener() { //uitdagen
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -146,10 +147,12 @@ public class MainController extends CoreController {
 
 		menu.deleteCompetitionItem(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				new CompetitionController(account).openDeleteCompetitionView();
 				
 				//invController = new InviteController();
 				//invController.setButtonsRemove();
+
 			}
 		});
 
@@ -158,6 +161,7 @@ public class MainController extends CoreController {
 		menu.addLogoutItemActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
+				closePanels();
 				// addLoginListener();
 			}
 		});
@@ -217,6 +221,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				sendChat();
 			}
 		});
@@ -255,6 +260,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				if (currentGame.getCurrentobserveturn() > 0) {
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() - 1);
@@ -278,24 +284,32 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);
+				accountcontroller.addView(chatPanel);
 			}
 		});
 	}
 
 	protected void openGame(GameModel selectedGame) {
+		
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-		chatPanel.setEnabled(true);
+		//chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
-		frame.remove(currGamePanel);
+		//frame.remove(currGamePanel);
+		closePanels();
+		
 
 		ArrayList<GameModel> games;
 		StashModel stash = new StashModel();
+		currGamePanel.setPlayerTiles(stash.getPlayerTiles(account, selectedGame));
+		
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-
+		while(letters.length < 7){
+			
+		}
 		currGamePanel.setPlayerTiles(letters);
 
 		games = account.getObserverAbleGames();
@@ -319,15 +333,18 @@ public class MainController extends CoreController {
 
 		addButtonListeners();
 
-		frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-		frame.revalidate();
-		frame.repaint();
-
+		//frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		//frame.revalidate();
+		//frame.repaint();
+		//chatPanel.setEnabled(true);
+		openPanels();
+		
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
 			chatPanel.addToChatField(message);
 		}
+		chatModel.update();
 	}
 
 	private void setCurrentGame(GameModel selectedGame) {
@@ -355,6 +372,7 @@ public class MainController extends CoreController {
 		String message = chatPanel.getChatFieldSendText();
 
 		if (!message.equals("") && !message.equals(" ")) {
+
 			chatModel.send(message);
 			chatModel.update();
 
@@ -362,26 +380,21 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
+	
+	public void openPanels(){
+		frame.add(currGamePanel,
+				"cell 4 0 6 6,growx,aligny top");
 
-	public void propertyChange(PropertyChangeEvent evt) {
-		switch (evt.getPropertyName()) {
-		case Event.LOGIN:
-			crtl = new ChallengeController(account.getUsername());
-			frame.getContentPane().add(currGamePanel,
-					"cell 4 0 6 6,growx,aligny top");
-
-			frame.getContentPane().add(chatPanel,
-					"cell 0 0 4 6,alignx left,aligny top");
-			frame.repaint();
-
-			break;
-		case Event.LOGOUT:
-			frame.getContentPane().remove(currGamePanel);
-			frame.getContentPane().remove(chatPanel);
-			frame.repaint();
-			break;
-
-		}
+		frame.add(chatPanel,
+				"cell 0 0 4 6,alignx left,aligny top");
+		frame.revalidate();
+		frame.repaint();
+	}
+	
+	public void closePanels(){
+		frame.remove(currGamePanel);
+		frame.remove(chatPanel);
+		frame.repaint();
 	}
 
 	public void setTurnLabel() {

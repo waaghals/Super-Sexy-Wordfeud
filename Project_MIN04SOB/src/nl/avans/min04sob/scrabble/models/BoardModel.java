@@ -11,7 +11,6 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class BoardModel extends CoreTableModel {
 	Tile[][] tileData;
-	Tile[][] playerTile;
 	Point coordinates;
 	HashMap<Point, String> tilesHM = new HashMap<Point, String>();
 
@@ -32,28 +31,13 @@ public class BoardModel extends CoreTableModel {
 		}
 
 		// System.out.println(tl.isEmpty());
-		playerTile = new Tile[][] { { new Tile("A", 1), new Tile("B", 2),
-				new Tile("C", 2), new Tile("D", 2), new Tile("E", 2),
-				new Tile("F", 2), new Tile("G", 2) } };
+	
 
 		
 	}
+	
 
-	public String[][] getPlayerDataValues() {
-		String[][] playerDataValues = new String[1][playerTile[0].length];
-		for (int y = 0; playerTile[0].length > y; y++) {
-			playerDataValues[0][y] = playerTile[0][y].getLetter();
-		}
-		return playerDataValues;
-	}
 
-	public void setPlayetTile(int x, Tile newtile) {
-		playerTile[0][x] = newtile;
-	}
-
-	public Tile getPlayerTile(int x, int y) {
-		return playerTile[y][x];
-	}
 
 	public int getMultiplier(Point coord) {
 		if (tilesHM.containsKey(coord)) {

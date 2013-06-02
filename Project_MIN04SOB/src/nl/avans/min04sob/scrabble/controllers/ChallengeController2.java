@@ -2,33 +2,38 @@ package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.models.ChallengeModel2;
+import nl.avans.min04sob.scrabble.models.AccountModel;
+import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.views.ChallengeView2;
 
 
 public class ChallengeController2 extends CoreController {
 
 	private ChallengeView2 challengeView2;
-	private ChallengeModel2 challengeModel2;
+	private ChallengeModel challengeModel;
 	private JFrame frame;
+	private AccountModel account;
 	
-	public ChallengeController2() {
+	public ChallengeController2(AccountModel user) {
+		account = user;
 		initialize();
 		addListeners();
-		
+		//add array
 		frame.setAlwaysOnTop(true);
 		frame.add(challengeView2);
 		
 		addView(challengeView2);
-		addModel(challengeModel2);
+		addModel(challengeModel);
 		
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+		challengeView2.showChallenge();
 	}
 	
 	
@@ -36,7 +41,7 @@ public class ChallengeController2 extends CoreController {
 	public void initialize() {
 		frame = new JFrame();
 		challengeView2 = new ChallengeView2();
-		challengeModel2 = new ChallengeModel2();
+		challengeModel = new ChallengeModel(account);
 	}
 
 	@Override
@@ -45,12 +50,14 @@ public class ChallengeController2 extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				acceptChallenge();
+				frame.dispose();
 			}
 		});
 		challengeView2.addActionListenerDecline(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				declineChallenge();
+				frame.dispose();
 			}
 		});
 		challengeView2.addActionListenerBack(new ActionListener() {
@@ -62,13 +69,32 @@ public class ChallengeController2 extends CoreController {
 		
 	}
 	
+	public void receiveChallenges(){
+		int index=0;
+		while(index<challengeModel.challengeArray().size())
+		{
+			challengeView2.receiveChallenge(challengeModel.challengeArray().get(index));
+			index++;
+		} 
+		challengeView2.showChallenge();
+	}
+	
 	private void acceptChallenge() {
-		//TODO doesnt have a good model yet
-		//challengeModel.something();
+		try {
+			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void declineChallenge() {
-		//TODO RT acceptchallenge()
+		try {
+			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),false);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void goBack() {

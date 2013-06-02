@@ -15,7 +15,6 @@ public class TileTable extends JTable {
 		int rowIndex = rowAtPoint(p);
 		
 		Tile tile = (Tile) getModel().getValueAt(rowIndex, colIndex);
-		
 		if (tile != null) {
 			return "Waarde: " + tile.getValue();
 		}

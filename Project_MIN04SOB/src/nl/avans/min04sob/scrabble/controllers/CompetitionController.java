@@ -3,11 +3,9 @@ package nl.avans.min04sob.scrabble.controllers;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -15,29 +13,26 @@ import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
 import nl.avans.min04sob.scrabble.views.CompetitionView;
-import nl.avans.min04sob.scrabble.views.JoinCompetitionView;
 
 public class CompetitionController extends CoreController {
 
 	private CompetitionModel competitionModel;
 	private CompetitionView competitionView;
-	private JoinCompetitionView joinCompetitionView;
 	private CoreWindow window;
 	private AccountModel accountModel;
 	private ChallengeModel challengeModel;
+	private int index; //competitie id meegeven
 
 	public CompetitionController(AccountModel user)
 	{
 
 		accountModel = user;
-		//cm = new CompetitionModel(800);
+		competitionModel = new CompetitionModel();
 		competitionView = new CompetitionView();
-		joinCompetitionView = new JoinCompetitionView();
-		challengeModel = new ChallengeModel();
+		challengeModel = new ChallengeModel(accountModel);
 		
 		addView(competitionView);
 		addModel(competitionModel);
-		addView(joinCompetitionView);
 		
 	}
 
@@ -65,7 +60,7 @@ public class CompetitionController extends CoreController {
 				window.dispose();
 			}	
 		});
-		
+		//uitdagen
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -76,9 +71,12 @@ public class CompetitionController extends CoreController {
 			}
 		});
 		
-		competitionView.addCompetitionListListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				String desc;
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
+				}
 			}
 		});
 		
@@ -101,25 +99,27 @@ public class CompetitionController extends CoreController {
 				window.dispose();
 			}	
 		});
-		
+		//joinCompetition
 		competitionView.addActionButtonListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if(competitionView.getSelectedCompetition() != null){
-					String desc = competitionView.getSelectedCompetition();
-					System.out.println("-"+ desc +"-");
-					competitionModel.join(competitionModel.getCompetitionID(desc), accountModel.toString());					
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
+					//competitionView.removeIndex(competitionView.getIndex());
 				}
 				else{
 					System.out.println("selecteer een competitie");
 				}
 			}
 			
-		});
+		}); 
 		
-		competitionView.addCompetitionListListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println(e.getSource());
-				System.out.println(e.toString());
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
+				}
 			}
 		});
 		
@@ -144,15 +144,12 @@ public class CompetitionController extends CoreController {
 			}	
 		});
 		
-		competitionView.addCompetitionListListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if(e.getValueIsAdjusting()){
-					getParticipants(competitionModel.getCompetitionID(competitionView.getSelectedCompetition()));
+		competitionView.addCompetitionListListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+				if(e.getClickCount()==1){
+					int id = competitionView.getSelectedCompetition().getCompId();
+					getParticipants(id);
 				}
-				
-				
 			}
 		});
 		
@@ -161,7 +158,7 @@ public class CompetitionController extends CoreController {
 		getAllCompetitions();
 		
 	}
-	
+	//wordt niet gebruikt
 	public void openDeleteCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
@@ -181,7 +178,7 @@ public class CompetitionController extends CoreController {
 		
 		getAllCompetitions();	
 	}
-	
+	//wordt niet gebruikt
 	public void openDeleteFromCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
@@ -210,11 +207,15 @@ public class CompetitionController extends CoreController {
 	}
 	
 	public void getAvailable(String username){
-		competitionView.fillAvailableCompetitions(accountModel.getAvailableCompetitions(username));
+		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
 	}
 	
 	public void getAllCompetitions(){
-		competitionView.fillAllCompetitions(accountModel.getAllCompetitions());
+		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
+	}
+	
+	public int getCompID(){ //competition ID meegeven
+		return index;
 	}
 
 }

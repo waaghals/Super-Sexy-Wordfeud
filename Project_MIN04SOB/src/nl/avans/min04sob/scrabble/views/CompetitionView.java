@@ -1,6 +1,8 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 
 import net.miginfocom.swing.MigLayout;
@@ -20,9 +22,9 @@ public class CompetitionView extends CorePanel{
 	private JLabel competitionsLabel;
 	private JLabel playersInCompetitonLabel;
 	private JScrollPane scrollPane;
-	private JList<String> competitionsList;
+	private JList<CompetitionModel> competitionsList;
 	private JScrollPane scrollPane_1;
-	private JList<String> playerList;
+	private JList<AccountModel> playerList;
 	private JButton backButton;
 	private JButton actionButton;
 	
@@ -39,14 +41,14 @@ public class CompetitionView extends CorePanel{
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 		
-		competitionsList = new JList<String>();
+		competitionsList = new JList<CompetitionModel>();
 		competitionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(competitionsList);
 		
 		scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 1 1,grow");
 		
-		playerList = new JList<String>();
+		playerList = new JList<AccountModel>();
 		playerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(playerList);
 		
@@ -54,7 +56,8 @@ public class CompetitionView extends CorePanel{
 		add(backButton, "cell 0 2,alignx left");
 		
 		actionButton = new JButton();
-		actionButton.setEnabled(false);
+		actionButton.setEnabled(true); //test
+
 		add(actionButton, "cell 1 2,alignx right");
 	}
 
@@ -72,8 +75,8 @@ public class CompetitionView extends CorePanel{
 		revalidate();
 	}
 	
-	public void addCompetitionListListener(ListSelectionListener listener){
-		competitionsList.addListSelectionListener(listener);
+	public void addCompetitionListListener(MouseAdapter listener){
+		competitionsList.addMouseListener(listener);
 	}
 	
 	public void addBackListener(ActionListener listener){
@@ -84,16 +87,16 @@ public class CompetitionView extends CorePanel{
 		actionButton.addActionListener(listener);
 	}
 
-	public void fillCompetitions(String[] comp_desc) {
-		competitionsList.setListData(comp_desc);
+	public void fillCompetitions(CompetitionModel[] comp) {
+		competitionsList.setListData(comp);
 	}
 
-	public void fillPlayerList(String[] usersFromCompetition) {
+	public void fillPlayerList(AccountModel[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
 		actionButton.setEnabled(true);
 	}
 	
-	public void fillAvailableCompetitions(String[] availableCompetitions) {
+	/* public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
 		competitionsList.setListData(availableCompetitions);
 		actionButton.setEnabled(true);
 	}
@@ -101,14 +104,27 @@ public class CompetitionView extends CorePanel{
 	public void fillAllCompetitions(String[] allCompetitions) {
 		competitionsList.setListData(allCompetitions);
 	}
+	*/ 
 	
-	public String getSelectedCompetition(){
-		String s = competitionsList.getSelectedValue();
-		return s;
+	public CompetitionModel getSelectedCompetition(){
+		return competitionsList.getSelectedValue();
 	}
 	
-	public String getSelectedPlayer(){
-		String s = playerList.getSelectedValue();
-		return s;
+	public AccountModel getSelectedPlayer(){
+		return playerList.getSelectedValue();
 	}
+	
+	public JList<CompetitionModel> getList(){
+		return competitionsList;
+	}
+	
+	public void removeIndex(int index){
+		competitionsList.remove(index);
+	}
+	
+	public int getIndex(){
+		return competitionsList.getSelectedIndex();
+	}
+	
+	
 }

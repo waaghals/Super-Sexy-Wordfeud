@@ -57,11 +57,14 @@ public class GameModel extends CoreModel {
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`id`) FROM `beurt` WHERE `spel_id` = ? GROUP BY `spel_id` ORDER BY `id`";
 	private final String whosTurnAtTurn = "SELECT account_naam FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
+
 	private final String scoreQuery = "SELECT ID , score FROM beurt WHERE score IS NOT NULL AND score != 0 AND Account_naam = ?";
-	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
+	//private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID ";
 	
 	private final String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
 	
+
+	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Letter_Spel_ID = ?";
 	private final boolean observer;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
@@ -74,6 +77,7 @@ public class GameModel extends CoreModel {
 
 			ResultSet dbResult = new Query(getGameQuery).set(gameId).select();
 			int numRows = Query.getNumRows(dbResult);
+			
 			if (numRows == 1) {
 				dbResult.next();
 				this.gameId = gameId;
@@ -91,17 +95,17 @@ public class GameModel extends CoreModel {
 				letterSet = dbResult.getString(10);
 				if (!(observer)) {
 					if (challengerName.equals(currentUser.getUsername())) {
-						opponent = new AccountModel(challengeeName, false);
-						challenger = currentUser;
+						opponent = new AccountModel(challengeeName);
+						challenger = new AccountModel(challengerName);
 						iamchallenger = true;
 					} else {
-						opponent = new AccountModel(challengerName, false);
-						challenger = opponent;
+						opponent = new AccountModel(challengerName);
+						challenger = new AccountModel(challengeeName);
 						iamchallenger = false;
 					}
 				} else {
-					opponent = new AccountModel(challengeeName, true);
-					challenger = new AccountModel(challengerName, true);
+					opponent = new AccountModel(challengeeName);
+					challenger = new AccountModel(challengerName);
 					iamchallenger = false;
 
 				}
@@ -671,14 +675,15 @@ public class GameModel extends CoreModel {
 	public boolean whosturn() {
 		// dont use unless observing
 		// use yourturn instead
-		if (observer) {
-			ResultSet res;
+	
+		
 			try {
-				res = new Query(whosTurnAtTurn).set(getGameId())
+				System.out.println(getGameId()+ "  " +currentobserveturn );
+				ResultSet res = new Query(whosTurnAtTurn).set(getGameId())
 						.set(currentobserveturn).select();
-
+				
 				res.next();
-				String lastturnplayername = res.getString("account_naam");
+				String lastturnplayername = res.getString(1);
 
 				if (lastturnplayername.equals(challenger.getUsername())) {
 					return false;
@@ -690,8 +695,6 @@ public class GameModel extends CoreModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-		}
 		return (Boolean) null;
 
 	}
@@ -830,7 +833,7 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void Resign() {
+	public void resign() {
 		try {
 			new Query(resignQuery).set(STATE_RESIGNED).set(this.getGameId())
 					.exec();
@@ -859,6 +862,8 @@ public class GameModel extends CoreModel {
 					.set(currentUser.getUsername()).select();
 			String[] letters;
 			if (!(Query.getNumRows(res) == 0)) {
+				res.next();
+
 				letters = res.getString(2).split(",");
 				for (int x = 0; letters.length > x; x++) {
 					ResultSet tilewaarde = new Query(getTileValue)

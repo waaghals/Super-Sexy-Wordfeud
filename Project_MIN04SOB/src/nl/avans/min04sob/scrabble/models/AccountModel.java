@@ -15,22 +15,18 @@ public class AccountModel extends CoreModel {
 
 	private String username;
 	private boolean isLoggedIn;
-	private final String availableCompetitionQuery = "SELECT DISTINCT(`competitie_id`) FROM `deelnemer` WHERE `competitie_id` <> (SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?)";
+	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
 
 	public AccountModel() {
 		initialize();
 	}
 
-	public AccountModel(String username , boolean iamobservingthis) {
+	public AccountModel(String username) {
 		initialize();
-		if(!(iamobservingthis)){
-			if (checkUsernameAvailable(username)) {
-				this.username = username;
-			}
-		}else{
+		
 			this.username = username;
 		}
-	}
+	
 	
 	
 
@@ -129,30 +125,14 @@ public class AccountModel extends CoreModel {
 		return false;
 	}
 	
-	public String[] getAllCompetitions(){
-		String[] allComps = new String[0];
-		int x = 0;
-		try {
-			ResultSet dbResult = new Query("SELECT DISTINCT(`competitie_id`) FROM `deelnemer`").select();
-			allComps = new String[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < allComps.length){
-				allComps[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
-				x++;
-			}
-		} catch (SQLException sql) {
-			sql.printStackTrace();
-		}
-		return allComps;		
-	}
-	
-	public String[] getCompetitions(String username){
-		String[] comp_desc = new String[0];
+	public CompetitionModel[] getCompetitions(String username){
+		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
 			ResultSet dbResult = new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username).select();
-			comp_desc = new String[Query.getNumRows(dbResult)];
+			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -161,15 +141,15 @@ public class AccountModel extends CoreModel {
 		return comp_desc;
 	}
 	
-	public String[] getAvailableCompetitions(String username){
-		String[] comp_desc = new String[0];
+	public CompetitionModel[] getAvailableCompetitions(String username){
+		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
 			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft		
 			ResultSet dbResult = new Query(availableCompetitionQuery).set(username).select();
-			comp_desc = new String[Query.getNumRows(dbResult)];
+			comp_desc = new CompetitionModel[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < comp_desc.length){
-				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id")).getDesc();
+				comp_desc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException sql) {
@@ -197,7 +177,7 @@ public class AccountModel extends CoreModel {
 	}
 	public ArrayList<GameModel> getObserverAbleGames(){
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
-		String query = "SELECT `ID` FROM `spel` WHERE NOT `Toestand_type` = ?";
+		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
 		try {
 			ResultSet dbResult = new Query(query).set(GameModel.STATE_REQUEST).select();
 			while (dbResult.next()) {
