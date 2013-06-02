@@ -188,6 +188,13 @@ public class MainController extends CoreController {
 
 			}
 		});
+		
+		menu.createCompetitionItem(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new CompetitionController(account).openCreateCompetitionView();
+			}
+		});
 
 		addLoginListener();
 

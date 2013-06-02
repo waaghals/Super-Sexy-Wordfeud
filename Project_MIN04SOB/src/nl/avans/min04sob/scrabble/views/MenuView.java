@@ -205,6 +205,10 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void joinCompetitionItem(ActionListener listener) {
 		joinCompetitionItem.addActionListener(listener);
 	}
+	
+	public void createCompetitionItem(ActionListener listener) {
+		 createCompetitionItem.addActionListener(listener);
+	}
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
