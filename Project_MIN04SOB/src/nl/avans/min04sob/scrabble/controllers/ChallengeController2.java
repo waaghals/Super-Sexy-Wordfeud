@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -31,17 +32,11 @@ public class ChallengeController2 extends CoreController {
 		addModel(challengeModel);
 		
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
 	
 	
-	@Override
-	public void initialize() {
-		frame = new JFrame();
-		challengeView2 = new ChallengeView2();
-		challengeModel = new ChallengeModel(account);
-	}
 
 	@Override
 	public void addListeners() {
@@ -70,6 +65,7 @@ public class ChallengeController2 extends CoreController {
 		
 	}
 	
+
 	private void fillChallengeList() {
 		//TODO
 		challengeView2.fillChallengeList(challengeModel.challengeArray());
@@ -86,6 +82,7 @@ public class ChallengeController2 extends CoreController {
 		}
 	}
 	
+
 	private void declineChallenge() {
 		try {
 			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),false);
@@ -99,5 +96,13 @@ public class ChallengeController2 extends CoreController {
 		frame.dispose();
 		frame = null;
 	}
+	
+	@Override
+	public void initialize() {
+		frame = new JFrame();
+		challengeView2 = new ChallengeView2();
+		challengeModel = new ChallengeModel(account);
+	}
+	
 
 }

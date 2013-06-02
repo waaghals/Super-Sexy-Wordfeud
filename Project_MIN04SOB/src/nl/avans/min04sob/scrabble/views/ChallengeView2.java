@@ -1,25 +1,21 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JButton;
-import javax.swing.Box;
-import javax.swing.JComboBox;
+
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 
 public class ChallengeView2 extends CorePanel {
 
@@ -58,12 +54,12 @@ public class ChallengeView2 extends CorePanel {
 		acceptButton.addActionListener(listener);
 	}
 	
-	public void addActionListenerDecline(ActionListener listener) {
-		declineButton.addActionListener(listener);
-	}
-	
 	public void addActionListenerBack(ActionListener listener) {
 		backButton.addActionListener(listener);
+	}
+	
+	public void addActionListenerDecline(ActionListener listener) {
+		declineButton.addActionListener(listener);
 	}
 	
 	public void fillChallengeList(String[] challenges) {

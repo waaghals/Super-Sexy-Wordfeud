@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import javax.swing.JMenuItem;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
-import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -64,26 +62,55 @@ public class MainController extends CoreController {
 		frame.pack();
 	}
 
-	@Override
-	public void initialize() {
-		observer = false;
-		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
-		// changePassPanel = new ChangePassPanel();
-		menu = new MenuView();
+	private void addButtonListeners() {
+		currGamePanel.addResignActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resigncontroller = new ResignController(currentGame);
+			}
+		});
 
-		// competitioncontroller = new CompetitionController();
-		account = new AccountModel();
+		currGamePanel.addNextActionListener(new ActionListener() {
 
-		currGamePanel = new BoardPanel();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (currentGame.getCurrentobserveturn() < currentGame
+						.getNumberOfTotalTurns() + 1) {
+					currentGame.setCurrentobserveturn(currentGame
+							.getCurrentobserveturn() + 1);
 
-		boardModel = new BoardModel();
-		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
-		currGamePanel.setModel(boardModel);
+					currGamePanel.update();
 
-		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
-		chatPanel = new ChatPanel();
-		chatModel = null;
+					currentGame.updateboardfromdatabasetoturn(currentGame
+							.getCurrentobserveturn());
 
+					currentGame.getBoardModel().update();
+
+					updatelabels(currentGame.getCurrentobserveturn());
+				}
+			}
+		});
+		currGamePanel.addPreviousActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (currentGame.getCurrentobserveturn() > 0) {
+					currentGame.setCurrentobserveturn(currentGame
+							.getCurrentobserveturn() - 1);
+					currentGame.getBoardModel().setBoardToDefault();
+					currGamePanel.update();
+					for (int x = 0; currentGame.getCurrentobserveturn() > x
+							|| currentGame.getCurrentobserveturn() == x; x++) {
+						currentGame.updateboardfromdatabasetoturn(x);
+
+					}
+					updatelabels(currentGame.getCurrentobserveturn());
+
+				}
+			}
+
+		});
 	}
 
 	@Override
@@ -110,6 +137,7 @@ public class MainController extends CoreController {
 			}
 		});
 		menu.addChangePassItemActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//changePass();
 				AccountController accountController = new AccountController(account);
@@ -118,12 +146,14 @@ public class MainController extends CoreController {
 		});
 
 		menu.seeCompetitionsItem(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CompetitionController(account).openCompetitionScores();
 			}
 		});
 
 		menu.joinCompetitionItem(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openJoinCompetitionView();
@@ -134,18 +164,21 @@ public class MainController extends CoreController {
 		});
 
 		menu.viewWords(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AcceptDeclineController();
 			}
 		});
 		
 		menu.deleteFromCompetitionItem(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CompetitionController(account).openDeleteFromCompetitionView();
 			}
 		});
 
 		menu.deleteCompetitionItem(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openDeleteCompetitionView();
@@ -155,10 +188,18 @@ public class MainController extends CoreController {
 
 			}
 		});
+		
+		menu.createCompetitionItem(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new CompetitionController(account).openCreateCompetitionView();
+			}
+		});
 
 		addLoginListener();
 
 		menu.addLogoutItemActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				account.logout();
 				closePanels();
@@ -228,65 +269,43 @@ public class MainController extends CoreController {
 
 	}
 
-	private void addButtonListeners() {
-		currGamePanel.addResignActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				resigncontroller = new ResignController(currentGame);
-			}
-		});
-
-		currGamePanel.addNextActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentGame.getCurrentobserveturn() < currentGame
-						.getNumberOfTotalTurns() + 1) {
-					currentGame.setCurrentobserveturn(currentGame
-							.getCurrentobserveturn() + 1);
-
-					currGamePanel.update();
-
-					currentGame.updateboardfromdatabasetoturn(currentGame
-							.getCurrentobserveturn());
-
-					currentGame.getBoardModel().update();
-
-					updatelabels(currentGame.getCurrentobserveturn());
-				}
-			}
-		});
-		currGamePanel.addPreviousActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if (currentGame.getCurrentobserveturn() > 0) {
-					currentGame.setCurrentobserveturn(currentGame
-							.getCurrentobserveturn() - 1);
-					currentGame.getBoardModel().setBoardToDefault();
-					currGamePanel.update();
-					for (int x = 0; currentGame.getCurrentobserveturn() > x
-							|| currentGame.getCurrentobserveturn() == x; x++) {
-						currentGame.updateboardfromdatabasetoturn(x);
-
-					}
-					updatelabels(currentGame.getCurrentobserveturn());
-
-				}
-			}
-
-		});
-	}
-
 	private void addLoginListener() {
 		menu.addLoginItemActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				accountcontroller = new AccountController(account);
 				accountcontroller.addView(menu);
 				accountcontroller.addView(chatPanel);
 			}
 		});
+	}
+
+	public void closePanels(){
+		frame.remove(currGamePanel);
+		frame.remove(chatPanel);
+		frame.repaint();
+	}
+
+	@Override
+	public void initialize() {
+		observer = false;
+		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
+		// changePassPanel = new ChangePassPanel();
+		menu = new MenuView();
+
+		// competitioncontroller = new CompetitionController();
+		account = new AccountModel();
+
+		currGamePanel = new BoardPanel();
+
+		boardModel = new BoardModel();
+		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
+		currGamePanel.setModel(boardModel);
+
+		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
+		chatPanel = new ChatPanel();
+		chatModel = null;
+
 	}
 
 	protected void openGame(GameModel selectedGame) {
@@ -307,9 +326,9 @@ public class MainController extends CoreController {
 		currGamePanel.setPlayerTiles(stash.getPlayerTiles(account, selectedGame));
 		
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-		while(letters.length < 7){
+		//while(letters.length < 7){
 			
-		}
+		//}
 		currGamePanel.setPlayerTiles(letters);
 
 		games = account.getObserverAbleGames();
@@ -347,8 +366,43 @@ public class MainController extends CoreController {
 		chatModel.update();
 	}
 
+	public void openPanels(){
+		frame.add(currGamePanel,
+				"cell 4 0 6 6,growx,aligny top");
+
+		frame.add(chatPanel,
+				"cell 0 0 4 6,alignx left,aligny top");
+		frame.revalidate();
+		frame.repaint();
+	}
+
+	public void sendChat() {
+		String message = chatPanel.getChatFieldSendText();
+
+		if (!message.equals("") && !message.equals(" ")) {
+
+			chatModel.send(message);
+			chatModel.update();
+
+			// Empty the chat message box
+			chatPanel.setChatFieldSendText("");
+		}
+	}
+	
 	private void setCurrentGame(GameModel selectedGame) {
 		currentGame = selectedGame;
+	}
+	
+	public void setTurnLabel() {
+		if (currentGame.isObserver()) {
+			if (currentGame.whosturn()) {
+				currGamePanel.setLabelPlayerTurn(" van "
+						+ currentGame.getChallenger().getUsername());
+			} else {
+				currGamePanel.setLabelPlayerTurn(" van "
+						+ currentGame.getOpponent().getUsername());
+			}
+		}
 	}
 
 	private void updatelabels(int toTurn) {
@@ -366,47 +420,6 @@ public class MainController extends CoreController {
 
 		}
 		setTurnLabel();
-	}
-
-	public void sendChat() {
-		String message = chatPanel.getChatFieldSendText();
-
-		if (!message.equals("") && !message.equals(" ")) {
-
-			chatModel.send(message);
-			chatModel.update();
-
-			// Empty the chat message box
-			chatPanel.setChatFieldSendText("");
-		}
-	}
-	
-	public void openPanels(){
-		frame.add(currGamePanel,
-				"cell 4 0 6 6,growx,aligny top");
-
-		frame.add(chatPanel,
-				"cell 0 0 4 6,alignx left,aligny top");
-		frame.revalidate();
-		frame.repaint();
-	}
-	
-	public void closePanels(){
-		frame.remove(currGamePanel);
-		frame.remove(chatPanel);
-		frame.repaint();
-	}
-
-	public void setTurnLabel() {
-		if (currentGame.isObserver()) {
-			if (currentGame.whosturn()) {
-				currGamePanel.setLabelPlayerTurn(" van "
-						+ currentGame.getChallenger().getUsername());
-			} else {
-				currGamePanel.setLabelPlayerTurn(" van "
-						+ currentGame.getOpponent().getUsername());
-			}
-		}
 	}
 }
 

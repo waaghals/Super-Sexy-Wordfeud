@@ -1,11 +1,13 @@
 package nl.avans.min04sob.scrabble.models;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Queries;
 import nl.avans.min04sob.scrabble.core.Query;
 
@@ -19,7 +21,8 @@ public class StashModel extends CoreModel {
 		String[] letters = null;
 		String q = "SELECT `karakter` FROM `pot`";
 		try {
-			ResultSet res = new Query(q).select();
+			Future<ResultSet> worker = Db.run(new Query(q));
+			ResultSet res = worker.get();
 			int numRows  = Query.getNumRows(res);
 			
 			letters = new String[numRows];
@@ -40,8 +43,9 @@ public class StashModel extends CoreModel {
 		int gameId = game.getGameId();
 		int numRows;
 		try {
-			ResultSet res = new Query(Queries.CURRENT_TILES).set(user.getUsername())
-					.set(gameId).select();
+			Future<ResultSet> worker = Db.run(new Query(Queries.CURRENT_TILES).set(user.getUsername())
+					.set(gameId));
+			ResultSet res = worker.get();
 			numRows = Query.getNumRows(res);
 
 			Tile[] tiles = new Tile[numRows];
@@ -54,7 +58,7 @@ public class StashModel extends CoreModel {
 			}
 
 			return tiles;
-		} catch (SQLException sql) {
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return null;
@@ -64,7 +68,8 @@ public class StashModel extends CoreModel {
 		String letter = null;
 		String q = "SELECT `karakter` FROM `pot`";
 		try {
-			ResultSet res = new Query(q).select();
+			Future<ResultSet> worker = Db.run(new Query(q));
+			ResultSet res = worker.get();
 			int numRows  = Query.getNumRows(res);
 			
 			String[] letters = new String[numRows];

@@ -1,7 +1,5 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Calendar;
@@ -60,33 +58,28 @@ public class DateRangePanel extends CorePanel {
 		add(endYear);
 	}
 
-	/**
-	 * This method builds the list of years for the start date and end date of
-	 * the semester
-	 * 
-	 * @param yearsList
-	 *            The combo box containing the years
-	 */
-	private void buildYearsList(JComboBox<Integer> yearsList) {
-
-		int currentYear = startDate.get(Calendar.YEAR);
-
-		for (int yearCount = currentYear; yearCount <= currentYear + 5; yearCount++)
-			yearsList.addItem(yearCount);
+	public void addEndDayListener(ActionListener listener) {
+		endDay.addActionListener(listener);
 	}
 
-	/**
-	 * This method builds the list of months for the start date and end date of
-	 * the semester
-	 * 
-	 * @param monthsList
-	 *            The combo box containing the months
-	 */
-	private void buildMonthsList(JComboBox<Integer> monthsList) {
+	public void addEndMonthListener(ActionListener listener) {
+		endMonth.addActionListener(listener);
+	}
 
-		monthsList.removeAllItems();
-		for (int monthCount = 0; monthCount < 12; monthCount++)
-			monthsList.addItem(monthCount);
+	public void addEndYearListener(ActionListener listener) {
+		endYear.addActionListener(listener);
+	}
+
+	public void addStartDayListener(ActionListener listener) {
+		startDay.addActionListener(listener);
+	}
+
+	public void addStartMonthListener(ActionListener listener) {
+		startMonth.addActionListener(listener);
+	}
+
+	public void addStartYearListener(ActionListener listener) {
+		startYear.addActionListener(listener);
 	}
 
 	/**
@@ -112,37 +105,33 @@ public class DateRangePanel extends CorePanel {
 			daysList.addItem(dayCount);
 	}
 
-	public void addStartYearListener(ActionListener listener) {
-		startYear.addActionListener(listener);
+	/**
+	 * This method builds the list of months for the start date and end date of
+	 * the semester
+	 * 
+	 * @param monthsList
+	 *            The combo box containing the months
+	 */
+	private void buildMonthsList(JComboBox<Integer> monthsList) {
+
+		monthsList.removeAllItems();
+		for (int monthCount = 0; monthCount < 12; monthCount++)
+			monthsList.addItem(monthCount);
 	}
 
-	public void addStartMonthListener(ActionListener listener) {
-		startMonth.addActionListener(listener);
-	}
+	/**
+	 * This method builds the list of years for the start date and end date of
+	 * the semester
+	 * 
+	 * @param yearsList
+	 *            The combo box containing the years
+	 */
+	private void buildYearsList(JComboBox<Integer> yearsList) {
 
-	public void addStartDayListener(ActionListener listener) {
-		startDay.addActionListener(listener);
-	}
+		int currentYear = startDate.get(Calendar.YEAR);
 
-	public void addEndYearListener(ActionListener listener) {
-		endYear.addActionListener(listener);
-	}
-
-	public void addEndMonthListener(ActionListener listener) {
-		endMonth.addActionListener(listener);
-	}
-
-	public void addEndDayListener(ActionListener listener) {
-		endDay.addActionListener(listener);
-	}
-
-	public Calendar getStartDate() {
-		int year = (int) startYear.getSelectedItem();
-		int month = (int) startMonth.getSelectedItem();
-		int day = (int) startDay.getSelectedItem();
-		startDate.set(year, month, day);
-
-		return startDate;
+		for (int yearCount = currentYear; yearCount <= currentYear + 5; yearCount++)
+			yearsList.addItem(yearCount);
 	}
 
 	public Calendar getEndDate() {
@@ -152,6 +141,15 @@ public class DateRangePanel extends CorePanel {
 		endDate.set(year, month, day);
 
 		return endDate;
+	}
+
+	public Calendar getStartDate() {
+		int year = (int) startYear.getSelectedItem();
+		int month = (int) startMonth.getSelectedItem();
+		int day = (int) startDay.getSelectedItem();
+		startDate.set(year, month, day);
+
+		return startDate;
 	}
 
 	@Override

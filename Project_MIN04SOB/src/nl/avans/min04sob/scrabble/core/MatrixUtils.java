@@ -9,6 +9,84 @@ import org.apache.commons.lang3.ArrayUtils;
 public class MatrixUtils {
 
 	/**
+	 * Remove all surrounding null values form a matrix
+	 * 
+	 * @param matrix
+	 * @return Object[][] the resulting cropped matrix
+	 */
+	public static Object[][] crop(Object[][] matrix) {
+		ArrayList<Object> nominees = new ArrayList<Object>();
+
+		// Remove empty rows
+		for (int row = 0; row < matrix.length; row++) {
+			if (isEmpty(matrix[row])) {
+				nominees.add(matrix[row]);
+
+			}
+		}
+
+		// Remove the nominees
+		for (Object row : nominees) {
+			matrix = ArrayUtils.removeElement(matrix, row);
+		}
+		return matrix;
+	}
+
+	/**
+	 * Returns an array of Points where letter is not null
+	 * 
+	 * @param matrix 
+	 * @return Point[] a list of not null coordinates in the matrix
+	 */
+	public static Point[] getCoordinates(Object[][] matrix) {
+		matrix = crop(matrix);
+		ArrayList<Point> coords = new ArrayList<Point>();
+		for (int col = 0; col < matrix[0].length; col++) {
+			for (int row = 0; row < matrix.length; row++) {
+				if(matrix[row][col] != null){
+					coords.add(new Point(row, col));
+				}
+			}
+		}
+		return (Point[]) coords.toArray();
+	}
+
+	/**
+	 * Check if the matrix had all the elements XORed elements in a straight
+	 * line
+	 * 
+	 * @param matrix
+	 *            The XORed object matrix
+	 * @return is numRow or numCols equals 1
+	 */
+	public static Dimension getDimension(Object[][] matrix) {
+		int width = matrix.length;
+		int hight = matrix[0].length;
+
+		return new Dimension(width, hight);
+	}
+
+	public static boolean isAligned(Dimension size){
+		return size.getHeight() == 1 || size.getWidth() == 1;
+	}
+
+	/**
+	 * Check if all items in an array are null
+	 * 
+	 * @param arr
+	 * @return boolean if array only has null values
+	 */
+	public static boolean isEmpty(Object[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] != null) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	/**
 	 * Performs a XOR on both the matrices, <- is that a word?
 	 * 
 	 * @param oldMatrix
@@ -50,83 +128,5 @@ public class MatrixUtils {
 		}
 
 		return xorMatrix;
-	}
-
-	/**
-	 * Remove all surrounding null values form a matrix
-	 * 
-	 * @param matrix
-	 * @return Object[][] the resulting cropped matrix
-	 */
-	public static Object[][] crop(Object[][] matrix) {
-		ArrayList<Object> nominees = new ArrayList<Object>();
-
-		// Remove empty rows
-		for (int row = 0; row < matrix.length; row++) {
-			if (isEmpty(matrix[row])) {
-				nominees.add(matrix[row]);
-
-			}
-		}
-
-		// Remove the nominees
-		for (Object row : nominees) {
-			matrix = ArrayUtils.removeElement(matrix, row);
-		}
-		return matrix;
-	}
-
-	/**
-	 * Check if all items in an array are null
-	 * 
-	 * @param arr
-	 * @return boolean if array only has null values
-	 */
-	public static boolean isEmpty(Object[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] != null) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Check if the matrix had all the elements XORed elements in a straight
-	 * line
-	 * 
-	 * @param matrix
-	 *            The XORed object matrix
-	 * @return is numRow or numCols equals 1
-	 */
-	public static Dimension getDimension(Object[][] matrix) {
-		int width = matrix.length;
-		int hight = matrix[0].length;
-
-		return new Dimension(width, hight);
-	}
-
-	/**
-	 * Returns an array of Points where letter is not null
-	 * 
-	 * @param matrix 
-	 * @return Point[] a list of not null coordinates in the matrix
-	 */
-	public static Point[] getCoordinates(Object[][] matrix) {
-		matrix = crop(matrix);
-		ArrayList<Point> coords = new ArrayList<Point>();
-		for (int col = 0; col < matrix[0].length; col++) {
-			for (int row = 0; row < matrix.length; row++) {
-				if(matrix[row][col] != null){
-					coords.add(new Point(row, col));
-				}
-			}
-		}
-		return (Point[]) coords.toArray();
-	}
-	
-	
-	public static boolean isAligned(Dimension size){
-		return size.getHeight() == 1 || size.getWidth() == 1;
 	}
 }

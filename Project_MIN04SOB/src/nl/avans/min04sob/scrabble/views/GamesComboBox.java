@@ -4,12 +4,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-
-import javax.swing.event.ChangeListener;
-
+import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
@@ -17,8 +14,6 @@ import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.models.Role;
-
-import javax.swing.JLabel;
 
 public class GamesComboBox extends CorePanel {
 
@@ -28,6 +23,42 @@ public class GamesComboBox extends CorePanel {
 	public GamesComboBox(){
 		initialize();
 }
+
+	public void addGame(GameModel game) {
+		if (game == null) {
+			return;
+		}
+		gameList.addItem(game);
+	}
+
+	public void addGameListListener(ActionListener listenener) {
+		gameList.addActionListener(listenener);
+	}
+
+	public void addGames(ArrayList<GameModel> arrayList) {
+		if (arrayList == null) {
+			return;
+		}
+		gameList.removeAll();
+		for (GameModel game : arrayList) {
+			gameList.addItem(game);
+		}
+	}
+
+	public void addObserverCheckBoxListener(ActionListener listenener) {
+
+		observer.addActionListener(listenener);
+
+	}
+
+	public boolean checkBoxIsSelected() {
+		return observer.isSelected();
+		
+	}
+
+	public GameModel getSelectedGame() {
+		return (GameModel) gameList.getSelectedItem();
+	}
 
 	public void initialize() {
 
@@ -42,33 +73,6 @@ public class GamesComboBox extends CorePanel {
 		gameList.setEnabled(false);
 		observer = new JCheckBox();
 		add(observer,"cell 2 1,grow");
-	}
-
-	public void addGameListListener(ActionListener listenener) {
-		gameList.addActionListener(listenener);
-	}
-
-	public void addObserverCheckBoxListener(ActionListener listenener) {
-
-		observer.addActionListener(listenener);
-
-	}
-
-	public void addGame(GameModel game) {
-		if (game == null) {
-			return;
-		}
-		gameList.addItem(game);
-	}
-
-	public void addGames(ArrayList<GameModel> arrayList) {
-		if (arrayList == null) {
-			return;
-		}
-		gameList.removeAll();
-		for (GameModel game : arrayList) {
-			gameList.addItem(game);
-		}
 	}
 
 	@Override
@@ -107,14 +111,5 @@ public class GamesComboBox extends CorePanel {
 			break;
 		}
 
-	}
-
-	public boolean checkBoxIsSelected() {
-		return observer.isSelected();
-		
-	}
-
-	public GameModel getSelectedGame() {
-		return (GameModel) gameList.getSelectedItem();
 	}
 }

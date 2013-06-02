@@ -4,9 +4,13 @@ import java.awt.Point;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.Column;
 import nl.avans.min04sob.scrabble.core.CoreTableModel;
+import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class BoardModel extends CoreTableModel {
@@ -29,15 +33,27 @@ public class BoardModel extends CoreTableModel {
 			// setValueAt(new Tile(tilesHM.get(point), 1), point.x, point.y);
 			// //TODO set tile value
 		}
-
-		// System.out.println(tl.isEmpty());
-	
-
 		
+	/*	setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 0);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 1);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 2);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 3);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 4);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 5);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 6);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 7);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 8);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  1, 7);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  1, 7);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  2, 7);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  3, 7);
+		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 7);
+		
+		setValueAt(new Tile("Q", 10, Tile.MUTATABLE),  5, 6);
+		setValueAt(new Tile("Q", 10, Tile.NOT_MUTATABLE),  7, 7);
+		setValueAt(new Tile("Q", 10, Tile.NOT_MUTATABLE),  7, 8);*/
+		// System.out.println(tl.isEmpty());		
 	}
-	
-
-
 
 	public int getMultiplier(Point coord) {
 		if (tilesHM.containsKey(coord)) {
@@ -55,67 +71,6 @@ public class BoardModel extends CoreTableModel {
 			}
 		}
 		return EMPTY; // gewoon vakje
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// Tile tile = (Tile) getValueAt(rowIndex, columnIndex);
-		// if(tile == null){
-		return false;
-		// }
-		// return tile.isMutatable();
-	}
-
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(rowIndex < 15 && columnIndex <15){
-		return data[rowIndex][columnIndex];
-		}
-		return null;
-	}
-	public void setBoardToDefault(){
-		int boardX = 0;
-		int boardY = 0;
-		String query = "SELECT * FROM  `tegel` WHERE  `Bord_naam` =  'Standard'";
-		try {
-			ResultSet dbResult = new Query(query).select();
-
-			while (dbResult.next()) {
-				int x = dbResult.getInt("X") - 1;
-				int y = dbResult.getInt("Y") - 1;
-				tilesHM.put(new Point(x, y),
-						dbResult.getString("TegelType_soort"));
-
-				if (x > boardX) {
-					boardX = x;
-				}
-
-				if (y > boardX) {
-					boardY = y;
-				}
-			}
-
-			// Create a array the size of the board
-			initDataArray(boardX + 1, boardY + 1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		for (int i = 0; i <= boardY; i++) {
-			String colName = (char) (i + 97) + "";
-			addColumn(new Column(colName, Tile.class, i));
-		}
-	}
-
-	@Override
-	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
-		data[rowIndex][columnIndex] = newValue;
 	}
 
 	public Point getStartPoint() {
@@ -145,5 +100,67 @@ public class BoardModel extends CoreTableModel {
 		}
 
 		return coord;
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if(rowIndex < 15 && columnIndex <15){
+		return data[rowIndex][columnIndex];
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		// Tile tile = (Tile) getValueAt(rowIndex, columnIndex);
+		// if(tile == null){
+		return false;
+		// }
+		// return tile.isMutatable();
+	}
+	public void setBoardToDefault(){
+		int boardX = 0;
+		int boardY = 0;
+		String query = "SELECT * FROM  `tegel` WHERE  `Bord_naam` =  'Standard'";
+		try {
+			Future<ResultSet> worker = Db.run(new Query(query));
+			ResultSet rs = worker.get();
+
+			while (rs.next()) {
+				int x = rs.getInt("X") - 1;
+				int y = rs.getInt("Y") - 1;
+				tilesHM.put(new Point(x, y),
+						rs.getString("TegelType_soort"));
+
+				if (x > boardX) {
+					boardX = x;
+				}
+
+				if (y > boardX) {
+					boardY = y;
+				}
+			}
+
+			// Create a array the size of the board
+			initDataArray(boardX + 1, boardY + 1);
+
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i <= boardY; i++) {
+			String colName = (char) (i + 97) + "";
+			addColumn(new Column(colName, Tile.class, i));
+		}
+	}
+
+	@Override
+	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
+		data[rowIndex][columnIndex] = newValue;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -10,7 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
@@ -21,12 +20,6 @@ public class BoardPanelt extends CorePanel {
 	 Tile tl = new Tile();
 	 Tile[] tilearray = new Tile[16];
 		
-
-	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public BoardPanelt() {
 		
@@ -121,6 +114,12 @@ public class BoardPanelt extends CorePanel {
 		JButton resign = new JButton();
 		resign.setText("Resign");
 		add(resign, "cell 8 3,alignx center,growy");
+
+	}
+
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 
 	}
 }

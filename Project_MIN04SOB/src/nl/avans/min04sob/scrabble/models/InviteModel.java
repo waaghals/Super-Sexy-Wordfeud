@@ -3,8 +3,11 @@ package nl.avans.min04sob.scrabble.models;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
+import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class InviteModel extends CoreModel {
@@ -25,18 +28,17 @@ public class InviteModel extends CoreModel {
 
 	public ArrayList<String> getCompetitions() {
 		try {
-			ResultSet rs = new Query(selectQueryCompetitie).set(
-					account.getUsername()).select();
+			Future<ResultSet> worker = Db.run(new Query(selectQueryCompetitie).set(
+					account.getUsername()));
+			ResultSet rs = worker.get();
 			while (rs.next()) {
 				// gameID = Integer.parseInt(rs.getString(1));
 				competitions.add(rs.getString(2));
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException |NullPointerException | InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NullPointerException n) {
-			n.printStackTrace();
 		}
 		return competitions;
 	}

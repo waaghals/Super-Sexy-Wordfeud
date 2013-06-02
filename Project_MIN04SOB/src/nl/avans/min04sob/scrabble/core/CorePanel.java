@@ -11,6 +11,7 @@ public abstract class CorePanel extends JPanel implements CoreView {
 		setLayout(new MigLayout());
 	}
 	
+	@Override
 	public String toString(){
 		return this.getClass().getName();
 	}

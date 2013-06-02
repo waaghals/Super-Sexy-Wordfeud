@@ -124,6 +124,7 @@ public class BoardPanel extends CorePanel {
 
 		play = new JButton();
 		play.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -207,16 +208,20 @@ public class BoardPanel extends CorePanel {
 
 	}
 
-	public void setPlayerTiles(Tile[] playerTiles) {
-		if (!(playerTiles.length == 0)) {
-			for (int y = 0; playerTiles.length > y + 1; y++) {
-				playerTilesField.setValueAt(playerTiles[y], 0, y);
-			}
-		}
+	public void setLabelPlayerTurn(String currTurnPlayerName){
+		this.turnLabel.setText(currTurnPlayerName);
 	}
 
-	public void setRenderer(TableCellRenderer renderer) {
-		playBoard.setDefaultRenderer(Tile.class, renderer);
+	public void setLabelScore(int currTurnScore){
+		this.playerScoreLabel.setText(Integer.toString(currTurnScore));
+	}
+
+	public void setLabelsNamesScores(String playerName, String playerScore,
+			String opponentName, String opponentscore) {
+		this.playerNameLabel.setText(playerName);
+		this.playerScoreLabel.setText(playerScore);
+		this.opponentNameLabel.setText(opponentName);
+		this.opponentScoreLabel.setText(opponentscore);
 	}
 
 	public void setModel(BoardModel bpm) {
@@ -231,23 +236,19 @@ public class BoardPanel extends CorePanel {
 		playerNameLabel.setText(name);
 	}
 
+	public void setPlayerTiles(Tile[] playerTiles) {
+		if (!(playerTiles.length == 0)) {
+			for (int y = 0; playerTiles.length > y + 1; y++) {
+				playerTilesField.setValueAt(playerTiles[y], 0, y);
+			}
+		}
+	}
+	public void setRenderer(TableCellRenderer renderer) {
+		playBoard.setDefaultRenderer(Tile.class, renderer);
+	}
 	public void update() {
 
 		this.repaint();
-	}
-
-	public void setLabelsNamesScores(String playerName, String playerScore,
-			String opponentName, String opponentscore) {
-		this.playerNameLabel.setText(playerName);
-		this.playerScoreLabel.setText(playerScore);
-		this.opponentNameLabel.setText(opponentName);
-		this.opponentScoreLabel.setText(opponentscore);
-	}
-	public void setLabelPlayerTurn(String currTurnPlayerName){
-		this.turnLabel.setText(currTurnPlayerName);
-	}
-	public void setLabelScore(int currTurnScore){
-		this.playerScoreLabel.setText(Integer.toString(currTurnScore));
 	}
 	
 	
