@@ -33,15 +33,16 @@ public class ChallengeView2 extends CorePanel {
 		scrollPane.setViewportView(challengeList);
 		
 		acceptButton = new JButton("Accepteer");
-		acceptButton .setEnabled(false);
+ 
 		add(acceptButton, "cell 1 1,alignx center");
 		
 		declineButton = new JButton("Weiger");
 		add(declineButton, "cell 1 2,alignx center");
-		declineButton.setEnabled(false);
+ 
 		
 		backButton = new JButton("Ga terug");
 		add(backButton, "cell 0 4");
+		 
 	}
 
 	public void addActionListenerAccept(ActionListener listener) {
@@ -57,7 +58,18 @@ public class ChallengeView2 extends CorePanel {
 	}
 	
 	public void fillChallengeList(String[] challenges) {
+		
 		challengeList.setListData(challenges);
+		if(challengeList.getModel().getSize() == 0)
+		{
+		acceptButton .setEnabled(true);
+		declineButton.setEnabled(true);
+		}
+		else
+		{
+			acceptButton .setEnabled(false);
+			declineButton.setEnabled(false);
+		}
 	}
 	
 	public String getSelectedChallenge() {

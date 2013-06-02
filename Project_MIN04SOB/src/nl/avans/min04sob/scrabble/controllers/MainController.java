@@ -45,7 +45,6 @@ public class MainController extends CoreController {
 
 		initialize();
 		addListeners();
-
 		addView(menu);
 		addView(chatPanel);
 		addView(frame);

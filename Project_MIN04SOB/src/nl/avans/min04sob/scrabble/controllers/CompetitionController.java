@@ -174,6 +174,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+				window=null;
 			}	
 		});
 		
@@ -205,6 +206,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+				window =null;
 			}	
 		});
 		
@@ -236,6 +238,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
+				window=null;
 			}	
 		});
 		//joinCompetition
