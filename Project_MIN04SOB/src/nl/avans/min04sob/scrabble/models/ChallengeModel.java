@@ -153,7 +153,8 @@ public class ChallengeModel extends CoreModel {
 			}	
 	}
 
-	public ArrayList<String> challengeArray() {
-		return challenge;
+	public String[] challengeArray() {
+			String[] tempChallengeArray = challenge.toArray(new String[challenge.size()]);
+		return tempChallengeArray;
 	}
 }

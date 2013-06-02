@@ -33,7 +33,6 @@ public class ChallengeController2 extends CoreController {
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
-		challengeView2.showChallenge();
 	}
 	
 	
@@ -51,6 +50,7 @@ public class ChallengeController2 extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				acceptChallenge();
 				frame.dispose();
+				frame = null;
 			}
 		});
 		challengeView2.addActionListenerDecline(new ActionListener() {
@@ -58,6 +58,7 @@ public class ChallengeController2 extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				declineChallenge();
 				frame.dispose();
+				frame = null;
 			}
 		});
 		challengeView2.addActionListenerBack(new ActionListener() {
@@ -69,15 +70,12 @@ public class ChallengeController2 extends CoreController {
 		
 	}
 	
-	public void receiveChallenges(){
-		int index=0;
-		while(index<challengeModel.challengeArray().size())
-		{
-			challengeView2.receiveChallenge(challengeModel.challengeArray().get(index));
-			index++;
-		} 
-		challengeView2.showChallenge();
+	private void fillChallengeList() {
+		//TODO
+		challengeView2.fillChallengeList(challengeModel.challengeArray());
 	}
+	
+	
 	
 	private void acceptChallenge() {
 		try {

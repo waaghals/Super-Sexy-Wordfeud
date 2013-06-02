@@ -27,18 +27,20 @@ public class ChallengeView2 extends CorePanel {
 	private JButton declineButton;
 	private JButton backButton;
 	private JLabel challengeLabel;
-	private JPanel challengeList;
+	private JList challengeList;
 	private JScrollPane scrollPane;
-	final ArrayList<JCheckBox> checkbox;
-	private String selectedChallenge="";
-	ButtonGroup buttongroup = new ButtonGroup();
 	
 	public ChallengeView2() {
 		 
-		setLayout(new MigLayout("", "[150px:150px:150px,grow][100px:100px:100px,grow]", "[14px][40px:40px:40px][40px:40px:40px,grow][grow][140px:40px:140px,grow]"));
-		checkbox = new ArrayList<JCheckBox>();
+		setLayout(new MigLayout("", "[150px:150px:150px,grow][100px:100px:100px,grow]", "[14px][40px:40px:40px,grow][40px:40px:40px,grow][90.00][grow]"));
 		challengeLabel = new JLabel("Uitdagingen");
 		add(challengeLabel, "cell 0 0 2 1,alignx left,aligny top");
+		
+		scrollPane = new JScrollPane();
+		add(scrollPane, "cell 0 1 1 3,grow");
+		
+		challengeList = new JList();
+		scrollPane.setViewportView(challengeList);
 		
 		acceptButton = new JButton("Accepteer");
 		acceptButton .setEnabled(false);
@@ -49,7 +51,7 @@ public class ChallengeView2 extends CorePanel {
 		declineButton.setEnabled(false);
 		
 		backButton = new JButton("Ga terug");
-		add(backButton, "cell 0 10");
+		add(backButton, "cell 0 4");
 	}
 
 	public void addActionListenerAccept(ActionListener listener) {
@@ -64,47 +66,25 @@ public class ChallengeView2 extends CorePanel {
 		backButton.addActionListener(listener);
 	}
 	
-	public void showChallenge(){
-		challengeList = new JPanel();		
-		challengeList.setLayout(new BoxLayout(challengeList,BoxLayout.PAGE_AXIS));
-		this.add(challengeList, "cell 0 1 2 1");
-		if(checkbox.size()==0)
-		{
-			challengeList.add(new JLabel("No challenges"));
-		}
-		else
-		{
-			declineButton.setEnabled(true);
-			acceptButton.setEnabled(true);
-			int index=0;
-			while(index<checkbox.size()){
-				add(checkbox.get(index), "cell 0 1 0 0,grow");
-				buttongroup.add(checkbox.get(index));
-				final int a = index;
-				checkbox.get(index).addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					setSelectedChallenge(checkbox.get(a).getText());
-				}
-			});
-				challengeList.add(checkbox.get(index));
-				index++;
-			}
-		} 
+	public void fillChallengeList(String[] challenges) {
+		challengeList.setListData(challenges);
 	}
 	
-	public void receiveChallenge(String challenge)
-	{
-		checkbox.add(new JCheckBox(challenge));
+	public String getSelectedChallenge() {
+		String s = (String) challengeList.getSelectedValue();
+		return s;
 	}
 	
-	public void setSelectedChallenge( String challenge)
-	{
-		selectedChallenge = challenge;
+	public JList<String> getList(){
+		return challengeList;
 	}
 	
-	public String getSelectedChallenge()
-	{
-		return selectedChallenge;
+	public void removeIndex(int index){
+		challengeList.remove(index);
+	}
+	
+	public int getIndex(){
+		return challengeList.getSelectedIndex();
 	}
 	
 	@Override
