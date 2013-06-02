@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -44,18 +44,21 @@ public class AccountController extends CoreController {
 		addModel(accountModel);
 
 		loginPanel.addActionListenerLogin(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				checkLogin();
 			}
 		});
 
 		loginPanel.addActionListenerRegister(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginToRegister();
 			}
 		});
 
 		loginPanel.addKeyListenerPassword(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					checkLogin();
@@ -64,6 +67,7 @@ public class AccountController extends CoreController {
 		});
 		
 		loginPanel.addKeyListenerUsername(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					loginPanel.getPasswordField().requestFocus();
@@ -72,6 +76,7 @@ public class AccountController extends CoreController {
 		});
 
 		registerPanel.addKeyListenerPassword2(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					tryToRegister();
@@ -80,6 +85,7 @@ public class AccountController extends CoreController {
 		});
 
 		registerPanel.addKeyListenerUsername(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					registerPanel.getPasswordField1().requestFocus();
@@ -88,6 +94,7 @@ public class AccountController extends CoreController {
 		});
 		
 		registerPanel.addKeyListenerPassword1(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					registerPanel.getPasswordField2().requestFocus();
@@ -97,24 +104,28 @@ public class AccountController extends CoreController {
 		
 		
 		registerPanel.addActionListenerCancel(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				registerToLogin();
 			}
 		});
 
 		registerPanel.addActionListenerRegister(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				tryToRegister();
 			}
 		});
 
 		changepassPanel.addCancelActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
 		
 		changepassPanel.addKeyListenerOldPass(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					changepassPanel.get1NewPass().requestFocus();
@@ -123,6 +134,7 @@ public class AccountController extends CoreController {
 		});
 		
 		changepassPanel.addKeyListenerNewPass1(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					changepassPanel.get2NewPass().requestFocus();
@@ -131,6 +143,7 @@ public class AccountController extends CoreController {
 		});
 		
 		changepassPanel.addKeyListenerNewPass2(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					changePass();
@@ -139,14 +152,48 @@ public class AccountController extends CoreController {
 		});
 
 		changepassPanel.addChangeActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				changePass();
 			}
 		});
 
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void addListeners() {
+		// TODO Automatisch gegenereerde methodestub
+
+	}
+
+	public void changePass() {
+		String oldpass = changepassPanel.getOldPass();
+		String newpass1 = changepassPanel.getNewPass1();
+		String newpass2 = changepassPanel.getNewPass2();
+
+		if (oldpass.equals(accountModel.getpass())) {
+			if (validateLength(newpass1.length()) == -1) {
+				changepassPanel.setNewPass1Good(false, "Te Kort");
+			} else if (validateLength(newpass1.length()) == 1) {
+				changepassPanel.setNewPass1Good(false, "Te Lang");
+			} else {
+				if (newpass2.equals(newpass1)) {
+					accountModel.changePass(changepassPanel.getNewPass1());
+					changepassPanel.setOldPassGood(true, "");
+					changepassPanel.setNewPass1Good(true, "");
+					changepassPanel.setNewPass2Good(true, "");
+					changepassPanel.passwordChange();
+					frame.dispose();
+				} else {
+					changepassPanel.setNewPass2Good(false, "Verkeerd");
+				}
+			}
+		} else {
+			changepassPanel.setOldPassGood(false, "Fout");
+		}
 	}
 
 	private void checkLogin() {
@@ -163,12 +210,47 @@ public class AccountController extends CoreController {
 
 	}
 
+	public ChangePassPanel getchangepasspanel() {
+		return changepassPanel;
+	}
+
+	@Override
+	public void initialize() {
+		// TODO Automatisch gegenereerde methodestub
+
+	}
+
+	public void loginToRegister() {
+		frame.remove(loginPanel);
+		frame.add(registerPanel);
+		registerPanel.clearFields();
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
+	}
+
+	private void registerToLogin() {
+		frame.remove(registerPanel);
+		loginPanel.clearFields();
+		frame.add(loginPanel);
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
+	}
+
+	public void setChangePassPanel() {
+		frame.remove(loginPanel);
+		frame.add(changepassPanel);
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
+	}
+
 	private void tryToRegister() {
 
-		// TODO een goede account rol toevoegen
 		if (validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
-					registerPanel.getPassword1(), registerPanel.getRole());
+					registerPanel.getPassword1(), registerPanel.getRoles());
 			registerToLogin();
 		}
 
@@ -183,26 +265,6 @@ public class AccountController extends CoreController {
 			
 			return 0;
 		}
-	}
-
-	private boolean validateUsername() {
-		if (validateLength(registerPanel.getUsername().length()) == -1) {
-			registerPanel.setUsernameMistake(false, "Te kort");
-			return false;
-		} else if (validateLength(registerPanel.getUsername().length()) == 1) {
-			registerPanel.setUsernameMistake(false, "Te lang");
-			return false;
-		} else {
-			if (AccountModel
-					.checkUsernameAvailable(registerPanel.getUsername())) {
-				registerPanel.setUsernameMistake(true, "");
-				return true;
-			} else {
-				registerPanel.setUsernameMistake(false, "Al in gebruik");
-				return false;
-			}
-		}
-
 	}
 
 	private boolean validatePassword1() {
@@ -237,72 +299,23 @@ public class AccountController extends CoreController {
 		}
 	}
 
-	public ChangePassPanel getchangepasspanel() {
-		return changepassPanel;
-	}
-
-	public void changePass() {
-		String oldpass = changepassPanel.getOldPass();
-		String newpass1 = changepassPanel.getNewPass1();
-		String newpass2 = changepassPanel.getNewPass2();
-
-		if (oldpass.equals(accountModel.getpass())) {
-			if (validateLength(newpass1.length()) == -1) {
-				changepassPanel.setNewPass1Good(false, "Te Kort");
-			} else if (validateLength(newpass1.length()) == 1) {
-				changepassPanel.setNewPass1Good(false, "Te Lang");
-			} else {
-				if (newpass2.equals(newpass1)) {
-					accountModel.changePass(changepassPanel.getNewPass1());
-					changepassPanel.setOldPassGood(true, "");
-					changepassPanel.setNewPass1Good(true, "");
-					changepassPanel.setNewPass2Good(true, "");
-					changepassPanel.passwordChange();
-					frame.dispose();
-				} else {
-					changepassPanel.setNewPass2Good(false, "Verkeerd");
-				}
-			}
+	private boolean validateUsername() {
+		if (validateLength(registerPanel.getUsername().length()) == -1) {
+			registerPanel.setUsernameMistake(false, "Te kort");
+			return false;
+		} else if (validateLength(registerPanel.getUsername().length()) == 1) {
+			registerPanel.setUsernameMistake(false, "Te lang");
+			return false;
 		} else {
-			changepassPanel.setOldPassGood(false, "Fout");
+			if (AccountModel
+					.checkUsernameAvailable(registerPanel.getUsername())) {
+				registerPanel.setUsernameMistake(true, "");
+				return true;
+			} else {
+				registerPanel.setUsernameMistake(false, "Al in gebruik");
+				return false;
+			}
 		}
-	}
 
-	public void loginToRegister() {
-		frame.remove(loginPanel);
-		frame.add(registerPanel);
-		registerPanel.clearFields();
-		frame.revalidate();
-		frame.repaint();
-		frame.pack();
-	}
-
-	private void registerToLogin() {
-		frame.remove(registerPanel);
-		loginPanel.clearFields();
-		frame.add(loginPanel);
-		frame.revalidate();
-		frame.repaint();
-		frame.pack();
-	}
-
-	@Override
-	public void initialize() {
-		// TODO Automatisch gegenereerde methodestub
-
-	}
-
-	@Override
-	public void addListeners() {
-		// TODO Automatisch gegenereerde methodestub
-
-	}
-
-	public void setChangePassPanel() {
-		frame.remove(loginPanel);
-		frame.add(changepassPanel);
-		frame.revalidate();
-		frame.repaint();
-		frame.pack();
 	}
 }

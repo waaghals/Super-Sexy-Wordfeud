@@ -15,14 +15,14 @@ public abstract class CoreModel {
 		propertyChangeSupport.addPropertyChangeListener(listener);
 	}
 
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.removePropertyChangeListener(listener);
-	}
-
 	protected void firePropertyChange(String propertyName, Object oldValue,
 			Object newValue) {
 		propertyChangeSupport.firePropertyChange(propertyName, oldValue,
 				newValue);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.removePropertyChangeListener(listener);
 	}
 	
 	abstract public void update();

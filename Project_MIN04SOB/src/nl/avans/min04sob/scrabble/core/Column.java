@@ -16,11 +16,11 @@ public class Column {
 		return classType;
 	}
 	
-	public String getName(){
-		return name;
-	}
-	
 	public int getColumnIndex(){
 		return index;
+	}
+	
+	public String getName(){
+		return name;
 	}
 }

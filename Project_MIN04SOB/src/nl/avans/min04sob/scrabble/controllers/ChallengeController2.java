@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -31,17 +32,19 @@ public class ChallengeController2 extends CoreController {
 		addModel(challengeModel);
 		
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		challengeView2.showChallenge();
 	}
 	
 	
-	@Override
-	public void initialize() {
-		frame = new JFrame();
-		challengeView2 = new ChallengeView2();
-		challengeModel = new ChallengeModel(account);
+	private void acceptChallenge() {
+		try {
+			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -69,25 +72,6 @@ public class ChallengeController2 extends CoreController {
 		
 	}
 	
-	public void receiveChallenges(){
-		int index=0;
-		while(index<challengeModel.challengeArray().size())
-		{
-			challengeView2.receiveChallenge(challengeModel.challengeArray().get(index));
-			index++;
-		} 
-		challengeView2.showChallenge();
-	}
-	
-	private void acceptChallenge() {
-		try {
-			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),true);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	private void declineChallenge() {
 		try {
 			challengeModel.respondChallenge(challengeView2.getSelectedChallenge(),false);
@@ -100,6 +84,23 @@ public class ChallengeController2 extends CoreController {
 	private void goBack() {
 		frame.dispose();
 		frame = null;
+	}
+	
+	@Override
+	public void initialize() {
+		frame = new JFrame();
+		challengeView2 = new ChallengeView2();
+		challengeModel = new ChallengeModel(account);
+	}
+	
+	public void receiveChallenges(){
+		int index=0;
+		while(index<challengeModel.challengeArray().size())
+		{
+			challengeView2.receiveChallenge(challengeModel.challengeArray().get(index));
+			index++;
+		} 
+		challengeView2.showChallenge();
 	}
 
 }

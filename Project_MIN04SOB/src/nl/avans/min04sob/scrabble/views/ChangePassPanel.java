@@ -2,19 +2,16 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JButton;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 
 public class ChangePassPanel extends CorePanel{
 	
@@ -56,8 +53,8 @@ public class ChangePassPanel extends CorePanel{
 		btnCancel.addActionListener(listener);
 	}
 	
-	public void addKeyListenerOldPass(KeyAdapter listener) {
-		oldPass.addKeyListener(listener);
+	public void addChangeActionListener(ActionListener listener){
+		btnChange.addActionListener(listener);
 	}
 	
 	public void addKeyListenerNewPass1(KeyAdapter listener) {
@@ -68,12 +65,16 @@ public class ChangePassPanel extends CorePanel{
 		newPass2.addKeyListener(listener);
 	}
 	
-	public void addChangeActionListener(ActionListener listener){
-		btnChange.addActionListener(listener);
+	public void addKeyListenerOldPass(KeyAdapter listener) {
+		oldPass.addKeyListener(listener);
 	}
 	
-	public String getOldPass(){
-		return new String(oldPass.getPassword());
+	public JPasswordField get1NewPass() {
+		return newPass1;
+	}
+	
+	public JPasswordField get2NewPass() {
+		return newPass2;
 	}
 	
 	public String getNewPass1(){
@@ -84,15 +85,16 @@ public class ChangePassPanel extends CorePanel{
 		return new String(newPass2.getPassword());
 	}
 	
-	public void setOldPassGood(boolean good, String discription){
-		if(good){
-			oldPass.setBackground(Color.WHITE);
-			oldPassResult.setText(discription);
-		}else{
-			oldPass.setBackground(Color.RED);
-			oldPassResult.setText(discription);
-		}
-		
+	public String getOldPass(){
+		return new String(oldPass.getPassword());
+	}
+	
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+	}
+	
+	public void passwordChange(){
+		btnChange.setEnabled(false);
 	}
 	
 	public void setNewPass1Good(boolean good, String discription){
@@ -116,18 +118,14 @@ public class ChangePassPanel extends CorePanel{
 		}
 		
 	}
-	
-	public JPasswordField get1NewPass() {
-		return newPass1;
-	}
-	
-	public JPasswordField get2NewPass() {
-		return newPass2;
-	}
-	
-	public void passwordChange(){
-		btnChange.setEnabled(false);
-	}
-	public void modelPropertyChange(PropertyChangeEvent evt) {
+	public void setOldPassGood(boolean good, String discription){
+		if(good){
+			oldPass.setBackground(Color.WHITE);
+			oldPassResult.setText(discription);
+		}else{
+			oldPass.setBackground(Color.RED);
+			oldPassResult.setText(discription);
+		}
+		
 	}
 }

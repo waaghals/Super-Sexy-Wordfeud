@@ -2,8 +2,7 @@ package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
@@ -13,10 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
-import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.ActionEvent;
+import nl.avans.min04sob.scrabble.core.CorePanel;
 //GUI checked
 public class LoginPanel extends CorePanel {
 
@@ -24,10 +21,6 @@ public class LoginPanel extends CorePanel {
 	private JButton loginButton, registerButton;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-	}
 
 	public LoginPanel() {
 		setPreferredSize(new Dimension(507, 117));
@@ -47,6 +40,7 @@ public class LoginPanel extends CorePanel {
 		add(loginButton, "cell 1 2,aligny center");
 		registerButton = new JButton("Ik heb nog geen account");
 		registerButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
@@ -54,6 +48,33 @@ public class LoginPanel extends CorePanel {
 		//add(registerButton, "cell 5 2 2 1,grow");
 	}
 
+	public void addActionListenerLogin(ActionListener listener) {
+		loginButton.addActionListener(listener);
+	}
+
+	
+	public void addActionListenerRegister(ActionListener listener) {
+		registerButton.addActionListener(listener);
+	}
+	
+	public void addKeyListenerPassword(KeyAdapter listener) {
+		passwordField.addKeyListener(listener);
+	}
+
+	public void addKeyListenerUsername(KeyAdapter listener) {
+		usernameField.addKeyListener(listener);
+	}
+
+	public void clearFields(){
+		usernameField.setText("");
+		setUsernameMistake(true);
+		passwordField.setText("");
+		setPasswordMistake(true);
+	}
+	
+	public char[] getPassword() {
+		return passwordField.getPassword();
+	}
 	
 	public JTextField getPasswordField() {
 		return passwordField;
@@ -62,33 +83,10 @@ public class LoginPanel extends CorePanel {
 	public String getUsername() {
 		return usernameField.getText();
 	}
-
-	public char[] getPassword() {
-		return passwordField.getPassword();
-	}
-
-	public void addActionListenerLogin(ActionListener listener) {
-		loginButton.addActionListener(listener);
-	}
 	
-	public void addKeyListenerPassword(KeyAdapter listener) {
-		passwordField.addKeyListener(listener);
-	}
-	
-	public void addKeyListenerUsername(KeyAdapter listener) {
-		usernameField.addKeyListener(listener);
-	}
-	
-	public void addActionListenerRegister(ActionListener listener) {
-		registerButton.addActionListener(listener);
-	}
-	
-	public void setUsernameMistake(boolean mistake){
-		if(mistake){
-			usernameField.setBackground(Color.WHITE);
-		}else{
-			usernameField.setBackground(Color.RED);
-		}
+	@Override
+	public void modelPropertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
 	}
 	
 	public void setPasswordMistake(boolean mistake){
@@ -99,14 +97,15 @@ public class LoginPanel extends CorePanel {
 		}
 	}
 	
-	public void clearFields(){
-		usernameField.setText("");
-		setUsernameMistake(true);
-		passwordField.setText("");
-		setPasswordMistake(true);
-	}
-	
 	public void setUsernameField(String username){
 		usernameField.setText(username);
+	}
+	
+	public void setUsernameMistake(boolean mistake){
+		if(mistake){
+			usernameField.setBackground(Color.WHITE);
+		}else{
+			usernameField.setBackground(Color.RED);
+		}
 	}
 }
