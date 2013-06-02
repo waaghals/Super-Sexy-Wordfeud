@@ -86,7 +86,8 @@ public class CompetitionController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				window.dispose();
+				window1.dispose();
+				window1=null;
 			}	
 		});
 		
