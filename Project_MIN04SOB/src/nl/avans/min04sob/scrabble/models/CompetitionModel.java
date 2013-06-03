@@ -12,7 +12,6 @@ import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Queries;
@@ -20,7 +19,6 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class CompetitionModel extends CoreModel {
 
-	
 	private boolean compDuplication;
 	private int competitieId;
 	private String desc;
@@ -153,6 +151,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	private void createCompetition(String username, String omschrijving) {
+		int gameid = 0;
 		try {
 			Calendar cal = Calendar.getInstance();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -163,72 +162,54 @@ public class CompetitionModel extends CoreModel {
 			String endDate = dateFormat.format(date2);
 			Db.run(new Query(createQuery).set(username).set(currentDate)
 					.set(endDate).set(omschrijving));
-			Future<ResultSet> worker = Db.run(new Query(getCreatedCompID).set(username));
+			Future<ResultSet> worker = Db.run(new Query(getCreatedCompID)
+					.set(username));
 			ResultSet dbResult = worker.get();
-			join(dbResult.getInt("ID"), username);
+			if (dbResult.next()) {
+				gameid = dbResult.getInt("id");
+			}
+			join(gameid, username);
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
 
 	// wordt niet gebruikt
-/*	public void deleteCompetition(int competitionID) {
-		boolean competition = false; // kijkt of de competitie eerst bestaat.
-
-		try {
-			Future<ResultSet> worker = Db.run(new Query(query));
-			ResultSet res = worker.get();
-
-			while (res.next()) {
-				if (res.getString("competitie").equals(competitionID)) {
-					competition = true;
-					break;
-				}
-			}
-
-			if (competition == true) {
-				ArrayList<Integer> spel_ids = new ArrayList<Integer>();
-
-				Date date = new Date();
-				Future<ResultSet> worker1;
-
-				worker1 = Db.run(new Query(
-						"SELECT `einde FROM `competitie` WHERE `id` = ?")
-						.set(competitionID));
-
-				ResultSet dbResult = worker1.get();
-				if (dbResult.next()) {
-					date = dbResult.getDate("einde");
-				}
-				// if(vandaag voorbij einddatum is)
-				if (date.compareTo(new Date()) > 0) {
-					Future<ResultSet> worker11 = Db
-							.run(new Query(
-									"SELECT `id` FROM `spel` WHERE `competitie_id` = ?")
-									.set(competitionID));
-					ResultSet dbResult1 = worker11.get();
-					while (dbResult1.next()) {
-						spel_ids.add(dbResult.getInt("spel_id"));
-						for (Integer id : spel_ids) {
-							Db.run(new Query(removeChats).set(id));
-							Db.run(new Query(removeScores).set(id));
-						}
-					}
-					Db.run(new Query(
-							"DELETE FROM `spel` WHERE `competitie_ID` = ?")
-							.set(competitionID));
-					Db.run(new Query(
-							"DELETE FROM `deelnemer` WHERE `competitie_ID` = ?")
-							.set(competitionID));
-					Db.run(new Query(removeCompetitionQuery).set(competitionID));
-				}
-
-			}
-		} catch (SQLException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
-	}
-*/
+	/*
+	 * public void deleteCompetition(int competitionID) { boolean competition =
+	 * false; // kijkt of de competitie eerst bestaat.
+	 * 
+	 * try { Future<ResultSet> worker = Db.run(new Query(query)); ResultSet res
+	 * = worker.get();
+	 * 
+	 * while (res.next()) { if
+	 * (res.getString("competitie").equals(competitionID)) { competition = true;
+	 * break; } }
+	 * 
+	 * if (competition == true) { ArrayList<Integer> spel_ids = new
+	 * ArrayList<Integer>();
+	 * 
+	 * Date date = new Date(); Future<ResultSet> worker1;
+	 * 
+	 * worker1 = Db.run(new Query(
+	 * "SELECT `einde FROM `competitie` WHERE `id` = ?") .set(competitionID));
+	 * 
+	 * ResultSet dbResult = worker1.get(); if (dbResult.next()) { date =
+	 * dbResult.getDate("einde"); } // if(vandaag voorbij einddatum is) if
+	 * (date.compareTo(new Date()) > 0) { Future<ResultSet> worker11 = Db
+	 * .run(new Query( "SELECT `id` FROM `spel` WHERE `competitie_id` = ?")
+	 * .set(competitionID)); ResultSet dbResult1 = worker11.get(); while
+	 * (dbResult1.next()) { spel_ids.add(dbResult.getInt("spel_id")); for
+	 * (Integer id : spel_ids) { Db.run(new Query(removeChats).set(id));
+	 * Db.run(new Query(removeScores).set(id)); } } Db.run(new Query(
+	 * "DELETE FROM `spel` WHERE `competitie_ID` = ?") .set(competitionID));
+	 * Db.run(new Query( "DELETE FROM `deelnemer` WHERE `competitie_ID` = ?")
+	 * .set(competitionID)); Db.run(new
+	 * Query(removeCompetitionQuery).set(competitionID)); }
+	 * 
+	 * } } catch (SQLException | InterruptedException | ExecutionException e) {
+	 * e.printStackTrace(); } }
+	 */
 	public CompetitionModel[] getAllCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
@@ -392,7 +373,6 @@ public class CompetitionModel extends CoreModel {
 
 	@Override
 	public void update() {
-		
 
 	}
 
@@ -402,7 +382,7 @@ public class CompetitionModel extends CoreModel {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(Queries.RANKING));
 			ResultSet rs = worker.get();
-			while(rs.next()){
+			while (rs.next()) {
 				rankingData[i][0] = rs.getString("account");
 				rankingData[i][1] = rs.getString("aantal_wedstrijden");
 				rankingData[i][2] = rs.getString("aantal_gewonnen");
@@ -413,7 +393,7 @@ public class CompetitionModel extends CoreModel {
 		}
 		return rankingData;
 	}
-	
+
 	public void checkCompetition(String username, String omschrijving) {
 		boolean error = false;
 		ResultSet result;
@@ -434,8 +414,7 @@ public class CompetitionModel extends CoreModel {
 				}
 				while (result.next()) {
 
-					if (result.getString(2).equals(username))
-					{
+					if (result.getString(2).equals(username)) {
 						error = true;
 						break;
 					}
@@ -454,6 +433,6 @@ public class CompetitionModel extends CoreModel {
 
 	private void setDuplicatedCompetition(boolean error) {
 		compDuplication = error;
-		
+
 	}
 }
