@@ -250,6 +250,7 @@ public class CompetitionController extends CoreController {
 				if(competitionView.getSelectedCompetition() != null){
 					int id = competitionView.getSelectedCompetition().getCompId();
 					getParticipants(id);
+					competitionModel.join(id, accountModel.getUsername());
 					window.dispose();
 					//competitionView.removeIndex(competitionView.getIndex());
 				}

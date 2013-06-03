@@ -7,9 +7,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
@@ -144,18 +146,17 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public void createCompetition(/*String username, String eindDatum,*/
-			String omschrijving) {
+	public void createCompetition(String omschrijving) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date date1 = new Date();
-			String currentdate = dateFormat.format(date1);
-			Date date2;
-			date2 = dateFormat.parse(eindDatum);		//nog ff naar gekeken worden. einddatum moet een maand later zijn als de startdatum'.
-			String endDate = dateFormat.format(date2);
-			Db.run(new Query(createQuery).set(owner.getUsername()).set(currentdate)
+			Calendar cal = Calendar.getInstance();
+			String currentDate = dateFormat.format(cal);
+			cal.add(Calendar.MONTH, 1);
+			String endDate = dateFormat.format(cal);
+			
+			Db.run(new Query(createQuery).set(owner.getUsername()).set(currentDate)
 					.set(endDate).set(omschrijving));
-		} catch (SQLException | ParseException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
