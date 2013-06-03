@@ -47,6 +47,7 @@ public class AccountController extends CoreController {
 		changepassPaneladmin = new ChangePassPanelAdministrator();
 		addView(changepassPaneladmin);
 		changepassPaneladmin.fillPlayerList(accountModel.getPlayers());
+		
 		changepassPaneladmin.BackaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -58,6 +59,8 @@ public class AccountController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 System.out.println(changepassPaneladmin.getSelectedPlayer());
+				 accountModel.changeAnotherPlayerPass(changepassPaneladmin.getSelectedNewPass(),changepassPaneladmin.getSelectedPlayer());
+				 frame.dispose();
 			}
 		});
 		

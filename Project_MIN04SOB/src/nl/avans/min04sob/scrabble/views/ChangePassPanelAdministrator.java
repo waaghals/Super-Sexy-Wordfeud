@@ -68,7 +68,9 @@ public class ChangePassPanelAdministrator extends CorePanel{
 	public String getSelectedPlayer(){
 		return accountList.getSelectedValue();
 	}
-	
+	public String getSelectedNewPass(){
+		return Newpass.getText();
+	}
 	
 	
 	@Override

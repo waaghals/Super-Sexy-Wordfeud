@@ -64,12 +64,18 @@ public class AccountModel extends CoreModel {
 	public void changePass(String newPass){
 		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
 		try{
-			
 			Db.run(new Query(query).set(newPass).set(username));
 		}catch(SQLException sql){
 			sql.printStackTrace();
 		}
-		
+	}
+	public void changeAnotherPlayerPass(String newPass,String selectedplayer){
+		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
+		try{
+			Db.run(new Query(query).set(newPass).set(selectedplayer));
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
 	}
 
 	public CompetitionModel[] getAvailableCompetitions(String username){
