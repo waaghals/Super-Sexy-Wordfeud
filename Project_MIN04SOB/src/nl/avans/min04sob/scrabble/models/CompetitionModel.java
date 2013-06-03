@@ -36,6 +36,7 @@ public class CompetitionModel extends CoreModel {
 	private final String removeScores = "DELETE FROM `beurt` WHERE `spel_id` = ?";
 	private final String removeGames = "DELETE FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `competitie_id` = ?";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
+	private final String getCreatedCompID = "SELECT `id` FROM `competitie` WHERE `account_naam_eigenaar` = ?";
 	private final String removeCompetitionQuery = "DELETE FROM `competitie` WHERE `ID` = ?";
 	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = ?";
 	private final String totalPointsQuery = "SELECT SUM(`score`) as `score` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
@@ -162,7 +163,10 @@ public class CompetitionModel extends CoreModel {
 			String endDate = dateFormat.format(date2);
 			Db.run(new Query(createQuery).set(username).set(currentDate)
 					.set(endDate).set(omschrijving));
-		} catch (SQLException e) {
+			Future<ResultSet> worker = Db.run(new Query(getCreatedCompID).set(username));
+			ResultSet dbResult = worker.get();
+			join(dbResult.getInt("ID"), username);
+		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
