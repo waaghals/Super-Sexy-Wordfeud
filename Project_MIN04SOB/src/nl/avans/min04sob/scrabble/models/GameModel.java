@@ -54,7 +54,7 @@ public class GameModel extends CoreModel {
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
-	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
+	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 
 	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
@@ -268,22 +268,8 @@ public class GameModel extends CoreModel {
 		for (String s:teVergelijkenWoorden){
 			System.out.println(s);
 		}
-		/*try {
-			checkWordsInDatabase(teVergelijkenWoorden);
-			for(int y = 0; y < 15;y++){
-				for(int x = 0;x<15;x++){
-					
-					if(playedLetters[y][x] !=null){
-						//String query = "INSERT INTO gelegdeletter(Letter_ID, Letter_Spel_ID,Beurt_ID,Tegel_X, Tegel_Y,Tegel_Bord_naam, BlancoLetterKarakter) VALUES(1, 1, 1, 1, 1,'Standard','')";
-						//new Query(query).set(1).set(511).set(1).set(1).set(1).exec();
-						System.out.print("De query moet nog gefixt worden");
-						//TODO De query moet nog gefixt worden;
-					}
-				}
-			}
-		} catch (Exception e) {	
-			System.out.println(e.getMessage());
-		}*/
+		
+
 	}
 
 	public String[][] compareArrays(String[][] bord, String[][] database) {
