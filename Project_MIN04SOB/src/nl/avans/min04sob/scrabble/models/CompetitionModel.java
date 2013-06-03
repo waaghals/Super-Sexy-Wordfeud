@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -149,15 +149,16 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public void createCompetition(String omschrijving) {
+	public void createCompetition(String username, String omschrijving) {
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
-			String currentDate = dateFormat.format(cal);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date1 = new Date(cal.getTimeInMillis());
+			String currentDate = dateFormat.format(date1);
 			cal.add(Calendar.MONTH, 1);
-			String endDate = dateFormat.format(cal);
-			
-			Db.run(new Query(createQuery).set(owner.getUsername()).set(currentDate)
+			Date date2 = new Date(cal.getTimeInMillis());
+			String endDate = dateFormat.format(date2);
+			Db.run(new Query(createQuery).set(username).set(currentDate)
 					.set(endDate).set(omschrijving));
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -165,7 +166,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	// wordt niet gebruikt
-	public void deleteCompetition(int competitionID) {
+/*	public void deleteCompetition(int competitionID) {
 		boolean competition = false; // kijkt of de competitie eerst bestaat.
 
 		try {
@@ -221,7 +222,7 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	public CompetitionModel[] getAllCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
@@ -385,7 +386,7 @@ public class CompetitionModel extends CoreModel {
 
 	@Override
 	public void update() {
-		// TODO Automatisch gegenereerde methodestub
+		
 
 	}
 

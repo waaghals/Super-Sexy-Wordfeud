@@ -313,7 +313,7 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
-				competitionModel.createCompetition(desc);
+				competitionModel.createCompetition(accountModel.getUsername(), desc);
 			}
 		});
 
