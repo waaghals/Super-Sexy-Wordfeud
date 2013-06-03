@@ -166,7 +166,7 @@ public class CompetitionModel extends CoreModel {
 	}
 
 	// wordt niet gebruikt
-	public void deleteCompetition(int competitionID) {
+/*	public void deleteCompetition(int competitionID) {
 		boolean competition = false; // kijkt of de competitie eerst bestaat.
 
 		try {
@@ -222,7 +222,7 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	public CompetitionModel[] getAllCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
@@ -386,7 +386,7 @@ public class CompetitionModel extends CoreModel {
 
 	@Override
 	public void update() {
-		// TODO Automatisch gegenereerde methodestub
+		
 
 	}
 
