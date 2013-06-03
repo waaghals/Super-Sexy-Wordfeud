@@ -25,17 +25,11 @@ public class CompetitionScoreView extends CorePanel {
 	private JButton backButton;
 	private JLabel competitionLabel;
 	private JLabel playersLabel;
-	private String[] columnNames;
-	private Object[][] data;
 	private JTable table;
 	private DefaultTableModel tableModel;
 
 	public CompetitionScoreView() {
-		setLayout(new MigLayout("", "[250px:n:350px,grow][400px:n]",
-				"[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
-
-		columnNames = new String[] { "Naam", "Aantal wedstrijden",
-				"Aantal gewonnen" };
+		setLayout(new MigLayout("", "[250px:n:350px,grow][700px:n]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
 		competitionLabel = new JLabel("Competities");
 		add(competitionLabel, "cell 0 0,alignx left");
@@ -67,9 +61,8 @@ public class CompetitionScoreView extends CorePanel {
 		tableModel.addColumn("Aantal wedstrijden");
 		tableModel.addColumn("Totaal punten");
 		tableModel.addColumn("gemiddelde punten");
-		tableModel.addColumn("Aantal gewonnen/ verloren");
+		tableModel.addColumn("gewonnen/ verloren");
 		tableModel.addColumn("Bayesian_gemiddelde");
-
 	}
 
 	public void addRow(Object[] dataRow) {

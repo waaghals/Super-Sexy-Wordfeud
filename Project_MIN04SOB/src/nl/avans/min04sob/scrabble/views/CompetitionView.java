@@ -131,5 +131,9 @@ public class CompetitionView extends CorePanel{
 		revalidate();
 	}
 	
+	public void disableList(){
+		playerList.enable(false);
+	}
+	
 	
 }

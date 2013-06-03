@@ -162,7 +162,7 @@ public class CompetitionController extends CoreController {
 
 		competitionView.setText("Ingeschreven competities",
 				"Spelers in competitie", "Speler uitdagen", true);
-
+		
 		getCompetitions(accountModel.toString());
 	}
 
@@ -198,7 +198,7 @@ public class CompetitionController extends CoreController {
 
 		competitionView.setText("Competities", "Spelers in competitie",
 				"Verwijder Competitie", true);
-
+		competitionView.disableList();
 		getAllCompetitions();
 	}
 
@@ -233,7 +233,7 @@ public class CompetitionController extends CoreController {
 
 		competitionView.setText("Ingeschreven Competities",
 				"Spelers in competitie", "Verwijderen uit Competitie", true);
-
+		competitionView.disableList();
 		getAvailable(accountModel.toString());
 	}
 
@@ -285,7 +285,7 @@ public class CompetitionController extends CoreController {
 
 		competitionView.setText("Beschikbare competities",
 				"Spelers in competitie", "Competitie deelnemen", true);
-
+		competitionView.disableList();
 		getAvailable(accountModel.toString());
 
 	}

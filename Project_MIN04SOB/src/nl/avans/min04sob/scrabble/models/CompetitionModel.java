@@ -229,13 +229,13 @@ public class CompetitionModel extends CoreModel {
 		return allComps;
 
 	}
-	//geef alle openstaande competities
+	//geeft alle openstaande competities
 	public CompetitionModel[] getAllOpenCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(
-					"SELECT DISTINCT(`ID`) FROM tjmbrouw_db2.competitie WHERE einde > now();"));
+					"SELECT DISTINCT(`ID`) FROM `competitie` WHERE `einde` > now();"));
 			ResultSet dbResult = worker.get();
 			allComps = new CompetitionModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < allComps.length) {
