@@ -30,23 +30,23 @@ public class ChangePassPanelAdministrator extends CorePanel{
 	private JScrollPane scrollPane;
 	
 	public ChangePassPanelAdministrator(){
-		setPreferredSize(new Dimension(460, 100));
+		setPreferredSize(new Dimension(460, 220));
 		setLayout(new MigLayout("", "[120px][100.00px][115.00px][100px]", "[30px][30px][30px][30px]"));
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 1 0 0 0,grow");
+		add(scrollPane, "cell 1 0 2 12,grow");
 		accountList = new JList<String>();
 		accountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(accountList);
 		NamePass = new JLabel("New password");
-		add(NamePass, "cell 0 1,alignx right,aligny center");
+		add(NamePass, "cell 0 13,alignx right,aligny center");
 		Newpass = new JTextField(11);
-		add(Newpass, "cell 1 1 2 1,grow"); 
+		add(Newpass, "cell 1 13 2 1,grow"); 
 		errorLabel = new JLabel("");
-		add(errorLabel,"cell 3 0,grow");
+		add(errorLabel,"cell 1 0,grow");
 		back = new JButton("Back");
-		add(back, "cell 1 2,grow");
+		add(back, "cell 1 15,grow");
 		change =new JButton("Change");
-		add(change, "flowy,cell 2 2,grow");
+		add(change, "flowy,cell 2 15,grow");
 	}
 	
 
@@ -58,6 +58,9 @@ public class ChangePassPanelAdministrator extends CorePanel{
 	{
 		change.addActionListener(listener);
 	}
+	
+	
+	
 	public void fillPlayerList(String[] players) {
 		accountList.setListData(players);
 	
@@ -65,6 +68,8 @@ public class ChangePassPanelAdministrator extends CorePanel{
 	public String getSelectedPlayer(){
 		return accountList.getSelectedValue();
 	}
+	
+	
 	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
@@ -75,21 +80,6 @@ public class ChangePassPanelAdministrator extends CorePanel{
 }
 
 /*/
-ChangePassPanelAdministrator changepassPaneladmin = new ChangePassPanelAdministrator()
-addView(changepassPaneladmin);
 
-changepassPaneladmin.BackaddActionListener(new ActionListener() {
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		frame.dispose();
-	}
-});
-
-changepassPaneladmin.ChangeaddActionListener(new ActionListener() {
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		 
-	}
-});
 
 /*/

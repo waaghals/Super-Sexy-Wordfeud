@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.views.ChangePassPanel;
+import nl.avans.min04sob.scrabble.views.ChangePassPanelAdministrator;
 import nl.avans.min04sob.scrabble.views.LoginPanel;
 import nl.avans.min04sob.scrabble.views.RegisterPanel;
 
@@ -22,6 +23,7 @@ public class AccountController extends CoreController {
 	private AccountModel accountModel;
 	private ChangePassPanel changepassPanel;
 	private JFrame frame;
+	private ChangePassPanelAdministrator changepassPaneladmin;
 	private final int maxpass_userLength, minpass_userLength;
 
 	public AccountController(AccountModel account) {
@@ -42,7 +44,23 @@ public class AccountController extends CoreController {
 		addView(loginPanel);
 		addView(changepassPanel);
 		addModel(accountModel);
+		changepassPaneladmin = new ChangePassPanelAdministrator();
+		addView(changepassPaneladmin);
 
+		changepassPaneladmin.BackaddActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+
+		changepassPaneladmin.ChangeaddActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 System.out.println(changepassPaneladmin.getSelectedPlayer());
+			}
+		});
+		
 		loginPanel.addActionListenerLogin(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
