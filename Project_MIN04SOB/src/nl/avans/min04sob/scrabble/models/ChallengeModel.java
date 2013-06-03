@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import nl.avans.min04sob.scrabble.controllers.CompetitionController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class ChallengeModel extends CoreModel {
@@ -30,6 +31,7 @@ public class ChallengeModel extends CoreModel {
 	private AccountModel accountModel;
 	private CompetitionController competitionController;
 	private boolean isDuplication = false;
+	private int numChallenge;
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
@@ -39,12 +41,7 @@ public class ChallengeModel extends CoreModel {
 
 	public void check(String challenger, String opponent, int compID)// uitdager
 	{
-
-
 		boolean error = false;
-
-		
-
 		try {
 			Future<ResultSet> worker = Db.run(new Query(countQuery));
 			result = worker.get();
@@ -59,13 +56,13 @@ public class ChallengeModel extends CoreModel {
 					e.printStackTrace();
 				}
 				while (result.next()) {
-
 					if ((result.getString(7).equals(STATE_UNKNOWN)
 							&& result.getString(4).equals(challenger)
+
 							&& result.getString(5).equals(opponent)
-							&& result.getString(3).equals(STATE_REQUEST)
-							))
-					{
+							&& result.getString(3).equals(STATE_REQUEST) && result
+								.getInt(2) == compID)) {
+
 						error = true;
 						break;
 					}
@@ -82,11 +79,11 @@ public class ChallengeModel extends CoreModel {
 		setDuplicatedChallenge(error);
 
 	}
-	
+
 	private void setDuplicatedChallenge(boolean error) {
 		isDuplication = error;
 	}
-	
+
 	public boolean isDuplicatedChallenge() {
 		return isDuplication;
 	}
@@ -102,33 +99,36 @@ public class ChallengeModel extends CoreModel {
 		String getSpelId = "SELECT Max(ID)FROM `spel` ";
 		String getSortOfLetter_Amount = "SELECT `karakter` , `aantal` FROM `lettertype`WHERE `LetterSet_code` = ?";
 		try {
-			Db.run(new Query(query).set(compID)
-					.set(STATE_REQUEST).set(challenger).set(opponent)
-					.set(currentdate).set(STATE_UNKNOWN)
-					.set("standard").set("NL"));
-			/// SUPPPPER SEXY CODE BITCHESSSSSSSSSS JEROEN
+
+			Db.run(new Query(query).set(compID).set(STATE_REQUEST)
+					.set(challenger).set(opponent).set(currentdate)
+					.set(STATE_UNKNOWN).set("standard").set("NL"));
+			// / SUPPPPER SEXY CODE BITCHESSSSSSSSSS JEROEN
 			// met minder SEXY KLEINE CODE VERANDERING VAN PATRICK
-			
-			
-			
+
 			Future<ResultSet> workerId = Db.run(new Query(getSpelId));
 			ResultSet spelId = workerId.get();
 			spelId.next();
-			
-			Future<ResultSet> worker = Db.run(new Query(getSortOfLetter_Amount).set("NL"));
+
+			Future<ResultSet> worker = Db.run(new Query(getSortOfLetter_Amount)
+					.set("NL"));
 			ResultSet res = worker.get();
 			int idCounter = 0;
-			while(res.next()){
-				
-				for(int counter = 0;counter < res.getInt(2); counter++ ){
-					Db.run(new Query(insertLetters).set(idCounter).set(spelId.getInt(1)).set("NL").set(res.getString(1)));
+
+			while (res.next()) {
+
+				for (int counter = 0; counter < res.getInt(2); counter++) {
+					Db.run(new Query(insertLetters).set(idCounter)
+							.set(spelId.getInt(1)).set("NL")
+							.set(res.getString(1)));
+
 					idCounter++;
 				}
-				//idCounter++;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 	}
 
@@ -161,7 +161,7 @@ public class ChallengeModel extends CoreModel {
 		}
 
 		else {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,  } `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
 			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
 		}
@@ -175,32 +175,36 @@ public class ChallengeModel extends CoreModel {
 	}
 
 	public String[] challengeArray() {
-		String [] challenges = new String[0];
+		String[] challenges = new String[0];
 		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(selectQuery).set(
-					accountModel.getUsername()).set(STATE_REQUEST).set(STATE_UNKNOWN));
+			Future<ResultSet> worker = Db.run(new Query(selectQuery)
+					.set(accountModel.getUsername()).set(STATE_REQUEST)
+					.set(STATE_UNKNOWN));
 			ResultSet dbResult = worker.get();
 			challenges = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < challenges.length) {
-				challenges[x] = new String(dbResult.getString("account_naam_uitdager"));
+				challenges[x] = new String(
+						dbResult.getString("account_naam_uitdager"));
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return challenges;
-		
-		
 	}
 
 	@Override
 	public void update() {
+
 		// // if your name = tegenstander if your naam = uitdager
 		// /// receive challenge your name = challenged ///// ///// ///// /////
 		// ///// ///// /////
 		// /array list add alleen als challend= yourname;;
-		
+
+		int oldNumChallenge = numChallenge;
+		numChallenge = challengeArray().length;
+		firePropertyChange(Event.NEWCHALLENGE, oldNumChallenge, numChallenge);
 
 	}
 

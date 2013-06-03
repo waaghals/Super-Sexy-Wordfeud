@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -29,7 +28,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem logoutItem;
 	private JMenuItem changePassItem;
 	private JMenuItem registerItem;
-	private JMenuItem viewPlayers;
+ 
 
 	private JMenuItem doChallengeItem;
 	private JMenuItem viewChallengeItem;
@@ -40,12 +39,13 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem deleteCompetitionItem;
 
 	private JMenuItem viewWords;
-	
+	private JMenuItem AccountaanmakenItem;
 	private int numChallenge;
 
 	private ActionListener openGameListener;
 	private ActionListener viewGameListener;
 	private JMenuItem createCompetitionItem;
+	private JMenuItem viewPlayers;
 
 
 	public MenuView() {
@@ -186,10 +186,12 @@ public class MenuView extends JMenuBar implements CoreView {
 	private void createModeratorMenu() {
 		viewWords = new JMenuItem("Woorden beheren");
 		viewWords.setMnemonic('W');
+		AccountaanmakenItem = new JMenuItem("Account aanmaken");
 		
 		viewPlayers = new JMenuItem("Gebruikers beheren");
 		viewPlayers.setMnemonic('G');
 		
+		toolboxMenu.add(AccountaanmakenItem );
 		toolboxMenu.add(viewWords);
 		toolboxMenu.add(viewPlayers);
 	}
@@ -212,6 +214,8 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
+		System.out.println("MenuView event recieved");
+		System.out.println(evt.getPropertyName());
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel user = (AccountModel) evt.getNewValue();
@@ -232,14 +236,15 @@ public class MenuView extends JMenuBar implements CoreView {
 			setLoggedOutState();
 
 			break;
-
 		case Event.NEWCHALLENGE:
-			numChallenge = (int) evt.getNewValue();
+			String[] challenges = (String[]) evt.getNewValue();
+			setChallengeCount(challenges.length);
 			break;
 
 		default:
 			break;
 		}
+		
 	}
 
 	private void setVisibleMenus(AccountModel user) {
@@ -321,5 +326,10 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void viewWords(ActionListener listener) {
 		viewWords.addActionListener(listener);
 	}
-
+	public void viewPlayers(ActionListener listener) {
+		viewPlayers.addActionListener(listener);
+	}
+	public void Accountaanmaken(ActionListener listener) {
+		AccountaanmakenItem.addActionListener(listener);
+	}
 }
