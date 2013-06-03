@@ -73,7 +73,7 @@ public class StashModel extends CoreModel {
 			Future<ResultSet> worker = Db.run(new Query(q));
 			ResultSet res = worker.get();
 			int numRows  = Query.getNumRows(res);
-			
+		
 			String[] letters = new String[numRows];
 			int i = 0;
 			while(res.next()){
@@ -82,8 +82,12 @@ public class StashModel extends CoreModel {
 			}
 			
 			Random randominteger = new Random();
+		
 			int r = randominteger.nextInt(letters.length);
+		
+				
 			letter = letters[r];
+			
 			
 		} catch(Exception e){
 			e.printStackTrace();
