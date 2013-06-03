@@ -15,6 +15,7 @@ import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
+import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.models.StashModel;
@@ -50,7 +51,7 @@ public class MainController extends CoreController {
 		addView(frame);
 		addModel(boardModel);
 		addModel(account);
-
+		addModel(new ChallengeModel(account));
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
 		// chatPanel.addToChatField(message);

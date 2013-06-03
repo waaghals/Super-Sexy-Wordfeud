@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import nl.avans.min04sob.scrabble.controllers.CompetitionController;
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class ChallengeModel extends CoreModel {
@@ -29,6 +30,7 @@ public class ChallengeModel extends CoreModel {
 	private AccountModel accountModel;
 	private CompetitionController competitionController;
 	private boolean isDuplication = false;
+	private int numChallenge;
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
@@ -38,7 +40,6 @@ public class ChallengeModel extends CoreModel {
 
 	public void check(String challenger, String opponent, int compID)// uitdager
 	{
-
 
 		boolean error = false;
 
@@ -61,10 +62,8 @@ public class ChallengeModel extends CoreModel {
 
 					if ((result.getString(7).equals(STATE_UNKNOWN)
 							&& result.getString(4).equals(challenger)
-							&& result.getString(5).equals(opponent)
-							&& result.getString(3).equals(STATE_REQUEST)
-							))
-					{
+							&& result.getString(5).equals(opponent) && result
+							.getString(3).equals(STATE_REQUEST))) {
 						error = true;
 						break;
 					}
@@ -81,11 +80,11 @@ public class ChallengeModel extends CoreModel {
 		setDupicatedChallenge(error);
 
 	}
-	
+
 	private void setDupicatedChallenge(boolean e) {
 		isDuplication = e;
 	}
-	
+
 	public boolean isDuplicatedChallenge() {
 		return isDuplication;
 	}
@@ -99,10 +98,9 @@ public class ChallengeModel extends CoreModel {
 
 		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?)";
 		try {
-			Db.run(new Query(query).set(compID)
-					.set(STATE_REQUEST).set(challenger).set(opponent)
-					.set(currentdate).set(STATE_UNKNOWN)
-					.set("standard").set("NL"));
+			Db.run(new Query(query).set(compID).set(STATE_REQUEST)
+					.set(challenger).set(opponent).set(currentdate)
+					.set(STATE_UNKNOWN).set("standard").set("NL"));
 		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
@@ -137,7 +135,7 @@ public class ChallengeModel extends CoreModel {
 		}
 
 		else {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,  } `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
 			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
 		}
@@ -151,32 +149,37 @@ public class ChallengeModel extends CoreModel {
 	}
 
 	public String[] challengeArray() {
-		String [] challenges = new String[0];
+		String[] challenges = new String[0];
 		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(selectQuery).set(
-					accountModel.getUsername()).set(STATE_REQUEST).set(STATE_UNKNOWN));
+			Future<ResultSet> worker = Db.run(new Query(selectQuery)
+					.set(accountModel.getUsername()).set(STATE_REQUEST)
+					.set(STATE_UNKNOWN));
 			ResultSet dbResult = worker.get();
 			challenges = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < challenges.length) {
-				challenges[x] = new String(dbResult.getString("account_naam_uitdager"));
+				challenges[x] = new String(
+						dbResult.getString("account_naam_uitdager"));
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return challenges;
-		
-		
 	}
 
 	@Override
 	public void update() {
+
+		
 		// // if your name = tegenstander if your naam = uitdager
 		// /// receive challenge your name = challenged ///// ///// ///// /////
 		// ///// ///// /////
 		// /array list add alleen als challend= yourname;;
-		
+
+		int oldNumChallenge = numChallenge;
+		numChallenge = challengeArray().length;
+		firePropertyChange(Event.NEWCHALLENGE, oldNumChallenge, numChallenge);
 
 	}
 

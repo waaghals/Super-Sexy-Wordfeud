@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -212,6 +211,8 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
+		System.out.println("MenuView event recieved");
+		System.out.println(evt.getPropertyName());
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel user = (AccountModel) evt.getNewValue();
@@ -232,14 +233,15 @@ public class MenuView extends JMenuBar implements CoreView {
 			setLoggedOutState();
 
 			break;
-
 		case Event.NEWCHALLENGE:
-			numChallenge = (int) evt.getNewValue();
+			String[] challenges = (String[]) evt.getNewValue();
+			setChallengeCount(challenges.length);
 			break;
 
 		default:
 			break;
 		}
+		
 	}
 
 	private void setVisibleMenus(AccountModel user) {
