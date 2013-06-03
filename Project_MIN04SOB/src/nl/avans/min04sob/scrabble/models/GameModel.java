@@ -191,7 +191,7 @@ public class GameModel extends CoreModel {
 		// Everything went better than expected.jpg :)
 	}
 
-	public void checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public ArrayList<String> checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		// verticaal woord
 		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
 		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
@@ -265,13 +265,23 @@ public class GameModel extends CoreModel {
 				teVergelijkenWoorden.add(output);
 			}
 		}
-		for (String s:teVergelijkenWoorden){
-			System.out.println(s);
-		}
-		
+		return teVergelijkenWoorden;
 
 	}
 
+	public void legWoord(Tile[][] playedLetters,Tile[][] oldBoard,Tile[][] newBoard){
+		try{
+			//Tile[][]newBoardTiles = (Tile[][]) newBoard.getData();
+			//checkValidMove(oldBoard, newBoard);
+			ArrayList<String> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
+			checkWordsInDatabase(teVergelijkenWoorden);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+		
+	}
+	
 	public String[][] compareArrays(String[][] bord, String[][] database) {
 		String[][] returns = new String[7][3];
 		int counter = 0;
@@ -336,26 +346,21 @@ public class GameModel extends CoreModel {
 		}
 	}
 
+	
 	private void checkWordsInDatabase(ArrayList<String> words) throws Exception{
 		for(String s:words){
-			System.out.println(s);
-			try {
-				String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
-				ResultSet wordresult = new Query(getWordFromDatabase).set(s).select();
-				if(Query.getNumRows(wordresult) == 0){
-					new Query(query).set(s).exec();
-					throw new Exception(STATE_SETPENDING);
-				}else if(wordresult.next()){
-					String statusString = wordresult.getString("status");
-					if(statusString.equals("Denied")){
-						throw new Exception(STATE_DENIED);
-					}else if(statusString.equals("Pending")){
-						throw new Exception(STATE_PENDING);
-					}else if(statusString.equals("Accepted")){
-					}
+			String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
+			ResultSet wordresult = new Query(getWordFromDatabase).set(s).call();
+			if(Query.getNumRows(wordresult) == 0){
+				new Query(query).set(s).call();
+				throw new Exception(STATE_SETPENDING);
+			}else if(wordresult.next()){
+				String statusString = wordresult.getString("status");
+				if(statusString.equals("Denied")){
+					throw new Exception(STATE_DENIED);
+				}else if(statusString.equals("Pending")){
+					throw new Exception(STATE_PENDING);
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 		

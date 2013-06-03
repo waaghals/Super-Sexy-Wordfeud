@@ -12,14 +12,14 @@ import javax.swing.JLabel;
 
 public class CreateCompetitionView extends CorePanel {
 	
-	private JFrame myFrame;
+	//private JFrame myFrame;
 	private JButton backButton;
 	private JTextField textField;
 	private JButton createButton;
 	private JLabel lblTest;
 	
 	public CreateCompetitionView(){
-		myFrame = new JFrame();
+		//myFrame = new JFrame();
 		
 		setLayout(new MigLayout("", "[131.00][137.00,grow]", "[][45.00,grow][30.00]"));
 		
@@ -35,7 +35,7 @@ public class CreateCompetitionView extends CorePanel {
 
 		createButton = new JButton("Aanmaken");
 		add(createButton, "cell 1 2,alignx right");
-		
+		/*
 		myFrame.setContentPane(this);
 		myFrame.setTitle("Competition aanmaken");
 		myFrame.setResizable(false);
@@ -43,6 +43,7 @@ public class CreateCompetitionView extends CorePanel {
 		myFrame.pack();
 		myFrame.setDefaultCloseOperation(myFrame.DISPOSE_ON_CLOSE);
 		myFrame.setVisible(true);
+		*/
 	}
 	
 	public String getDiscription(){
