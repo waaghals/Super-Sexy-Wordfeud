@@ -11,9 +11,11 @@ import java.io.IOException;
  */
 public class Queries {
 	public static final String CURRENT_TILES;
+	public static final String RANKING;
 
 	static {
 		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
+		RANKING = Queries.readFile("queries/ranking.sql");
 	}
 
 	private static String readFile(final String file) {

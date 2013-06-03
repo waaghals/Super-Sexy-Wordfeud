@@ -23,6 +23,7 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_PLAYING = "Playing";
 	private final String selectQuery = "SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
 	private final String checkQuery = "SELECT * FROM `spel`";
+	private final String countQuery = "SELECT COUNT(*) FROM Spel ";
 	private ResultSet result;
 	private String yourname;
 	private ArrayList<String> challenge = new ArrayList<String>();
@@ -42,7 +43,7 @@ public class ChallengeModel extends CoreModel {
 
 		boolean error = false;
 
-		String countQuery = "SELECT COUNT(*) FROM Spel ";
+		
 
 		try {
 			Future<ResultSet> worker = Db.run(new Query(countQuery));
@@ -78,12 +79,12 @@ public class ChallengeModel extends CoreModel {
 		if (!error) {
 			createChallenge(challenger, opponent, compID);
 		}
-		setDupicatedChallenge(error);
+		setDuplicatedChallenge(error);
 
 	}
 	
-	private void setDupicatedChallenge(boolean e) {
-		isDuplication = e;
+	private void setDuplicatedChallenge(boolean error) {
+		isDuplication = error;
 	}
 	
 	public boolean isDuplicatedChallenge() {
