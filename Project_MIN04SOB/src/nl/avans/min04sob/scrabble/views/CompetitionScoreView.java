@@ -31,12 +31,10 @@ public class CompetitionScoreView extends CorePanel {
 	private DefaultTableModel tableModel;
 
 	public CompetitionScoreView() {
-		setLayout(new MigLayout("", "[200px:220px:220px,grow][800px:800px:800px]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
+		setLayout(new MigLayout("", "[250px:n:350px,grow][400px:n]", "[][100px:100px:100px,grow][][100px:150px:100px,grow][100px:100px:25px]"));
 
-		columnNames = new String[] { "account_naam",
-				"aantal gespeelde webstrijden", "totaal aantal punten",
-				"gemiddeld aantal punten per wedstrijd",
-				"aantal webstrijden gewonnen/verloren", "bayesian-average" };
+		columnNames = new String[] { "Naam", "Aantal wedstrijden",
+				"Aantal gewonnen" };
 
 		competitionLabel = new JLabel("Competities");
 		add(competitionLabel, "cell 0 0,alignx left");
@@ -46,7 +44,7 @@ public class CompetitionScoreView extends CorePanel {
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1 1 3,grow");
-		
+
 		scrollPane1 = new JScrollPane();
 		add(scrollPane1, "cell 1 1 1 3,grow");
 
@@ -60,19 +58,16 @@ public class CompetitionScoreView extends CorePanel {
 
 		backButton = new JButton("Terug");
 		add(backButton, "cell 0 4,alignx left,aligny top");
-		
+
 	}
 
 	public void setColumns() {
-		tableModel.addColumn("account_naam");
-		tableModel.addColumn("aantal gespeelde wedstrijd");
-		tableModel.addColumn("totaal aantal punten");
-		tableModel.addColumn("gemiddeld aantal punten per wedstrijd");
-		tableModel.addColumn("aantal webstrijden gewonnen/verloren");
-		tableModel.addColumn("bayesian-average");		
+		tableModel.addColumn("Naam");
+		tableModel.addColumn("Aantal wedstrijden");
+		tableModel.addColumn("Aantal gewonnen");
 	}
-	
-	public void addRow(Object[] dataRow){
+
+	public void addRow(Object[] dataRow) {
 		tableModel.addRow(dataRow);
 	}
 
@@ -94,21 +89,20 @@ public class CompetitionScoreView extends CorePanel {
 	public CompetitionModel selectedCompetition() {
 		return competitionList.getSelectedValue();
 	}
-	
-	public void addBackListener(ActionListener listener){
+
+	public void addBackListener(ActionListener listener) {
 		backButton.addActionListener(listener);
 	}
-	
-	public void addCompetitionListListener(MouseAdapter listener){
+
+	public void addCompetitionListListener(MouseAdapter listener) {
 		competitionList.addMouseListener(listener);
 	}
-	
+
 	public void fillCompetitions(CompetitionModel[] comp) {
 		competitionList.setListData(comp);
 	}
-	
-	
-	public CompetitionModel getSelectedCompetition(){
+
+	public CompetitionModel getSelectedCompetition() {
 		return competitionList.getSelectedValue();
 	}
 }
