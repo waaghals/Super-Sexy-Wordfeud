@@ -97,15 +97,31 @@ public class ChallengeModel extends CoreModel {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
-
+		String insertLetters = "INSERT INTO `letter` (`ID`,`Spel_ID`,`LetterType_LetterSet_Code`,`LetterType_Karakter`) VALUES (?,?,?,?,?,?)";
 		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?)";
+		String getSpelId = "SELECT Max(ID)FROM `spel` ";
+		String getSortOfLetter_Amount = "SELECT `karakter` , `aantal`FROM `lettertype`WHERE `LetterSet_code` = ?";
 		try {
 			Db.run(new Query(query).set(compID)
 					.set(STATE_REQUEST).set(challenger).set(opponent)
 					.set(currentdate).set(STATE_UNKNOWN)
 					.set("standard").set("NL"));
-		} catch (SQLException sql) {
-			sql.printStackTrace();
+			Future<ResultSet> workerId = Db.run(new Query(getSpelId));
+			ResultSet spelId = workerId.get();
+			spelId.next();
+			
+			Future<ResultSet> worker = Db.run(new Query(getSortOfLetter_Amount).set("NL"));
+			ResultSet res = worker.get();
+			int idCounter = 0;
+			while(res.next()){
+				for(int counter = 0;counter < res.getInt("aantal"); counter++ ){
+					Db.run(new Query(insertLetters).set(idCounter).set(spelId.getInt(0)).set("NL").set(res.getString(0)));
+					idCounter++;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
