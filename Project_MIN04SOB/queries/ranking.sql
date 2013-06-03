@@ -1,7 +1,8 @@
-SELECT `c`.`omschrijving`   AS `omschrijving`, 
+SELECT `r`.`competitie_id`  AS `competitie_id`,
+       `c`.`omschrijving`   AS `omschrijving`, 
        `r`.`account_naam`   AS `account`, 
        `b`.`this_num_games` AS `aantal_wedstrijden`, 
-       `w`. `wins`          AS `aantal_gewonnen` 
+
 FROM   `ranking` AS `r` 
        JOIN `rank_bayesian` AS `b` 
          ON ( `r`.`competitie_id` = `b`.`competitie_id` 

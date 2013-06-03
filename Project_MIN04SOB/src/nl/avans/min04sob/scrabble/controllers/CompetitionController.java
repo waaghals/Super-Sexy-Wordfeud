@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -88,7 +89,7 @@ public class CompetitionController extends CoreController {
 		window1.add(competitionScoreView);
 		window1.setResizable(false);
 		window1.setTitle("Competitie Scores");
-		window1.setPreferredSize(new Dimension(500,300));
+		window1.setPreferredSize(new Dimension(1000,300));
 		window1.pack();
 
 		competitionScoreView.addBackListener(new ActionListener() {
@@ -106,9 +107,9 @@ public class CompetitionController extends CoreController {
 				if (e.getClickCount() == 1) {
 					CompetitionModel selectedComp = competitionScoreView
 							.getSelectedCompetition();
-					String[][] rankingData = selectedComp.getRanking();
-
-					for (String[] row : rankingData) {
+					ArrayList<Object[]> rankingData = selectedComp.getRanking();
+					competitionScoreView.emptyTable();
+					for (Object[] row : rankingData) {
 						competitionScoreView.addRow(row);
 					}
 				}
@@ -301,7 +302,6 @@ public class CompetitionController extends CoreController {
 		
 		createCompetitionView.addBackButtonListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window2.dispose();
 				
@@ -310,7 +310,6 @@ public class CompetitionController extends CoreController {
 		
 		createCompetitionView.addCreateButtonListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
 				competitionModel.checkCompetition(accountModel.getUsername(), desc);
