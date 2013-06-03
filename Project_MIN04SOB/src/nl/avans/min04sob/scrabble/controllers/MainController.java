@@ -331,8 +331,9 @@ public class MainController extends CoreController {
 
 			
 			for(int counter = 0;newletters.length > counter; counter++){
-				String newletter = stash.getRandomLetter();
+				
 				if(stash.letterleft()){
+					String newletter = stash.getRandomLetter();
 					if(!(letters.length > counter)){
 							newletters[counter] = new Tile(newletter,selectedGame.getvalueforLetter(newletter),Tile.MUTATABLE );
 					}else{

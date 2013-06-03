@@ -21,7 +21,7 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
-	private final String selectQuery = "SELECT `ID`,`account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
+	private final String selectQuery = "SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
 	private final String checkQuery = "SELECT * FROM `spel`";
 	private ResultSet result;
 	private String yourname;
@@ -159,7 +159,7 @@ public class ChallengeModel extends CoreModel {
 			ResultSet dbResult = worker.get();
 			challenges = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < challenges.length) {
-				challenges[x] = new String(dbResult.getInt("ID") + ", " + dbResult.getString("account_naam_uitdager"));
+				challenges[x] = new String(dbResult.getString("account_naam_uitdager"));
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {

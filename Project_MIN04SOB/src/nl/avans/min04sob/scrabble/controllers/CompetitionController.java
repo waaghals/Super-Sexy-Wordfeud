@@ -251,6 +251,7 @@ public class CompetitionController extends CoreController {
 					int id = competitionView.getSelectedCompetition()
 							.getCompId();
 					getParticipants(id);
+					competitionModel.join(id, accountModel.getUsername());
 					window.dispose();
 					// competitionView.removeIndex(competitionView.getIndex());
 				} else {
@@ -278,14 +279,27 @@ public class CompetitionController extends CoreController {
 
 	}
 
-	public void openCreateCompetitionView() {
-		window = new CoreWindow();
-		createCompetitionView = new CreateCompetitionView();
-		window.add(createCompetitionView);
+	public void openCreateCompetitionView(){
+		createCompetitionView= new CreateCompetitionView();
+		
+		createCompetitionView.addBackButtonListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
+				
+			}
+		});
+		
+		createCompetitionView.addCreateButtonListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String desc = createCompetitionView.getDiscription();
+				competitionModel.createCompetition(desc);
+			}
+		});
 
-		window.setPreferredSize(new Dimension(400, 320));
-		window.setResizable(false);
-		window.pack();
 	}
 
 }

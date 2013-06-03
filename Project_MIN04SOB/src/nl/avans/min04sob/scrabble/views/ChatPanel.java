@@ -1,6 +1,7 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Color;
+import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -23,15 +24,17 @@ public class ChatPanel extends CorePanel {
 	private JScrollPane chatScroll;
 
 	public ChatPanel() {
+		
 		setLayout(new MigLayout("", "[::300px][300px][100px][100px]", "[::300px][400px][100px:150px:200px][30px]"));
 		chatField = new JTextArea();
 		chatField.setEnabled(false);
+		chatField.setWrapStyleWord(true);
+		chatField.setLineWrap(true);
 		chatField.setDisabledTextColor(Color.BLACK);
-		chatScroll = new JScrollPane(chatField);
+		chatScroll = new JScrollPane(chatField, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		chatSendButton = new JButton();
 		chatSendButton.setText("Verstuur");
-
 		add(chatScroll, "cell 0 0 4 3,grow");
 		chatFieldSend = new JTextField();
 		add(chatFieldSend, "cell 0 3 3 1,grow");

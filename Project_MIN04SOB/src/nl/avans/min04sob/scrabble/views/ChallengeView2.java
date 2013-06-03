@@ -61,7 +61,7 @@ public class ChallengeView2 extends CorePanel {
 	public void fillChallengeList(String[] challenges) {
 		
 		challengeList.setListData(challenges);
-		if(challengeList.getModel().getSize() == 0)
+		if(challengeList.getModel().getSize() > 0)
 		{
 		acceptButton .setEnabled(true);
 		declineButton.setEnabled(true);
