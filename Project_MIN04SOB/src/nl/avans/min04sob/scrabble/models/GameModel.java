@@ -754,7 +754,7 @@ public class GameModel extends CoreModel {
 	@Override
 	public String toString() {
 		// return gameId + "";
-		return "(" + gameId + ") " + competition.getDesc() + " - "
+		return "(" + gameId + ") " + competition.getDesc() + " : " + challenger.getUsername() + " - "
 				+ opponent.getUsername();
 	}
 
