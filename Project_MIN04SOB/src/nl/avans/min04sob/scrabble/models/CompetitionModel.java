@@ -303,14 +303,14 @@ public class CompetitionModel extends CoreModel {
 		return start;
 	}
 
-	public AccountModel[] getUsersFromCompetition(int competition_id) {
+	public AccountModel[] getUsersFromCompetition(int competition_id, String username) {
 		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
-							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?")
-							.set(competition_id));
+							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` NOT LIKE ?")
+							.set(competition_id).set(username));
 			ResultSet dbResult = worker.get();
 			accounts = new AccountModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
