@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
@@ -121,6 +123,11 @@ public class CompetitionView extends CorePanel{
 		competitionsLabel.setText(labelText);
 		actionButton.setText(button);
 		actionButton.setVisible(visible);
+		revalidate();
+	}
+
+	public void changeActionText() {
+		actionButton.setText("1 uitdaging per tegenstander");
 		revalidate();
 	}
 	
