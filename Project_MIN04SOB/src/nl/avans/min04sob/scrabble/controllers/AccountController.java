@@ -46,7 +46,7 @@ public class AccountController extends CoreController {
 		addModel(accountModel);
 		changepassPaneladmin = new ChangePassPanelAdministrator();
 		addView(changepassPaneladmin);
-
+		changepassPaneladmin.fillPlayerList(accountModel.getPlayers());
 		changepassPaneladmin.BackaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -236,6 +236,13 @@ public class AccountController extends CoreController {
 	public void initialize() {
 		// TODO Automatisch gegenereerde methodestub
 
+	}
+	
+	public void adminChangePass(){
+		frame.remove(loginPanel);
+		frame.add(changepassPaneladmin);
+		frame.repaint();
+		frame.pack();
 	}
 
 	public void loginToRegister() {

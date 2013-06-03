@@ -28,7 +28,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem logoutItem;
 	private JMenuItem changePassItem;
 	private JMenuItem registerItem;
-	private JMenuItem viewPlayers;
+ 
 
 	private JMenuItem doChallengeItem;
 	private JMenuItem viewChallengeItem;
@@ -45,6 +45,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private ActionListener openGameListener;
 	private ActionListener viewGameListener;
 	private JMenuItem createCompetitionItem;
+	private JMenuItem viewPlayers;
 
 
 	public MenuView() {
@@ -322,6 +323,9 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	public void viewWords(ActionListener listener) {
 		viewWords.addActionListener(listener);
+	}
+	public void viewPlayers(ActionListener listener) {
+		viewPlayers.addActionListener(listener);
 	}
 
 }

@@ -169,7 +169,14 @@ public class MainController extends CoreController {
 				//invController.setButtonsJoin();
 			}
 		});
-
+		menu.viewPlayers(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				accountcontroller= new AccountController(account);
+				accountcontroller.adminChangePass();
+			 
+			}});
+		
 		menu.viewWords(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
