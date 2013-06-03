@@ -124,6 +124,7 @@ public class CompetitionController extends CoreController {
 		window = new CoreWindow();
 		window.add(competitionView);
 		window.setTitle("Speler uitdagen");
+		window.setPreferredSize(new Dimension(400,300));
 
 		window.setResizable(false);
 		window.pack();
