@@ -25,21 +25,20 @@ public class CompetitionController extends CoreController {
 	private AccountModel accountModel;
 	private ChallengeModel challengeModel;
 	private CompetitionScoreView competitionScoreView;
-	private int index; //competitie id meegeven
+	private int index; // competitie id meegeven
 	private CreateCompetitionView createCompetitionView;
 
-	public CompetitionController(AccountModel user)
-	{
+	public CompetitionController(AccountModel user) {
 
 		accountModel = user;
 		competitionModel = new CompetitionModel();
 		competitionView = new CompetitionView();
 		challengeModel = new ChallengeModel(accountModel);
 		competitionScoreView = new CompetitionScoreView();
-		
+
 		addView(competitionView);
 		addModel(competitionModel);
-		
+
 	}
 
 	@Override
@@ -47,245 +46,246 @@ public class CompetitionController extends CoreController {
 		// TODO Auto-generated method stub
 	}
 
-	public void getAllCompetitions(){
+	public void getAllCompetitions() {
 		competitionView.fillCompetitions(competitionModel.getAllCompetitions());
 	}
-	
-	public void getAllCompetitionsScore(){
-		competitionScoreView.fillCompetitions(competitionModel.getAllCompetitions());
+
+	public void getAllCompetitionsScore() {
+		competitionScoreView.fillCompetitions(competitionModel
+				.getAllCompetitions());
 	}
-	
-	public void getAvailable(String username){
-		competitionView.fillCompetitions(accountModel.getAvailableCompetitions(username));
+
+	public void getAvailable(String username) {
+		competitionView.fillCompetitions(accountModel
+				.getAvailableCompetitions(username));
 	}
-	
-	public void getCompetitions(String username){
-		competitionView.fillCompetitions(accountModel.getCompetitions(username));
+
+	public void getCompetitions(String username) {
+		competitionView
+				.fillCompetitions(accountModel.getCompetitions(username));
 	}
-	
-	public int getCompID(){ //competition ID meegeven
+
+	public int getCompID() { // competition ID meegeven
 		return index;
 	}
-	public void getParticipants(int competition_id){
-		competitionView.fillPlayerList(competitionModel.getUsersFromCompetition(competition_id));
+
+	public void getParticipants(int competition_id) {
+		competitionView.fillPlayerList(competitionModel
+				.getUsersFromCompetition(competition_id));
 	}
+
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 	}
-	
-	public void openCompetitionScores(){
+
+	public void openCompetitionScores() {
 		window1 = new CoreWindow();
 		window1.add(competitionScoreView);
-		
-		window1.setPreferredSize(new Dimension(1400,320));
 		window1.setResizable(false);
 		window1.pack();
-		
-		competitionScoreView.addBackListener(new ActionListener(){
+
+		competitionScoreView.addBackListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window1.dispose();
-				window1=null;
-			}	
+				window1 = null;
+			}
 		});
-		
+
 		competitionScoreView.addCompetitionListListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getClickCount()==1){
-					int id = competitionScoreView.getSelectedCompetition().getCompId();
-					Object[] rowData = new Object[6];
-					int index = 0;
-					//naam, aantal spellen, totaal punten, gemiddelde punten, win/lose, bayesian-
-					for(AccountModel account: competitionModel.getUsersFromCompetition(id)){
-						rowData[0] = account;
-						rowData[1] = competitionModel.totalPlayedGames(id, account.getUsername());
-						rowData[2] = competitionModel.totalPoints(id, account.getUsername());
-						rowData[3] = competitionModel.averagePoints(id, account.getUsername());
-						rowData[4] = competitionModel.amountWon(id, account.getUsername()) +" / " + competitionModel.amountLost(id, account.getUsername());
-						rowData[5] = "bayesian-gemiddelde";
-						competitionScoreView.addRow(rowData);
-						index++;
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					CompetitionModel selectedComp = competitionScoreView
+							.getSelectedCompetition();
+					String[][] rankingData = selectedComp.getRanking();
+
+					for (String[] row : rankingData) {
+						competitionScoreView.addRow(row);
 					}
 				}
 			}
 		});
-		
+
 		getAllCompetitionsScore();
-		
+
 	}
-	
-	
-	
-	public void openCompetitionView(){
+
+	public void openCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
+
 		window.setResizable(false);
 		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
+
+		competitionView.addBackListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
 				window = null;
-			}	
+			}
 		});
-		//uitdagen
-		competitionView.addActionButtonListener(new ActionListener(){
+		// uitdagen
+		competitionView.addActionButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int id = competitionView.getSelectedCompetition().getCompId();
-				challengeModel.check(accountModel.getUsername(), competitionView.getSelectedPlayer().getUsername(), id);
+				challengeModel.check(accountModel.getUsername(),
+						competitionView.getSelectedPlayer().getUsername(), id);
 				if (challengeModel.isDuplicatedChallenge()) {
 					competitionView.changeActionText();
 				}
 			}
 		});
-		
+
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getClickCount()==1){
-					int id = competitionView.getSelectedCompetition().getCompId();
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int id = competitionView.getSelectedCompetition()
+							.getCompId();
 					getParticipants(id);
 				}
 			}
 		});
-		
-		competitionView.setText("Ingeschreven competities", "Spelers in competitie", "Speler uitdagen", true);
-		
+
+		competitionView.setText("Ingeschreven competities",
+				"Spelers in competitie", "Speler uitdagen", true);
+
 		getCompetitions(accountModel.toString());
 	}
-	
-	//wordt niet gebruikt
+
+	// wordt niet gebruikt
 	public void openDeleteCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
+
+		window.setPreferredSize(new Dimension(400, 320));
 		window.setResizable(false);
 		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
+
+		competitionView.addBackListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
-				window=null;
-			}	
+				window = null;
+			}
 		});
-		
+
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getClickCount()==1){
-					int id = competitionView.getSelectedCompetition().getCompId();
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int id = competitionView.getSelectedCompetition()
+							.getCompId();
 					getParticipants(id);
 				}
 			}
 		});
-		
-		competitionView.setText("Competities", "Spelers in competitie", "Verwijder Competitie",true);
-		
-		getAllCompetitions();	
+
+		competitionView.setText("Competities", "Spelers in competitie",
+				"Verwijder Competitie", true);
+
+		getAllCompetitions();
 	}
-	
-	//wordt niet gebruikt
+
+	// wordt niet gebruikt
 	public void openDeleteFromCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
+
+		window.setPreferredSize(new Dimension(400, 320));
 		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
+
+		competitionView.addBackListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
-				window =null;
-			}	
+				window = null;
+			}
 		});
-		
+
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getClickCount()==1){
-					int id = competitionView.getSelectedCompetition().getCompId();
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int id = competitionView.getSelectedCompetition()
+							.getCompId();
 					getParticipants(id);
 				}
 			}
 		});
-		
-		competitionView.setText("Ingeschreven Competities", "Spelers in competitie", "Verwijderen uit Competitie",true);
-		
-		getAvailable(accountModel.toString());	
+
+		competitionView.setText("Ingeschreven Competities",
+				"Spelers in competitie", "Verwijderen uit Competitie", true);
+
+		getAvailable(accountModel.toString());
 	}
-	
+
 	public void openJoinCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
+
+		window.setPreferredSize(new Dimension(400, 320));
 		window.setResizable(false);
 		window.pack();
-		
-		competitionView.addBackListener(new ActionListener(){
+
+		competitionView.addBackListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window.dispose();
-				window=null;
-			}	
+				window = null;
+			}
 		});
-		//joinCompetition
-		competitionView.addActionButtonListener(new ActionListener(){
+		// joinCompetition
+		competitionView.addActionButtonListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(competitionView.getSelectedCompetition() != null){
-					int id = competitionView.getSelectedCompetition().getCompId();
+				if (competitionView.getSelectedCompetition() != null) {
+					int id = competitionView.getSelectedCompetition()
+							.getCompId();
 					getParticipants(id);
 					window.dispose();
-					//competitionView.removeIndex(competitionView.getIndex());
-				}
-				else{
+					// competitionView.removeIndex(competitionView.getIndex());
+				} else {
 					System.out.println("selecteer een competitie");
 				}
 			}
-			
-		}); 
-		
+
+		});
+
 		competitionView.addCompetitionListListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getClickCount()==1){
-					int id = competitionView.getSelectedCompetition().getCompId();
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					int id = competitionView.getSelectedCompetition()
+							.getCompId();
 					getParticipants(id);
 				}
 			}
 		});
-		
-		competitionView.setText("Beschikbare competities", "Spelers in competitie", "Competitie deelnemen", true);
-		
+
+		competitionView.setText("Beschikbare competities",
+				"Spelers in competitie", "Competitie deelnemen", true);
+
 		getAvailable(accountModel.toString());
-		
+
 	}
-	
-	public void openCreateCompetitionView(){
+
+	public void openCreateCompetitionView() {
 		window = new CoreWindow();
-		createCompetitionView= new CreateCompetitionView();
+		createCompetitionView = new CreateCompetitionView();
 		window.add(createCompetitionView);
-		
-		window.setPreferredSize(new Dimension(400,320));
+
+		window.setPreferredSize(new Dimension(400, 320));
 		window.setResizable(false);
 		window.pack();
-		
-				
 	}
 
 }

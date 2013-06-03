@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
+import nl.avans.min04sob.scrabble.core.Queries;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class CompetitionModel extends CoreModel {
@@ -71,7 +72,8 @@ public class CompetitionModel extends CoreModel {
 		int amountWon = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(gamefinished)
-					.set(username).set(username).set(competitionID).set("finished"));
+					.set(username).set(username).set(competitionID)
+					.set("finished"));
 			ResultSet dbResult1 = worker.get();
 			while (dbResult1.next()) {
 				spel_ids.add(dbResult1.getInt("id"));
@@ -103,7 +105,8 @@ public class CompetitionModel extends CoreModel {
 		int amountLost = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(gamefinished)
-					.set(username).set(username).set(competitionID).set("finished"));
+					.set(username).set(username).set(competitionID)
+					.set("finished"));
 			ResultSet dbResult1 = worker.get();
 			while (dbResult1.next()) {
 				spel_ids.add(dbResult1.getInt("id"));
@@ -271,7 +274,8 @@ public class CompetitionModel extends CoreModel {
 		ArrayList<Array> all = new ArrayList<Array>();
 
 		try {
-			Future<ResultSet> worker = Db.run(new Query(leaderboardQuery).set(competitionID));
+			Future<ResultSet> worker = Db.run(new Query(leaderboardQuery)
+					.set(competitionID));
 			ResultSet dbResult = worker.get();
 			all.add(dbResult.getArray("account_naam"));
 			all.add(dbResult.getArray("competitie_id"));
@@ -294,9 +298,10 @@ public class CompetitionModel extends CoreModel {
 		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(
-					"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?")
-					.set(competition_id));
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ?")
+							.set(competition_id));
 			ResultSet dbResult = worker.get();
 			accounts = new AccountModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < accounts.length) {
@@ -323,8 +328,8 @@ public class CompetitionModel extends CoreModel {
 	public void remove(int competitionID, String username) {
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		try {
-			Future<ResultSet> worker = Db.run(new Query(chatsToRemove).set(username)
-					.set(username).set(competitionID));
+			Future<ResultSet> worker = Db.run(new Query(chatsToRemove)
+					.set(username).set(username).set(competitionID));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
 				spel_ids.add(dbResult.getInt("spel_id"));
@@ -349,8 +354,9 @@ public class CompetitionModel extends CoreModel {
 	public int totalPlayedGames(int competitionID, String username) {
 		int totalGames = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(totalPlayedGamesQuery).set(username)
-					.set(username).set(competitionID).set("finished"));
+			Future<ResultSet> worker = Db.run(new Query(totalPlayedGamesQuery)
+					.set(username).set(username).set(competitionID)
+					.set("finished"));
 			ResultSet dbResult = worker.get();
 			if (dbResult.next()) {
 				totalGames = dbResult.getInt("COUNT(*)");
@@ -364,9 +370,8 @@ public class CompetitionModel extends CoreModel {
 	public int totalPoints(int competitionID, String username) {
 		int total = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(
-					totalPointsQuery)
-					.set(competitionID).set(username));
+			Future<ResultSet> worker = Db.run(new Query(totalPointsQuery).set(
+					competitionID).set(username));
 			ResultSet dbResult = worker.get();
 			if (dbResult.next()) {
 				total = dbResult.getInt("score");
@@ -381,5 +386,23 @@ public class CompetitionModel extends CoreModel {
 	public void update() {
 		// TODO Automatisch gegenereerde methodestub
 
+	}
+
+	public String[][] getRanking() {
+		String[][] rankingData = new String[10][3];
+		int i = 0;
+		try {
+			Future<ResultSet> worker = Db.run(new Query(Queries.RANKING));
+			ResultSet rs = worker.get();
+			while(rs.next()){
+				rankingData[i][0] = rs.getString("account");
+				rankingData[i][1] = rs.getString("aantal_wedstrijden");
+				rankingData[i][2] = rs.getString("aantal_gewonnen");
+				i++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		return rankingData;
 	}
 }
