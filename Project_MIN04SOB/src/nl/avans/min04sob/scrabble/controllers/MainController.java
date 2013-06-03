@@ -1,6 +1,7 @@
 
 package nl.avans.min04sob.scrabble.controllers;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,6 +19,7 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
+import nl.avans.min04sob.scrabble.models.PlayerTileModel;
 import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -35,6 +37,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
+	private PlayerTileModel playerTileModel;
 	private GameModel currentGame;
 	private InviteController invController;
 
@@ -50,15 +53,19 @@ public class MainController extends CoreController {
 		addView(chatPanel);
 		addView(frame);
 		addModel(boardModel);
+
 		addModel(account);
 		addModel(new ChallengeModel(account));
+
+		addModel(playerTileModel);
+
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
 		// chatPanel.addToChatField(message);
 		// }
 
 		frame.setJMenuBar(menu);
-
+		frame.setPreferredSize(new Dimension(1000,680));
 		frame.pack();
 	}
 
@@ -297,7 +304,8 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 
 		currGamePanel = new BoardPanel();
-
+		
+		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
@@ -322,27 +330,6 @@ public class MainController extends CoreController {
 		
 
 		ArrayList<GameModel> games;
-		StashModel stash = new StashModel();
-		currGamePanel.setPlayerTiles(stash.getPlayerTiles(account, selectedGame));
-		
-		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-		Tile[] newletters = new Tile[6];
-		
-		
-
-			
-			for(int counter = 0;newletters.length > counter; counter++){
-				
-				if(stash.letterleft()){
-					String newletter = stash.getRandomLetter();
-					if(!(letters.length > counter)){
-							newletters[counter] = new Tile(newletter,selectedGame.getvalueforLetter(newletter),Tile.MUTATABLE );
-					}else{
-						newletters[counter] = letters[counter];
-					}
-				}
-		}
-		currGamePanel.setPlayerTiles(newletters);
 
 		games = account.getObserverAbleGames();
 
