@@ -40,8 +40,6 @@ public class CompetitionModel extends CoreModel {
 	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) as `avg` FROM `beurt` JOIN `spel` ON `spel`.`id` = `beurt`.`spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
 	private final String gamefinished = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = ?";
 	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(`score`) as `score` FROM `spel` JOIN `beurt` ON `spel`.`id` = `beurt`.`spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `spel.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
-	private final String bayesianAverageQuery = "";
-	private final String query = "SELECT `*` FROM `deelnemer`;";
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
 
 	public CompetitionModel() {
@@ -390,21 +388,27 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public String[][] getRanking() {
-		String[][] rankingData = new String[10][3];
-		int i = 0;
+	public ArrayList<Object[]> getRanking() {
+		Object[] row = new Object[6];
+		ArrayList<Object[]> data = new ArrayList<>();
 		try {
-			Future<ResultSet> worker = Db.run(new Query(Queries.RANKING));
+			Future<ResultSet> worker = Db.run(new Query("SELECT * FROM `ranking`"));
 			ResultSet rs = worker.get();
 			while(rs.next()){
-				rankingData[i][0] = rs.getString("account");
-				rankingData[i][1] = rs.getString("aantal_wedstrijden");
-				rankingData[i][2] = rs.getString("aantal_gewonnen");
-				i++;
+				int compId = rs.getInt("competitie_id");
+				String accountName = rs.getString("account_naam");
+				
+				row[0] = accountName;
+				row[1] = totalPlayedGames(compId, accountName);
+				row[2] = totalPoints(compId, accountName);
+				row[3] = averagePoints(compId, accountName);
+				row[4] = amountWon(compId, accountName) + " / " + amountLost(compId, accountName);
+				row[5] = rs.getString("bayesian_rating");
+				data.add(row);
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		return rankingData;
+		return data;
 	}
 }
