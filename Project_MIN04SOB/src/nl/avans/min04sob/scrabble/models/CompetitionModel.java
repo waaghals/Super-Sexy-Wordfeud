@@ -144,16 +144,16 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public void createCompetition(String username, String eindDatum,
+	public void createCompetition(/*String username, String eindDatum,*/
 			String omschrijving) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date1 = new Date();
 			String currentdate = dateFormat.format(date1);
 			Date date2;
-			date2 = dateFormat.parse(eindDatum);
+			date2 = dateFormat.parse(eindDatum);		//nog ff naar gekeken worden. einddatum moet een maand later zijn als de startdatum'.
 			String endDate = dateFormat.format(date2);
-			Db.run(new Query(createQuery).set(username).set(currentdate)
+			Db.run(new Query(createQuery).set(owner.getUsername()).set(currentdate)
 					.set(endDate).set(omschrijving));
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();

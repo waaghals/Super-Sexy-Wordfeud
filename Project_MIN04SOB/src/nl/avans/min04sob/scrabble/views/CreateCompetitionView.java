@@ -47,6 +47,14 @@ public class CreateCompetitionView extends CorePanel {
 		return text;
 	}
 	
+	public void addBackButtonListener(ActionListener listener){
+		backButton.addActionListener(listener);
+	}
+	
+	public void addCreateButtonListener(ActionListener listener){
+		createButton.addActionListener(listener);
+	}
+	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub

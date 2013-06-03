@@ -285,7 +285,24 @@ public class CompetitionController extends CoreController {
 		window.setResizable(false);
 		window.pack();
 		
+		createCompetitionView.addBackButtonListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				window.dispose();
 				
+			}
+		});
+		
+		createCompetitionView.addCreateButtonListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String desc = createCompetitionView.getDiscription();
+				competitionModel.createCompetition(desc);
+			}
+		});
+		
 	}
 
 }
