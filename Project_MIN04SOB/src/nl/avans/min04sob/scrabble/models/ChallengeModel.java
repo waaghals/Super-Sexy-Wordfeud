@@ -81,11 +81,11 @@ public class ChallengeModel extends CoreModel {
 		setDupicatedChallenge(error);
 
 	}
-
+	
 	private void setDupicatedChallenge(boolean e) {
 		isDuplication = e;
 	}
-
+	
 	public boolean isDuplicatedChallenge() {
 		return isDuplication;
 	}
@@ -127,13 +127,6 @@ public class ChallengeModel extends CoreModel {
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		resultset.next();
-		for (int index = 0; index < challenge.size(); index++) {
-			String xx = resultset.getString(4);
-			if (xx.equals(challenge.get(index))) {
-				challenge.remove(index);
-			}
-		}
 		String query2 = "";
 
 		if (accepted == true) {
@@ -148,7 +141,13 @@ public class ChallengeModel extends CoreModel {
 			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
 		}
-		
+		resultset.next();
+		for (int index = 0; index < challenge.size(); index++) {
+			String xx = resultset.getString(4);
+			if (xx.equals(challenge.get(index))) {
+				challenge.remove(index);
+			}
+		}
 	}
 
 	public String[] challengeArray() {
@@ -160,15 +159,15 @@ public class ChallengeModel extends CoreModel {
 			ResultSet dbResult = worker.get();
 			challenges = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < challenges.length) {
-				challenges[x] = new String( dbResult.getString("account_naam_uitdager"));
+				challenges[x] = new String(dbResult.getInt("ID") + ", " + dbResult.getString("account_naam_uitdager"));
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return challenges;
-
-
+		
+		
 	}
 
 	@Override
@@ -177,7 +176,7 @@ public class ChallengeModel extends CoreModel {
 		// /// receive challenge your name = challenged ///// ///// ///// /////
 		// ///// ///// /////
 		// /array list add alleen als challend= yourname;;
-
+		
 
 	}
 
