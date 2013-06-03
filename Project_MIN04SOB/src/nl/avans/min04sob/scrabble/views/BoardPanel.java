@@ -22,6 +22,7 @@ import nl.avans.min04sob.scrabble.core.TileTable;
 import nl.avans.min04sob.scrabble.core.TileTranfserHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
+import nl.avans.min04sob.scrabble.models.PlayerTileModel;
 import nl.avans.min04sob.scrabble.models.Role;
 import nl.avans.min04sob.scrabble.models.Tile;
 
@@ -199,7 +200,7 @@ public class BoardPanel extends CorePanel {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			if (account.isRole(Role.OBSERVER)) {
-
+				
 			}
 			revalidate();
 			break;
@@ -226,6 +227,9 @@ public class BoardPanel extends CorePanel {
 
 	public void setModel(BoardModel bpm) {
 		playBoard.setModel(bpm);
+	}
+	public void setPlayerTileModel(PlayerTileModel ptm){
+		playerTilesField.setModel(ptm);
 	}
 
 	public void setOpponent(String name) {

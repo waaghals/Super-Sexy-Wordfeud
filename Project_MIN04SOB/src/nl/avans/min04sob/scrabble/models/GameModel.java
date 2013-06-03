@@ -18,7 +18,7 @@ public class GameModel extends CoreModel {
 
 	public static void main2(String[] args) {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel(0, null, null, false).test();
+		new GameModel(0, null, null,null,false).test();
 	}
 
 	private CompetitionModel competition;
@@ -37,6 +37,7 @@ public class GameModel extends CoreModel {
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
+	private PlayerTileModel playerTileModel;
 	@Deprecated
 	private String[][] boardData;
 	
@@ -74,10 +75,11 @@ public class GameModel extends CoreModel {
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
 	private final boolean observer;
 
-	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
+	public GameModel(int gameId, AccountModel user, BoardModel boardModel,PlayerTileModel playerTileModel,
 			boolean observer) {
 		this.observer = observer;
 		this.boardModel = boardModel;
+		this.playerTileModel = playerTileModel;
 		currentUser = user;
 
 		try {
@@ -191,7 +193,7 @@ public class GameModel extends CoreModel {
 		// Everything went better than expected.jpg :)
 	}
 
-	public void checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public ArrayList<String> checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		// verticaal woord
 		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
 		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
@@ -265,13 +267,23 @@ public class GameModel extends CoreModel {
 				teVergelijkenWoorden.add(output);
 			}
 		}
-		for (String s:teVergelijkenWoorden){
-			System.out.println(s);
-		}
-		
+		return teVergelijkenWoorden;
 
 	}
 
+	public void legWoord(Tile[][] playedLetters,Tile[][] oldBoard,Tile[][] newBoard){
+		try{
+			//Tile[][]newBoardTiles = (Tile[][]) newBoard.getData();
+			//checkValidMove(oldBoard, newBoard);
+			ArrayList<String> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
+			checkWordsInDatabase(teVergelijkenWoorden);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+		
+	}
+	
 	public String[][] compareArrays(String[][] bord, String[][] database) {
 		String[][] returns = new String[7][3];
 		int counter = 0;
@@ -335,27 +347,48 @@ public class GameModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
+	public void setplayertilesfromdatabase(){
+		
+		StashModel stash = new StashModel();
+		
+		
+		Tile[] letters = stash.getPlayerTiles(currentUser, this);
+		Tile[] newletters = new Tile[6];
+		
+		
 
+			
+			for(int counter = 0;newletters.length > counter; counter++){
+				
+				if(stash.letterleft()){
+					String newletter = stash.getRandomLetter();
+					if(!(letters.length > counter)){
+							newletters[counter] = new Tile(newletter,this.getvalueforLetter(newletter),Tile.MUTATABLE );
+					}else{
+						newletters[counter] = letters[counter];
+					}
+					
+				}
+				playerTileModel.setPlayerTileData(newletters);
+			
+			}
+	}
+
+	
 	private void checkWordsInDatabase(ArrayList<String> words) throws Exception{
 		for(String s:words){
-			System.out.println(s);
-			try {
-				String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
-				ResultSet wordresult = new Query(getWordFromDatabase).set(s).select();
-				if(Query.getNumRows(wordresult) == 0){
-					new Query(query).set(s).exec();
-					throw new Exception(STATE_SETPENDING);
-				}else if(wordresult.next()){
-					String statusString = wordresult.getString("status");
-					if(statusString.equals("Denied")){
-						throw new Exception(STATE_DENIED);
-					}else if(statusString.equals("Pending")){
-						throw new Exception(STATE_PENDING);
-					}else if(statusString.equals("Accepted")){
-					}
+			String query = "INSERT INTO woordenboek(woord, `status`) VALUES(?,'Pending')";
+			ResultSet wordresult = new Query(getWordFromDatabase).set(s).call();
+			if(Query.getNumRows(wordresult) == 0){
+				new Query(query).set(s).call();
+				throw new Exception(STATE_SETPENDING);
+			}else if(wordresult.next()){
+				String statusString = wordresult.getString("status");
+				if(statusString.equals("Denied")){
+					throw new Exception(STATE_DENIED);
+				}else if(statusString.equals("Pending")){
+					throw new Exception(STATE_PENDING);
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 		
