@@ -18,7 +18,7 @@ public class GameModel extends CoreModel {
 
 	public static void main2(String[] args) {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel(0, null, null, false).test();
+		new GameModel(0, null, null,null,false).test();
 	}
 
 	private CompetitionModel competition;
@@ -37,6 +37,7 @@ public class GameModel extends CoreModel {
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
+	private PlayerTileModel playerTileModel;
 	@Deprecated
 	private String[][] boardData;
 	
@@ -54,7 +55,7 @@ public class GameModel extends CoreModel {
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
-	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Letter_Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
+	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 
 	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
@@ -74,10 +75,11 @@ public class GameModel extends CoreModel {
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
 	private final boolean observer;
 
-	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
+	public GameModel(int gameId, AccountModel user, BoardModel boardModel,PlayerTileModel playerTileModel,
 			boolean observer) {
 		this.observer = observer;
 		this.boardModel = boardModel;
+		this.playerTileModel = playerTileModel;
 		currentUser = user;
 
 		try {
@@ -334,6 +336,32 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
+	}
+	public void setplayertilesfromdatabase(){
+		
+		StashModel stash = new StashModel();
+		
+		
+		Tile[] letters = stash.getPlayerTiles(currentUser, this);
+		Tile[] newletters = new Tile[6];
+		
+		
+
+			
+			for(int counter = 0;newletters.length > counter; counter++){
+				
+				if(stash.letterleft()){
+					String newletter = stash.getRandomLetter();
+					if(!(letters.length > counter)){
+							newletters[counter] = new Tile(newletter,this.getvalueforLetter(newletter),Tile.MUTATABLE );
+					}else{
+						newletters[counter] = letters[counter];
+					}
+					
+				}
+				playerTileModel.setPlayerTileData(newletters);
+			
+			}
 	}
 
 	private void checkWordsInDatabase(ArrayList<String> words) throws Exception{
