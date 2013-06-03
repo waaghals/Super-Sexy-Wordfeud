@@ -268,22 +268,8 @@ public class GameModel extends CoreModel {
 		for (String s:teVergelijkenWoorden){
 			System.out.println(s);
 		}
-		/*try {
-			checkWordsInDatabase(teVergelijkenWoorden);
-			for(int y = 0; y < 15;y++){
-				for(int x = 0;x<15;x++){
-					
-					if(playedLetters[y][x] !=null){
-						//String query = "INSERT INTO gelegdeletter(Letter_ID, Letter_Spel_ID,Beurt_ID,Tegel_X, Tegel_Y,Tegel_Bord_naam, BlancoLetterKarakter) VALUES(1, 1, 1, 1, 1,'Standard','')";
-						//new Query(query).set(1).set(511).set(1).set(1).set(1).exec();
-						System.out.print("De query moet nog gefixt worden");
-						//TODO De query moet nog gefixt worden;
-					}
-				}
-			}
-		} catch (Exception e) {	
-			System.out.println(e.getMessage());
-		}*/
+		
+
 	}
 
 	public String[][] compareArrays(String[][] bord, String[][] database) {

@@ -1,5 +1,6 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import net.miginfocom.swing.MigLayout;
@@ -20,14 +21,11 @@ public class CreateCompetitionView extends CorePanel {
 	public CreateCompetitionView(){
 		setLayout(new MigLayout("", "[131.00][137.00,grow]", "[][237.00][30.00]"));
 		
-		JLabel dateLabel = new JLabel("Geef de einddatum aan");
-		add(dateLabel, "cell 0 0");
-		
 		JLabel descriptionLabel = new JLabel("Geef de imschrijving van de competition");
-		add(descriptionLabel, "cell 1 0");
+		add(descriptionLabel, "cell 0 0 2 1");
 		
 		textField = new JTextField();
-		add(textField, "cell 1 1,growx");
+		add(textField, "cell 0 1 2 1,growx");
 		textField.setColumns(10);
 		
 		backButton = new JButton("Terug");
@@ -44,7 +42,11 @@ public class CreateCompetitionView extends CorePanel {
 		myFrame.setVisible(true);
 	}
 	
-
+	public String getDiscription(){
+		String text = textField.getText();
+		return text;
+	}
+	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
