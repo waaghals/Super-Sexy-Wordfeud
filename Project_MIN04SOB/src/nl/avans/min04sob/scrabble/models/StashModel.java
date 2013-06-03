@@ -12,6 +12,7 @@ import nl.avans.min04sob.scrabble.core.Queries;
 import nl.avans.min04sob.scrabble.core.Query;
 
 public class StashModel extends CoreModel {
+	private final String letterfrompot = "SELECT `karakter` FROM `pot`";
 
 	public StashModel() {
 
@@ -65,6 +66,7 @@ public class StashModel extends CoreModel {
 	}
 
 	public String getRandomLetter() {
+		
 		String letter = null;
 		String q = "SELECT `karakter` FROM `pot`";
 		try {
@@ -87,6 +89,27 @@ public class StashModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return letter;
+	}
+
+	public boolean letterleft(){
+		
+		
+		Future<ResultSet> worker; 
+			try {
+				worker = Db.run(new Query(letterfrompot));
+				ResultSet res = worker.get();
+			
+				int numRows  = Query.getNumRows(res);
+				if(numRows == 0){
+					return false;
+				}else{
+					return true;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return (Boolean) null;
 	}
 
 	@Override

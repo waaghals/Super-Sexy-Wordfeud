@@ -895,5 +895,19 @@ public class GameModel extends CoreModel {
 		}
 		return false;
 	}
-
+	public int getvalueforLetter(String letter) {
+	
+		try {
+			Future<ResultSet> worker = Db.run(new Query(getTileValue).set(letter).set(letterSet));
+			ResultSet tileValue = worker.get();
+		
+		
+			tileValue.next();
+			return tileValue.getInt(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

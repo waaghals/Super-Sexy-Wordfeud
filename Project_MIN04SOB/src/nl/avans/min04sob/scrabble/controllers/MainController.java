@@ -325,10 +325,22 @@ public class MainController extends CoreController {
 		currGamePanel.setPlayerTiles(stash.getPlayerTiles(account, selectedGame));
 		
 		Tile[] letters = stash.getPlayerTiles(account, selectedGame);
-		//while(letters.length < 7){
+		Tile[] newletters = new Tile[6];
+		
+		
+
 			
-		//}
-		currGamePanel.setPlayerTiles(letters);
+			for(int counter = 0;newletters.length > counter; counter++){
+				String newletter = stash.getRandomLetter();
+				if(stash.letterleft()){
+					if(!(letters.length > counter)){
+							newletters[counter] = new Tile(newletter,selectedGame.getvalueforLetter(newletter),Tile.MUTATABLE );
+					}else{
+						newletters[counter] = letters[counter];
+					}
+				}
+		}
+		currGamePanel.setPlayerTiles(newletters);
 
 		games = account.getObserverAbleGames();
 
@@ -342,7 +354,7 @@ public class MainController extends CoreController {
 		AccountModel accountTurn;
 
 		updatelabels(selectedGame.getCurrentobserveturn());
-
+		
 		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
 		selectedGame.setPlayerLetterFromDatabase();
