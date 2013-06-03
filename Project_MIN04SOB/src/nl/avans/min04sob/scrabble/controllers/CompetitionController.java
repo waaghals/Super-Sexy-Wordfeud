@@ -22,6 +22,7 @@ public class CompetitionController extends CoreController {
 	private CompetitionView competitionView;
 	private CoreWindow window;
 	private CoreWindow window1;
+	private CoreWindow window2;
 	private AccountModel accountModel;
 	private ChallengeModel challengeModel;
 	private CompetitionScoreView competitionScoreView;
@@ -35,9 +36,12 @@ public class CompetitionController extends CoreController {
 		competitionView = new CompetitionView();
 		challengeModel = new ChallengeModel(accountModel);
 		competitionScoreView = new CompetitionScoreView();
+		createCompetitionView = new CreateCompetitionView();
 
 		addView(competitionView);
 		addModel(competitionModel);
+		addView(competitionScoreView);
+		addView(createCompetitionView);
 
 	}
 
@@ -83,6 +87,8 @@ public class CompetitionController extends CoreController {
 		window1 = new CoreWindow();
 		window1.add(competitionScoreView);
 		window1.setResizable(false);
+		window1.setTitle("Competitie Scores");
+		window1.setPreferredSize(new Dimension(500,300));
 		window1.pack();
 
 		competitionScoreView.addBackListener(new ActionListener() {
@@ -116,6 +122,7 @@ public class CompetitionController extends CoreController {
 	public void openCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
+		window.setTitle("Speler uitdagen");
 
 		window.setResizable(false);
 		window.pack();
@@ -162,6 +169,7 @@ public class CompetitionController extends CoreController {
 	public void openDeleteCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
+		window.setTitle("Competitie verwijderen");
 
 		window.setPreferredSize(new Dimension(400, 320));
 		window.setResizable(false);
@@ -197,6 +205,7 @@ public class CompetitionController extends CoreController {
 	public void openDeleteFromCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
+		window.setTitle("Verwijderen uit competitie");
 
 		window.setPreferredSize(new Dimension(400, 320));
 		window.pack();
@@ -230,6 +239,7 @@ public class CompetitionController extends CoreController {
 	public void openJoinCompetitionView() {
 		window = new CoreWindow();
 		window.add(competitionView);
+		window.setTitle("Competitie deelnemen");
 
 		window.setPreferredSize(new Dimension(400, 320));
 		window.setResizable(false);
@@ -280,13 +290,20 @@ public class CompetitionController extends CoreController {
 	}
 
 	public void openCreateCompetitionView(){
-		createCompetitionView= new CreateCompetitionView();
+		//createCompetitionView= new CreateCompetitionView();
+		window2 = new CoreWindow();
+		window2.add(createCompetitionView);
+		window2.setTitle("Competitie aanmaken");
+
+		window2.setPreferredSize(new Dimension(250, 130));
+		window2.setResizable(false);
+		window2.pack();
 		
 		createCompetitionView.addBackButtonListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				window.dispose();
+				window2.dispose();
 				
 			}
 		});
