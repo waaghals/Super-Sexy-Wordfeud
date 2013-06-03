@@ -26,6 +26,8 @@ public class ChatPanel extends CorePanel {
 		setLayout(new MigLayout("", "[::300px][300px][100px][100px]", "[::300px][400px][100px:150px:200px][30px]"));
 		chatField = new JTextArea();
 		chatField.setEnabled(false);
+		chatField.setWrapStyleWord(true);
+		chatField.setLineWrap(true);
 		chatField.setDisabledTextColor(Color.BLACK);
 		chatScroll = new JScrollPane(chatField);
 
