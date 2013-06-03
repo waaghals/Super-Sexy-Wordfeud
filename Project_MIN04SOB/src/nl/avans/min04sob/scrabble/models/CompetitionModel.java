@@ -210,12 +210,34 @@ public class CompetitionModel extends CoreModel {
 	 * } } catch (SQLException | InterruptedException | ExecutionException e) {
 	 * e.printStackTrace(); } }
 	 */
+	
+	//geef alle competities ooit aangemaakt
 	public CompetitionModel[] getAllCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(
 					"SELECT DISTINCT(`competitie_id`) FROM `deelnemer`"));
+			ResultSet dbResult = worker.get();
+			allComps = new CompetitionModel[Query.getNumRows(dbResult)];
+			while (dbResult.next() && x < allComps.length) {
+				allComps[x] = new CompetitionModel(
+						dbResult.getInt("competitie_id"));
+				x++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+		return allComps;
+
+	}
+	//geef alle openstaande competities
+	public CompetitionModel[] getAllOpenCompetitions() {
+		CompetitionModel[] allComps = new CompetitionModel[0];
+		int x = 0;
+		try {
+			Future<ResultSet> worker = Db.run(new Query(
+					"SELECT DISTINCT(`ID`) FROM tjmbrouw_db2.competitie WHERE einde > now();"));
 			ResultSet dbResult = worker.get();
 			allComps = new CompetitionModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < allComps.length) {
