@@ -39,12 +39,7 @@ public class ChallengeModel extends CoreModel {
 
 	public void check(String challenger, String opponent, int compID)// uitdager
 	{
-
-
 		boolean error = false;
-
-		
-
 		try {
 			Future<ResultSet> worker = Db.run(new Query(countQuery));
 			result = worker.get();
@@ -59,11 +54,11 @@ public class ChallengeModel extends CoreModel {
 					e.printStackTrace();
 				}
 				while (result.next()) {
-
 					if ((result.getString(7).equals(STATE_UNKNOWN)
 							&& result.getString(4).equals(challenger)
 							&& result.getString(5).equals(opponent)
 							&& result.getString(3).equals(STATE_REQUEST)
+							&& result.getInt(2) == compID
 							))
 					{
 						error = true;
@@ -113,12 +108,12 @@ public class ChallengeModel extends CoreModel {
 			Future<ResultSet> worker = Db.run(new Query(getSortOfLetter_Amount).set("NL"));
 			ResultSet res = worker.get();
 			int idCounter = 0;
-			while(res.next()){
+			/*while(res.next()){
 				for(int counter = 0;counter < res.getInt("aantal"); counter++ ){
 					Db.run(new Query(insertLetters).set(idCounter).set(spelId.getInt(0)).set("NL").set(res.getString(0)));
 					idCounter++;
 				}
-			}
+			}*/
 			
 		} catch (Exception e) {
 			e.printStackTrace();
