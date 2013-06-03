@@ -20,6 +20,8 @@ import nl.avans.min04sob.scrabble.core.Query;
 
 public class CompetitionModel extends CoreModel {
 
+	
+	private boolean compDuplication;
 	private int competitieId;
 	private String desc;
 	private AccountModel owner;
@@ -149,7 +151,7 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public void createCompetition(String username, String omschrijving) {
+	private void createCompetition(String username, String omschrijving) {
 		try {
 			Calendar cal = Calendar.getInstance();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -406,5 +408,48 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return rankingData;
+	}
+	
+	public void checkCompetition(String username, String omschrijving) {
+		boolean error = false;
+		ResultSet result;
+		String countQuery = "SELECT COUNT(*) FROM `competitie` ";
+		String checkQuery = "SELECT * FROM `competitie`";
+		try {
+			Future<ResultSet> worker = Db.run(new Query(countQuery));
+			result = worker.get();
+
+			result.next();
+
+			if (result.getInt(1) > 0) {
+				Future<ResultSet> newWorker = Db.run(new Query(checkQuery));
+				try {
+					result = newWorker.get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				while (result.next()) {
+
+					if (result.getString(2).equals(username))
+					{
+						error = true;
+						break;
+					}
+				}
+			}
+
+		} catch (InterruptedException | ExecutionException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (!error) {
+			createCompetition(username, omschrijving);
+		}
+		setDuplicatedCompetition(error);
+	}
+
+	private void setDuplicatedCompetition(boolean error) {
+		compDuplication = error;
+		
 	}
 }
