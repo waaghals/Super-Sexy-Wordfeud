@@ -119,7 +119,7 @@ public class AccountModel extends CoreModel {
 			Future<ResultSet> worker = Db.run(new Query(query).set(GameModel.STATE_REQUEST));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(), true));
+				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(),new PlayerTileModel(), true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -137,7 +137,7 @@ public class AccountModel extends CoreModel {
 					.set(GameModel.STATE_PLAYING));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(), false));
+				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(),new PlayerTileModel(), false));
 				// Add a new game with the gameId for this account
 			}
 

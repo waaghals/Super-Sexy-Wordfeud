@@ -18,7 +18,7 @@ public class GameModel extends CoreModel {
 
 	public static void main2(String[] args) {
 		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel(0, null, null, false).test();
+		new GameModel(0, null, null,null,false).test();
 	}
 
 	private CompetitionModel competition;
@@ -37,6 +37,7 @@ public class GameModel extends CoreModel {
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
+	private PlayerTileModel playerTileModel;
 	@Deprecated
 	private String[][] boardData;
 	
@@ -74,10 +75,11 @@ public class GameModel extends CoreModel {
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
 	private final boolean observer;
 
-	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
+	public GameModel(int gameId, AccountModel user, BoardModel boardModel,PlayerTileModel playerTileModel,
 			boolean observer) {
 		this.observer = observer;
 		this.boardModel = boardModel;
+		this.playerTileModel = playerTileModel;
 		currentUser = user;
 
 		try {
@@ -354,6 +356,32 @@ public class GameModel extends CoreModel {
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
+	}
+	public void setplayertilesfromdatabase(){
+		
+		StashModel stash = new StashModel();
+		
+		
+		Tile[] letters = stash.getPlayerTiles(currentUser, this);
+		Tile[] newletters = new Tile[6];
+		
+		
+
+			
+			for(int counter = 0;newletters.length > counter; counter++){
+				
+				if(stash.letterleft()){
+					String newletter = stash.getRandomLetter();
+					if(!(letters.length > counter)){
+							newletters[counter] = new Tile(newletter,this.getvalueforLetter(newletter),Tile.MUTATABLE );
+					}else{
+						newletters[counter] = letters[counter];
+					}
+					
+				}
+				playerTileModel.setPlayerTileData(newletters);
+			
+			}
 	}
 
 	
