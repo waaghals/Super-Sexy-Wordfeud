@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -22,50 +21,50 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
-	private final String selectQuery = "SELECT * FROM `Spel`";
+	private final String selectQuery = "SELECT `ID`,`account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
+	private final String checkQuery = "SELECT * FROM `spel`";
 	private ResultSet result;
 	private String yourname;
-	private Timer timer = new Timer();
 	private ArrayList<String> challenge = new ArrayList<String>();
 	private AccountModel accountModel;
 	private CompetitionController competitionController;
+	private boolean isDuplication = false;
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
 		// competitionController = new CompetitionController(user);
 		yourname = accountModel.getUsername();
-		upddate();
 	}
 
-	public void controle(AccountModel challegendname)// uitdager
+	public void check(String challenger, String opponent, int compID)// uitdager
 	{
 
-		System.out.println("controle werkt");
+
 		boolean error = false;
-		String queryy = "SELECT COUNT(*)   FROM Spel ";
+
+		String countQuery = "SELECT COUNT(*) FROM Spel ";
+
 		try {
-			Future<ResultSet> worker = Db.run(new Query(queryy));
+			Future<ResultSet> worker = Db.run(new Query(countQuery));
 			result = worker.get();
 
 			result.next();
 
 			if (result.getInt(1) > 0) {
-				Future<ResultSet> newWorker = Db.run(new Query(selectQuery));
+				Future<ResultSet> newWorker = Db.run(new Query(checkQuery));
 				try {
 					result = newWorker.get();
 				} catch (InterruptedException | ExecutionException e) {
-					// TODO Automatisch gegenereerd catch-blok
 					e.printStackTrace();
 				}
 				while (result.next()) {
+
 					if ((result.getString(7).equals(STATE_UNKNOWN)
-							&& result.getString(4).equals(yourname)
-							&& result.getString(5).equals(
-									challegendname.getUsername())
-							&& result.getString(3).equals(STATE_UNKNOWN)
-							)|| yourname.equals(challegendname.getUsername())) 
+							&& result.getString(4).equals(challenger)
+							&& result.getString(5).equals(opponent)
+							&& result.getString(3).equals(STATE_REQUEST)
+							))
 					{
-						System.out.println("foute challenge");
 						error = true;
 						break;
 					}
@@ -73,40 +72,48 @@ public class ChallengeModel extends CoreModel {
 			}
 
 		} catch (InterruptedException | ExecutionException | SQLException e) {
-			// TODO Automatisch gegenereerd catch-blok
 			e.printStackTrace();
 		}
 
 		if (!error) {
-			createChallenge(yourname, challegendname.getUsername());
+			createChallenge(challenger, opponent, compID);
 		}
+		setDupicatedChallenge(error);
+
 	}
 
-	public void createChallenge(String Challengername, String challegendname)
+	private void setDupicatedChallenge(boolean e) {
+		isDuplication = e;
+	}
+
+	public boolean isDuplicatedChallenge() {
+		return isDuplication;
+	}
+
+	private void createChallenge(String challenger, String opponent, int compID)
+	// uitdager
 	{
-		System.out.println("je zit nu in create challnge");
-		competitionController = new CompetitionController(accountModel);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
-		System.out.println(competitionController.getCompID()+" "+STATE_REQUEST+" "+Challengername+" "+challegendname+" "+currentdate+" "+STATE_UNKNOWN);
-		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`moment_reaktie`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?,?)";
-		try { 
-			Db.run(new Query(query).set(competitionController.getCompID())
-					.set(STATE_REQUEST).set(Challengername).set(challegendname)
-					.set(currentdate).set(STATE_UNKNOWN).set(currentdate)
-					.set("standard").set("NL"));
 
-			System.out.println("uitdaging verstuurd");
+		String query = "INSERT INTO `Spel` (`Competitie_ID`,`Toestand_type`,`Account_naam_uitdager`,`Account_naam_tegenstander`,`moment_uitdaging`,`Reaktie_type`,`Bord_naam`,`LetterSet_naam`) VALUES (?,?,?,?,?,?,?,?)";
+		try {
+			Db.run(new Query(query).set(compID)
+					.set(STATE_REQUEST).set(challenger).set(opponent)
+					.set(currentdate).set(STATE_UNKNOWN)
+					.set("standard").set("NL"));
 		} catch (SQLException sql) {
 			sql.printStackTrace();
-			System.out.println("error");
 		}
 	}
 
 	public void respondChallenge(String nameuitdager, boolean accepted)
 			throws SQLException // uitdgedaagde
+
 	{
+		// where
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
@@ -118,60 +125,60 @@ public class ChallengeModel extends CoreModel {
 		try {
 			resultset = worker.get();
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Automatisch gegenereerd catch-blok
 			e.printStackTrace();
-		}
-		String query2 = "";
-		if (accepted == true) {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-			Db.run(new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED)
-					.set(currentdate).set(nameuitdager).set(yourname));
-		}
-		else {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
-					.set(currentdate).set(nameuitdager).set(yourname));
 		}
 		resultset.next();
 		for (int index = 0; index < challenge.size(); index++) {
 			String xx = resultset.getString(4);
 			if (xx.equals(challenge.get(index))) {
 				challenge.remove(index);
-				System.out.println("oke");
 			}
 		}
-	}
+		String query2 = "";
 
+		if (accepted == true) {
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			Db.run(new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED)
+					.set(currentdate).set(nameuitdager).set(yourname));
+
+		}
+
+		else {
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
+					.set(currentdate).set(nameuitdager).set(yourname));
+		}
+		
+	}
 
 	public String[] challengeArray() {
-			String[] tempChallengeArray = challenge.toArray(new String[challenge.size()]);
-		return tempChallengeArray;
-	}
-
- 
-	public void upddate() {
-		System.out.println("update");
+		String [] challenges = new String[0];
+		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(selectQuery));
+			Future<ResultSet> worker = Db.run(new Query(selectQuery).set(
+					accountModel.getUsername()).set(STATE_REQUEST).set(STATE_UNKNOWN));
 			ResultSet dbResult = worker.get();
-			while (dbResult.next()) {
-				if (!challenge.contains(dbResult.getString(4))) {
-					if (dbResult.getString(5).equals(yourname)
-							&& dbResult.getString(3).equals(STATE_REQUEST)
-							&& dbResult.getString(7).equals(STATE_UNKNOWN)) {
-						challenge.add(dbResult.getString(4));
-						System.out.println(dbResult.getString(4));
-					}
-				}
+			challenges = new String[Query.getNumRows(dbResult)];
+			while (dbResult.next() && x < challenges.length) {
+				challenges[x] = new String( dbResult.getString("account_naam_uitdager"));
+				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
+		return challenges;
+
+
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		// // if your name = tegenstander if your naam = uitdager
+		// /// receive challenge your name = challenged ///// ///// ///// /////
+		// ///// ///// /////
+		// /array list add alleen als challend= yourname;;
+
 
 	}
+
 }
