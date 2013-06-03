@@ -257,7 +257,7 @@ public class AccountController extends CoreController {
 		frame.pack();
 	}
 
-	private void registerToLogin() {
+	public void registerToLogin() {
 		frame.remove(registerPanel);
 		loginPanel.clearFields();
 		frame.add(loginPanel);

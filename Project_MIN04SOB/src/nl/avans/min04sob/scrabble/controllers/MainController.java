@@ -151,7 +151,13 @@ public class MainController extends CoreController {
 				accountController.setChangePassPanel();
 			}
 		});
-
+		menu. Accountaanmaken(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AccountController accountController = new AccountController(account);
+				accountController.loginToRegister();
+			}
+		});
 		menu.seeCompetitionsItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

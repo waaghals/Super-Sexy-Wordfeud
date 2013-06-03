@@ -39,7 +39,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem deleteCompetitionItem;
 
 	private JMenuItem viewWords;
-	
+	private JMenuItem AccountaanmakenItem;
 	private int numChallenge;
 
 	private ActionListener openGameListener;
@@ -186,10 +186,12 @@ public class MenuView extends JMenuBar implements CoreView {
 	private void createModeratorMenu() {
 		viewWords = new JMenuItem("Woorden beheren");
 		viewWords.setMnemonic('W');
+		AccountaanmakenItem = new JMenuItem("Account aanmaken");
 		
 		viewPlayers = new JMenuItem("Gebruikers beheren");
 		viewPlayers.setMnemonic('G');
 		
+		toolboxMenu.add(AccountaanmakenItem );
 		toolboxMenu.add(viewWords);
 		toolboxMenu.add(viewPlayers);
 	}
@@ -327,5 +329,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void viewPlayers(ActionListener listener) {
 		viewPlayers.addActionListener(listener);
 	}
-
+	public void Accountaanmaken(ActionListener listener) {
+		AccountaanmakenItem.addActionListener(listener);
+	}
 }
