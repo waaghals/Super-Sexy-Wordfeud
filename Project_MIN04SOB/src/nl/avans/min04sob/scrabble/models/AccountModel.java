@@ -111,6 +111,23 @@ public class AccountModel extends CoreModel {
 		}
 		return compDesc;
 	}
+	
+	public String [] getPlayers(){
+		String	[] player = new String[0];
+		int x = 0;
+		try {
+			Future<ResultSet> worker = Db.run(new Query("SELECT * FROM `Account`;"));
+			ResultSet dbResult = worker.get();
+			player = new String[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < player.length){
+				player[x] = dbResult.getString(1);
+				x++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+		return player;
+	}
 
 	public ArrayList<GameModel> getObserverAbleGames(){
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
