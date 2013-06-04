@@ -269,10 +269,12 @@ public class MenuView extends JMenuBar implements CoreView {
 			joinCompetitionItem.setEnabled(true);
 			challengeMenu.setEnabled(true);
 			seeCompetitionsItem.setEnabled(true);
+			deleteCompetitionItem.setEnabled(false);
+			deleteFromCompetitionItem.setEnabled(false);
 		}
 		
 		if(user.getOwnedCompetitions().length > 0 || user.isRole(Role.ADMINISTRATOR)){
-			deleteCompetitionItem.setEnabled(true);
+			//deleteCompetitionItem.setEnabled(true);
 		}
 
 		if (numGames > 0 && user.isRole(Role.PLAYER)) {
