@@ -193,7 +193,7 @@ public class GameModel extends CoreModel {
 		// Everything went better than expected.jpg :)
 	}
 
-	public ArrayList<String> checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public ArrayList<ArrayList<Tile>> checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		// verticaal woord
 		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
 		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
@@ -248,44 +248,41 @@ public class GameModel extends CoreModel {
 				}
 			}
 		}
-		ArrayList<String> teVergelijkenWoorden = new ArrayList<String>();
-		for(ArrayList<Tile> tiles: verticalenWoorden){
-			if(tiles.size() > 1){
-				String output = "";
-				for(Tile t :tiles){
-					output += t.getLetter();		
-				}
-				teVergelijkenWoorden.add(output);
-			}
+		ArrayList<ArrayList<Tile>> teVergelijkenWoorden = new ArrayList<ArrayList<Tile>>();
+		for(ArrayList<Tile> woord:verticalenWoorden){
+			teVergelijkenWoorden.add(woord);
 		}
-		for(ArrayList<Tile> tiles: horizontalenWoorden){
-			if(tiles.size() > 1){
-				String output = "";
-				for(Tile t :tiles){
-					output += t.getLetter();
-				}
-				teVergelijkenWoorden.add(output);
-			}
+		for(ArrayList<Tile> woord:horizontalenWoorden){
+			teVergelijkenWoorden.add(woord);
 		}
 		return teVergelijkenWoorden;
-
+		
 	}
 
 	public void legWoord(Tile[][] playedLetters,Tile[][] oldBoard,Tile[][] newBoard){
 		try{
 			//Tile[][]newBoardTiles = (Tile[][]) newBoard.getData();
 			//checkValidMove(oldBoard, newBoard);
-			ArrayList<String> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
-			checkWordsInDatabase(teVergelijkenWoorden);
+			ArrayList<String>teVergelijkenWoordenString = new ArrayList<String>();
+			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
+			for(ArrayList<Tile>woord:teVergelijkenWoorden){
+				String tempwoord ="";
+				for(Tile t:woord){
+					tempwoord += t.getLetter();
+				}
+				teVergelijkenWoordenString.add(tempwoord);
+			}
+			checkWordsInDatabase(teVergelijkenWoordenString);
+			//getScore(playedLetters, teVergelijkenWoorden, newBoard);
 			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
 							+"VALUES (?, ?, ?, ?, ?, ?,?);";
 			for(int y = 0 ; y < 15 ; y++){
 				for(int x = 0 ; x < 15 ; x++){
 					if(playedLetters[y][x] != null){
-						ResultSet rs = Db.run(new Query("SELECT ID FROM letter WHERE LetterType_karakter = ? AND Spel_ID = 592").set(playedLetters[y][x].getLetter())).get();
-						rs.first();
+						//ResultSet rs = Db.run(new Query("SELECT ID FROM letter WHERE LetterType_karakter = ? AND Spel_ID = 592").set(playedLetters[y][x].getLetter())).get();
+						//rs.first();
 						Db.run(new Query("INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
-								+"VALUES ("+rs.getInt(1)+", 592, 1, "+(x+1)+", "+(y+1)+", 'Standard','');"));
+								+"VALUES (?, ?, ?, ?, ?, ?, ?);").set(playedLetters[y][x].getTileId()).set(gameId).set(currentobserveturn+1).set(x+1).set(y+1).set("Standard").set(""));
 					}
 				}
 			}
