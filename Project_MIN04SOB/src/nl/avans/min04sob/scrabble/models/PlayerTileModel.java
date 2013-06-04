@@ -44,6 +44,10 @@ public class PlayerTileModel extends CoreTableModel {
 			}
 			return null;
 		}
+	
+	public Tile[][] getTiles(){
+		return tileData;
+	}
 
 	@Override
 	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {

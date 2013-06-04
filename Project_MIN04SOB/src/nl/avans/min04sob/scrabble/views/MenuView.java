@@ -66,14 +66,22 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void adddoChallengeItemActionListener(ActionListener listener) {
 		doChallengeItem.addActionListener(listener);
 	}
-
+	
 	private void addGamesToMenu(JMenu menu, ArrayList<GameModel> games) {
+		ArrayList<JMenuItem> items = new ArrayList<JMenuItem>();
+		JMenuItem item;
 		for (GameModel game : games) {
-			JMenuItem item = new JMenuItem(game.toString());
+			item = new JMenuItem(game.toString());
 			item.putClientProperty("game", game);
-			menu.add(item);
+			if(!items.contains(item)) {
+				items.add(item);
+			}
+		}
+		for(JMenuItem i : items) {
+			menu.add(i);
 		}
 	}
+
 
 	public void addLoginItemActionListener(ActionListener listener) {
 		loginItem.addActionListener(listener);
