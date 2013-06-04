@@ -127,7 +127,11 @@ public class AccountController extends CoreController {
 		registerPanel.addActionListenerCancel(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				registerToLogin();
+				if(accountModel.isLoggedIn()){
+					frame.dispose();
+				}else{		
+					registerToLogin();
+				}				
 			}
 		});
 
