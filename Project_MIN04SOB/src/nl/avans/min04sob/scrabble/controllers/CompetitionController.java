@@ -76,7 +76,7 @@ public class CompetitionController extends CoreController {
 
 	public void getParticipants(int competition_id) {
 		competitionView.fillPlayerList(competitionModel
-				.getUsersFromCompetition(competition_id));
+				.getUsersFromCompetition(competition_id, accountModel.getUsername()));
 	}
 
 	@Override
