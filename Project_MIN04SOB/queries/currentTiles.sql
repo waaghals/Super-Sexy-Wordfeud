@@ -3,6 +3,7 @@ SELECT `lb`.`spel_id`              AS `spel_id`
        , `b`.`account_naam`        AS `account_naam`
        , `l`.`lettertype_karakter` AS `letter`
        , `lt`.`waarde`             AS `waarde`
+       , `l`.`ID`
 FROM   `letterbakjeletter` `lb`
        JOIN `letter` `l`
          ON `lb`.`spel_id` = `l`.`spel_id`

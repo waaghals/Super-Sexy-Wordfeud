@@ -55,9 +55,9 @@ public class GameModel extends CoreModel {
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
-	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
+	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID, ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 
-	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
+	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter`,`l`.`ID` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
 
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
@@ -193,7 +193,7 @@ public class GameModel extends CoreModel {
 		// Everything went better than expected.jpg :)
 	}
 
-	public ArrayList<String> checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public ArrayList<ArrayList<Tile>> checkValidWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		// verticaal woord
 		ArrayList<ArrayList<Tile>> verticalenWoorden = new ArrayList<ArrayList<Tile>>();
 		ArrayList<ArrayList<Tile>> horizontalenWoorden = new ArrayList<ArrayList<Tile>>();
@@ -248,42 +248,41 @@ public class GameModel extends CoreModel {
 				}
 			}
 		}
-		ArrayList<String> teVergelijkenWoorden = new ArrayList<String>();
-		for(ArrayList<Tile> tiles: verticalenWoorden){
-			if(tiles.size() > 1){
-				String output = "";
-				for(Tile t :tiles){
-					output += t.getLetter();		
-				}
-				teVergelijkenWoorden.add(output);
-			}
+		ArrayList<ArrayList<Tile>> teVergelijkenWoorden = new ArrayList<ArrayList<Tile>>();
+		for(ArrayList<Tile> woord:verticalenWoorden){
+			teVergelijkenWoorden.add(woord);
 		}
-		for(ArrayList<Tile> tiles: horizontalenWoorden){
-			if(tiles.size() > 1){
-				String output = "";
-				for(Tile t :tiles){
-					output += t.getLetter();
-				}
-				teVergelijkenWoorden.add(output);
-			}
+		for(ArrayList<Tile> woord:horizontalenWoorden){
+			teVergelijkenWoorden.add(woord);
 		}
 		return teVergelijkenWoorden;
-
+		
 	}
 
 	public void legWoord(Tile[][] playedLetters,Tile[][] oldBoard,Tile[][] newBoard){
 		try{
 			//Tile[][]newBoardTiles = (Tile[][]) newBoard.getData();
 			//checkValidMove(oldBoard, newBoard);
-			ArrayList<String> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
-			checkWordsInDatabase(teVergelijkenWoorden);
-			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter) VALUES ( "+
-														"?, ?, ?, ?, ?, ?, ?);";
+			ArrayList<String>teVergelijkenWoordenString = new ArrayList<String>();
+			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
+			for(ArrayList<Tile>woord:teVergelijkenWoorden){
+				String tempwoord ="";
+				for(Tile t:woord){
+					tempwoord += t.getLetter();
+				}
+				teVergelijkenWoordenString.add(tempwoord);
+			}
+			checkWordsInDatabase(teVergelijkenWoordenString);
+			//getScore(playedLetters, teVergelijkenWoorden, newBoard);
+			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
+							+"VALUES (?, ?, ?, ?, ?, ?,?);";
 			for(int y = 0 ; y < 15 ; y++){
 				for(int x = 0 ; x < 15 ; x++){
 					if(playedLetters[y][x] != null){
-						//if(playedLetters[y][x].g)
-						//Db.run(new Query(query).set(x/*Letterid*/).set(gameId/*spel id*/).set(y/* beurt id*/).set(value/*x coord*/).set(/*y coord*/).set(/*bord naam*/).set(/*BlancoLetterKarakter*/));
+						//ResultSet rs = Db.run(new Query("SELECT ID FROM letter WHERE LetterType_karakter = ? AND Spel_ID = 592").set(playedLetters[y][x].getLetter())).get();
+						//rs.first();
+						Db.run(new Query("INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
+								+"VALUES (?, ?, ?, ?, ?, ?, ?);").set(playedLetters[y][x].getTileId()).set(gameId).set(currentobserveturn+1).set(x+1).set(y+1).set("Standard").set(""));
 					}
 				}
 			}
@@ -335,7 +334,7 @@ public class GameModel extends CoreModel {
 						boardModel
 								.setValueAt(new Tile(rs.getString(6),
 										tilewaarde.getInt(1),
-										Tile.NOT_MUTATABLE), y, x);
+										Tile.NOT_MUTATABLE,rs.getInt("ID")), y, x);
 
 					} else {
 						// TODO add letter value in query
@@ -348,7 +347,7 @@ public class GameModel extends CoreModel {
 						boardModel
 								.setValueAt(new Tile(rs.getString(3),
 										tilewaarde.getInt(1),
-										Tile.NOT_MUTATABLE), y, x);
+										Tile.NOT_MUTATABLE,rs.getInt("ID")), y, x);
 					}
 				}
 			}
@@ -370,10 +369,12 @@ public class GameModel extends CoreModel {
 			
 			for(int counter = 0;newletters.length > counter; counter++){
 				
-				if(stash.letterleft()){
-					String newletter = stash.getRandomLetter();
+				
 					if(!(letters.length > counter)){
-							newletters[counter] = new Tile(newletter,this.getvalueforLetter(newletter),Tile.MUTATABLE );
+						if(stash.letterleft()){
+							
+							newletters[counter] = stash.getRandomLetter();
+						}
 					}else{
 						newletters[counter] = letters[counter];
 					}
@@ -381,7 +382,7 @@ public class GameModel extends CoreModel {
 				}
 				playerTileModel.setPlayerTileData(newletters);
 			
-			}
+			
 	}
 
 	
@@ -680,7 +681,7 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void setPlayerLetterFromDatabase() {
+	/*public void setPlayerLetterFromDatabase() {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getPlayerTiles).set(
 					getGameId()).set(currentUser.getUsername()));
@@ -697,17 +698,17 @@ public class GameModel extends CoreModel {
 					ResultSet tilewaarde = worker1.get();
 					tilewaarde.next();
 
-					/*
-					 * boardModel.setPlayetTile(x, new Tile(letters[x],
-					 * tilewaarde.getInt(1), Tile.MUTATABLE));
-					 */
+					
+					 boardModel.setPlayetTile(x, new Tile(letters[x],
+					 tilewaarde.getInt(1), Tile.MUTATABLE));
+					
 				}
 			}
 
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
-	}
+	}*/
 
 	private void test() {
 		Integer[][] matrix = new Integer[][] {
@@ -849,7 +850,7 @@ public class GameModel extends CoreModel {
 					tilewaarde.next();
 					boardModel.setValueAt(
 							new Tile(rs.getString(4), tilewaarde.getInt(1),
-									Tile.NOT_MUTATABLE), y, x);
+									Tile.NOT_MUTATABLE,rs.getInt(5)), y, x);
 
 				} else {
 					Future<ResultSet> worker2 = Db.run(new Query(getTileValue)
@@ -858,7 +859,7 @@ public class GameModel extends CoreModel {
 					tilewaarde.next();
 					boardModel.setValueAt(
 							new Tile(rs.getString(1), tilewaarde.getInt(1),
-									Tile.NOT_MUTATABLE), y, x);
+									Tile.NOT_MUTATABLE,rs.getInt(5)), y, x);
 				}
 			}
 			boardModel.update();

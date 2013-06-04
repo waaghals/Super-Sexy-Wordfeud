@@ -25,6 +25,7 @@ import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
+import nl.avans.min04sob.scrabble.views.SelectSwapView;
 
 public class MainController extends CoreController {
 
@@ -118,6 +119,16 @@ public class MainController extends CoreController {
 				}
 			}
 
+		});
+		//swappen
+		currGamePanel.addSwapActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//view maken om de letters te selecteren
+				Tile [][] letters = playerTileModel.getTiles();
+				new SelectSwapView(letters);
+			}
 		});
 	}
 
@@ -330,7 +341,6 @@ public class MainController extends CoreController {
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
-		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
 	}
@@ -365,7 +375,7 @@ public class MainController extends CoreController {
 		
 		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
-		selectedGame.setPlayerLetterFromDatabase();
+		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 
@@ -421,6 +431,15 @@ public class MainController extends CoreController {
 				currGamePanel.setLabelPlayerTurn(" van "
 						+ currentGame.getOpponent().getUsername());
 			}
+		}else{
+			if (currentGame.yourturn()) {
+				currGamePanel.setLabelPlayerTurn("your turn");
+			}else if(currentGame.isIamchallenger()){
+				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent().getUsername() + " turn");
+
+			}else{
+				currGamePanel.setLabelPlayerTurn(currentGame.getChallenger().getUsername() + " turn");
+			}
 		}
 	}
 
@@ -440,5 +459,6 @@ public class MainController extends CoreController {
 		}
 		setTurnLabel();
 	}
+	
 }
 

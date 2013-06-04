@@ -128,8 +128,8 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private void createChallengeMenu() {
 		doChallengeItem = new JMenuItem("Spelers uitdagen");
-		viewChallengeItem = new JMenuItem("Bekijk uitdagingen ( "
-				+ numChallenge + " )");
+		viewChallengeItem = new JMenuItem("Bekijk uitdagingen"/*( "
+				+ numChallenge + " )"*/);
 
 		challengeMenu.add(doChallengeItem);
 		challengeMenu.add(viewChallengeItem);

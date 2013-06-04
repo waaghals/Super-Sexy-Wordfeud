@@ -58,9 +58,15 @@ public class AccountController extends CoreController {
 		changepassPaneladmin.ChangeaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 System.out.println(changepassPaneladmin.getSelectedPlayer());
+				 if(changepassPaneladmin.getSelectedNewPass().length()>4){
 				 accountModel.changeAnotherPlayerPass(changepassPaneladmin.getSelectedNewPass(),changepassPaneladmin.getSelectedPlayer());
 				 frame.dispose();
+				 }
+	
+				 else
+				 {
+					 changepassPaneladmin.setText("Wachtwoord te kort");
+				 }
 			}
 		});
 		
@@ -127,7 +133,11 @@ public class AccountController extends CoreController {
 		registerPanel.addActionListenerCancel(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				registerToLogin();
+				if(accountModel.isLoggedIn()){
+					frame.dispose();
+				}else{		
+					registerToLogin();
+				}				
 			}
 		});
 
