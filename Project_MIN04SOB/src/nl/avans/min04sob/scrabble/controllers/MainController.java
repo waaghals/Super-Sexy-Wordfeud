@@ -330,7 +330,6 @@ public class MainController extends CoreController {
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
-		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
 	}

@@ -54,7 +54,7 @@ public class StashModel extends CoreModel {
 			while (res.next()) {
 				String character = res.getString("letter");
 				int charValue = res.getInt("waarde");
-				tiles[i] = new Tile(character, charValue, Tile.MUTATABLE);
+				tiles[i] = new Tile(character, charValue, Tile.MUTATABLE,res.getInt("ID"));
 				i++;
 			}
 
