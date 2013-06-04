@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -11,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
@@ -27,6 +30,7 @@ public class CompetitionView extends CorePanel{
 	private JList<AccountModel> playerList;
 	private JButton backButton;
 	private JButton actionButton;
+ 
 	
 	public CompetitionView(){
 		
@@ -56,9 +60,25 @@ public class CompetitionView extends CorePanel{
 		add(backButton, "cell 0 2,alignx left");
 		
 		actionButton = new JButton();
-		actionButton.setEnabled(true); //test
+		actionButton.setEnabled(false); //test
 
 		add(actionButton, "cell 1 2,alignx right");
+		
+		competitionsList.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent arg0) {
+				if(actionButton.getText().equals("Competitie deelnemen")){
+				actionButton.setEnabled(true);	
+				}
+			}
+		}); 
+		
+		playerList.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent arg0) {
+				if(actionButton.getText().equals("1 uitdaging per tegenstander")||actionButton.getText().equals("Speler uitdagen")){
+					actionButton.setEnabled(true);	
+				}	
+			}
+		}); 
 	}
 
 	public void addActionButtonListener(ActionListener listener){
@@ -79,7 +99,7 @@ public class CompetitionView extends CorePanel{
 	
 	public void fillPlayerList(AccountModel[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
-		actionButton.setEnabled(true);
+	 
 	}
 
 	public int getIndex(){
@@ -89,6 +109,7 @@ public class CompetitionView extends CorePanel{
 	public JList<CompetitionModel> getList(){
 		return competitionsList;
 	}
+	
 	
 	/* public void fillAvailableCompetitions(CompetitionModel[] availableCompetitions) {
 		competitionsList.setListData(availableCompetitions);
@@ -130,7 +151,13 @@ public class CompetitionView extends CorePanel{
 		actionButton.setText("1 uitdaging per tegenstander");
 		revalidate();
 	}
-	
+	/*/
+	Competitie deelnemen
+	1 uitdaging per tegenstander
+	Verwijderen uit Competitie
+	Verwijder Competitie
+	Speler uitdagen
+	/*/
 	public void disableList(){
 		playerList.enable(false);
 	}
