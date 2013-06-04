@@ -147,6 +147,7 @@ public class CompetitionController extends CoreController {
 				if (challengeModel.isDuplicatedChallenge()) {
 					competitionView.changeActionText();
 				}
+				window.dispose();
 			}
 		});
 
@@ -194,6 +195,7 @@ public class CompetitionController extends CoreController {
 							.getCompId();
 					getParticipants(id);
 				}
+				window.dispose();
 			}
 		});
 
@@ -229,6 +231,7 @@ public class CompetitionController extends CoreController {
 							.getCompId();
 					getParticipants(id);
 				}
+				window.dispose();
 			}
 		});
 
@@ -269,6 +272,7 @@ public class CompetitionController extends CoreController {
 				} else {
 					System.out.println("selecteer een competitie");
 				}
+				window.dispose();
 			}
 
 		});
@@ -314,6 +318,7 @@ public class CompetitionController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
 				competitionModel.checkCompetition(accountModel.getUsername(), desc);
+				window2.dispose();
 			}
 		});
 
