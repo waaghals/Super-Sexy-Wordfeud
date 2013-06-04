@@ -64,12 +64,20 @@ public class AccountModel extends CoreModel {
 	public void changePass(String newPass){
 		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
 		try{
-			
 			Db.run(new Query(query).set(newPass).set(username));
 		}catch(SQLException sql){
 			sql.printStackTrace();
 		}
-		
+	}
+	public void changeAnotherPlayerPass(String newPass,String selectedplayer){
+		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
+		String[] splitStr = selectedplayer.split("\\s+");
+		System.out.println(splitStr[0]);
+		try{
+			Db.run(new Query(query).set(newPass).set(splitStr[0]));
+		}catch(SQLException sql){
+			sql.printStackTrace();
+		}
 	}
 
 	public CompetitionModel[] getAvailableCompetitions(String username){
@@ -110,6 +118,23 @@ public class AccountModel extends CoreModel {
 			sql.printStackTrace();
 		}
 		return compDesc;
+	}
+	
+	public String [] getPlayers(){
+		String	[] player = new String[0];
+		int x = 0;
+		try {
+			Future<ResultSet> worker = Db.run(new Query("SELECT * FROM `Account`;"));
+			ResultSet dbResult = worker.get();
+			player = new String[Query.getNumRows(dbResult)];
+			while(dbResult.next() && x < player.length){
+				player[x] = dbResult.getString(1);
+				x++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+		return player;
 	}
 
 	public ArrayList<GameModel> getObserverAbleGames(){

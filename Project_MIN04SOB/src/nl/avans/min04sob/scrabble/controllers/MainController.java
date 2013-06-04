@@ -16,6 +16,7 @@ import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
+import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.models.PlayerTileModel;
@@ -52,7 +53,10 @@ public class MainController extends CoreController {
 		addView(chatPanel);
 		addView(frame);
 		addModel(boardModel);
+
 		addModel(account);
+		addModel(new ChallengeModel(account));
+
 		addModel(playerTileModel);
 
 		// Add the old messages first.
@@ -148,7 +152,13 @@ public class MainController extends CoreController {
 				accountController.setChangePassPanel();
 			}
 		});
-
+		menu. Accountaanmaken(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AccountController accountController = new AccountController(account);
+				accountController.loginToRegister();
+			}
+		});
 		menu.seeCompetitionsItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -166,7 +176,14 @@ public class MainController extends CoreController {
 				//invController.setButtonsJoin();
 			}
 		});
-
+		menu.viewPlayers(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				accountcontroller= new AccountController(account);
+				accountcontroller.adminChangePass();
+			 
+			}});
+		
 		menu.viewWords(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
