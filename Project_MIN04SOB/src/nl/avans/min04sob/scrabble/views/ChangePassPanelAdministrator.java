@@ -72,6 +72,10 @@ public class ChangePassPanelAdministrator extends CorePanel{
 		return Newpass.getText();
 	}
 	
+	public void setText(String msg)
+	{
+		change.setText(msg);
+	}
 	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {

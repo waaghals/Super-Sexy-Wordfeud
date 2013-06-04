@@ -128,7 +128,7 @@ public class AccountModel extends CoreModel {
 			ResultSet dbResult = worker.get();
 			player = new String[Query.getNumRows(dbResult)];
 			while(dbResult.next() && x < player.length){
-				player[x] = dbResult.getString(1);
+				player[x] = dbResult.getString(1)+"  -   "+dbResult.getString(2);
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException sql) {

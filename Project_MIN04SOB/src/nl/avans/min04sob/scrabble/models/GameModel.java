@@ -277,13 +277,15 @@ public class GameModel extends CoreModel {
 			//checkValidMove(oldBoard, newBoard);
 			ArrayList<String> teVergelijkenWoorden = checkValidWord(playedLetters, newBoard);
 			checkWordsInDatabase(teVergelijkenWoorden);
-			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter) VALUES ( "+
-														"?, ?, ?, ?, ?, ?, ?);";
+			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
+							+"VALUES (?, ?, ?, ?, ?, ?,?);";
 			for(int y = 0 ; y < 15 ; y++){
 				for(int x = 0 ; x < 15 ; x++){
 					if(playedLetters[y][x] != null){
-						//if(playedLetters[y][x].g)
-						//Db.run(new Query(query).set(x/*Letterid*/).set(gameId/*spel id*/).set(y/* beurt id*/).set(value/*x coord*/).set(/*y coord*/).set(/*bord naam*/).set(/*BlancoLetterKarakter*/));
+						ResultSet rs = Db.run(new Query("SELECT ID FROM letter WHERE LetterType_karakter = ? AND Spel_ID = 592").set(playedLetters[y][x].getLetter())).get();
+						rs.first();
+						Db.run(new Query("INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
+								+"VALUES ("+rs.getInt(1)+", 592, 1, "+(x+1)+", "+(y+1)+", 'Standard','');"));
 					}
 				}
 			}
