@@ -1,5 +1,7 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
 
 import net.miginfocom.swing.MigLayout;
@@ -44,6 +46,22 @@ public class SelectSwapView extends CorePanel {
 	
 	public void fillList(){
 		list.setListData(lettersArray);
+	}
+	
+	public void addListListener(MouseAdapter listener){
+		list.addMouseListener(listener);
+	}
+	
+	public void addButtonListener(ActionListener listener){
+		swapButton.addActionListener(listener);
+	}
+	
+	public void getSelectedIndexes(){
+		list.getSelectedIndices();
+	}
+	
+	public Tile getSelectedTile(){
+		return list.getSelectedValue();
 	}
 
 
