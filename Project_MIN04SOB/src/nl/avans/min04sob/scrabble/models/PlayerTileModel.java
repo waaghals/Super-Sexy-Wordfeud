@@ -36,5 +36,9 @@ Tile[][] tileData;
 			}
 			return null;
 		}
+	
+	public Tile[][] getTiles(){
+		return tileData;
+	}
 
 }

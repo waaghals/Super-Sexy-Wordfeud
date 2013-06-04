@@ -193,6 +193,11 @@ public class BoardPanel extends CorePanel {
 		resignActionListener = listener;
 		resignButton.addActionListener(resignActionListener);
 	}
+	
+	//swap button
+	public void addSwapActionListener(ActionListener listener){
+		swapButton.addActionListener(listener);
+	}
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {

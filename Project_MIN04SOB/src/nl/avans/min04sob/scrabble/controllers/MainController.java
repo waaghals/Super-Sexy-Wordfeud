@@ -25,6 +25,7 @@ import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 import nl.avans.min04sob.scrabble.views.ChatPanel;
 import nl.avans.min04sob.scrabble.views.MenuView;
+import nl.avans.min04sob.scrabble.views.SelectSwapView;
 
 public class MainController extends CoreController {
 
@@ -117,6 +118,16 @@ public class MainController extends CoreController {
 				}
 			}
 
+		});
+		//swappen
+		currGamePanel.addSwapActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//view maken om de letters te selecteren
+				Tile [][] letters = playerTileModel.getTiles();
+				new SelectSwapView(letters);
+			}
 		});
 	}
 
