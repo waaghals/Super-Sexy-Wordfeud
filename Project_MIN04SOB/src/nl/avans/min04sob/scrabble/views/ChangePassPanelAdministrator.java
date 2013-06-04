@@ -37,7 +37,7 @@ public class ChangePassPanelAdministrator extends CorePanel{
 		accountList = new JList<String>();
 		accountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(accountList);
-		NamePass = new JLabel("New password");
+		NamePass = new JLabel("nieuw wachtwoord");
 		add(NamePass, "cell 0 13,alignx right,aligny center");
 		Newpass = new JTextField(11);
 		add(Newpass, "cell 1 13 2 1,grow"); 
