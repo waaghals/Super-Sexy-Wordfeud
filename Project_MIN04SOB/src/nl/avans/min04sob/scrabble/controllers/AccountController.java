@@ -58,14 +58,14 @@ public class AccountController extends CoreController {
 		changepassPaneladmin.ChangeaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 if(changepassPaneladmin.getSelectedPlayer()!=null && changepassPaneladmin.getSelectedNewPass().length()>4){
+				 if(changepassPaneladmin.getSelectedNewPass().length()>4){
 				 accountModel.changeAnotherPlayerPass(changepassPaneladmin.getSelectedNewPass(),changepassPaneladmin.getSelectedPlayer());
 				 frame.dispose();
 				 }
 	
 				 else
 				 {
-					 changepassPaneladmin.setText("Wachtwoord te kort of niks gekozen");
+					 changepassPaneladmin.setText("Wachtwoord te kort");
 				 }
 			}
 		});
