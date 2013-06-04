@@ -415,6 +415,15 @@ public class MainController extends CoreController {
 				currGamePanel.setLabelPlayerTurn(" van "
 						+ currentGame.getOpponent().getUsername());
 			}
+		}else{
+			if (currentGame.yourturn()) {
+				currGamePanel.setLabelPlayerTurn("your turn");
+			}else if(currentGame.isIamchallenger()){
+				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent().getUsername() + " turn");
+
+			}else{
+				currGamePanel.setLabelPlayerTurn(currentGame.getChallenger().getUsername() + " turn");
+			}
 		}
 	}
 
@@ -434,5 +443,6 @@ public class MainController extends CoreController {
 		}
 		setTurnLabel();
 	}
+	
 }
 
