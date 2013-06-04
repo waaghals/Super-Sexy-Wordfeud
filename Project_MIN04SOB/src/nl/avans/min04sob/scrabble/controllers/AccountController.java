@@ -58,9 +58,14 @@ public class AccountController extends CoreController {
 		changepassPaneladmin.ChangeaddActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 System.out.println(changepassPaneladmin.getSelectedPlayer());
+				 if(changepassPaneladmin.getSelectedPlayer()!=null){
 				 accountModel.changeAnotherPlayerPass(changepassPaneladmin.getSelectedNewPass(),changepassPaneladmin.getSelectedPlayer());
 				 frame.dispose();
+				 }
+				 else
+				 {
+					 changepassPaneladmin.setText("You need to select first");
+				 }
 			}
 		});
 		
