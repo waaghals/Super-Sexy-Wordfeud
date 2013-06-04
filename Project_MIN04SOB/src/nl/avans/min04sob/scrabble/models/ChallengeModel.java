@@ -56,12 +56,11 @@ public class ChallengeModel extends CoreModel {
 					e.printStackTrace();
 				}
 				while (result.next()) {
-					if ((result.getString(7).equals(STATE_UNKNOWN)
+					if ((	result.getString(7).equals(STATE_UNKNOWN)
 							&& result.getString(4).equals(challenger)
-
 							&& result.getString(5).equals(opponent)
-							&& result.getString(3).equals(STATE_REQUEST) && result
-								.getInt(2) == compID)) {
+							&& result.getString(3).equals(STATE_REQUEST) 
+							&& result.getInt(2) == compID)) {
 
 						error = true;
 						break;
@@ -161,7 +160,7 @@ public class ChallengeModel extends CoreModel {
 		}
 
 		else {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,  } `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
 			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
 		}
