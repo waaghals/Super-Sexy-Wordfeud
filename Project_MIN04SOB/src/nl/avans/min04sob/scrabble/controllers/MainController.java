@@ -68,6 +68,7 @@ public class MainController extends CoreController {
 		frame.setJMenuBar(menu);
 		frame.setPreferredSize(new Dimension(1000,680));
 		frame.pack();
+		startUp();
 	}
 
 	private void addButtonListeners() {
@@ -310,6 +311,12 @@ public class MainController extends CoreController {
 			}
 		});
 	}
+	
+	private void startUp() {
+		accountcontroller = new AccountController(account);
+		accountcontroller.addView(menu);
+		accountcontroller.addView(chatPanel);
+	}
 
 	public void closePanels(){
 		frame.remove(currGamePanel);
@@ -334,10 +341,8 @@ public class MainController extends CoreController {
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
-		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
-
 	}
 
 	protected void openGame(GameModel selectedGame) {
@@ -370,7 +375,7 @@ public class MainController extends CoreController {
 		
 		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
-		selectedGame.setPlayerLetterFromDatabase();
+		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 
@@ -426,6 +431,15 @@ public class MainController extends CoreController {
 				currGamePanel.setLabelPlayerTurn(" van "
 						+ currentGame.getOpponent().getUsername());
 			}
+		}else{
+			if (currentGame.yourturn()) {
+				currGamePanel.setLabelPlayerTurn("your turn");
+			}else if(currentGame.isIamchallenger()){
+				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent().getUsername() + " turn");
+
+			}else{
+				currGamePanel.setLabelPlayerTurn(currentGame.getChallenger().getUsername() + " turn");
+			}
 		}
 	}
 
@@ -445,5 +459,6 @@ public class MainController extends CoreController {
 		}
 		setTurnLabel();
 	}
+	
 }
 

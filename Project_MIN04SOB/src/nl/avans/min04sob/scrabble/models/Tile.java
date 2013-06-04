@@ -9,6 +9,7 @@ public class Tile implements Transferable {
 	private String letter;
 	private int value;
 	private boolean mutatable;
+	private int tileId;
 	public final static boolean MUTATABLE = true;
 	public final static boolean NOT_MUTATABLE = false;
 	private final static DataFlavor flavors[] = { new DataFlavor(Tile.class,
@@ -34,10 +35,11 @@ public class Tile implements Transferable {
 		mutatable = true;
 	}
 
-	public Tile(String letter, int value, boolean mutatable) {
+	public Tile(String letter, int value, boolean mutatable,int id) {
 		this.letter = letter;
 		this.value = value;
 		this.mutatable = mutatable;
+		this.tileId = id;
 	}
 
 	public String getLetter() {
@@ -62,6 +64,9 @@ public class Tile implements Transferable {
 
 	public void lock() {
 		mutatable = false;
+	}
+	public int getTileId(){
+		return this.tileId;
 	}
 
 	public void setEmpty(boolean empty) {

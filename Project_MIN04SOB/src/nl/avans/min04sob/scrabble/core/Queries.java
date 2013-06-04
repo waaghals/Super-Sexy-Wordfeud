@@ -14,7 +14,7 @@ public class Queries {
 	public static final String RANKING;
 
 	static {
-		CURRENT_TILES = Queries.readFile("queries/currentTiles.sql");
+		CURRENT_TILES = Queries.readFile("/queries/currentTiles.sql");
 		RANKING = Queries.readFile("queries/ranking.sql");
 	}
 

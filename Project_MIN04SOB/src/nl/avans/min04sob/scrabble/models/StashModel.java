@@ -24,16 +24,16 @@ public class StashModel extends CoreModel {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(q));
 			ResultSet res = worker.get();
-			int numRows  = Query.getNumRows(res);
-			
+			int numRows = Query.getNumRows(res);
+
 			letters = new String[numRows];
 			int i = 0;
-			while(res.next()){
+			while (res.next()) {
 				letters[i] = res.getString(1);
-				i++;		
+				i++;
 			}
-			
-		} catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return letters;
@@ -44,17 +44,18 @@ public class StashModel extends CoreModel {
 		int gameId = game.getGameId();
 		int numRows;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(Queries.CURRENT_TILES).set(user.getUsername())
-					.set(gameId));
+			Future<ResultSet> worker = Db.run(new Query(Queries.CURRENT_TILES)
+					.set(user.getUsername()).set(gameId));
 			ResultSet res = worker.get();
 			numRows = Query.getNumRows(res);
-
+			
 			Tile[] tiles = new Tile[numRows];
 			int i = 0;
 			while (res.next()) {
 				String character = res.getString("letter");
 				int charValue = res.getInt("waarde");
-				tiles[i] = new Tile(character, charValue, Tile.MUTATABLE);
+				tiles[i] = new Tile(character, charValue, Tile.MUTATABLE,
+						res.getInt("ID"));
 				i++;
 			}
 
@@ -65,54 +66,57 @@ public class StashModel extends CoreModel {
 		return null;
 	}
 
-	public String getRandomLetter() {
-		
-		String letter = null;
-		String q = "SELECT `karakter` FROM `pot`";
+	public Tile getRandomLetter() {
+
+		Tile letter = null;
+		String q = "SELECT `letter_ID`,`karakter` FROM `pot` WHERE `Spel_ID` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(q));
 			ResultSet res = worker.get();
-			int numRows  = Query.getNumRows(res);
-		
-			String[] letters = new String[numRows];
-			int i = 0;
-			while(res.next()){
-				letters[i] = res.getString(1);
-				i++;		
-			}
+			int numRows = Query.getNumRows(res);
+			
+
 			
 			Random randominteger = new Random();
+			int r = randominteger.nextInt(numRows);
+
+			for (int x = 0; x < r-1; x++) {
+				res.next();
+			}
+			String getTileValue =  "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
+			Future<ResultSet> worker1 = Db.run(new Query(getTileValue)
+			.set(res.getString(4)).set("NL"));
+			ResultSet tilewaarde = worker1.get();
+			tilewaarde.next();
+			letter = new Tile(res.getString(2),tilewaarde.getInt(1),Tile.MUTATABLE,res.getInt(1));;
+			
 		
-			int r = randominteger.nextInt(letters.length);
-		
-				
-			letter = letters[r];
 			
 			
-		} catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return letter;
 	}
 
-	public boolean letterleft(){
-		
-		
-		Future<ResultSet> worker; 
-			try {
-				worker = Db.run(new Query(letterfrompot));
-				ResultSet res = worker.get();
-			
-				int numRows  = Query.getNumRows(res);
-				if(numRows == 0){
-					return false;
-				}else{
-					return true;
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public boolean letterleft() {
+
+		Future<ResultSet> worker;
+		try {
+			worker = Db.run(new Query(letterfrompot));
+			ResultSet res = worker.get();
+
+			int numRows = Query.getNumRows(res);
+			if (numRows == 0) {
+				return false;
+			} else {
+				return true;
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return (Boolean) null;
 	}
 

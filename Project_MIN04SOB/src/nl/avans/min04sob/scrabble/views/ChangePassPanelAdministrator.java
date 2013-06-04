@@ -14,6 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
@@ -47,6 +49,14 @@ public class ChangePassPanelAdministrator extends CorePanel{
 		add(back, "cell 1 15,grow");
 		change =new JButton("Change");
 		add(change, "flowy,cell 2 15,grow");
+		change.setEnabled(false);
+		
+		accountList.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent arg0) {
+				change.setEnabled(true);	
+			}
+			
+		});
 	}
 	
 
@@ -72,6 +82,10 @@ public class ChangePassPanelAdministrator extends CorePanel{
 		return Newpass.getText();
 	}
 	
+	public void setText(String msg)
+	{
+		change.setText(msg);
+	}
 	
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
