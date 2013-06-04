@@ -55,9 +55,9 @@ public class GameModel extends CoreModel {
 	private final String getGameQuery = "SELECT * FROM `spel` WHERE `ID` = ?";
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
-	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
+	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID, ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
 
-	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
+	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter`,`l`.`ID` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
 
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
@@ -337,7 +337,7 @@ public class GameModel extends CoreModel {
 						boardModel
 								.setValueAt(new Tile(rs.getString(6),
 										tilewaarde.getInt(1),
-										Tile.NOT_MUTATABLE), y, x);
+										Tile.NOT_MUTATABLE,rs.getInt("ID")), y, x);
 
 					} else {
 						// TODO add letter value in query
@@ -350,7 +350,7 @@ public class GameModel extends CoreModel {
 						boardModel
 								.setValueAt(new Tile(rs.getString(3),
 										tilewaarde.getInt(1),
-										Tile.NOT_MUTATABLE), y, x);
+										Tile.NOT_MUTATABLE,rs.getInt("ID")), y, x);
 					}
 				}
 			}
@@ -851,7 +851,7 @@ public class GameModel extends CoreModel {
 					tilewaarde.next();
 					boardModel.setValueAt(
 							new Tile(rs.getString(4), tilewaarde.getInt(1),
-									Tile.NOT_MUTATABLE), y, x);
+									Tile.NOT_MUTATABLE,rs.getInt(5)), y, x);
 
 				} else {
 					Future<ResultSet> worker2 = Db.run(new Query(getTileValue)
@@ -860,7 +860,7 @@ public class GameModel extends CoreModel {
 					tilewaarde.next();
 					boardModel.setValueAt(
 							new Tile(rs.getString(1), tilewaarde.getInt(1),
-									Tile.NOT_MUTATABLE), y, x);
+									Tile.NOT_MUTATABLE,rs.getInt(5)), y, x);
 				}
 			}
 			boardModel.update();

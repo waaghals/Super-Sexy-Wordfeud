@@ -330,7 +330,6 @@ public class MainController extends CoreController {
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
 
-		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
 	}
@@ -421,6 +420,15 @@ public class MainController extends CoreController {
 				currGamePanel.setLabelPlayerTurn(" van "
 						+ currentGame.getOpponent().getUsername());
 			}
+		}else{
+			if (currentGame.yourturn()) {
+				currGamePanel.setLabelPlayerTurn("your turn");
+			}else if(currentGame.isIamchallenger()){
+				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent().getUsername() + " turn");
+
+			}else{
+				currGamePanel.setLabelPlayerTurn(currentGame.getChallenger().getUsername() + " turn");
+			}
 		}
 	}
 
@@ -440,5 +448,6 @@ public class MainController extends CoreController {
 		}
 		setTurnLabel();
 	}
+	
 }
 
