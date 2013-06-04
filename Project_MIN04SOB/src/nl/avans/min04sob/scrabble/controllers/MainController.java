@@ -364,7 +364,7 @@ public class MainController extends CoreController {
 		
 		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
-		selectedGame.setPlayerLetterFromDatabase();
+		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 

@@ -372,10 +372,12 @@ public class GameModel extends CoreModel {
 			
 			for(int counter = 0;newletters.length > counter; counter++){
 				
-				if(stash.letterleft()){
-					String newletter = stash.getRandomLetter();
+				
 					if(!(letters.length > counter)){
-							newletters[counter] = new Tile(newletter,this.getvalueforLetter(newletter),Tile.MUTATABLE );
+						if(stash.letterleft()){
+							
+							newletters[counter] = stash.getRandomLetter();
+						}
 					}else{
 						newletters[counter] = letters[counter];
 					}
@@ -383,7 +385,7 @@ public class GameModel extends CoreModel {
 				}
 				playerTileModel.setPlayerTileData(newletters);
 			
-			}
+			
 	}
 
 	
@@ -682,7 +684,7 @@ public class GameModel extends CoreModel {
 		this.currentobserveturn = currentobserveturn;
 	}
 
-	public void setPlayerLetterFromDatabase() {
+	/*public void setPlayerLetterFromDatabase() {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getPlayerTiles).set(
 					getGameId()).set(currentUser.getUsername()));
@@ -699,17 +701,17 @@ public class GameModel extends CoreModel {
 					ResultSet tilewaarde = worker1.get();
 					tilewaarde.next();
 
-					/*
-					 * boardModel.setPlayetTile(x, new Tile(letters[x],
-					 * tilewaarde.getInt(1), Tile.MUTATABLE));
-					 */
+					
+					 boardModel.setPlayetTile(x, new Tile(letters[x],
+					 tilewaarde.getInt(1), Tile.MUTATABLE));
+					
 				}
 			}
 
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
-	}
+	}*/
 
 	private void test() {
 		Integer[][] matrix = new Integer[][] {
