@@ -67,6 +67,7 @@ public class MainController extends CoreController {
 		frame.setJMenuBar(menu);
 		frame.setPreferredSize(new Dimension(1000,680));
 		frame.pack();
+		startUp();
 	}
 
 	private void addButtonListeners() {
@@ -299,6 +300,12 @@ public class MainController extends CoreController {
 			}
 		});
 	}
+	
+	private void startUp() {
+		accountcontroller = new AccountController(account);
+		accountcontroller.addView(menu);
+		accountcontroller.addView(chatPanel);
+	}
 
 	public void closePanels(){
 		frame.remove(currGamePanel);
@@ -326,7 +333,6 @@ public class MainController extends CoreController {
 		boardModel.setValueAt(new Tile("B", 15, false), 8, 8);
 		chatPanel = new ChatPanel();
 		chatModel = null;
-
 	}
 
 	protected void openGame(GameModel selectedGame) {
