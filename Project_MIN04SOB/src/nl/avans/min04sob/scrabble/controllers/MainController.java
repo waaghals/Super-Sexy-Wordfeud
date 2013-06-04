@@ -132,8 +132,10 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//view maken om de letters te selecteren
-				Tile [][] letters = playerTileModel.getTiles();
-				selectSwap(letters);
+				//TODO moest de methode verander waardoor jullie ding niet goed meer werkte je moet getValueAt gebruiken nu.
+				//Tile [][] letters =
+						
+				//selectSwap(letters);
 			}
 		});
 	}

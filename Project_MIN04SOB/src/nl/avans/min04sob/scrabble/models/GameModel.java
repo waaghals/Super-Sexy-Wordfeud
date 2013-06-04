@@ -283,7 +283,7 @@ public class GameModel extends CoreModel {
 				teVergelijkenWoordenString.add(tempwoord);
 			}
 			checkWordsInDatabase(teVergelijkenWoordenString);
-			// getScore(playedLetters, teVergelijkenWoorden, newBoard);
+			getScore(playedLetters, teVergelijkenWoorden, newBoard);
 			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
 					+ "VALUES (?, ?, ?, ?, ?, ?,?);";
 			for (int y = 0; y < 15; y++) {
@@ -533,22 +533,22 @@ public class GameModel extends CoreModel {
 		return 0;
 	}
 
-	public int getScore(Tile[][] playedLetters, ArrayList[] woorden,
+	public int getScore(Tile[][] playedLetters, ArrayList<ArrayList<Tile>> woorden,
 			BoardModel currentBoard) {
 		int Score = 0;
-		for (int wordCounter = 0; woorden.length < wordCounter + 1; wordCounter++) {
+		for (int wordCounter = 0; woorden.size() < wordCounter + 1; wordCounter++) {
 			int scoreofcurrentword = 0;
 			boolean times3 = false;
 			boolean times2 = false;
-			for (int letterCounter = 0; woorden[wordCounter].size() < letterCounter; letterCounter++) {
+			for (int letterCounter = 0; woorden.get(wordCounter).size() < letterCounter; letterCounter++) {
 				int scoreofcurrentletter = 0;
-				scoreofcurrentletter = ((Tile) woorden[wordCounter]
-						.get(letterCounter)).getValue();
+				scoreofcurrentletter =  woorden.get(wordCounter).get(letterCounter).getValue();
+						
 				// check if any played letter are on special tiles
 
 				for (int xpos = 0; playedLetters.length > xpos; xpos++) {
 					for (int ypos = 0; playedLetters[xpos].length > ypos; ypos++) {
-						if (((Tile) woorden[wordCounter].get(letterCounter) == playedLetters[xpos][ypos])) {
+						if ((woorden.get(wordCounter).get(letterCounter).getTileId() == playedLetters[xpos][ypos].getTileId())) {
 
 							switch (currentBoard.getMultiplier(new Point(xpos,
 									ypos))) {
