@@ -250,6 +250,9 @@ public class BoardPanel extends CorePanel {
 	public void setRenderer(TableCellRenderer renderer) {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
 	}
+	public void setPlayerTileRenderer(TableCellRenderer renderer){
+		playerTilesField.setDefaultRenderer(Tile.class, renderer);
+	}
 	public void update() {
 
 		this.repaint();

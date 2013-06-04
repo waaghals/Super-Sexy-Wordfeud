@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.CoreWindow;
@@ -322,7 +323,7 @@ public class MainController extends CoreController {
 
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
-
+		
 		currGamePanel = new BoardPanel();
 		
 		playerTileModel = new PlayerTileModel();
@@ -335,7 +336,7 @@ public class MainController extends CoreController {
 	}
 
 	protected void openGame(GameModel selectedGame) {
-		
+		//TODO hij roept dit 2 keer aan bug??
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
@@ -358,12 +359,16 @@ public class MainController extends CoreController {
 		boardModel = selectedGame.getBoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
+		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(playerTileModel));
+		currGamePanel.setPlayerTileModel(playerTileModel);
+		
 		AccountModel accountTurn;
 
 		updatelabels(selectedGame.getCurrentobserveturn());
 		
 		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
+		
 		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();

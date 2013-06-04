@@ -40,7 +40,7 @@ public class StashModel extends CoreModel {
 	}
 
 	public Tile[] getPlayerTiles(AccountModel user, GameModel game) {
-		String username = user.getUsername();
+		
 		int gameId = game.getGameId();
 		int numRows;
 		try {
@@ -66,32 +66,31 @@ public class StashModel extends CoreModel {
 		return null;
 	}
 
-	public Tile getRandomLetter() {
+	public Tile getRandomLetter(int spel_ID) {
 
 		Tile letter = null;
 		String q = "SELECT `letter_ID`,`karakter` FROM `pot` WHERE `Spel_ID` = ?";
 		try {
-			Future<ResultSet> worker = Db.run(new Query(q));
+			Future<ResultSet> worker = Db.run(new Query(q).set(spel_ID));
 			ResultSet res = worker.get();
 			int numRows = Query.getNumRows(res);
 			
-
-			
+			res.first();
+			if(numRows > 0){
 			Random randominteger = new Random();
 			int r = randominteger.nextInt(numRows);
 
-			for (int x = 0; x < r-1; x++) {
+			for (int x = 0; x < r; x++) {
 				res.next();
 			}
 			String getTileValue =  "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
-			Future<ResultSet> worker1 = Db.run(new Query(getTileValue)
-			.set(res.getString(4)).set("NL"));
+			Future<ResultSet> worker1 = Db.run(new Query(getTileValue).set(res.getString(2)).set("NL"));
 			ResultSet tilewaarde = worker1.get();
 			tilewaarde.next();
 			letter = new Tile(res.getString(2),tilewaarde.getInt(1),Tile.MUTATABLE,res.getInt(1));;
 			
 		
-			
+			}
 			
 
 		} catch (Exception e) {

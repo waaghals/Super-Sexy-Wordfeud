@@ -1,10 +1,14 @@
 package nl.avans.min04sob.scrabble.models;
 
+import javax.xml.crypto.Data;
+
 import nl.avans.min04sob.scrabble.core.CoreTableModel;
 
 public class PlayerTileModel extends CoreTableModel {
-Tile[][] tileData;
-	
+
+	public PlayerTileModel(){
+		initDataArray(1, 7);
+	}
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -12,9 +16,10 @@ Tile[][] tileData;
 		return true;
 	}
 
-	@Override
-	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
+	public void setsValueAt(Tile newValue, int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
+		System.out.println(((Tile) newValue).getLetter());
+		
 		data[rowIndex][columnIndex] = newValue;
 	}
 
@@ -24,8 +29,11 @@ Tile[][] tileData;
 		
 	}
 	public void setPlayerTileData(Tile[] newletters){
-		for(int counter = 0; counter < 7; counter++){
-			this.setValueAt(newletters[counter], 0, counter);
+		for(int counter = 0; counter < newletters.length; counter++){
+			
+			
+			this.setsValueAt(newletters[counter], 0, counter);
+			
 		}
 	}
 
@@ -36,5 +44,11 @@ Tile[][] tileData;
 			}
 			return null;
 		}
+
+	@Override
+	public void setValueAt(Object newValue, int rowIndex, int columnIndex) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
