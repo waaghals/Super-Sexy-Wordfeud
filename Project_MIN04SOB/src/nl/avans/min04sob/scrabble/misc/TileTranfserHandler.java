@@ -81,10 +81,11 @@ public class TileTranfserHandler extends TransferHandler {
 						+ sourceCol + " to null");
 				model.setValueAt(null, sourceRow, sourceCol);
 			} else {
-				//Put the sourceTile Back
+				// Put the sourceTile Back
 				model.setValueAt(sourceTile, sourceRow, sourceCol);
 			}
 			table.clearSelection();
+
 		} catch (UnsupportedFlavorException | IOException e) {
 			// TODO Automatisch gegenereerd catch-blok
 			e.printStackTrace();
