@@ -51,8 +51,6 @@ public class MainController extends CoreController {
 
 	private StashModel stashModel;
 
-	private Boolean observer;
-	private CompetitionController competitioncontroller;
 	private ResignController resigncontroller;
 	private ArrayList<Tile> selectedTiles;
 
@@ -340,7 +338,6 @@ public class MainController extends CoreController {
 
 	@Override
 	public void initialize() {
-		observer = false;
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
@@ -353,7 +350,7 @@ public class MainController extends CoreController {
 		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
-
+		chatPanel = new ChatPanel();
 	}
 
 	public void closePanels(){
@@ -378,12 +375,10 @@ public class MainController extends CoreController {
 		// frame.remove(currGamePanel);
 		closePanels();
 
-		ArrayList<GameModel> games;
-
-		games = account.getObserverAbleGames();
+		account.getObserverAbleGames();
 
 		System.out.println("test");
-		boolean yourTurn = selectedGame.yourturn();
+		selectedGame.yourturn();
 
 		currGamePanel = new BoardPanel();
 		boardModel = selectedGame.getBoardModel();
@@ -393,8 +388,6 @@ public class MainController extends CoreController {
 		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(
 				playerTileModel));
 		currGamePanel.setPlayerTileModel(playerTileModel);
-
-		AccountModel accountTurn;
 
 		updatelabels(selectedGame.getCurrentobserveturn());
 
