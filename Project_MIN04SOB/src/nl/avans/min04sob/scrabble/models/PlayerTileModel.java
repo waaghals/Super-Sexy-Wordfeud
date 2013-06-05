@@ -1,6 +1,5 @@
 package nl.avans.min04sob.scrabble.models;
 
-import javax.xml.crypto.Data;
 
 import nl.avans.min04sob.scrabble.core.mvc.CoreTableModel;
 

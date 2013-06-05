@@ -1,7 +1,5 @@
 package testmains;
 
-import java.util.ArrayList;
-
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.GameModel;

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
@@ -303,6 +302,7 @@ public class CompetitionController extends CoreController {
 		
 		createCompetitionView.addBackButtonListener(new ActionListener() {
 			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window2.dispose();
 				
@@ -311,6 +311,7 @@ public class CompetitionController extends CoreController {
 		
 		createCompetitionView.addCreateButtonListener(new ActionListener() {
 			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
 				competitionModel.checkCompetition(accountModel.getUsername(), desc);

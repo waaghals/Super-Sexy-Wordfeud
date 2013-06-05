@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 
+@SuppressWarnings("serial")
 public abstract class CorePanel extends JPanel implements CoreView {
 	
 	public CorePanel() {

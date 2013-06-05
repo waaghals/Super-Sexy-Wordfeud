@@ -51,6 +51,7 @@ public class MainController extends CoreController {
 
 	private StashModel stashModel;
 
+	@SuppressWarnings("unused")
 	private ResignController resigncontroller;
 	private ArrayList<Tile> selectedTiles;
 
@@ -494,6 +495,7 @@ public class MainController extends CoreController {
 
 		swapView.addListListener(new MouseAdapter() {
 
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 					selectedTiles.add(swapView.getSelectedTile());

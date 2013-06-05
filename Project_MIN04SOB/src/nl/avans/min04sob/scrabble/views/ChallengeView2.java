@@ -74,7 +74,7 @@ public class ChallengeView2 extends CorePanel {
 	}
 
 	public String getSelectedChallenge() {
-		String s = (String) challengeList.getSelectedValue();
+		String s = challengeList.getSelectedValue();
 		return s;
 	}
 

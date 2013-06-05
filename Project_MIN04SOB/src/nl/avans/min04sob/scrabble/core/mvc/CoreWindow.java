@@ -9,6 +9,7 @@ import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 
+@SuppressWarnings("serial")
 public class CoreWindow extends JFrame implements CoreView {
 
 	public CoreWindow() {

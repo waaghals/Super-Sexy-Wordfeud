@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.concurrent.Callable;
 
-import testmains.TestMain;
 
 import nl.avans.min04sob.scrabble.core.Role;
 

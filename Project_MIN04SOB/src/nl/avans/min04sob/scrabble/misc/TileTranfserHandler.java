@@ -1,6 +1,5 @@
 package nl.avans.min04sob.scrabble.misc;
 
-import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;

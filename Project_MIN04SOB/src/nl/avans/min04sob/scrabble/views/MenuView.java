@@ -14,6 +14,7 @@ import nl.avans.min04sob.scrabble.core.mvc.CoreView;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
 
+@SuppressWarnings("serial")
 public class MenuView extends JMenuBar implements CoreView {
 
 	private JMenu accountMenu;

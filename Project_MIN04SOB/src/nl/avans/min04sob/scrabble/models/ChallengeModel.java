@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.controllers.CompetitionController;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
@@ -29,7 +28,6 @@ public class ChallengeModel extends CoreModel {
 	private String yourname;
 	private ArrayList<String> challenge = new ArrayList<String>();
 	private AccountModel accountModel;
-	private CompetitionController competitionController;
 	private boolean isDuplication = false;
 	private int numChallenge;
 
