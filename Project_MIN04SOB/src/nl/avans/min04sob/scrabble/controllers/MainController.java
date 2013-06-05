@@ -37,7 +37,7 @@ public class MainController extends CoreController {
 	private CoreWindow frame;
 	private MenuView menu;
 	private AccountModel account;
-	private ChallengeController crtl;
+	
 	private AccountController accountcontroller;
 	private BoardPanel currGamePanel;
 	private ChatPanel chatPanel;
@@ -45,7 +45,7 @@ public class MainController extends CoreController {
 	private BoardModel boardModel;
 	private PlayerTileModel playerTileModel;
 	private GameModel currentGame;
-	private InviteController invController;
+	
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
 
