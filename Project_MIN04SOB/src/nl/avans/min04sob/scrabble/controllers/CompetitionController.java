@@ -78,6 +78,11 @@ public class CompetitionController extends CoreController {
 				.getUsersFromCompetition(competition_id, accountModel.getUsername()));
 	}
 
+	public void getChallengeAbleUsers(int competition_id) {
+		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));
+	}
+
+
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
@@ -119,7 +124,7 @@ public class CompetitionController extends CoreController {
 
 	}
 
-	public void openCompetitionView() {
+	public void openChallengeView() {
 		window = new CoreWindow();
 		window.add(competitionView);
 		window.setTitle("Speler uitdagen");
@@ -143,9 +148,8 @@ public class CompetitionController extends CoreController {
 				int id = competitionView.getSelectedCompetition().getCompId();
 				challengeModel.check(accountModel.getUsername(),
 						competitionView.getSelectedPlayer().getUsername(), id);
-				if (challengeModel.isDuplicatedChallenge()) {
-					competitionView.changeActionText();
-				}
+				competitionView.clearPlayerList();
+				getChallengeAbleUsers(id);
 			}
 		});
 
@@ -155,14 +159,14 @@ public class CompetitionController extends CoreController {
 				if (e.getClickCount() == 1) {
 					int id = competitionView.getSelectedCompetition()
 							.getCompId();
-					getParticipants(id);
+					getChallengeAbleUsers(id);
 				}
 			}
 		});
 
 		competitionView.setText("Ingeschreven competities",
 				"Spelers in competitie", "Speler uitdagen", true);
-		
+
 		getCompetitions(accountModel.toString());
 	}
 
@@ -263,8 +267,10 @@ public class CompetitionController extends CoreController {
 							.getCompId();
 					getParticipants(id);
 					competitionModel.join(id, accountModel.getUsername());
-					window.dispose();
-					// competitionView.removeIndex(competitionView.getIndex());
+					competitionView.clearCompList();
+					competitionView.clearPlayerList();
+					getAvailable(accountModel.getUsername());
+					competitionView.clearPlayerList();
 				} else {
 					System.out.println("selecteer een competitie");
 				}
@@ -299,18 +305,18 @@ public class CompetitionController extends CoreController {
 		window2.setPreferredSize(new Dimension(250, 130));
 		window2.setResizable(false);
 		window2.pack();
-		
+
 		createCompetitionView.addBackButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window2.dispose();
-				
+
 			}
 		});
-		
+
 		createCompetitionView.addCreateButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
