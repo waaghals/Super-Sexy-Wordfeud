@@ -135,9 +135,9 @@ public class MainController extends CoreController {
 				// view maken om de letters te selecteren
 				// TODO moest de methode verander waardoor jullie ding niet goed
 				// meer werkte je moet getValueAt gebruiken nu.
-				// Tile [][] letters =
+				Tile [] letters = stashModel.getPlayerTiles(account, currentGame);
 
-				// selectSwap(letters);
+				selectSwap(letters);
 			}
 		});
 	}
@@ -228,9 +228,6 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openDeleteCompetitionView();
-
-				// invController = new InviteController();
-				// invController.setButtonsRemove();
 
 			}
 		});
@@ -480,7 +477,7 @@ public class MainController extends CoreController {
 	}
 
 	// selectSwap
-	public void selectSwap(Tile[][] letters) {
+	public void selectSwap(Tile[] letters) {
 		swapWindow = new CoreWindow();
 		swapView = new SelectSwapView(letters);
 		swapWindow.add(swapView);
@@ -496,13 +493,13 @@ public class MainController extends CoreController {
 
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for(Tile tile: selectedTiles){
-					//rij toevoegen aan beurt
+					
 					
 					
 					
 					// elke tile uit hand verwijderen en aan de pot toevoegen
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
-
+					// rij toevoegen aan beurt
 				}
 
 			}
