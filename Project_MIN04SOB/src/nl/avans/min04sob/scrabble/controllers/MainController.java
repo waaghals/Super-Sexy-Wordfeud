@@ -1,4 +1,3 @@
-
 package nl.avans.min04sob.scrabble.controllers;
 
 import java.awt.Dimension;
@@ -9,8 +8,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -46,11 +48,13 @@ public class MainController extends CoreController {
 	private InviteController invController;
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
-	private ArrayList<Tile> selectedTiles;
+
+	private StashModel stashModel;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
 	private ResignController resigncontroller;
+	private ArrayList<Tile> selectedTiles;
 
 	public MainController() {
 
@@ -72,7 +76,7 @@ public class MainController extends CoreController {
 		// }
 
 		frame.setJMenuBar(menu);
-		frame.setPreferredSize(new Dimension(1000,680));
+		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
 		startUp();
 	}
@@ -100,7 +104,7 @@ public class MainController extends CoreController {
 							.getCurrentobserveturn());
 
 					currentGame.getBoardModel().update();
-
+					
 					updatelabels(currentGame.getCurrentobserveturn());
 				}
 			}
@@ -126,16 +130,17 @@ public class MainController extends CoreController {
 			}
 
 		});
-		//swappen
+		// swappen
 		currGamePanel.addSwapActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//view maken om de letters te selecteren
-				//TODO moest de methode verander waardoor jullie ding niet goed meer werkte je moet getValueAt gebruiken nu.
-				//Tile [][] letters =
-						
-				//selectSwap(letters);
+				// view maken om de letters te selecteren
+				// TODO moest de methode verander waardoor jullie ding niet goed
+				// meer werkte je moet getValueAt gebruiken nu.
+				// Tile [][] letters =
+
+				// selectSwap(letters);
 			}
 		});
 	}
@@ -143,38 +148,40 @@ public class MainController extends CoreController {
 	@Override
 	public void addListeners() {
 
-		menu.viewChallengeItemActionListener(new ActionListener() {	//uitdagingen bekijken
+		menu.viewChallengeItemActionListener(new ActionListener() { // uitdagingen
+																	// bekijken
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//crtl.challengers();
+				// crtl.challengers();
 				new ChallengeController2(account);
-				//new ChallengeController(account.getUsername());
-
+				// new ChallengeController(account.getUsername());
 
 			}
 		});
-		menu.adddoChallengeItemActionListener(new ActionListener() { //uitdagen
+		menu.adddoChallengeItemActionListener(new ActionListener() { // uitdagen
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CompetitionController(account).openCompetitionView();
-				//crtl.toChallenge();
+				// crtl.toChallenge();
 
 			}
 		});
 		menu.addChangePassItemActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//changePass();
-				AccountController accountController = new AccountController(account);
+				// changePass();
+				AccountController accountController = new AccountController(
+						account);
 				accountController.setChangePassPanel();
 			}
 		});
-		menu. Accountaanmaken(new ActionListener() {
+		menu.Accountaanmaken(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AccountController accountController = new AccountController(account);
+				AccountController accountController = new AccountController(
+						account);
 				accountController.loginToRegister();
 			}
 		});
@@ -191,29 +198,31 @@ public class MainController extends CoreController {
 
 				new CompetitionController(account).openJoinCompetitionView();
 
-				//invController = new InviteController();
-				//invController.setButtonsJoin();
+				// invController = new InviteController();
+				// invController.setButtonsJoin();
 			}
 		});
 		menu.viewPlayers(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				accountcontroller= new AccountController(account);
+				accountcontroller = new AccountController(account);
 				accountcontroller.adminChangePass();
-			 
-			}});
-		
+
+			}
+		});
+
 		menu.viewWords(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AcceptDeclineController();
 			}
 		});
-		
-		menu.deleteFromCompetitionItem(new ActionListener(){
+
+		menu.deleteFromCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openDeleteFromCompetitionView();
+				new CompetitionController(account)
+						.openDeleteFromCompetitionView();
 			}
 		});
 
@@ -222,14 +231,14 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openDeleteCompetitionView();
-				
-				//invController = new InviteController();
-				//invController.setButtonsRemove();
+
+				// invController = new InviteController();
+				// invController.setButtonsRemove();
 
 			}
 		});
-		
-		menu.createCompetitionItem(new ActionListener(){
+
+		menu.createCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new CompetitionController(account).openCreateCompetitionView();
@@ -302,7 +311,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				sendChat();
 			}
 		});
@@ -319,18 +328,15 @@ public class MainController extends CoreController {
 			}
 		});
 	}
-	
+
 	private void startUp() {
 		accountcontroller = new AccountController(account);
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
+
 	}
 
-	public void closePanels(){
-		frame.remove(currGamePanel);
-		frame.remove(chatPanel);
-		frame.repaint();
-	}
+
 
 	@Override
 	public void initialize() {
@@ -341,30 +347,36 @@ public class MainController extends CoreController {
 
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
-		
+
 		currGamePanel = new BoardPanel();
-		
+
 		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
-		currGamePanel.setModel(boardModel);
 
-		chatPanel = new ChatPanel();
-		chatModel = null;
 	}
 
+	public void closePanels(){
+		frame.remove(currGamePanel);
+		frame.remove(chatPanel);
+		frame.repaint();
+	}
+
+	
+
+
 	protected void openGame(GameModel selectedGame) {
-		//TODO hij roept dit 2 keer aan bug??
+		// TODO hij roept dit 2 keer aan bug??
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-		//chatPanel.setEnabled(true);
+		removeModel(playerTileModel);
+		// chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
-		//frame.remove(currGamePanel);
+		// frame.remove(currGamePanel);
 		closePanels();
-		
 
 		ArrayList<GameModel> games;
 
@@ -375,30 +387,33 @@ public class MainController extends CoreController {
 
 		currGamePanel = new BoardPanel();
 		boardModel = selectedGame.getBoardModel();
+		playerTileModel = selectedGame.getPlayerTileModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
-		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(playerTileModel));
+		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(
+				playerTileModel));
 		currGamePanel.setPlayerTileModel(playerTileModel);
-		
+
 		AccountModel accountTurn;
 
 		updatelabels(selectedGame.getCurrentobserveturn());
-		
+
 		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
 		addModel(boardModel);
-		
+		addModel(playerTileModel);
+
 		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 
 		addButtonListeners();
 
-		//frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-		//frame.revalidate();
-		//frame.repaint();
-		//chatPanel.setEnabled(true);
+		// frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
+		// frame.revalidate();
+		// frame.repaint();
+		// chatPanel.setEnabled(true);
 		openPanels();
-		
+
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -407,12 +422,10 @@ public class MainController extends CoreController {
 		chatModel.update();
 	}
 
-	public void openPanels(){
-		frame.add(currGamePanel,
-				"cell 4 0 6 6,growx,aligny top");
+	public void openPanels() {
+		frame.add(currGamePanel, "cell 4 0 6 6,growx,aligny top");
 
-		frame.add(chatPanel,
-				"cell 0 0 4 6,alignx left,aligny top");
+		frame.add(chatPanel, "cell 0 0 4 6,alignx left,aligny top");
 		frame.revalidate();
 		frame.repaint();
 	}
@@ -429,11 +442,11 @@ public class MainController extends CoreController {
 			chatPanel.setChatFieldSendText("");
 		}
 	}
-	
+
 	private void setCurrentGame(GameModel selectedGame) {
 		currentGame = selectedGame;
 	}
-	
+
 	public void setTurnLabel() {
 		if (currentGame.isObserver()) {
 			if (currentGame.whosturn()) {
@@ -443,14 +456,16 @@ public class MainController extends CoreController {
 				currGamePanel.setLabelPlayerTurn(" van "
 						+ currentGame.getOpponent().getUsername());
 			}
-		}else{
+		} else {
 			if (currentGame.yourturn()) {
 				currGamePanel.setLabelPlayerTurn("your turn");
-			}else if(currentGame.isIamchallenger()){
-				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent().getUsername() + " turn");
+			} else if (currentGame.isIamchallenger()) {
+				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent()
+						.getUsername() + " turn");
 
-			}else{
-				currGamePanel.setLabelPlayerTurn(currentGame.getChallenger().getUsername() + " turn");
+			} else {
+				currGamePanel.setLabelPlayerTurn(currentGame.getChallenger()
+						.getUsername() + " turn");
 			}
 		}
 	}
@@ -471,38 +486,45 @@ public class MainController extends CoreController {
 		}
 		setTurnLabel();
 	}
-	
-	//selectSwap
-	public void selectSwap(Tile[][] letters){
+
+	// selectSwap
+	public void selectSwap(Tile[][] letters) {
 		swapWindow = new CoreWindow();
 		swapView = new SelectSwapView(letters);
 		swapWindow.add(swapView);
 		swapWindow.setResizable(false);
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
-		
+
+
 		selectedTiles = new ArrayList<Tile>();
-		
-		swapView.addListListener(new MouseAdapter(){
-		
+
+		swapView.addListListener(new MouseAdapter() {
+
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 					selectedTiles.add(swapView.getSelectedTile());
 				}
 			}
 		});
-		
+
 		swapView.addButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+			
+				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for(Tile tile: selectedTiles){
-					// de tile wisselen met pot
+					stashModel.addTileToStash(currentGame.getGameId(), tile);
+					
+					// elke tile aan pot toevoegen
+					// zelfde hoeveelheid uit te pot halen
+
 				}
-				
+
 			}
 		});
 	}
-	
-}
 
+}

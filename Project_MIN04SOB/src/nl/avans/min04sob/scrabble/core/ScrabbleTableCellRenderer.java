@@ -141,6 +141,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			Component c = super.getTableCellRendererComponent(table, value,
 					isSelected, hasFocus, row, col);
 			Tile tile = (Tile) playerTileModel.getValueAt(row, col);
+			c.setBackground(Color.white);
 			return c;
 		}
 	}
