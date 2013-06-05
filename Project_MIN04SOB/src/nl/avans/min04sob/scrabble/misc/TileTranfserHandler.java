@@ -1,3 +1,4 @@
+
 package nl.avans.min04sob.scrabble.misc;
 
 import java.awt.Point;

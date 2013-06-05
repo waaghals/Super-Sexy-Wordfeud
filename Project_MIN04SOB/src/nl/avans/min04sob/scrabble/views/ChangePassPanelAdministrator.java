@@ -1,16 +1,12 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -19,7 +15,6 @@ import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
-import nl.avans.min04sob.scrabble.models.AccountModel;
 
 public class ChangePassPanelAdministrator extends CorePanel{
  
@@ -52,6 +47,7 @@ public class ChangePassPanelAdministrator extends CorePanel{
 		change.setEnabled(false);
 		
 		accountList.addListSelectionListener(new ListSelectionListener(){
+			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				change.setEnabled(true);	
 			}

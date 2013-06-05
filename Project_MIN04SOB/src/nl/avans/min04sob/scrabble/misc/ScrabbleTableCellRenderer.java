@@ -2,12 +2,10 @@ package nl.avans.min04sob.scrabble.misc;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
