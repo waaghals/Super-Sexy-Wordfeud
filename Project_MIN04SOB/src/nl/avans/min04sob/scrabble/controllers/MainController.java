@@ -323,6 +323,7 @@ public class MainController extends CoreController {
 	}
 
 	private void refresh() {
+		boardModel.removeMutatable();
 		openGame(currentGame);
 	}
 
