@@ -1,8 +1,5 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
@@ -11,12 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class CompetitionScoreView extends CorePanel {
 

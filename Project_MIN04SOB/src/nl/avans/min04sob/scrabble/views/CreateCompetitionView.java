@@ -3,12 +3,12 @@ package nl.avans.min04sob.scrabble.views;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 public class CreateCompetitionView extends CorePanel {
 	

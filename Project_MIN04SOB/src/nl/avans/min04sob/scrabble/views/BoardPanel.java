@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.util.Arrays;
 
 import javax.swing.DropMode;
 import javax.swing.JButton;
@@ -22,7 +21,6 @@ import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
-import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.misc.TileTable;
 import nl.avans.min04sob.scrabble.misc.TileTransferHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
