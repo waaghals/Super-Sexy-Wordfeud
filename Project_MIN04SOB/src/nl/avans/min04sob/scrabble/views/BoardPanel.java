@@ -43,14 +43,9 @@ public class BoardPanel extends CorePanel {
 	private ActionListener resignActionListener;
 
 	private boolean isObserver;
-	
-	private final JLabel turnScoreText;
 	private final JLabel browseText;
 	private final JLabel turnTextLabel;
 	private final JLabel spelersLabel;
-	
-	
-	private JLabel turnScoreLabel;
 	
 	private JLabel turnLabel;
 	
@@ -62,6 +57,7 @@ public class BoardPanel extends CorePanel {
 	
 	private JLabel playerScoreLabel;
 	private DefaultTableModel playerStash;
+	private JButton refreshButton;
 
 	public BoardPanel() {
 		playerStash = new DefaultTableModel(1, 8);
@@ -173,12 +169,9 @@ public class BoardPanel extends CorePanel {
 
 		prevButton = new JButton();
 		prevButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-
-		turnScoreText = new JLabel("Score");
-		add(turnScoreText, "cell 0 6,alignx right");
-
-		turnScoreLabel = new JLabel("<score>");
-		add(turnScoreLabel, "cell 1 6");
+		
+		refreshButton = new JButton("Refresh");
+		add(refreshButton, "cell 1 6,grow");
 
 		browseText = new JLabel("Bladeren");
 		add(browseText, "cell 2 6,alignx right");
@@ -206,6 +199,10 @@ public class BoardPanel extends CorePanel {
 	public void addPreviousActionListener(ActionListener listener) {
 		prevButton.addActionListener(listener);
 
+	}
+	
+	public void addRefreshActionListener(ActionListener listener) {
+		refreshButton.addActionListener(listener);
 	}
 
 	public void addResignActionListener(ActionListener listener) {

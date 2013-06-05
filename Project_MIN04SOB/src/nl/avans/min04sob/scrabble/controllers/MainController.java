@@ -235,11 +235,12 @@ public class MainController extends CoreController {
 		});
 
 		
-		menu.refreshitem(new ActionListener() {
+		currGamePanel.addRefreshActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				refresh();
-			}});
+			}
+		});
 		
 		menu.createCompetitionItem(new ActionListener() {
 			@Override
