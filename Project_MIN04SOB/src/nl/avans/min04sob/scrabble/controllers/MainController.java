@@ -162,7 +162,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openCompetitionView();
+				new CompetitionController(account).openChallengeView();
 				// crtl.toChallenge();
 
 			}
@@ -498,7 +498,7 @@ public class MainController extends CoreController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					selectedTiles.add(swapView.getSelectedTile());
+					//selectedTiles.add(swapView.getSelectedTile());
 				}
 			}
 		});
