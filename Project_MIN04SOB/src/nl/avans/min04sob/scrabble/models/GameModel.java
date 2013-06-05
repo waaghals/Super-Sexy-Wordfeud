@@ -9,10 +9,11 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Db;
-import nl.avans.min04sob.scrabble.core.MatrixUtils;
-import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.db.Db;
+import nl.avans.min04sob.scrabble.core.db.Query;
+import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
+import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
+import nl.avans.min04sob.scrabble.misc.MatrixUtils;
 
 public class GameModel extends CoreModel {
 
@@ -370,7 +371,9 @@ public class GameModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
-
+	public void setplayertilestodatabase(){
+		
+	}
 	public void setplayertilesfromdatabase() {
 
 		StashModel stash = new StashModel();
@@ -944,5 +947,8 @@ public class GameModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	public PlayerTileModel getPlayerTileModel(){
+		return this.playerTileModel;
 	}
 }

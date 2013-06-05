@@ -16,14 +16,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.Event;
-import nl.avans.min04sob.scrabble.core.TileTable;
-import nl.avans.min04sob.scrabble.core.TileTranfserHandler;
+import nl.avans.min04sob.scrabble.core.Role;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
+import nl.avans.min04sob.scrabble.misc.TileTable;
+import nl.avans.min04sob.scrabble.misc.TileTranfserHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.PlayerTileModel;
-import nl.avans.min04sob.scrabble.models.Role;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
@@ -107,10 +107,17 @@ public class BoardPanel extends CorePanel {
 		opponentScoreLabel = new JLabel("<score>");
 		add(opponentScoreLabel, "cell 6 2");
 
-		playerTilesField = new JTable(1, 7);
+		playerTilesField = new TileTable();
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
+		playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		playerTilesField.getTableHeader().setReorderingAllowed(false);
+		playerTilesField.getTableHeader().setResizingAllowed(false);
 		playerTilesField.setRowHeight(30);
+		playerTilesField.setEnabled(true);
 		playerTilesField.setCellSelectionEnabled(true);
+		playerTilesField.validate();
+		
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
@@ -234,7 +241,7 @@ public class BoardPanel extends CorePanel {
 		playBoard.setModel(bpm);
 	}
 	public void setPlayerTileModel(PlayerTileModel ptm){
-		playerTilesField.setModel(ptm);
+	playerTilesField.setModel(ptm);
 	}
 
 	public void setOpponent(String name) {

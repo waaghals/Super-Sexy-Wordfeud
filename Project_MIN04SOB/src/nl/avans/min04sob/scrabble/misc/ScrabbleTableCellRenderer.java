@@ -1,13 +1,11 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.misc;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -141,6 +139,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			Component c = super.getTableCellRendererComponent(table, value,
 					isSelected, hasFocus, row, col);
 			Tile tile = (Tile) playerTileModel.getValueAt(row, col);
+			c.setBackground(Color.white);
 			return c;
 		}
 	}

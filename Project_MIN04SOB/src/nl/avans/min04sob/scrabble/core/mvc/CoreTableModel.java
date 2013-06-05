@@ -1,9 +1,11 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.core.mvc;
 
 import java.util.ArrayList;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import nl.avans.min04sob.scrabble.misc.Column;
 
 public abstract class CoreTableModel extends CoreModel implements TableModel {
 

@@ -9,15 +9,14 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.core.CorePanel;
-import nl.avans.min04sob.scrabble.models.Role;
+import nl.avans.min04sob.scrabble.core.Role;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 import javax.swing.JCheckBox;
 
 //GUI checked

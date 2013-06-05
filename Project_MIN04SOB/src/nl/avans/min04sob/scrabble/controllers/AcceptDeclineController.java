@@ -7,7 +7,7 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.models.ModeratorModel;
 import nl.avans.min04sob.scrabble.views.AcceptDeclineView;
 

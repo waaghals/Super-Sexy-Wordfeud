@@ -4,7 +4,6 @@ import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,10 +11,9 @@ import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Db;
-import nl.avans.min04sob.scrabble.core.Queries;
-import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.db.Db;
+import nl.avans.min04sob.scrabble.core.db.Query;
+import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 
 public class CompetitionModel extends CoreModel {
 

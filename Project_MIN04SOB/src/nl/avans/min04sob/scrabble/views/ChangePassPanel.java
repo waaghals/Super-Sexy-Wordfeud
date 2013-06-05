@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class ChangePassPanel extends CorePanel{
 	

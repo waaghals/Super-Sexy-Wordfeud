@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.CoreModel;
-import nl.avans.min04sob.scrabble.core.Db;
-import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.db.Db;
+import nl.avans.min04sob.scrabble.core.db.Query;
+import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 
 public class ModeratorModel extends CoreModel{
 	

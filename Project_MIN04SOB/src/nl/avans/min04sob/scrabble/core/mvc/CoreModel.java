@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.core.mvc;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

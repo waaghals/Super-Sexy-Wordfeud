@@ -8,12 +8,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import nl.avans.min04sob.scrabble.core.CoreView;
 import nl.avans.min04sob.scrabble.core.Event;
+import nl.avans.min04sob.scrabble.core.Role;
+import nl.avans.min04sob.scrabble.core.mvc.CoreView;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.Role;
 
+@SuppressWarnings("serial")
 public class MenuView extends JMenuBar implements CoreView {
 
 	private JMenu accountMenu;

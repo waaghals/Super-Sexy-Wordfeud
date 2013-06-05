@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.core.db;
 
 import java.sql.Blob;
 import java.sql.Connection;
@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.concurrent.Callable;
 
-import testmains.TestMain;
 
-import nl.avans.min04sob.scrabble.models.Role;
+import nl.avans.min04sob.scrabble.core.Role;
 
 public class Query implements Callable<ResultSet> {
 

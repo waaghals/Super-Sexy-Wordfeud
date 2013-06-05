@@ -1,13 +1,15 @@
-package nl.avans.min04sob.scrabble.models;
+package nl.avans.min04sob.scrabble.misc;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+@SuppressWarnings("serial")
 public class InvalidMoveException extends Exception {
 	public static final int NOT_ALIGNED = 1;
 	public static final int NOT_CONNECTED = 2;
 	public static final int NOT_ON_START = 3;
 	public static final int NO_LETTERS_PUT = 4;
 
+	@SuppressWarnings("unused")
 	private int errorType;
 
 	public InvalidMoveException(int error) {

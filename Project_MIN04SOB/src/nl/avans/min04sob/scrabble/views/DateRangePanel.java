@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 @SuppressWarnings("serial")
 public class DateRangePanel extends CorePanel {

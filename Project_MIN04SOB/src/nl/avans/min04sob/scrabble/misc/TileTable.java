@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.misc;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
