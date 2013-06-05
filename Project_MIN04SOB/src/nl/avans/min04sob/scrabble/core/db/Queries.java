@@ -21,6 +21,7 @@ public class Queries {
 	private static String readFile(final String file) {
 		BufferedReader reader = null;
 		try {
+			
 			reader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
