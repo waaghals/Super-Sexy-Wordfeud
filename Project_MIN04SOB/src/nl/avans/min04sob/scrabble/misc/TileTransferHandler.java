@@ -13,12 +13,12 @@ import javax.swing.table.TableModel;
 
 import nl.avans.min04sob.scrabble.models.Tile;
 
-public class TileTranfserHandler extends TransferHandler {
+public class TileTransferHandler extends TransferHandler {
 
 	private static final DataFlavor tileFlavor = new DataFlavor(Tile.class,
 			"Tile");
 
-	public TileTranfserHandler() {
+	public TileTransferHandler() {
 	}
 
 	@Override

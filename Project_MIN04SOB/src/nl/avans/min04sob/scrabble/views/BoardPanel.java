@@ -24,7 +24,7 @@ import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.misc.TileTable;
-import nl.avans.min04sob.scrabble.misc.TileTranfserHandler;
+import nl.avans.min04sob.scrabble.misc.TileTransferHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
@@ -132,11 +132,11 @@ public class BoardPanel extends CorePanel {
 		// if (!(isObserver)) {
 		playBoard.setDragEnabled(true);
 		playBoard.setDropMode(DropMode.USE_SELECTION);
-		playBoard.setTransferHandler(new TileTranfserHandler());
+		playBoard.setTransferHandler(new TileTransferHandler());
 
 		playerTilesField.setDragEnabled(true);
 		playerTilesField.setDropMode(DropMode.USE_SELECTION);
-		playerTilesField.setTransferHandler(new TileTranfserHandler());
+		playerTilesField.setTransferHandler(new TileTransferHandler());
 
 		play = new JButton();
 		play.addActionListener(new ActionListener() {
