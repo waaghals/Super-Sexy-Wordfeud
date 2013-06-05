@@ -74,7 +74,8 @@ public class TileTranfserHandler extends TransferHandler {
 			int sourceRow = table.getSelectedRow();
 			int sourceCol = table.getSelectedColumn();
 			TableModel model = table.getModel();
-
+			if(data!=null)
+			{
 			sourceTile = (Tile) data.getTransferData(tileFlavor);
 			if (sourceTile != null && sourceTile.isMutatable()) {
 				System.out.println("Setting value at: R" + sourceRow + " C"
@@ -85,6 +86,7 @@ public class TileTranfserHandler extends TransferHandler {
 				model.setValueAt(sourceTile, sourceRow, sourceCol);
 			}
 			table.clearSelection();
+			}
 		} catch (UnsupportedFlavorException | IOException e) {
 			// TODO Automatisch gegenereerd catch-blok
 			e.printStackTrace();
