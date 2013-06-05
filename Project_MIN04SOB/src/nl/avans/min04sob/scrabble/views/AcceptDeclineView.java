@@ -1,7 +1,5 @@
 package nl.avans.min04sob.scrabble.views;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 

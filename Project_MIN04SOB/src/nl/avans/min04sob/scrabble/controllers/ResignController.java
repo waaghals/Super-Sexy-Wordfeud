@@ -1,7 +1,5 @@
 package nl.avans.min04sob.scrabble.controllers;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

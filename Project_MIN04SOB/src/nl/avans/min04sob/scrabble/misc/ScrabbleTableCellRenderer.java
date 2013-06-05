@@ -11,7 +11,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import nl.avans.min04sob.scrabble.models.BoardModel;
-
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
