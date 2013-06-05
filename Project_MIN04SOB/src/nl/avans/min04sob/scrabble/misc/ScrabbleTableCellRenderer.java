@@ -23,6 +23,8 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private Color blue;
 	private Color lightBlue;
 	private Color beige;
+	private Color green;
+	private Color lightGreen;
 	private ImageIcon dlImage;
 	private ImageIcon tlImage;
 	private ImageIcon dwImage;
@@ -49,6 +51,8 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		blue = new Color(8, 99, 240);
 		lightBlue = new Color(191, 244, 233);
 		beige = new Color(255, 255, 200);
+		green = new Color(5, 95, 5);
+		lightGreen = new Color(180, 255, 180);
 	}
 	
 
@@ -118,8 +122,8 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 			tileBackground = multiplierBackground;
 		} else {
 			//Tile is currently being put
-			tileForeground = Color.BLACK;
-			tileBackground = Color.WHITE;
+			tileForeground = green;
+			tileBackground = lightGreen;
 		}
 
 		Color foreground = blend(tileForeground, multiplierForeground,
