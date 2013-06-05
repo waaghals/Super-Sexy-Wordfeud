@@ -267,8 +267,10 @@ public class CompetitionController extends CoreController {
 							.getCompId();
 					getParticipants(id);
 					competitionModel.join(id, accountModel.getUsername());
-					window.dispose();
-					// competitionView.removeIndex(competitionView.getIndex());
+					competitionView.clearCompList();
+					competitionView.clearPlayerList();
+					getAvailable(accountModel.getUsername());
+					competitionView.clearPlayerList();
 				} else {
 					System.out.println("selecteer een competitie");
 				}
