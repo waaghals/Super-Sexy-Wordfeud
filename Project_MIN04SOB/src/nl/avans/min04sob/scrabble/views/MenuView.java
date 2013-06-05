@@ -240,7 +240,6 @@ public class MenuView extends JMenuBar implements CoreView {
 		createCompetitionItem.addActionListener(listener);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {

@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
@@ -22,7 +21,6 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
 	public static final String STATE_FINISHED = "Finished";
-	private final String selectQuery = "SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
 	private final String checkQuery = "SELECT * FROM `spel`";
 	private final String countQuery = "SELECT COUNT(*) FROM Spel ";
 	private ResultSet result;
@@ -30,7 +28,6 @@ public class ChallengeModel extends CoreModel {
 	private ArrayList<String> challenge = new ArrayList<String>();
 	private AccountModel accountModel;
 	private boolean isDuplication = false;
-	private int numChallenge;
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
