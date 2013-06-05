@@ -234,8 +234,6 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		System.out.println("MenuView event recieved");
-		System.out.println(evt.getPropertyName());
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel user = (AccountModel) evt.getNewValue();

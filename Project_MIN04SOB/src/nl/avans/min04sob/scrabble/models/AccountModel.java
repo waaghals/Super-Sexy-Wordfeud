@@ -44,6 +44,10 @@ public class AccountModel extends CoreModel {
 	private boolean isLoggedIn;
 
 	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
+
+	private ArrayList<GameModel> openGames;
+	
+	private int challengeCount;
 	
 	
 	
@@ -254,8 +258,19 @@ public class AccountModel extends CoreModel {
 
 	@Override
 	public void update() {
-
+		//Check new games
+		ArrayList<GameModel> newOpenGames = getOpenGames();
+		
+		firePropertyChange(Event.NEWGAME, openGames, newOpenGames);
+		openGames = newOpenGames;
+		
+		//Check new challenges
+		int newChallengeCount = getChallengeCount();
+		
+		firePropertyChange(Event.NEWCHALLENGE, challengeCount, newChallengeCount);
+		challengeCount = newChallengeCount;
 	}
+	
 	public CompetitionModel[] getOwnedCompetitions() {
 		try {
 			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ?";
