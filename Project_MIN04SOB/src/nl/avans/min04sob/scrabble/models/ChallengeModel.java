@@ -205,4 +205,52 @@ public class ChallengeModel extends CoreModel {
 
 	}
 
+	public AccountModel[] getChallengeAblePlayers(int competition_id, String username) {
+		AccountModel[] accounts = new AccountModel[0];
+		int x = 0;
+		try {
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` NOT LIKE ? AND `account_naam` NOT IN (SELECT `account_naam_tegenstander` FROM `spel` WHERE `account_naam_uitdager` = ? AND `competitie_id` = ? AND `toestand_type` = ?)")
+							.set(competition_id).set(username).set(username).set(competition_id).set(STATE_REQUEST));
+			ResultSet dbResult = worker.get();
+			accounts = new AccountModel[Query.getNumRows(dbResult)];
+			while (dbResult.next() && x < accounts.length) {
+				accounts[x] = new AccountModel(
+						dbResult.getString("account_naam"));
+				x++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+		return accounts;
+		
+	}
+/*
+ * Future<ResultSet> worker = Db.run(new Query(countQuery));
+			result = worker.get();
+
+			result.next();
+
+			if (result.getInt(1) > 0) {
+				Future<ResultSet> newWorker = Db.run(new Query(checkQuery));
+				try {
+					result = newWorker.get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				while (result.next()) {
+					if ((	result.getString(7).equals(STATE_UNKNOWN)
+							&& result.getString(4).equals(challenger)
+							&& result.getString(5).equals(opponent)
+							&& result.getString(3).equals(STATE_REQUEST) 
+							&& result.getInt(2) == compID)) {
+
+						error = true;
+						break;
+					}
+				}
+			}
+
+ */
 }
