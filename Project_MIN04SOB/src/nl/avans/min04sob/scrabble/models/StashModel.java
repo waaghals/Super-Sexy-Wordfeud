@@ -116,7 +116,7 @@ public class StashModel extends CoreModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 	
 	public void addTileToStash(int game_id, Tile tile){
