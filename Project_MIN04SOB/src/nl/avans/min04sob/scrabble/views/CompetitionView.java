@@ -101,6 +101,10 @@ public class CompetitionView extends CorePanel{
 		playerList.setListData(usersFromCompetition);
 	}
 	
+	public void clearCompList() {
+		competitionsList.removeAll();
+	}
+	
 	public void clearPlayerList() {
 		playerList.removeAll();
 	}
