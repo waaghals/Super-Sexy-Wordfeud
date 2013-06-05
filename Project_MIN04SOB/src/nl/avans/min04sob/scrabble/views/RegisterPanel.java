@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
-import nl.avans.min04sob.scrabble.models.Role;
 import javax.swing.JCheckBox;
 
 //GUI checked

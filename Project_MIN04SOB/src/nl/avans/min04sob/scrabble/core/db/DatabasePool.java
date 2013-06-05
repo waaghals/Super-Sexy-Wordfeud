@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import nl.avans.min04sob.scrabble.core.CorePool;
+import nl.avans.min04sob.scrabble.core.mvc.CorePool;
 
 public class DatabasePool extends CorePool<Connection> {
 

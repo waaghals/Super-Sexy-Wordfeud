@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import nl.avans.min04sob.scrabble.core.Column;
+import nl.avans.min04sob.scrabble.misc.Column;
 
 public abstract class CoreTableModel extends CoreModel implements TableModel {
 

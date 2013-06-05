@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
 
 import testmains.TestMain;
 
-import nl.avans.min04sob.scrabble.models.Role;
+import nl.avans.min04sob.scrabble.core.Role;
 
 public class Query implements Callable<ResultSet> {
 

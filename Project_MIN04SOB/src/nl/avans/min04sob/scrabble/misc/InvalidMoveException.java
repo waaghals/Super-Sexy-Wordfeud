@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.models;
+package nl.avans.min04sob.scrabble.misc;
 
 import org.apache.commons.lang3.ArrayUtils;
 

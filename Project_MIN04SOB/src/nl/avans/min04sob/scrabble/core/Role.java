@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.models;
+package nl.avans.min04sob.scrabble.core;
 
 public enum Role {
 	OBSERVER("observer"), 

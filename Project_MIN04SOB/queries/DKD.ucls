@@ -184,8 +184,8 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <enumeration id="20" language="java" name="nl.avans.min04sob.scrabble.models.Role" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+  <enumeration id="20" language="java" name="nl.avans.min04sob.scrabble.core.Role" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Role.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="49" width="160" x="1169" y="1016"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
@@ -241,9 +241,9 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="nl.avans.min04sob.scrabble.models.InvalidMoveException" 
-    project="Project_MIN04SOB" file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/InvalidMoveException.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="26" language="java" name="nl.avans.min04sob.scrabble.misc.InvalidMoveException" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/InvalidMoveException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="49" width="160" x="1696" y="571"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
@@ -317,8 +317,8 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </interface>  
-  <class id="34" language="java" name="nl.avans.min04sob.scrabble.core.TileTable" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/TileTable.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="34" language="java" name="nl.avans.min04sob.scrabble.misc.TileTable" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/TileTable.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="49" width="148" x="1230" y="660"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
@@ -344,8 +344,8 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="37" language="java" name="nl.avans.min04sob.scrabble.core.TileTranfserHandler" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/TileTranfserHandler.java" binary="false" 
+  <class id="37" language="java" name="nl.avans.min04sob.scrabble.misc.TileTranfserHandler" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/TileTranfserHandler.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="49" width="148" x="779" y="660"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
@@ -382,8 +382,8 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="41" language="java" name="nl.avans.min04sob.scrabble.core.MatrixUtils" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/MatrixUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="41" language="java" name="nl.avans.min04sob.scrabble.misc.MatrixUtils" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/MatrixUtils.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="49" width="148" x="1896" y="571"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
@@ -391,8 +391,8 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="42" language="java" name="nl.avans.min04sob.scrabble.core.Column" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Column.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="42" language="java" name="nl.avans.min04sob.scrabble.misc.Column" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/Column.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="49" width="148" x="2618" y="838"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
@@ -410,9 +410,9 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="44" language="java" name="nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer" 
+  <class id="44" language="java" name="nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer" 
     project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/ScrabbleTableCellRenderer.java" binary="false" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/ScrabbleTableCellRenderer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="49" width="179" x="339" y="660"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
@@ -430,8 +430,8 @@
       <operations public="false" package="false" protected="false" private="false"/>    
     </display>  
   </class>  
-  <class id="46" language="java" name="nl.avans.min04sob.scrabble.core.CorePool" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CorePool.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="46" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CorePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CorePool.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="49" width="148" x="3416" y="927"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
