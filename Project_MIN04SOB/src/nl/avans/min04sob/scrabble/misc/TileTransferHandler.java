@@ -13,12 +13,12 @@ import javax.swing.table.TableModel;
 
 import nl.avans.min04sob.scrabble.models.Tile;
 
-public class TileTranfserHandler extends TransferHandler {
+public class TileTransferHandler extends TransferHandler {
 
 	private static final DataFlavor tileFlavor = new DataFlavor(Tile.class,
 			"Tile");
 
-	public TileTranfserHandler() {
+	public TileTransferHandler() {
 	}
 
 	@Override
@@ -68,6 +68,7 @@ public class TileTranfserHandler extends TransferHandler {
 
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
+		if(data!=null){
 		Tile sourceTile;
 		try {
 			JTable table = (JTable) source;
@@ -89,6 +90,7 @@ public class TileTranfserHandler extends TransferHandler {
 		} catch (UnsupportedFlavorException | IOException e) {
 			// TODO Automatisch gegenereerd catch-blok
 			e.printStackTrace();
+		}
 		}
 	}
 

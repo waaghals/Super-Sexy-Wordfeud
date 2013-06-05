@@ -245,6 +245,7 @@ public class AccountModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void logout() {
 		isLoggedIn = false;

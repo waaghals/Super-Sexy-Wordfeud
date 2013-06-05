@@ -84,6 +84,7 @@ public class CompetitionController extends CoreController {
 	}
 	
 
+
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
@@ -167,7 +168,7 @@ public class CompetitionController extends CoreController {
 
 		competitionView.setText("Ingeschreven competities",
 				"Spelers in competitie", "Speler uitdagen", true);
-		
+
 		getCompetitions(accountModel.toString());
 	}
 
@@ -306,18 +307,18 @@ public class CompetitionController extends CoreController {
 		window2.setPreferredSize(new Dimension(250, 130));
 		window2.setResizable(false);
 		window2.pack();
-		
+
 		createCompetitionView.addBackButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window2.dispose();
-				
+
 			}
 		});
-		
+
 		createCompetitionView.addCreateButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();

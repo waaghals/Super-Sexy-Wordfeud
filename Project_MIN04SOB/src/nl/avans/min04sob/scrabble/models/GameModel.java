@@ -556,11 +556,11 @@ public class GameModel extends CoreModel {
 	public int getScore(Tile[][] playedLetters, ArrayList<ArrayList<Tile>> woorden,
 			BoardModel currentBoard) {
 		int Score = 0;
-		for (int wordCounter = 0; woorden.size() < wordCounter + 1; wordCounter++) {
+		for (int wordCounter = 0;  wordCounter < woorden.size(); wordCounter++) {
 			int scoreofcurrentword = 0;
 			boolean times3 = false;
 			boolean times2 = false;
-			for (int letterCounter = 0; woorden.get(wordCounter).size() < letterCounter; letterCounter++) {
+			for (int letterCounter = 0; letterCounter < woorden.get(wordCounter).size(); letterCounter++) {
 				int scoreofcurrentletter = 0;
 				scoreofcurrentletter =  woorden.get(wordCounter).get(letterCounter).getValue();
 						
@@ -568,7 +568,7 @@ public class GameModel extends CoreModel {
 
 				for (int xpos = 0; playedLetters.length > xpos; xpos++) {
 					for (int ypos = 0; playedLetters[xpos].length > ypos; ypos++) {
-						if ((woorden.get(wordCounter).get(letterCounter).getTileId() == playedLetters[xpos][ypos].getTileId())) {
+						/*if ((woorden.get(wordCounter).get(letterCounter).getTileId() == playedLetters[xpos][ypos].getTileId())) {
 
 							switch (currentBoard.getMultiplier(new Point(xpos,
 									ypos))) {
@@ -591,7 +591,7 @@ public class GameModel extends CoreModel {
 
 								break;
 							}
-						}
+						}*/
 						if (currentBoard.getMultiplier(new Point(xpos, ypos)) == 1) {
 
 						}
@@ -604,7 +604,8 @@ public class GameModel extends CoreModel {
 			if (times3) {
 				scoreofcurrentword = scoreofcurrentword * 3;
 
-			} else if (times2) {
+			} 
+			if (times2) {
 				scoreofcurrentword = scoreofcurrentword * 2;
 			}
 

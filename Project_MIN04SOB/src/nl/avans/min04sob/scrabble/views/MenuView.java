@@ -194,12 +194,14 @@ public class MenuView extends JMenuBar implements CoreView {
 		gameMenu.add(gameMenuOpen);
 		gameMenu.add(gameMenuView);
 
+
+		 
+		
 		add(accountMenu);
 		add(challengeMenu);
 		add(competitionMenu);
 		add(toolboxMenu);
 		add(gameMenu);
-
 	}
 
 	private void createModeratorMenu() {
@@ -341,7 +343,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void viewChallengeItemActionListener(ActionListener listener) {
 		viewChallengeItem.addActionListener(listener);
 	}
-
+	
 	public void viewWords(ActionListener listener) {
 		viewWords.addActionListener(listener);
 	}

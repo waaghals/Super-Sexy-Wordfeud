@@ -24,7 +24,7 @@ import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.misc.TileTable;
-import nl.avans.min04sob.scrabble.misc.TileTranfserHandler;
+import nl.avans.min04sob.scrabble.misc.TileTransferHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
@@ -43,14 +43,9 @@ public class BoardPanel extends CorePanel {
 	private ActionListener resignActionListener;
 
 	private boolean isObserver;
-	
-	private final JLabel turnScoreText;
 	private final JLabel browseText;
 	private final JLabel turnTextLabel;
 	private final JLabel spelersLabel;
-	
-	
-	private JLabel turnScoreLabel;
 	
 	private JLabel turnLabel;
 	
@@ -62,6 +57,7 @@ public class BoardPanel extends CorePanel {
 	
 	private JLabel playerScoreLabel;
 	private DefaultTableModel playerStash;
+	private JButton refreshButton;
 
 	public BoardPanel() {
 		playerStash = new DefaultTableModel(1, 8);
@@ -132,11 +128,11 @@ public class BoardPanel extends CorePanel {
 		// if (!(isObserver)) {
 		playBoard.setDragEnabled(true);
 		playBoard.setDropMode(DropMode.USE_SELECTION);
-		playBoard.setTransferHandler(new TileTranfserHandler());
+		playBoard.setTransferHandler(new TileTransferHandler());
 
 		playerTilesField.setDragEnabled(true);
 		playerTilesField.setDropMode(DropMode.USE_SELECTION);
-		playerTilesField.setTransferHandler(new TileTranfserHandler());
+		playerTilesField.setTransferHandler(new TileTransferHandler());
 
 		play = new JButton();
 		play.addActionListener(new ActionListener() {
@@ -173,12 +169,9 @@ public class BoardPanel extends CorePanel {
 
 		prevButton = new JButton();
 		prevButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-
-		turnScoreText = new JLabel("Score");
-		add(turnScoreText, "cell 0 6,alignx right");
-
-		turnScoreLabel = new JLabel("<score>");
-		add(turnScoreLabel, "cell 1 6");
+		
+		refreshButton = new JButton("Refresh");
+		add(refreshButton, "cell 1 6,grow");
 
 		browseText = new JLabel("Bladeren");
 		add(browseText, "cell 2 6,alignx right");
@@ -206,6 +199,10 @@ public class BoardPanel extends CorePanel {
 	public void addPreviousActionListener(ActionListener listener) {
 		prevButton.addActionListener(listener);
 
+	}
+	
+	public void addRefreshActionListener(ActionListener listener) {
+		refreshButton.addActionListener(listener);
 	}
 
 	public void addResignActionListener(ActionListener listener) {
