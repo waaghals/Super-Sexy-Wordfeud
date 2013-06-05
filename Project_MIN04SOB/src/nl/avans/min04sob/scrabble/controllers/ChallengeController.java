@@ -10,17 +10,17 @@ import javax.swing.WindowConstants;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
-import nl.avans.min04sob.scrabble.views.ChallengeView2;
+import nl.avans.min04sob.scrabble.views.ChallengeView;
 
 
-public class ChallengeController2 extends CoreController {
+public class ChallengeController extends CoreController {
 
-	private ChallengeView2 challengeView2;
+	private ChallengeView challengeView2;
 	private ChallengeModel challengeModel;
 	private JFrame frame;
 	private AccountModel account;
 	
-	public ChallengeController2(AccountModel user) {
+	public ChallengeController(AccountModel user) {
 		account = user;
 		initialize();
 		addListeners();
@@ -100,7 +100,7 @@ public class ChallengeController2 extends CoreController {
 	@Override
 	public void initialize() {
 		frame = new JFrame();
-		challengeView2 = new ChallengeView2();
+		challengeView2 = new ChallengeView();
 		challengeModel = new ChallengeModel(account);
 	}
 	

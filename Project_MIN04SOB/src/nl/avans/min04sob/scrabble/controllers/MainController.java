@@ -151,7 +151,7 @@ public class MainController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// crtl.challengers();
-				new ChallengeController2(account);
+				new ChallengeController(account);
 				// new ChallengeController(account.getUsername());
 
 			}
