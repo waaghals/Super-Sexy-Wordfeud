@@ -14,10 +14,10 @@ import java.util.concurrent.Future;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
+import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
 
 public class CompetitionModel extends CoreModel {
 
-	private boolean compDuplication;
 	private int competitieId;
 	private String desc;
 	private AccountModel owner;
@@ -32,14 +32,14 @@ public class CompetitionModel extends CoreModel {
 	private final String removeScores = "DELETE FROM `beurt` WHERE `spel_id` = ?";
 	private final String removeGames = "DELETE FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `competitie_id` = ?";
 	private final String createQuery = "INSERT INTO `competitie` (`account_naam_eigenaar`, `start`, `einde`, `omschrijving`) VALUES (?,?,?,?)";
-	private final String getCreatedCompID = "SELECT `id` FROM `competitie` WHERE `account_naam_eigenaar` = ?";
-	private final String removeCompetitionQuery = "DELETE FROM `competitie` WHERE `ID` = ?";
+	private final String getCreatedCompID = "SELECT `id` FROM `competitie` WHERE `account_naam_eigenaar` = ? ORDER BY `einde` DESC";
 	private final String totalPlayedGamesQuery = " SELECT COUNT(*) FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = ?";
 	private final String totalPointsQuery = "SELECT SUM(`score`) as `score` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `Competitie_ID` = ? AND `Account_naam` = ?";
 	private final String averagePointsQuery = "SELECT (SUM(`score`) / COUNT(DISTINCT `spel_id`)) as `avg` FROM `beurt` JOIN `spel` ON `spel`.`id` = `beurt`.`spel_id` WHERE `Competitie_id` = ? AND `Account_naam` = ?";
 	private final String gamefinished = "SELECT `id` FROM `spel` WHERE (`Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Competitie_ID` = ? AND 'Toestand_type' = ?";
 	private final String amountWonLosedGamesQuery = "SELECT `account_naam`, SUM(`score`) as `score` FROM `spel` JOIN `beurt` ON `spel`.`id` = `beurt`.`spel_id`  WHERE (`account_naam_uitdager` = ? OR `account_naam_tegenstander` = ?) AND `Toestand_type` = 'finished' AND `competitie_id` = ? AND `spel.id` = ? GROUP BY `account_naam` ORDER BY 2 DESC";
 	private final String initQuery = "SELECT * FROM `competitie` WHERE id = ?";
+
 
 	public CompetitionModel() {
 
@@ -146,27 +146,36 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	private void createCompetition(String username, String omschrijving) {
-		int gameid = 0;
-		try {
-			Calendar cal = Calendar.getInstance();
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date date1 = new Date(cal.getTimeInMillis());
-			String currentDate = dateFormat.format(date1);
-			cal.add(Calendar.MONTH, 1);
-			Date date2 = new Date(cal.getTimeInMillis());
-			String endDate = dateFormat.format(date2);
-			Db.run(new Query(createQuery).set(username).set(currentDate)
-					.set(endDate).set(omschrijving));
-			Future<ResultSet> worker = Db.run(new Query(getCreatedCompID)
-					.set(username));
-			ResultSet dbResult = worker.get();
-			if (dbResult.next()) {
-				gameid = dbResult.getInt("id");
+	public void createCompetition(AccountModel user, String desc)
+			throws DuplicateCompetitionException {
+
+		if (user.getOwnedCompetitions().length == 0) {
+			int compId = 0;
+			try {
+				Calendar cal = Calendar.getInstance();
+				DateFormat dateFormat = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss");
+				Date today = new Date(cal.getTimeInMillis());
+				String currentDate = dateFormat.format(today);
+				cal.add(Calendar.MONTH, 1);
+				Date nextMonth = new Date(cal.getTimeInMillis());
+				String endDate = dateFormat.format(nextMonth);
+				
+				Db.run(new Query(createQuery).set(user.getUsername())
+						.set(currentDate).set(endDate).set(desc));
+
+				Future<ResultSet> worker = Db.run(new Query(getCreatedCompID)
+						.set(user.getUsername()));
+				ResultSet dbResult = worker.get();
+				if (dbResult.next()) {
+					compId = dbResult.getInt("id");
+					join(compId, user.getUsername());
+				}
+			} catch (SQLException | InterruptedException | ExecutionException e) {
+				e.printStackTrace();
 			}
-			join(gameid, username);
-		} catch (SQLException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
+		} else {
+			throw new DuplicateCompetitionException();
 		}
 	}
 
@@ -206,8 +215,8 @@ public class CompetitionModel extends CoreModel {
 	 * } } catch (SQLException | InterruptedException | ExecutionException e) {
 	 * e.printStackTrace(); } }
 	 */
-	
-	//geef alle competities ooit aangemaakt
+
+	// geef alle competities ooit aangemaakt
 	public CompetitionModel[] getAllCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
@@ -227,13 +236,15 @@ public class CompetitionModel extends CoreModel {
 		return allComps;
 
 	}
-	//geeft alle openstaande competities
+
+	// geeft alle openstaande competities
 	public CompetitionModel[] getAllOpenCompetitions() {
 		CompetitionModel[] allComps = new CompetitionModel[0];
 		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query(
-					"SELECT DISTINCT(`ID`) FROM `competitie` WHERE `einde` > now();"));
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT DISTINCT(`ID`) FROM `competitie` WHERE `einde` > now();"));
 			ResultSet dbResult = worker.get();
 			allComps = new CompetitionModel[Query.getNumRows(dbResult)];
 			while (dbResult.next() && x < allComps.length) {
@@ -301,7 +312,8 @@ public class CompetitionModel extends CoreModel {
 		return start;
 	}
 
-	public AccountModel[] getUsersFromCompetition(int competition_id, String username) {
+	public AccountModel[] getUsersFromCompetition(int competition_id,
+			String username) {
 		AccountModel[] accounts = new AccountModel[0];
 		int x = 0;
 		try {
@@ -322,6 +334,7 @@ public class CompetitionModel extends CoreModel {
 		return accounts;
 	}
 
+	// Eigenlijk eigenschap van account, niet van speler
 	public void join(int competitionID, String username) {
 		try {
 			Db.run(new Query(joinQuery).set(competitionID).set(username));
@@ -398,18 +411,20 @@ public class CompetitionModel extends CoreModel {
 		Object[] row = new Object[6];
 		ArrayList<Object[]> data = new ArrayList<>();
 		try {
-			Future<ResultSet> worker = Db.run(new Query("SELECT * FROM `ranking`"));
+			Future<ResultSet> worker = Db.run(new Query(
+					"SELECT * FROM `ranking`"));
 			ResultSet rs = worker.get();
 
-			while(rs.next()){
+			while (rs.next()) {
 				int compId = rs.getInt("competitie_id");
 				String accountName = rs.getString("account_naam");
-				
+
 				row[0] = accountName;
 				row[1] = totalPlayedGames(compId, accountName);
 				row[2] = totalPoints(compId, accountName);
 				row[3] = averagePoints(compId, accountName);
-				row[4] = amountWon(compId, accountName) + " / " + amountLost(compId, accountName);
+				row[4] = amountWon(compId, accountName) + " / "
+						+ amountLost(compId, accountName);
 				row[5] = rs.getString("bayesian_rating");
 				data.add(row);
 			}
@@ -417,47 +432,5 @@ public class CompetitionModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return data;
-	}
-
-	public void checkCompetition(String username, String omschrijving) {
-		boolean error = false;
-		ResultSet result;
-		String countQuery = "SELECT COUNT(*) FROM `competitie` ";
-		String checkQuery = "SELECT * FROM `competitie`";
-		try {
-			Future<ResultSet> worker = Db.run(new Query(countQuery));
-			result = worker.get();
-
-			result.next();
-
-			if (result.getInt(1) > 0) {
-				Future<ResultSet> newWorker = Db.run(new Query(checkQuery));
-				try {
-					result = newWorker.get();
-				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
-				}
-				while (result.next()) {
-
-					if (result.getString(2).equals(username)) {
-						error = true;
-						break;
-					}
-				}
-			}
-
-		} catch (InterruptedException | ExecutionException | SQLException e) {
-			e.printStackTrace();
-		}
-
-		if (!error) {
-			createCompetition(username, omschrijving);
-		}
-		setDuplicatedCompetition(error);
-	}
-
-	private void setDuplicatedCompetition(boolean error) {
-		compDuplication = error;
-
 	}
 }

@@ -44,6 +44,10 @@ public class AccountModel extends CoreModel {
 	private boolean isLoggedIn;
 
 	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
+
+	private ArrayList<GameModel> openGames;
+	
+	private int challengeCount;
 	
 	
 	
@@ -105,7 +109,7 @@ public class AccountModel extends CoreModel {
 		return 1;
 	}
 
-	public CompetitionModel[] getCompetitions(String username){
+	public CompetitionModel[] getCompetitions(){
 		CompetitionModel[] compDesc = new CompetitionModel[0];
 		int x = 0;
 		try {
@@ -241,6 +245,7 @@ public class AccountModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void logout() {
 		isLoggedIn = false;
@@ -254,23 +259,33 @@ public class AccountModel extends CoreModel {
 
 	@Override
 	public void update() {
-
+		//Check new games
+		ArrayList<GameModel> newOpenGames = getOpenGames();
+		
+		firePropertyChange(Event.NEWGAME, openGames, newOpenGames);
+		openGames = newOpenGames;
+		
+		//Check new challenges
+		int newChallengeCount = getChallengeCount();
+		
+		firePropertyChange(Event.NEWCHALLENGE, challengeCount, newChallengeCount);
+		challengeCount = newChallengeCount;
 	}
+	
 	public CompetitionModel[] getOwnedCompetitions() {
+		ArrayList<CompetitionModel> competitions = null;
 		try {
-			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ?";
+			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ? AND `einde` > NOW()";
 			Future<ResultSet> worker = Db.run(new Query(query).set(username));
 			ResultSet result = worker.get();
-			int numRows = Query.getNumRows(result);
-			CompetitionModel[] competitions = new CompetitionModel[numRows];
+			competitions = new ArrayList<CompetitionModel>();
 			while(result.next()){
-				competitions[numRows-1] = new CompetitionModel(result.getInt(1));
-				numRows--;
+				competitions.add(new CompetitionModel(result.getInt(1)));
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		return new CompetitionModel[0];
+		return competitions.toArray(new CompetitionModel[competitions.size()]);
 	}
 	
 }

@@ -194,12 +194,14 @@ public class MenuView extends JMenuBar implements CoreView {
 		gameMenu.add(gameMenuOpen);
 		gameMenu.add(gameMenuView);
 
+
+		 
+		
 		add(accountMenu);
 		add(challengeMenu);
 		add(competitionMenu);
 		add(toolboxMenu);
 		add(gameMenu);
-
 	}
 
 	private void createModeratorMenu() {
@@ -234,8 +236,6 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		System.out.println("MenuView event recieved");
-		System.out.println(evt.getPropertyName());
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel user = (AccountModel) evt.getNewValue();
@@ -297,8 +297,8 @@ public class MenuView extends JMenuBar implements CoreView {
 			deleteFromCompetitionItem.setEnabled(false);
 		}
 		
-		if(user.getOwnedCompetitions().length > 0 || user.isRole(Role.ADMINISTRATOR)){
-			//deleteCompetitionItem.setEnabled(true);
+		if(user.getOwnedCompetitions().length > 0){
+			createCompetitionItem.setEnabled(false);
 		}
 
 		if (numGames > 0 && user.isRole(Role.PLAYER)) {
@@ -343,7 +343,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void viewChallengeItemActionListener(ActionListener listener) {
 		viewChallengeItem.addActionListener(listener);
 	}
-
+	
 	public void viewWords(ActionListener listener) {
 		viewWords.addActionListener(listener);
 	}

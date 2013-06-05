@@ -163,6 +163,16 @@ public class BoardModel extends CoreTableModel {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public void removeMutatable(){		
+		for (int x = 0; x < getColumnCount(); x++) {
+			for (int y = 0; y < getRowCount(); y++) {
+				Tile tile = (Tile) getValueAt(y, x);
+				if(tile != null && tile.isMutatable()){
+					setValueAt(null, y, x);
+				}
+			}
+		}
 	}
 }

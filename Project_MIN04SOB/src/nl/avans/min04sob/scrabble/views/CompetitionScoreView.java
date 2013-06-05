@@ -1,5 +1,8 @@
 package nl.avans.min04sob.scrabble.views;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
@@ -51,7 +54,6 @@ public class CompetitionScoreView extends CorePanel {
 
 		backButton = new JButton("Terug");
 		add(backButton, "cell 0 4,alignx left,aligny top");
-
 	}
 
 	public void setColumns() {

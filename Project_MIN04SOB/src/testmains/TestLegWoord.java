@@ -41,7 +41,7 @@ public class TestLegWoord {
 			//}
 		//}
 		Tile[][] playerdLetters = {
-				{null,null,null,null,new Tile("b",0,false, 9),new Tile("i",0,false, 43),new Tile("e",0,false, 21),new Tile("r",0,false, 78),null,null,null,null,null,null,null},
+				{null,null,null,null,new Tile("b",4,false, 9),new Tile("i",2,false, 43),new Tile("e",1,false, 21),new Tile("r",2,false, 78),null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
@@ -59,7 +59,7 @@ public class TestLegWoord {
 		};
 		
 		Tile[][] newBoard = {
-				{null,null,null,null,new Tile("b",0,false, 9),new Tile("i",0,false, 43),new Tile("e",0,false, 21),new Tile("r",0,false, 78),null,null,null,null,null,null,null},
+				{null,null,null,null,new Tile("b",4,false, 9),new Tile("i",2,false, 43),new Tile("e",1,false, 21),new Tile("r",2,false, 78),null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},

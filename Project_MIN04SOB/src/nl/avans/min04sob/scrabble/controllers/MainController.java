@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
@@ -54,7 +55,7 @@ public class MainController extends CoreController {
 	private ResignController resigncontroller;
 
 	public MainController() {
-
+		
 		initialize();
 		addListeners();
 		addView(menu);
@@ -75,10 +76,18 @@ public class MainController extends CoreController {
 		frame.setJMenuBar(menu);
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		startUp();
 	}
 
 	private void addButtonListeners() {
+		currGamePanel.addRefreshActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -232,6 +241,7 @@ public class MainController extends CoreController {
 			}
 		});
 
+		
 		menu.createCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -312,6 +322,11 @@ public class MainController extends CoreController {
 
 	}
 
+	private void refresh() {
+		boardModel.removeMutatable();
+		openGame(currentGame);
+	}
+
 	private void addLoginListener() {
 		menu.addLoginItemActionListener(new ActionListener() {
 			@Override
@@ -337,7 +352,7 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
-
+		
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
@@ -358,7 +373,6 @@ public class MainController extends CoreController {
 
 
 	protected void openGame(GameModel selectedGame) {
-		// TODO hij roept dit 2 keer aan bug??
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);

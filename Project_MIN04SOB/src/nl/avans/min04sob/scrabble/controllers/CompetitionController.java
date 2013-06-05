@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
+import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
@@ -66,7 +67,7 @@ public class CompetitionController extends CoreController {
 
 	public void getCompetitions(String username) {
 		competitionView
-				.fillCompetitions(accountModel.getCompetitions(username));
+				.fillCompetitions(accountModel.getCompetitions());
 	}
 
 	public int getCompID() { // competition ID meegeven
@@ -82,6 +83,7 @@ public class CompetitionController extends CoreController {
 		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));
 	}
 	
+
 
 	@Override
 	public void initialize() {
@@ -166,7 +168,7 @@ public class CompetitionController extends CoreController {
 
 		competitionView.setText("Ingeschreven competities",
 				"Spelers in competitie", "Speler uitdagen", true);
-		
+
 		getCompetitions(accountModel.toString());
 	}
 
@@ -305,22 +307,27 @@ public class CompetitionController extends CoreController {
 		window2.setPreferredSize(new Dimension(250, 130));
 		window2.setResizable(false);
 		window2.pack();
-		
+
 		createCompetitionView.addBackButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				window2.dispose();
-				
+
 			}
 		});
-		
+
 		createCompetitionView.addCreateButtonListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
-				competitionModel.checkCompetition(accountModel.getUsername(), desc);
+				try {
+					competitionModel.createCompetition(accountModel, desc);
+				} catch (DuplicateCompetitionException dupE) {
+					System.out.println("Deze moet dus nog worden afgehandeld");
+					dupE.printStackTrace();
+				}
 			}
 		});
 
