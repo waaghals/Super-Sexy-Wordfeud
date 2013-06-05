@@ -103,10 +103,13 @@ public class BoardModel extends CoreTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(rowIndex < 15 && columnIndex <15){
-		return data[rowIndex][columnIndex];
+		try{
+			return data[rowIndex][columnIndex];
+		} catch (ArrayIndexOutOfBoundsException e){
+			//Ugly, I know. Working with a deadline you known?
 		}
 		return null;
+		
 	}
 
 	@Override

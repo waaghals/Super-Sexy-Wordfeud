@@ -77,6 +77,11 @@ public class CompetitionController extends CoreController {
 		competitionView.fillPlayerList(competitionModel
 				.getUsersFromCompetition(competition_id, accountModel.getUsername()));
 	}
+	
+	public void getChallengeAbleUsers(int competition_id) {
+		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));
+	}
+	
 
 	public void getChallengeAbleUsers(int competition_id) {
 		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));

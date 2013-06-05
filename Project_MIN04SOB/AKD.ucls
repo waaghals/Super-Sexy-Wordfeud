@@ -1,3 +1,1679 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.2" icons="false" automaticImage="JPEG" always-add-relationships="true" 
+  generalizations="true" realizations="true" associations="true" dependencies="true" nesting-relationships="false">  
+  <class id="1" language="java" name="nl.avans.min04sob.scrabble.controllers.MainController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/MainController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="241" width="180" x="3522" y="290"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="nl.avans.min04sob.scrabble.controllers.CompetitionController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/CompetitionController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="269" width="206" x="4926" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="nl.avans.min04sob.scrabble.controllers.BoardController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/BoardController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="171" width="140" x="410" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="nl.avans.min04sob.scrabble.controllers.AccountController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/AccountController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="297" width="215" x="995" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="nl.avans.min04sob.scrabble.controllers.ChallengeController2" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/ChallengeController2.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="157" width="192" x="4501" y="571"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="nl.avans.min04sob.scrabble.controllers.AcceptDeclineController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/AcceptDeclineController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="129" width="146" x="5467" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="nl.avans.min04sob.scrabble.controllers.ResignController" 
+    project="Project_MIN04SOB" file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/ResignController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="159" x="2718" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="8" language="java" name="nl.avans.min04sob.scrabble.core.Role" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="129" width="125" x="1501" y="5200"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="9" language="java" name="nl.avans.min04sob.scrabble.core.Event" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Event.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="134" x="5254" y="4245"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="nl.avans.min04sob.scrabble.core.db.DatabasePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/DatabasePool.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="185" width="156" x="5311" y="5200"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="nl.avans.min04sob.scrabble.core.db.Db" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Db.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="73" width="162" x="5212" y="4526"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="nl.avans.min04sob.scrabble.core.db.Queries" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Queries.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="130" x="5768" y="3796"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="nl.avans.min04sob.scrabble.core.db.Query" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Query.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="255" width="159" x="5212" y="4905"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="213" width="230" x="4501" y="37"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreTableModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreTableModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="283" width="267" x="4486" y="3796"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CorePanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CorePanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="73" width="92" x="2586" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="129" width="317" x="5634" y="571"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface id="18" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="59" width="258" x="5294" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="19" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreWindow" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="171" width="258" x="5334" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CorePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CorePool.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="155" x="5411" y="4905"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="nl.avans.min04sob.scrabble.misc.Column" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/Column.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="143" width="149" x="4096" y="4526"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="nl.avans.min04sob.scrabble.misc.InvalidMoveException" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/InvalidMoveException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="129" width="138" x="3103" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="nl.avans.min04sob.scrabble.misc.TileTable" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/TileTable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="87" width="181" x="1583" y="3796"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/ScrabbleTableCellRenderer.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="367" width="411" x="429" y="3796"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="nl.avans.min04sob.scrabble.misc.MatrixUtils" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/MatrixUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="143" width="183" x="2880" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="nl.avans.min04sob.scrabble.misc.TileTranfserHandler" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/TileTranfserHandler.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="143" width="241" x="1019" y="3796"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="nl.avans.min04sob.scrabble.models.PlayerTileModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/PlayerTileModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="143" width="159" x="1321" y="4245"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="nl.avans.min04sob.scrabble.models.InviteModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/InviteModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="188" x="6064" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="nl.avans.min04sob.scrabble.models.ChatModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/ChatModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="185" width="202" x="5821" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="nl.avans.min04sob.scrabble.models.GameModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/GameModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1053" width="341" x="3522" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="nl.avans.min04sob.scrabble.models.CompetitionModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/CompetitionModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="689" width="267" x="4842" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="nl.avans.min04sob.scrabble.models.ChallengeModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/ChallengeModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="339" width="203" x="4926" y="768"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="nl.avans.min04sob.scrabble.models.ModeratorModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/ModeratorModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="157" width="171" x="5821" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="nl.avans.min04sob.scrabble.models.BoardModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/BoardModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="241" width="159" x="3302" y="4245"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="nl.avans.min04sob.scrabble.models.Tile" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="339" width="227" x="1253" y="4526"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="nl.avans.min04sob.scrabble.models.AccountModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/AccountModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="409" width="264" x="4182" y="3796"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="nl.avans.min04sob.scrabble.models.StashModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/StashModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="157" width="243" x="5676" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="nl.avans.min04sob.scrabble.views.ResignPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ResignPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="157" width="258" x="2586" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="nl.avans.min04sob.scrabble.views.AcceptDeclineView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/AcceptDeclineView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="283" width="265" x="5008" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="nl.avans.min04sob.scrabble.views.ChangePassPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChangePassPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="423" width="258" x="1505" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="nl.avans.min04sob.scrabble.views.DateRangePanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/DateRangePanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="339" width="361" x="2185" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="nl.avans.min04sob.scrabble.views.TotalPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/TotalPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="258" x="1887" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="nl.avans.min04sob.scrabble.views.ChatPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChatPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="258" x="3903" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="nl.avans.min04sob.scrabble.views.CompetitionScoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/CompetitionScoreView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="325" width="280" x="4541" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="nl.avans.min04sob.scrabble.views.LoginPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/LoginPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="311" width="258" x="909" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="nl.avans.min04sob.scrabble.views.SelectSwapView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/SelectSwapView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="185" width="258" x="112" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="nl.avans.min04sob.scrabble.views.ChangePassPanelAdministrator" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChangePassPanelAdministrator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="255" width="258" x="1207" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="nl.avans.min04sob.scrabble.views.RegisterPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/RegisterPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="465" width="258" x="611" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="nl.avans.min04sob.scrabble.views.MenuView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/MenuView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="787" width="285" x="4182" y="1147"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="nl.avans.min04sob.scrabble.views.CompetitionView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/CompetitionView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="367" width="258" x="4222" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="nl.avans.min04sob.scrabble.views.BoardPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/BoardPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="563" width="283" x="1501" y="3067"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="nl.avans.min04sob.scrabble.views.ChallengeView2" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChallengeView2.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="269" width="258" x="2884" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="53" language="java" name="nl.avans.min04sob.scrabble.views.CreateCompetitionView" 
+    project="Project_MIN04SOB" file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/CreateCompetitionView.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="258" x="3182" y="1974"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true"/>      
+      <operations public="true" package="false" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <dependency id="55">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="56">    
+    <bendpoint x="5624" y="3067"/>    
+    <bendpoint x="5624" y="3796"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="57">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="58" name="loginPanel"/>      
+      <multiplicity id="59" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="60">    
+    <bendpoint x="3554" y="3796"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="61">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="62">    
+    <bendpoint x="4191" y="1974"/>    
+    <bendpoint x="4191" y="3067"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <generalization id="63">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <dependency id="64">    
+    <bendpoint x="5436" y="1147"/>    
+    <bendpoint x="5727" y="1974"/>    
+    <bendpoint x="5949" y="3067"/>    
+    <bendpoint x="5949" y="3796"/>    
+    <bendpoint x="5949" y="4245"/>    
+    <bendpoint x="5949" y="4526"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="65">    
+    <bendpoint x="1145" y="4245"/>    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="66">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <association id="68">    
+    <bendpoint x="356" y="3067"/>    
+    <bendpoint x="356" y="3796"/>    
+    <bendpoint x="377" y="4245"/>    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="69" name="letters"/>      
+      <multiplicity id="70" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="71">    
+    <bendpoint x="1290" y="3796"/>    
+    <bendpoint x="1290" y="4245"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="72">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="73">    
+    <bendpoint x="5666" y="3796"/>    
+    <bendpoint x="5666" y="4245"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="74">    
+    <bendpoint x="4877" y="1147"/>    
+    <bendpoint x="4872" y="1974"/>    
+    <bendpoint x="4811" y="3067"/>    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="75" name="accountModel"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="77">    
+    <bendpoint x="4723" y="571"/>    
+    <bendpoint x="4723" y="768"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <association id="78">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="79" name="gameModel"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="81">    
+    <bendpoint x="1772" y="571"/>    
+    <bendpoint x="1772" y="768"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="82" name="accountcontroller"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="84">    
+    <bendpoint x="3554" y="4245"/>    
+    <bendpoint x="3554" y="4526"/>    
+    <bendpoint x="3554" y="4905"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="85">    
+    <bendpoint x="5603" y="290"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="86" name="registeredModels"/>      
+      <multiplicity id="87" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="88">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="89">    
+    <bendpoint x="1814" y="571"/>    
+    <bendpoint x="1793" y="768"/>    
+    <bendpoint x="1793" y="1147"/>    
+    <bendpoint x="1793" y="1974"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="90" name="currGamePanel"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="92">    
+    <bendpoint x="5201" y="571"/>    
+    <bendpoint x="5201" y="768"/>    
+    <bendpoint x="5343" y="1147"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="93" name="swapWindow"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="95">    
+    <bendpoint x="102" y="571"/>    
+    <bendpoint x="60" y="768"/>    
+    <bendpoint x="39" y="1147"/>    
+    <bendpoint x="39" y="1974"/>    
+    <bendpoint x="39" y="3067"/>    
+    <bendpoint x="39" y="3796"/>    
+    <bendpoint x="81" y="4245"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="96" name="selectedTiles"/>      
+      <multiplicity id="97" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="98">    
+    <bendpoint x="5832" y="768"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <dependency id="99">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="100">    
+    <bendpoint x="6282" y="1974"/>    
+    <bendpoint x="6282" y="3067"/>    
+    <bendpoint x="6282" y="3796"/>    
+    <bendpoint x="6282" y="4245"/>    
+    <bendpoint x="6282" y="4526"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="101">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <dependency id="102">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="30"/>  
+  </dependency>  
+  <dependency id="103">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <dependency id="104">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="105">    
+    <bendpoint x="5706" y="1974"/>    
+    <bendpoint x="5242" y="3067"/>    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="106" name="account"/>      
+      <multiplicity id="107" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="108">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="109">    
+    <end type="SOURCE" refId="47"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="110">    
+    <bendpoint x="5981" y="290"/>    
+    <bendpoint x="5981" y="571"/>    
+    <bendpoint x="5811" y="768"/>    
+    <bendpoint x="5769" y="1147"/>    
+    <bendpoint x="5748" y="1974"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="111" name="registeredViews"/>      
+      <multiplicity id="112" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="113">    
+    <bendpoint x="6054" y="3796"/>    
+    <bendpoint x="6054" y="4245"/>    
+    <bendpoint x="6054" y="4526"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="114">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="115" name="challengeModel"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="117">    
+    <bendpoint x="6053" y="1147"/>    
+    <bendpoint x="6053" y="768"/>    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <dependency id="118">    
+    <bendpoint x="4914" y="1974"/>    
+    <bendpoint x="5160" y="3067"/>    
+    <bendpoint x="5160" y="3796"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="119">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="120">    
+    <bendpoint x="5970" y="3067"/>    
+    <bendpoint x="5928" y="3796"/>    
+    <bendpoint x="5716" y="4245"/>    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="121">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="122" name="modModel"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="124">    
+    <bendpoint x="4851" y="1974"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <association id="125">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="126" name="resignPanel"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="128">    
+    <bendpoint x="1835" y="571"/>    
+    <bendpoint x="1835" y="768"/>    
+    <bendpoint x="1824" y="1147"/>    
+    <bendpoint x="1814" y="1974"/>    
+    <bendpoint x="1814" y="3067"/>    
+    <bendpoint x="1815" y="3796"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="129" name="boardModel"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="131">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="132" name="owner"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="134">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="135">    
+    <bendpoint x="144" y="571"/>    
+    <bendpoint x="102" y="768"/>    
+    <bendpoint x="60" y="1147"/>    
+    <bendpoint x="60" y="1974"/>    
+    <bendpoint x="81" y="3067"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="24"/>  
+  </dependency>  
+  <dependency id="136">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <dependency id="137">    
+    <bendpoint x="6043" y="1974"/>    
+    <bendpoint x="6033" y="3067"/>    
+    <bendpoint x="5991" y="3796"/>    
+    <bendpoint x="5928" y="4245"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="138">    
+    <bendpoint x="4851" y="3796"/>    
+    <bendpoint x="4851" y="4245"/>    
+    <bendpoint x="4851" y="4526"/>    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="139">    
+    <bendpoint x="3573" y="768"/>    
+    <bendpoint x="3510" y="1147"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="140" name="challengeView2"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="142">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <dependency id="143">    
+    <bendpoint x="6012" y="3067"/>    
+    <bendpoint x="6012" y="3796"/>    
+    <bendpoint x="6012" y="4245"/>    
+    <bendpoint x="6012" y="4526"/>    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="144">    
+    <bendpoint x="1510" y="3796"/>    
+    <bendpoint x="1510" y="4245"/>    
+    <bendpoint x="1510" y="4526"/>    
+    <bendpoint x="1510" y="4905"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="145">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="146" name="playerTileModel"/>      
+      <multiplicity id="147" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="148">    
+    <bendpoint x="81" y="1974"/>    
+    <bendpoint x="60" y="3067"/>    
+    <bendpoint x="60" y="3796"/>    
+    <bendpoint x="60" y="4245"/>    
+    <bendpoint x="60" y="4526"/>    
+    <bendpoint x="60" y="4905"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <generalization id="149">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="150">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="151">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="152" name="tileData"/>      
+      <multiplicity id="153" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="154">    
+    <bendpoint x="5582" y="768"/>    
+    <bendpoint x="5582" y="571"/>    
+    <bendpoint x="5582" y="290"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="155">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="156" name="instance"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="158">    
+    <bendpoint x="4086" y="4245"/>    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="159" name="columns"/>      
+      <multiplicity id="160" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="161">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="162">    
+    <bendpoint x="4170" y="3067"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="163" name="opponent"/>      
+      <multiplicity id="164" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="165">    
+    <bendpoint x="419" y="3067"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="24"/>  
+  </dependency>  
+  <association id="166">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="167" name="adView"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="169">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <dependency id="170">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <dependency id="171">    
+    <bendpoint x="5181" y="3067"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <generalization id="172">    
+    <bendpoint x="4856" y="1147"/>    
+    <bendpoint x="5180" y="768"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="173">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="174" name="window2"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="176">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="177">    
+    <bendpoint x="4744" y="571"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <dependency id="178">    
+    <bendpoint x="5280" y="1147"/>    
+    <bendpoint x="5622" y="1974"/>    
+    <bendpoint x="5603" y="3067"/>    
+    <bendpoint x="5221" y="3796"/>    
+    <bendpoint x="5221" y="4245"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="179">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <association id="180">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="181" name="challengeModel"/>      
+      <multiplicity id="182" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="183">    
+    <bendpoint x="81" y="1147"/>    
+    <bendpoint x="81" y="768"/>    
+    <bendpoint x="81" y="571"/>    
+    <bendpoint x="81" y="290"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="184">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="185" name="competition"/>      
+      <multiplicity id="186" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="187">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="188">    
+    <bendpoint x="1420" y="3796"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="189">    
+    <bendpoint x="1531" y="4245"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <generalization id="190">    
+    <bendpoint x="4510" y="290"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="191">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="192" name="competitionController"/>      
+      <multiplicity id="193" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="194">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="195" name="changepassPaneladmin"/>      
+      <multiplicity id="196" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="197">    
+    <bendpoint x="4874" y="571"/>    
+    <bendpoint x="5159" y="768"/>    
+    <bendpoint x="5301" y="1147"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="198" name="frame"/>      
+      <multiplicity id="199" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="200">    
+    <bendpoint x="3470" y="571"/>    
+    <bendpoint x="3470" y="768"/>    
+    <bendpoint x="3470" y="1147"/>    
+    <bendpoint x="3470" y="1974"/>    
+    <bendpoint x="3554" y="3067"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="201" name="account"/>      
+      <multiplicity id="202" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="203">    
+    <bendpoint x="1794" y="3796"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <generalization id="204">    
+    <bendpoint x="6303" y="1974"/>    
+    <bendpoint x="6303" y="1147"/>    
+    <bendpoint x="6303" y="768"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="205">    
+    <bendpoint x="1835" y="3067"/>    
+    <bendpoint x="1531" y="3796"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="206" name="playerTileModel"/>      
+      <multiplicity id="207" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="208">    
+    <bendpoint x="4790" y="3067"/>    
+    <bendpoint x="4893" y="3796"/>    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="209">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="210" name="changepassPanel"/>      
+      <multiplicity id="211" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="212">    
+    <bendpoint x="5737" y="3796"/>    
+    <bendpoint x="5737" y="4245"/>    
+    <bendpoint x="5737" y="4526"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="213">    
+    <bendpoint x="6022" y="1974"/>    
+    <bendpoint x="5991" y="3067"/>    
+    <bendpoint x="5970" y="3796"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="214">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="215" name="registerPanel"/>      
+      <multiplicity id="216" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="217">    
+    <bendpoint x="440" y="3067"/>    
+    <bendpoint x="377" y="3796"/>    
+    <bendpoint x="356" y="4245"/>    
+    <bendpoint x="356" y="4526"/>    
+    <bendpoint x="356" y="4905"/>    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="218">    
+    <bendpoint x="4128" y="3067"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="219" name="challenger"/>      
+      <multiplicity id="220" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="221">    
+    <bendpoint x="1814" y="768"/>    
+    <bendpoint x="1793" y="571"/>    
+    <bendpoint x="1793" y="290"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <generalization id="222">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <realization id="223">    
+    <bendpoint x="5303" y="1974"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <association id="224">    
+    <bendpoint x="4956" y="1974"/>    
+    <bendpoint x="5139" y="3067"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="225" name="accountModel"/>      
+      <multiplicity id="226" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="227">    
+    <bendpoint x="186" y="768"/>    
+    <bendpoint x="123" y="571"/>    
+    <bendpoint x="123" y="290"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="228">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="229" name="competitionView"/>      
+      <multiplicity id="230" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="231">    
+    <bendpoint x="5243" y="571"/>    
+    <bendpoint x="5243" y="768"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="232">    
+    <bendpoint x="3861" y="571"/>    
+    <bendpoint x="3861" y="768"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="233" name="menu"/>      
+      <multiplicity id="234" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="235">    
+    <bendpoint x="3531" y="571"/>    
+    <bendpoint x="3531" y="768"/>    
+    <bendpoint x="3531" y="1147"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="236" name="currentGame"/>      
+      <multiplicity id="237" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="238">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="239" name="pool"/>      
+      <multiplicity id="240" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="241">    
+    <bendpoint x="4510" y="768"/>    
+    <bendpoint x="4510" y="1147"/>    
+    <bendpoint x="4510" y="1974"/>    
+    <bendpoint x="4510" y="3067"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="242" name="account"/>      
+      <multiplicity id="243" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="244">    
+    <bendpoint x="4872" y="3796"/>    
+    <bendpoint x="4872" y="4245"/>    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <generalization id="245">    
+    <bendpoint x="4977" y="1974"/>    
+    <bendpoint x="5162" y="1147"/>    
+    <bendpoint x="5222" y="768"/>    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="246">    
+    <bendpoint x="4935" y="1974"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="247" name="competitionModel"/>      
+      <multiplicity id="248" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="249">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="250" name="competitionScoreView"/>      
+      <multiplicity id="251" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="252">    
+    <bendpoint x="4149" y="3067"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="253" name="currentUser"/>      
+      <multiplicity id="254" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="255">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="256" name="boardModel"/>      
+      <multiplicity id="257" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="258">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="259" name="account"/>      
+      <multiplicity id="260" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="261">    
+    <bendpoint x="1835" y="1974"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="262">    
+    <bendpoint x="5221" y="3067"/>    
+    <bendpoint x="5643" y="1974"/>    
+    <bendpoint x="5643" y="1147"/>    
+    <bendpoint x="5643" y="768"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <dependency id="263">    
+    <bendpoint x="4212" y="3067"/>    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <association id="264">    
+    <bendpoint x="1470" y="3067"/>    
+    <bendpoint x="1552" y="3796"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="265" name="bpm"/>      
+      <multiplicity id="266" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="267">    
+    <bendpoint x="3533" y="4526"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="268">    
+    <bendpoint x="3552" y="571"/>    
+    <bendpoint x="3552" y="768"/>    
+    <bendpoint x="3552" y="1147"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="269" name="chatPanel"/>      
+      <multiplicity id="270" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="271">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <realization id="272">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <dependency id="273">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="274">    
+    <bendpoint x="850" y="4245"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="275">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <association id="276">    
+    <bendpoint x="580" y="571"/>    
+    <bendpoint x="580" y="768"/>    
+    <bendpoint x="580" y="1147"/>    
+    <bendpoint x="580" y="1974"/>    
+    <bendpoint x="725" y="3067"/>    
+    <bendpoint x="870" y="3796"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="277" name="playerTileModel"/>      
+      <multiplicity id="278" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="279">    
+    <bendpoint x="1856" y="1974"/>    
+    <bendpoint x="1856" y="3067"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="280" name="accountModel"/>      
+      <multiplicity id="281" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="282">    
+    <bendpoint x="5242" y="3796"/>    
+    <bendpoint x="4809" y="4245"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <generalization id="283">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="284">    
+    <bendpoint x="5582" y="3067"/>    
+    <bendpoint x="5685" y="1974"/>    
+    <bendpoint x="5674" y="1147"/>    
+    <bendpoint x="5664" y="768"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <dependency id="285">    
+    <bendpoint x="4107" y="3067"/>    
+    <bendpoint x="4107" y="3796"/>    
+    <bendpoint x="4107" y="4245"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="286">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="287" name="stash"/>      
+      <multiplicity id="288" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="289">    
+    <bendpoint x="3512" y="3067"/>    
+    <bendpoint x="3470" y="3796"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="290" name="boardModel"/>      
+      <multiplicity id="291" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="292">    
+    <bendpoint x="4065" y="4245"/>    
+    <bendpoint x="4065" y="4526"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <generalization id="293">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="294">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="295" name="window"/>      
+      <multiplicity id="296" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="297">    
+    <bendpoint x="5603" y="571"/>    
+    <bendpoint x="5685" y="768"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="298" name="chatModel"/>      
+      <multiplicity id="299" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="300">    
+    <bendpoint x="398" y="3067"/>    
+    <bendpoint x="398" y="3796"/>    
+    <bendpoint x="398" y="4245"/>    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="301" name="lettersArray"/>      
+      <multiplicity id="302" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="303">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="304">    
+    <bendpoint x="4895" y="768"/>    
+    <bendpoint x="4895" y="571"/>    
+    <bendpoint x="4895" y="290"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <dependency id="305">    
+    <bendpoint x="3271" y="3067"/>    
+    <bendpoint x="3271" y="3796"/>    
+    <bendpoint x="3271" y="4245"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <generalization id="306">    
+    <bendpoint x="5790" y="1974"/>    
+    <bendpoint x="5790" y="1147"/>    
+    <bendpoint x="5790" y="768"/>    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <realization id="307">    
+    <bendpoint x="4893" y="1974"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <dependency id="308">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <dependency id="309">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <generalization id="310">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="311">    
+    <bendpoint x="4830" y="4245"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="312">    
+    <bendpoint x="3533" y="3067"/>    
+    <bendpoint x="3533" y="3796"/>    
+    <bendpoint x="3533" y="4245"/>    
+    <bendpoint x="3575" y="4526"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="313">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="314" name="window1"/>      
+      <multiplicity id="315" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="316">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="317" name="createCompetitionView"/>      
+      <multiplicity id="318" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="53" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="319">    
+    <bendpoint x="3129" y="571"/>    
+    <bendpoint x="3129" y="768"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="320" name="resigncontroller"/>      
+      <multiplicity id="321" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="322">    
+    <bendpoint x="165" y="571"/>    
+    <bendpoint x="165" y="768"/>    
+    <bendpoint x="165" y="1147"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="323" name="swapView"/>      
+      <multiplicity id="324" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="325">    
+    <bendpoint x="5561" y="571"/>    
+    <bendpoint x="5622" y="768"/>    
+    <bendpoint x="5695" y="1147"/>    
+    <bendpoint x="5769" y="1974"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="326" name="stashModel"/>      
+      <multiplicity id="327" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="328">    
+    <bendpoint x="5322" y="1147"/>    
+    <bendpoint x="5664" y="1974"/>    
+    <bendpoint x="5645" y="3067"/>    
+    <bendpoint x="5645" y="3796"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="329">    
+    <bendpoint x="5263" y="3067"/>    
+    <bendpoint x="5263" y="3796"/>    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <generalization id="330">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="331">    
+    <bendpoint x="6033" y="3796"/>    
+    <bendpoint x="5991" y="4245"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="332">    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="30"/>  
+  </dependency>  
+  <dependency id="333">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <dependency id="334">    
+    <bendpoint x="3491" y="1974"/>    
+    <bendpoint x="3491" y="3067"/>    
+    <bendpoint x="3491" y="3796"/>    
+    <bendpoint x="3491" y="4245"/>    
+    <bendpoint x="3491" y="4526"/>    
+    <bendpoint x="3491" y="4905"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="335">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="336" name="bpv"/>      
+      <multiplicity id="337" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="false" protected="true" private="true"/>    
+    <operations public="true" package="false" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+=======
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.2" icons="false" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="false">  
@@ -1672,4 +3348,5 @@
     <operations public="true" package="false" protected="true" private="true"/>  
   </classifier-display>  
   <association-display labels="false" multiplicity="false"/>
+>>>>>>> refs/remotes/origin/master
 </class-diagram>

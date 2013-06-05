@@ -73,6 +73,10 @@ public class ChallengeView2 extends CorePanel {
 		}
 	}
 
+	public void clearChallengeList() {
+		challengeList.removeAll();
+	}
+	
 	public String getSelectedChallenge() {
 		String s = challengeList.getSelectedValue();
 		return s;

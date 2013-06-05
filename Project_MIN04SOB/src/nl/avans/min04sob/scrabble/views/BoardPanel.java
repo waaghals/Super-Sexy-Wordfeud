@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Arrays;
 
 import javax.swing.DropMode;
 import javax.swing.JButton;
@@ -13,17 +14,19 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
+import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.misc.TileTable;
 import nl.avans.min04sob.scrabble.misc.TileTranfserHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
-import nl.avans.min04sob.scrabble.models.PlayerTileModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
@@ -58,9 +61,10 @@ public class BoardPanel extends CorePanel {
 	private JLabel playerNameLabel;
 	
 	private JLabel playerScoreLabel;
-
+	private DefaultTableModel playerStash;
 
 	public BoardPanel() {
+		playerStash = new DefaultTableModel(1, 8);
 		setLayout(new MigLayout(
 				"",
 				"[75px:75px][75px:75px][100px:100px:100px][100px:100px:100px][100px:100px:100px][125px][100px][]",
@@ -107,7 +111,10 @@ public class BoardPanel extends CorePanel {
 		opponentScoreLabel = new JLabel("<score>");
 		add(opponentScoreLabel, "cell 6 2");
 
+		
+	
 		playerTilesField = new TileTable();
+		playerTilesField.setModel(playerStash);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -117,6 +124,7 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setEnabled(true);
 		playerTilesField.setCellSelectionEnabled(true);
 		playerTilesField.validate();
+		playerTilesField.setDefaultRenderer(Tile.class, new DefaultTableCellRenderer());
 		
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
@@ -183,7 +191,11 @@ public class BoardPanel extends CorePanel {
 
 		add(nextButton, "cell 4 6,grow");
 
-		// }
+		// }\
+	
+	}
+	public void atValue(){
+		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
 	}
 
 	public void addNextActionListener(ActionListener listener) {
@@ -240,10 +252,7 @@ public class BoardPanel extends CorePanel {
 	public void setModel(BoardModel bpm) {
 		playBoard.setModel(bpm);
 	}
-	public void setPlayerTileModel(PlayerTileModel ptm){
-	playerTilesField.setModel(ptm);
-	}
-
+	
 	public void setOpponent(String name) {
 		opponentNameLabel.setText(name);
 	}
@@ -253,18 +262,14 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
-		if (!(playerTiles.length == 0)) {
-			for (int y = 0; playerTiles.length > y + 1; y++) {
-				playerTilesField.setValueAt(playerTiles[y], 0, y);
+			for (int y = 0; playerTiles.length > y; y++) {
+				playerStash.setValueAt(playerTiles[y], 0 ,y);
 			}
-		}
 	}
 	public void setRenderer(TableCellRenderer renderer) {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
 	}
-	public void setPlayerTileRenderer(TableCellRenderer renderer){
-		playerTilesField.setDefaultRenderer(Tile.class, renderer);
-	}
+
 	public void update() {
 
 		this.repaint();

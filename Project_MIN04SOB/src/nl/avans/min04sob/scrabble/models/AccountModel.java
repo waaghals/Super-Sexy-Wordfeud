@@ -11,6 +11,7 @@ import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
+import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class AccountModel extends CoreModel {
 
@@ -145,7 +146,7 @@ public class AccountModel extends CoreModel {
 			Future<ResultSet> worker = Db.run(new Query(query).set(GameModel.STATE_REQUEST));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(),new PlayerTileModel(), true));
+				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(),new BoardPanel(), true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -163,7 +164,7 @@ public class AccountModel extends CoreModel {
 					.set(GameModel.STATE_PLAYING));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(),new PlayerTileModel(), false));
+				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(),new BoardPanel(), false));
 				// Add a new game with the gameId for this account
 			}
 

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
@@ -19,24 +20,27 @@ public class TileTable extends JTable {
 		int colIndex = columnAtPoint(p);
 		int rowIndex = rowAtPoint(p);
 
-		BoardModel model = (BoardModel) getModel();
+		TableModel model = getModel();
 		Tile tile = (Tile) model.getValueAt(rowIndex, colIndex);
 
-		int multiplier = model.getMultiplier(new Point(rowIndex, colIndex));
-		switch (multiplier) {
-		case BoardModel.DL:
-			toolTip.append("(DL) ");
-			break;
-		case BoardModel.TL:
-			toolTip.append("(TL) ");
-			break;
-		case BoardModel.DW:
-			toolTip.append("(DW) ");
-			break;
-		case BoardModel.TW:
-			toolTip.append("(TW) ");
-			break;
+		if(model instanceof BoardModel){
+			int multiplier = ((BoardModel) model).getMultiplier(new Point(rowIndex, colIndex));
+			switch (multiplier) {
+			case BoardModel.DL:
+				toolTip.append("(DL) ");
+				break;
+			case BoardModel.TL:
+				toolTip.append("(TL) ");
+				break;
+			case BoardModel.DW:
+				toolTip.append("(DW) ");
+				break;
+			case BoardModel.TW:
+				toolTip.append("(TW) ");
+				break;
+			}
 		}
+		
 
 		if (tile != null) {
 			toolTip.append("Waarde:" + tile.getValue());

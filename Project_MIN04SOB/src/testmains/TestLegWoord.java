@@ -13,9 +13,10 @@ public class TestLegWoord {
 	public static void main(String[] args) {
 		AccountModel am = new AccountModel();
 		am.login("aaron", "aaron".toCharArray());
-		GameModel gm = new GameModel(592, am, null, null, false);
+		
 		BoardModel bOld = new BoardModel();
-		BoardModel bNew = new BoardModel();
+		GameModel gm = new GameModel(592, am, bOld, null, false);
+		bOld.setBoardToDefault();
 		Tile[][] oldboard = {
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 				{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
@@ -80,7 +81,7 @@ public class TestLegWoord {
 			//	bNew.setValueAt(newBoard[y][x], y, x);
 			//}
 	//	}
-		gm.legWoord(playerdLetters, oldboard, newBoard);
+		gm.playWord(playerdLetters, newBoard);
 		
 	}
 

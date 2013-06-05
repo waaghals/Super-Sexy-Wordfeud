@@ -99,7 +99,14 @@ public class CompetitionView extends CorePanel{
 	
 	public void fillPlayerList(AccountModel[] usersFromCompetition) {
 		playerList.setListData(usersFromCompetition);
-	 
+	}
+	
+	public void clearCompList() {
+		competitionsList.removeAll();
+	}
+	
+	public void clearPlayerList() {
+		playerList.removeAll();
 	}
 
 	public int getIndex(){

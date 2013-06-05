@@ -1,12 +1,14 @@
 package nl.avans.min04sob.scrabble.views;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Role;
@@ -116,23 +118,25 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private void createAccountMenu() {
 		registerItem = new JMenuItem("Registreren");
-		registerItem.setMnemonic('R');
+		registerItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK)); 
 
 		loginItem = new JMenuItem("Inloggen");
-		loginItem.setMnemonic('I');
+		loginItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_MASK)); 
 
 		logoutItem = new JMenuItem("Logout");
-		logoutItem.setMnemonic('O');
+		logoutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK)); 
 
 		changePassItem = new JMenuItem("Wachtwoord veranderen");
-		changePassItem.setMnemonic('W');
+		changePassItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_MASK)); ;
 	}
 
 	private void createChallengeMenu() {
 		doChallengeItem = new JMenuItem("Spelers uitdagen");
+		doChallengeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_MASK)); 
 		viewChallengeItem = new JMenuItem("Bekijk uitdagingen"/*( "
 				+ numChallenge + " )"*/);
-
+		viewChallengeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_MASK)); 
+		
 		challengeMenu.add(doChallengeItem);
 		challengeMenu.add(viewChallengeItem);
 	}
@@ -140,10 +144,15 @@ public class MenuView extends JMenuBar implements CoreView {
 	private void createCompetitionMenu() {
 		// create the menuItems
 		seeCompetitionsItem = new JMenuItem("Competities bekijken");
+		seeCompetitionsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_MASK)); 
 		joinCompetitionItem = new JMenuItem("Deelnemen aan competities");
+		joinCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, KeyEvent.CTRL_MASK)); 
 		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
+		deleteFromCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_MASK)); 
 		deleteCompetitionItem = new JMenuItem("verwijder competitie");
+		deleteCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_J, KeyEvent.CTRL_MASK)); 
 		createCompetitionItem = new JMenuItem("Competitie aanmaken");
+		createCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_MASK)); 
 		// add the menu and the menuItems
 
 		competitionMenu.add(seeCompetitionsItem);
@@ -195,11 +204,12 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private void createModeratorMenu() {
 		viewWords = new JMenuItem("Woorden beheren");
-		viewWords.setMnemonic('W');
+		viewWords.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_MASK)); 
 		AccountaanmakenItem = new JMenuItem("Account aanmaken");
+		AccountaanmakenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_MASK));
 		
 		viewPlayers = new JMenuItem("Gebruikers beheren");
-		viewPlayers.setMnemonic('G');
+		viewPlayers.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK)); 
 		
 		toolboxMenu.add(AccountaanmakenItem );
 		toolboxMenu.add(viewWords);
