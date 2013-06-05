@@ -8,8 +8,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -45,11 +48,13 @@ public class MainController extends CoreController {
 	private InviteController invController;
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
-	private ArrayList<Tile> selectedTiles;
+
+	private StashModel stashModel;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
 	private ResignController resigncontroller;
+	private ArrayList<Tile> selectedTiles;
 
 	public MainController() {
 
@@ -328,13 +333,10 @@ public class MainController extends CoreController {
 		accountcontroller = new AccountController(account);
 		accountcontroller.addView(menu);
 		accountcontroller.addView(chatPanel);
+
 	}
 
-	public void closePanels() {
-		frame.remove(currGamePanel);
-		frame.remove(chatPanel);
-		frame.repaint();
-	}
+
 
 	@Override
 	public void initialize() {
@@ -351,14 +353,17 @@ public class MainController extends CoreController {
 		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
-		currGamePanel.setModel(boardModel);
-		currGamePanel.setPlayerTileModel(playerTileModel);
-		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(
-				playerTileModel));
 
-		chatPanel = new ChatPanel();
-		chatModel = null;
 	}
+
+	public void closePanels(){
+		frame.remove(currGamePanel);
+		frame.remove(chatPanel);
+		frame.repaint();
+	}
+
+	
+
 
 	protected void openGame(GameModel selectedGame) {
 		// TODO hij roept dit 2 keer aan bug??
@@ -491,6 +496,7 @@ public class MainController extends CoreController {
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
 
+
 		selectedTiles = new ArrayList<Tile>();
 
 		swapView.addListListener(new MouseAdapter() {
@@ -506,8 +512,15 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Tile tile : selectedTiles) {
-					// de tile wisselen met pot
+
+			
+				List<Tile> selectedTiles = swapView.getSelectedTiles();
+				for(Tile tile: selectedTiles){
+					stashModel.addTileToStash(currentGame.getGameId(), tile);
+					
+					// elke tile aan pot toevoegen
+					// zelfde hoeveelheid uit te pot halen
+
 				}
 
 			}

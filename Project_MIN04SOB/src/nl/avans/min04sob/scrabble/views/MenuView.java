@@ -68,6 +68,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	}
 	
 	private void addGamesToMenu(JMenu menu, ArrayList<GameModel> games) {
+		menu.removeAll();
 		ArrayList<JMenuItem> items = new ArrayList<JMenuItem>();
 		JMenuItem item;
 		for (GameModel game : games) {
@@ -229,7 +230,6 @@ public class MenuView extends JMenuBar implements CoreView {
 			AccountModel user = (AccountModel) evt.getNewValue();
 			setLoggedInState();
 			setVisibleMenus(user);
-			
 
 			setChallengeCount(user.getChallengeCount());
 			
