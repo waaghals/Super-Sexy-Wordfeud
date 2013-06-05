@@ -16,9 +16,9 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.core.CoreWindow;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
+import nl.avans.min04sob.scrabble.core.mvc.CoreController;
+import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;

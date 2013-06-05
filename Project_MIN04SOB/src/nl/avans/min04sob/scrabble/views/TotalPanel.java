@@ -5,7 +5,7 @@ import java.beans.PropertyChangeEvent;
 
 import javax.swing.JPanel;
 
-import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class TotalPanel extends CorePanel{
 	

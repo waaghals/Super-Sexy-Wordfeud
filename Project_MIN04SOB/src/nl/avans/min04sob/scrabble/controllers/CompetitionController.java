@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import nl.avans.min04sob.scrabble.core.CoreController;
-import nl.avans.min04sob.scrabble.core.CoreWindow;
+import nl.avans.min04sob.scrabble.core.mvc.CoreController;
+import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;

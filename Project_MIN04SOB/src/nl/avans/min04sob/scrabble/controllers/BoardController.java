@@ -1,7 +1,7 @@
 package nl.avans.min04sob.scrabble.controllers;
 
-import nl.avans.min04sob.scrabble.core.CoreController;
 import nl.avans.min04sob.scrabble.core.ScrabbleTableCellRenderer;
+import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
 

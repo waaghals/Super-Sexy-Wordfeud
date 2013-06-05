@@ -16,10 +16,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.TileTable;
 import nl.avans.min04sob.scrabble.core.TileTranfserHandler;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.PlayerTileModel;

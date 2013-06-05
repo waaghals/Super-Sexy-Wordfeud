@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
+
 public abstract class CoreTableModel extends CoreModel implements TableModel {
 
 	protected Object[][] data;

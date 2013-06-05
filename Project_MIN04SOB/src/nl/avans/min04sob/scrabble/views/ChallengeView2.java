@@ -9,7 +9,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.core.CorePanel;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 @SuppressWarnings("serial")
 public class ChallengeView2 extends CorePanel {

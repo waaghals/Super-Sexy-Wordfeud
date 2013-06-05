@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.core.mvc;
 
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JFrame;
 
 import net.miginfocom.swing.MigLayout;
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 
 public class CoreWindow extends JFrame implements CoreView {

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 
 public class AccountModel extends CoreModel {
 

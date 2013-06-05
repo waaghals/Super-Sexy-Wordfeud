@@ -75,8 +75,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="nl.avans.min04sob.scrabble.core.CoreController" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CoreController.java" binary="false" 
+  <class id="8" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="213" width="230" x="3897" y="37"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
@@ -85,8 +85,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="nl.avans.min04sob.scrabble.core.CorePanel" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CorePanel.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CorePanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CorePanel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="73" width="92" x="2578" y="1161"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -104,8 +104,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="11" language="java" name="nl.avans.min04sob.scrabble.core.CoreView" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CoreView.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="11" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreView.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="59" width="258" x="5061" y="3053"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -150,8 +150,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="nl.avans.min04sob.scrabble.core.CoreModel" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CoreModel.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="16" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreModel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="129" width="317" x="5279" y="585"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -159,8 +159,9 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="nl.avans.min04sob.scrabble.core.CoreWindow" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CoreWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="17" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreWindow" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="171" width="258" x="5021" y="1988"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

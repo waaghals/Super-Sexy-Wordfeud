@@ -13,8 +13,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
-import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.core.Event;
+import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class ChatPanel extends CorePanel {
 

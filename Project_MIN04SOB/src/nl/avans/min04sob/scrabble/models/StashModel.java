@@ -6,10 +6,10 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.CoreModel;
 import nl.avans.min04sob.scrabble.core.Db;
 import nl.avans.min04sob.scrabble.core.Queries;
 import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 
 public class StashModel extends CoreModel {
 	private final String letterfrompot = "SELECT `karakter` FROM `pot`";

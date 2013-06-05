@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import nl.avans.min04sob.scrabble.core.CoreController;
+import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.models.GameModel;
 import nl.avans.min04sob.scrabble.views.ResignPanel;
 
