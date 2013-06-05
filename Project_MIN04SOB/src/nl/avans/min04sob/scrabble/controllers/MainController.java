@@ -386,9 +386,7 @@ public class MainController extends CoreController {
 		updatelabels(selectedGame.getCurrentobserveturn());
 
 		
-		
-
-		selectedGame.setplayertilesfromdatabase();
+		selectedGame.setplayertilesfromdatabase(selectedGame.getCurrentobserveturn());
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 
@@ -399,7 +397,7 @@ public class MainController extends CoreController {
 		// frame.repaint();
 		// chatPanel.setEnabled(true);
 		openPanels();
-		selectedGame.setplayertilesfromdatabase();
+		
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
