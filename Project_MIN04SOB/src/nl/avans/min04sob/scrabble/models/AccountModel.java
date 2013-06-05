@@ -241,6 +241,11 @@ public class AccountModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public void refresh()
+	{
+		firePropertyChange(Event.LOGIN, null, this);
+	}
 
 	public void logout() {
 		isLoggedIn = false;

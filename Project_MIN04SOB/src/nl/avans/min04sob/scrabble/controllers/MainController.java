@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
@@ -232,6 +233,13 @@ public class MainController extends CoreController {
 			}
 		});
 
+		
+		menu.refreshitem(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				account.refresh();
+			}});
+		
 		menu.createCompetitionItem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
