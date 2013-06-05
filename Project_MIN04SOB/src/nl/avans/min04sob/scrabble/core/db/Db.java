@@ -1,4 +1,4 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.core.db;
 
 import java.sql.ResultSet;
 import java.util.concurrent.Future;

@@ -94,8 +94,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="nl.avans.min04sob.scrabble.core.CoreTableModel" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/CoreTableModel.java" binary="false" 
+  <class id="10" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreTableModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreTableModel.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="283" width="267" x="4317" y="3782"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
@@ -122,8 +122,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="nl.avans.min04sob.scrabble.core.Query" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Query.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="nl.avans.min04sob.scrabble.core.db.Query" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Query.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="255" width="159" x="4658" y="4919"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -131,8 +131,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="nl.avans.min04sob.scrabble.core.Db" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Db.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="nl.avans.min04sob.scrabble.core.db.Db" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Db.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="73" width="162" x="4605" y="4512"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -196,8 +196,9 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="nl.avans.min04sob.scrabble.core.DatabasePool" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/DatabasePool.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="21" language="java" name="nl.avans.min04sob.scrabble.core.db.DatabasePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/DatabasePool.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="185" width="156" x="4758" y="5214"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -216,8 +217,8 @@
       <operations public="true" package="false" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="nl.avans.min04sob.scrabble.core.Queries" project="Project_MIN04SOB" 
-    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Queries.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="23" language="java" name="nl.avans.min04sob.scrabble.core.db.Queries" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Queries.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="101" width="130" x="4828" y="3782"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

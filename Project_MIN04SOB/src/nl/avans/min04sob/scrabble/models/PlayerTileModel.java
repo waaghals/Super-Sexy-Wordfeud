@@ -2,7 +2,7 @@ package nl.avans.min04sob.scrabble.models;
 
 import javax.xml.crypto.Data;
 
-import nl.avans.min04sob.scrabble.core.CoreTableModel;
+import nl.avans.min04sob.scrabble.core.mvc.CoreTableModel;
 
 public class PlayerTileModel extends CoreTableModel {
 

@@ -1,8 +1,10 @@
-package nl.avans.min04sob.scrabble.core;
+package nl.avans.min04sob.scrabble.core.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import nl.avans.min04sob.scrabble.core.CorePool;
 
 public class DatabasePool extends CorePool<Connection> {
 

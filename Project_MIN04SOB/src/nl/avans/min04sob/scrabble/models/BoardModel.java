@@ -9,9 +9,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import nl.avans.min04sob.scrabble.core.Column;
-import nl.avans.min04sob.scrabble.core.CoreTableModel;
-import nl.avans.min04sob.scrabble.core.Db;
-import nl.avans.min04sob.scrabble.core.Query;
+import nl.avans.min04sob.scrabble.core.db.Db;
+import nl.avans.min04sob.scrabble.core.db.Query;
+import nl.avans.min04sob.scrabble.core.mvc.CoreTableModel;
 
 public class BoardModel extends CoreTableModel {
 	Tile[][] tileData;
