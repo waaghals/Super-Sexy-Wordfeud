@@ -323,6 +323,15 @@ public class GameModel extends CoreModel {
 		}
 		return returns;
 	}
+	
+	public void doTurn(int game_id, String accountname, int score, String action){
+		String q = "INSERT INTO `beurt` (`spel_id`, `account_naam`, `score`, `aktie_type`) VALUES (?,?,?,?)";
+		try {
+			Db.run(new Query(q).set(game_id).set(accountname).set(score).set(action));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Deprecated
 	public String[][] getboardData() {
