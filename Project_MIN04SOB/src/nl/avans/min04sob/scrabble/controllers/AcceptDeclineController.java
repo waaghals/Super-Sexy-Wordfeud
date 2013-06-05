@@ -56,9 +56,10 @@ public class AcceptDeclineController extends CoreController {
 		
 		adView.addListSelectionListener(new ListSelectionListener() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				 JList list = (JList) e.getSource();
+				JList<String> list = (JList<String>) e.getSource();
 				 if(list.getSelectedValue() == null){
 					 adView.setButtonsEnabled(false);
 				 } else {

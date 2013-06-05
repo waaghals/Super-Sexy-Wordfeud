@@ -45,8 +45,6 @@ public class MainController extends CoreController {
 
 	private StashModel stashModel;
 
-	private ResignController resigncontroller;
-
 	public MainController() {
 		
 		initialize();
@@ -84,7 +82,7 @@ public class MainController extends CoreController {
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				resigncontroller = new ResignController(currentGame);
+				new ResignController(currentGame);
 			}
 		});
 

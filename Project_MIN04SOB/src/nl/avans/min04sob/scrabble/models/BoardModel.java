@@ -27,31 +27,6 @@ public class BoardModel extends CoreTableModel {
 	public BoardModel() {
 		coordinates = new Point();
 		setBoardToDefault();
-
-		for (Point point : tilesHM.keySet()) {
-			// setValueAt(new Tile(tilesHM.get(point), 1), point.x, point.y);
-			// //TODO set tile value
-		}
-		
-	/*	setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 0);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 1);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 2);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 3);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 4);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 5);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 6);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 7);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 8);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  1, 7);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  1, 7);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  2, 7);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  3, 7);
-		setValueAt(new Tile("X", 5, Tile.NOT_MUTATABLE),  4, 7);
-		
-		setValueAt(new Tile("Q", 10, Tile.MUTATABLE),  5, 6);
-		setValueAt(new Tile("Q", 10, Tile.NOT_MUTATABLE),  7, 7);
-		setValueAt(new Tile("Q", 10, Tile.NOT_MUTATABLE),  7, 8);*/
-		// System.out.println(tl.isEmpty());		
 	}
 
 	public int getMultiplier(Point coord) {

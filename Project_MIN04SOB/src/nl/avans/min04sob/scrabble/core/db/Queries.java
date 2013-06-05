@@ -1,7 +1,6 @@
 package nl.avans.min04sob.scrabble.core.db;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -20,20 +19,18 @@ public class Queries {
 
 	private static String readFile(final String file) {
 		BufferedReader reader = null;
+		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			reader = new BufferedReader(new FileReader(file));
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		String line = null;
-		StringBuilder stringBuilder = new StringBuilder();
-		String ls = System.getProperty("line.separator");
 
-		try {
+			String line = null;
+			String ls = System.getProperty("line.separator");
+
 			while ((line = reader.readLine()) != null) {
 				stringBuilder.append(line);
 				stringBuilder.append(ls);
 			}
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

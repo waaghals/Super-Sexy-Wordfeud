@@ -14,6 +14,10 @@ import nl.avans.min04sob.scrabble.models.Tile;
 
 public class TileTransferHandler extends TransferHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4763693992565251566L;
 	private static final DataFlavor tileFlavor = new DataFlavor(Tile.class,
 			"Tile");
 

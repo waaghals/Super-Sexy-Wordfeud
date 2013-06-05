@@ -37,8 +37,6 @@ public class GameModel extends CoreModel {
 	
 	private int currentobserveturn;
 
-	private StashModel stash = new StashModel();
-
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
 	

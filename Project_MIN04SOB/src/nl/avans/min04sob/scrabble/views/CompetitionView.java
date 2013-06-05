@@ -166,7 +166,7 @@ public class CompetitionView extends CorePanel{
 	Speler uitdagen
 	/*/
 	public void disableList(){
-		playerList.enable(false);
+		playerList.setEnabled(false);
 	}
 	
 	

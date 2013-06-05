@@ -17,6 +17,10 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 //GUI checked
 public class LoginPanel extends CorePanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2991196407210657700L;
 	private JLabel usernameLabel, passwordLabel;
 	private JButton loginButton, registerButton;
 	private JTextField usernameField;

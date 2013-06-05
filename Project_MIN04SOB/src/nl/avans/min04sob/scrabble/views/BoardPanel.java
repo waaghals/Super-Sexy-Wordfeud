@@ -28,6 +28,10 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2899677237066103421L;
 	private JButton resignButton;
 	private JButton swapButton;
 	private JButton passButton;
@@ -40,7 +44,6 @@ public class BoardPanel extends CorePanel {
 
 	private ActionListener resignActionListener;
 
-	private boolean isObserver;
 	private final JLabel browseText;
 	private final JLabel turnTextLabel;
 	private final JLabel spelersLabel;

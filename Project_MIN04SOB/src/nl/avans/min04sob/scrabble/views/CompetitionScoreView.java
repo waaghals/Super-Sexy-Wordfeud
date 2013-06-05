@@ -17,6 +17,10 @@ import nl.avans.min04sob.scrabble.models.CompetitionModel;
 
 public class CompetitionScoreView extends CorePanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2026062722648707313L;
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane1;
 	private JList<CompetitionModel> competitionList;

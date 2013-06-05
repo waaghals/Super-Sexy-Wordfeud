@@ -12,11 +12,14 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class CreateCompetitionView extends CorePanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8764775443838273522L;
 	//private JFrame myFrame;
 	private JButton backButton;
 	private JTextField textField;
 	private JButton createButton;
-	private JLabel lblTest;
 	
 	public CreateCompetitionView(){
 		//myFrame = new JFrame();

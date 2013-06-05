@@ -18,6 +18,10 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class ChangePassPanelAdministrator extends CorePanel{
  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7891036503091223344L;
 	private JLabel NamePass;
 	private JTextField Newpass;
 	private JLabel errorLabel;

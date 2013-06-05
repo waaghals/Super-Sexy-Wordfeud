@@ -18,6 +18,10 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class AcceptDeclineView extends CorePanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8789911575495095451L;
 	private JList<String> wordList;
 	private JFrame myFrame;
 	private JButton backButton;

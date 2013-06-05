@@ -68,8 +68,8 @@ public class CompetitionModel extends CoreModel {
 	public int amountLost(int competitionID, String username) {
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		int amountLost = 0;
-		int amountWon = 0;
 		try {
+
 			Future<ResultSet> worker = Db.run(new Query(gamefinished)
 					.set(username).set(username).set(competitionID)
 					.set("finished"));
@@ -85,7 +85,6 @@ public class CompetitionModel extends CoreModel {
 				ResultSet dbResult2 = worker1.get();
 				if (dbResult2.next()) {
 					if (dbResult2.getString(1).equals(username)) {
-						amountWon++;
 					} else {
 						amountLost++;
 					}
@@ -101,7 +100,6 @@ public class CompetitionModel extends CoreModel {
 	public int amountWon(int competitionID, String username) {
 		ArrayList<Integer> spel_ids = new ArrayList<Integer>();
 		int amountWon = 0;
-		int amountLost = 0;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(gamefinished)
 					.set(username).set(username).set(competitionID)
@@ -120,7 +118,6 @@ public class CompetitionModel extends CoreModel {
 					if (dbResult2.getString(1).equals(username)) {
 						amountWon++;
 					} else {
-						amountLost++;
 					}
 				}
 			}

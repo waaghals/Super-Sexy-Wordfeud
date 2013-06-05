@@ -14,6 +14,10 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class ResignPanel extends CorePanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6226885860193943779L;
 	private JButton yesButton;
 	private JButton noButton;
 	private JLabel areYouSureLabel;
