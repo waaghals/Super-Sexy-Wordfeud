@@ -16,9 +16,9 @@ public class PlayerTileModel extends CoreTableModel {
 		return true;
 	}
 
-	public void setsValueAt(Tile newValue, int rowIndex, int columnIndex) {
+	public void setValueAt(Tile newValue, int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
-		System.out.println(((Tile) newValue).getLetter());
+		//System.out.println(((Tile) newValue).getLetter());
 		
 		data[rowIndex][columnIndex] = newValue;
 	}
@@ -32,17 +32,16 @@ public class PlayerTileModel extends CoreTableModel {
 		for(int counter = 0; counter < newletters.length; counter++){
 			
 			
-			this.setsValueAt(newletters[counter], 0, counter);
+			this.setValueAt(newletters[counter], 0, counter);
 			
 		}
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(rowIndex < 15 && columnIndex <15){
+		
 			return data[rowIndex][columnIndex];
-			}
-			return null;
+			
 		}
 	
 

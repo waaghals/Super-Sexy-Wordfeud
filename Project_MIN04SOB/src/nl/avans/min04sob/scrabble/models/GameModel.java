@@ -370,7 +370,9 @@ public class GameModel extends CoreModel {
 			sql.printStackTrace();
 		}
 	}
-
+	public void setplayertilestodatabase(){
+		
+	}
 	public void setplayertilesfromdatabase() {
 
 		StashModel stash = new StashModel();
@@ -944,5 +946,8 @@ public class GameModel extends CoreModel {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	public PlayerTileModel getPlayerTileModel(){
+		return this.playerTileModel;
 	}
 }
