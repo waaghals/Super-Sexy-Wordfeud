@@ -21,20 +21,6 @@ public class Tile implements Transferable {
 		mutatable = true;
 	}
 
-	@Deprecated
-	public Tile(String character, boolean mutable) {
-		letter = character;
-		value = 0;
-		this.mutatable = mutable;
-	}
-
-	@Deprecated
-	public Tile(String character, int charValue) {
-		letter = character;
-		value = charValue;
-		mutatable = true;
-	}
-
 	public Tile(String letter, int value, boolean mutatable,int id) {
 		this.letter = letter;
 		this.value = value;
