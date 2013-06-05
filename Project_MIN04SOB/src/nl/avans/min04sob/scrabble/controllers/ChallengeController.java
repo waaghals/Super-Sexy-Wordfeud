@@ -45,7 +45,7 @@ public class ChallengeController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				acceptChallenge();
 				challengeView2.clearChallengeList();
-				challengeView2.fillChallengeList(challengeModel.challengeArray());
+				challengeView2.fillChallengeList(account.getChallenges());
 			}
 		});
 		challengeView2.addActionListenerDecline(new ActionListener() {
@@ -53,7 +53,7 @@ public class ChallengeController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				declineChallenge();
 				challengeView2.clearChallengeList();
-				challengeView2.fillChallengeList(challengeModel.challengeArray());
+				challengeView2.fillChallengeList(account.getChallenges());
 			}
 		});
 	
@@ -69,7 +69,7 @@ public class ChallengeController extends CoreController {
 	
 
 	private void fillChallengeList() {
-		challengeView2.fillChallengeList(challengeModel.challengeArray());
+		challengeView2.fillChallengeList(account.getChallenges());
 		frame.repaint();
 	}
 	

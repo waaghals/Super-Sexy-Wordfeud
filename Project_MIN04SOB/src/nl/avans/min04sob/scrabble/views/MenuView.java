@@ -31,7 +31,6 @@ public class MenuView extends JMenuBar implements CoreView {
 	private JMenuItem logoutItem;
 	private JMenuItem changePassItem;
 	private JMenuItem registerItem;
- 
 
 	private JMenuItem doChallengeItem;
 	private JMenuItem viewChallengeItem;
@@ -43,16 +42,13 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private JMenuItem viewWords;
 	private JMenuItem AccountaanmakenItem;
-	private int numChallenge;
 
 	private ActionListener openGameListener;
 	private ActionListener viewGameListener;
 	private JMenuItem createCompetitionItem;
 	private JMenuItem viewPlayers;
 
-
 	public MenuView() {
-		numChallenge = 0;
 		createMenus();
 		createAccountMenu();
 		createChallengeMenu();
@@ -69,7 +65,7 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void adddoChallengeItemActionListener(ActionListener listener) {
 		doChallengeItem.addActionListener(listener);
 	}
-	
+
 	private void addGamesToMenu(JMenu menu, ArrayList<GameModel> games) {
 		menu.removeAll();
 		ArrayList<JMenuItem> items = new ArrayList<JMenuItem>();
@@ -77,15 +73,14 @@ public class MenuView extends JMenuBar implements CoreView {
 		for (GameModel game : games) {
 			item = new JMenuItem(game.toString());
 			item.putClientProperty("game", game);
-			if(!items.contains(item)) {
+			if (!items.contains(item)) {
 				items.add(item);
 			}
 		}
-		for(JMenuItem i : items) {
+		for (JMenuItem i : items) {
 			menu.add(i);
 		}
 	}
-
 
 	public void addLoginItemActionListener(ActionListener listener) {
 		loginItem.addActionListener(listener);
@@ -118,25 +113,31 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private void createAccountMenu() {
 		registerItem = new JMenuItem("Registreren");
-		registerItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK)); 
+		registerItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+				KeyEvent.CTRL_MASK));
 
 		loginItem = new JMenuItem("Inloggen");
-		loginItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_MASK)); 
+		loginItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+				KeyEvent.CTRL_MASK));
 
 		logoutItem = new JMenuItem("Logout");
-		logoutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK)); 
+		logoutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+				KeyEvent.CTRL_MASK));
 
 		changePassItem = new JMenuItem("Wachtwoord veranderen");
-		changePassItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_MASK)); ;
+		changePassItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+				KeyEvent.CTRL_MASK));
+		;
 	}
 
 	private void createChallengeMenu() {
 		doChallengeItem = new JMenuItem("Spelers uitdagen");
-		doChallengeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_MASK)); 
-		viewChallengeItem = new JMenuItem("Bekijk uitdagingen"/*( "
-				+ numChallenge + " )"*/);
-		viewChallengeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_MASK)); 
-		
+		doChallengeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				KeyEvent.CTRL_MASK));
+		viewChallengeItem = new JMenuItem("Bekijk uitdagingen");
+		viewChallengeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F,
+				KeyEvent.CTRL_MASK));
+
 		challengeMenu.add(doChallengeItem);
 		challengeMenu.add(viewChallengeItem);
 	}
@@ -144,15 +145,20 @@ public class MenuView extends JMenuBar implements CoreView {
 	private void createCompetitionMenu() {
 		// create the menuItems
 		seeCompetitionsItem = new JMenuItem("Competities bekijken");
-		seeCompetitionsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_MASK)); 
+		seeCompetitionsItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_G, KeyEvent.CTRL_MASK));
 		joinCompetitionItem = new JMenuItem("Deelnemen aan competities");
-		joinCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, KeyEvent.CTRL_MASK)); 
+		joinCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_H, KeyEvent.CTRL_MASK));
 		deleteFromCompetitionItem = new JMenuItem("Verwijderen uit competitie");
-		deleteFromCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_MASK)); 
+		deleteFromCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_I, KeyEvent.CTRL_MASK));
 		deleteCompetitionItem = new JMenuItem("verwijder competitie");
-		deleteCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_J, KeyEvent.CTRL_MASK)); 
+		deleteCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_J, KeyEvent.CTRL_MASK));
 		createCompetitionItem = new JMenuItem("Competitie aanmaken");
-		createCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_MASK)); 
+		createCompetitionItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_K, KeyEvent.CTRL_MASK));
 		// add the menu and the menuItems
 
 		competitionMenu.add(seeCompetitionsItem);
@@ -194,9 +200,6 @@ public class MenuView extends JMenuBar implements CoreView {
 		gameMenu.add(gameMenuOpen);
 		gameMenu.add(gameMenuView);
 
-
-		 
-		
 		add(accountMenu);
 		add(challengeMenu);
 		add(competitionMenu);
@@ -206,14 +209,17 @@ public class MenuView extends JMenuBar implements CoreView {
 
 	private void createModeratorMenu() {
 		viewWords = new JMenuItem("Woorden beheren");
-		viewWords.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_MASK)); 
+		viewWords.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
+				KeyEvent.CTRL_MASK));
 		AccountaanmakenItem = new JMenuItem("Account aanmaken");
-		AccountaanmakenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_MASK));
-		
+		AccountaanmakenItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_M, KeyEvent.CTRL_MASK));
+
 		viewPlayers = new JMenuItem("Gebruikers beheren");
-		viewPlayers.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK)); 
-		
-		toolboxMenu.add(AccountaanmakenItem );
+		viewPlayers.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				KeyEvent.CTRL_MASK));
+
+		toolboxMenu.add(AccountaanmakenItem);
 		toolboxMenu.add(viewWords);
 		toolboxMenu.add(viewPlayers);
 	}
@@ -222,18 +228,19 @@ public class MenuView extends JMenuBar implements CoreView {
 		deleteCompetitionItem.addActionListener(listener);
 	}
 
-	public void deleteFromCompetitionItem(ActionListener listener){
+	public void deleteFromCompetitionItem(ActionListener listener) {
 		deleteFromCompetitionItem.addActionListener(listener);
 	}
-	
+
 	public void joinCompetitionItem(ActionListener listener) {
 		joinCompetitionItem.addActionListener(listener);
 	}
-	
+
 	public void createCompetitionItem(ActionListener listener) {
-		 createCompetitionItem.addActionListener(listener);
+		createCompetitionItem.addActionListener(listener);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
@@ -242,11 +249,11 @@ public class MenuView extends JMenuBar implements CoreView {
 			setLoggedInState();
 			setVisibleMenus(user);
 
-			setChallengeCount(user.getChallengeCount());
-			
-			addGamesToMenu(gameMenuOpen, user.getOpenGames());
-			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
+			setChallengeCount(user.getChallenges().length);
 
+			addGamesToMenu(gameMenuOpen, user.getOpenGames());
+
+			addGamesToMenu(gameMenuView, user.getObserverAbleGames());
 			addMenuItemListeners(gameMenuOpen, openGameListener);
 			addMenuItemListeners(gameMenuView, viewGameListener);
 
@@ -256,31 +263,33 @@ public class MenuView extends JMenuBar implements CoreView {
 
 			break;
 		case Event.NEWCHALLENGE:
-			String[] challenges = (String[]) evt.getNewValue();
-			setChallengeCount(challenges.length);
+
+			int numChallenge = (int) evt.getNewValue();
+			setChallengeCount(numChallenge);
 			break;
 
 		default:
 			break;
 		}
-		
+
 	}
 
 	private void setVisibleMenus(AccountModel user) {
 		if (user.isRole(Role.MODERATOR) || user.isRole(Role.ADMINISTRATOR)) {
 			toolboxMenu.setEnabled(true);
 		}
-		
-		if(user.isRole(Role.MODERATOR)){
+
+		if (user.isRole(Role.MODERATOR)) {
 			viewWords.setEnabled(true);
 		}
-		
-		if(user.isRole(Role.ADMINISTRATOR)){
+
+		if (user.isRole(Role.ADMINISTRATOR)) {
 			viewPlayers.setEnabled(true);
 		}
-		
+
 		int numGames = user.getOpenGames().size();
-		if (user.isRole(Role.OBSERVER) || (numGames > 0 && user.isRole(Role.PLAYER))) {
+		if (user.isRole(Role.OBSERVER)
+				|| (numGames > 0 && user.isRole(Role.PLAYER))) {
 			gameMenu.setEnabled(true);
 		}
 
@@ -288,7 +297,7 @@ public class MenuView extends JMenuBar implements CoreView {
 			gameMenuView.setEnabled(true);
 		}
 
-		if(user.isRole(Role.PLAYER)){
+		if (user.isRole(Role.PLAYER)) {
 			competitionMenu.setEnabled(true);
 			joinCompetitionItem.setEnabled(true);
 			challengeMenu.setEnabled(true);
@@ -296,8 +305,8 @@ public class MenuView extends JMenuBar implements CoreView {
 			deleteCompetitionItem.setEnabled(false);
 			deleteFromCompetitionItem.setEnabled(false);
 		}
-		
-		if(user.getOwnedCompetitions().length > 0){
+
+		if (user.getOwnedCompetitions().length > 0) {
 			createCompetitionItem.setEnabled(false);
 		}
 
@@ -311,12 +320,15 @@ public class MenuView extends JMenuBar implements CoreView {
 	}
 
 	public void setChallengeCount(int count) {
-		// TODO make this work
-		numChallenge = count;
-		viewChallengeItem = new JMenuItem("Bekijk uitdagingen ( "
-				+ numChallenge + " )");
-		challengeMenu.revalidate();
-
+		if (count > 0) {
+			viewChallengeItem.setText("Bekijk uitdagingen ( " + count + " )");
+			challengeMenu.setText("Uitdagingen ( " + count + " )");
+			viewChallengeItem.setEnabled(true);
+		} else {
+			viewChallengeItem.setText("Bekijk uitdagingen");
+			challengeMenu.setText("Uitdagingen");
+			viewChallengeItem.setEnabled(false);
+		}
 	}
 
 	private void setLoggedInState() {
@@ -335,7 +347,7 @@ public class MenuView extends JMenuBar implements CoreView {
 		viewWords.setEnabled(false);
 		viewPlayers.setEnabled(false);
 		gameMenu.setEnabled(false);
-		
+
 		gameMenuOpen.removeAll();
 		gameMenuView.removeAll();
 	}
@@ -343,13 +355,15 @@ public class MenuView extends JMenuBar implements CoreView {
 	public void viewChallengeItemActionListener(ActionListener listener) {
 		viewChallengeItem.addActionListener(listener);
 	}
-	
+
 	public void viewWords(ActionListener listener) {
 		viewWords.addActionListener(listener);
 	}
+
 	public void viewPlayers(ActionListener listener) {
 		viewPlayers.addActionListener(listener);
 	}
+
 	public void Accountaanmaken(ActionListener listener) {
 		AccountaanmakenItem.addActionListener(listener);
 	}

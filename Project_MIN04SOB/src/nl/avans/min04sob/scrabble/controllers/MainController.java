@@ -390,19 +390,12 @@ public class MainController extends CoreController {
 	
 		updatelabels(selectedGame.getCurrentobserveturn());
 
-		
-		
-
 		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
 
 		addButtonListeners();
 
-		// frame.getContentPane().add(currGamePanel, "cell 4 0 6 7,grow");
-		// frame.revalidate();
-		// frame.repaint();
-		// chatPanel.setEnabled(true);
 		openPanels();
 		selectedGame.setplayertilesfromdatabase();
 		chatPanel.empty();
