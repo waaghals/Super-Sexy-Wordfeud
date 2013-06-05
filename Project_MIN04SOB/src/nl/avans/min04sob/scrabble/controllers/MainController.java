@@ -507,13 +507,14 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int size = 0;
 
-			
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for(Tile tile: selectedTiles){
 					stashModel.addTileToStash(currentGame.getGameId(), tile);
-					
-					// elke tile aan pot toevoegen
+					size++;
+					// elke tile aan pot toevoegen : done
+					// elke tile uit hand verwijderen
 					// zelfde hoeveelheid uit te pot halen
 
 				}
