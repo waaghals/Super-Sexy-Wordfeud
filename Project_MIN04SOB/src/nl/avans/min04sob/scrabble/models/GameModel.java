@@ -56,13 +56,14 @@ public class GameModel extends CoreModel {
 	private final String getOpenQuery = "SELECT * FROM `gelegdeletter` WHERE Tegel_Y =? AND Tegel_X = ? AND Letter_Spel_ID = ?";
 	private final String getScoreQuery = "SELECT `totaalscore` FROM `score` WHERE `Spel_ID` = ? AND `Account_Naam` != ?";
 	private final String getTurnQuery = "SELECT LetterType_karakter, Tegel_X, Tegel_Y, BlancoLetterKarakter, beurt_ID, ID FROM gelegdeletter, letter WHERE gelegdeletter.Spel_ID = ? AND gelegdeletter.Letter_ID = letter.ID AND gelegdeletter.beurt_ID = ? ORDER BY beurt_ID ASC;;";
-
+	private final String getLastTurnQuery = "SELECT Account_naam, ID FROM beurt WHERE Spel_ID = ? ORDER BY ID DESC LIMIT 0, 1";
+	
 	private final String getBoardQuery = "SELECT  `gl`.`Spel_ID` ,  `gl`.`Beurt_ID` ,  `l`.`LetterType_karakter` ,  `gl`.`Tegel_X` ,  `gl`.`Tegel_Y` ,  `gl`.`BlancoLetterKarakter`,`l`.`ID` FROM  `gelegdeletter` AS  `gl` JOIN  `letter` AS  `l` ON ( (`l`.`Spel_ID` =  `gl`.`Spel_ID`)AND(`l`.`ID` =  `gl`.`Letter_ID`) ) JOIN  `spel`  `s` ON  `s`.`id` =  `gl`.`Spel_ID` JOIN  `letterset` AS  `ls` ON  `ls`.`code` =  `s`.`LetterSet_naam` WHERE gl.Spel_ID =?";
 	private final String getPlayerTiles = "SELECT Beurt_ID,inhoud FROM plankje WHERE Spel_ID = ? AND Account_naam = ? ORDER BY Beurt_ID DESC ";
 
 	private final String getTileValue = "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
 	private final String yourTurnQuery = "SELECT `account_naam`, MAX(`beurt`.`id`) AS `last_turn`, `account_naam_uitdager` AS `challenger` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE `beurt`.`spel_id` = ? GROUP BY `spel_id` ORDER BY `beurt`.`id`";
-	private final String whosTurnAtTurn = "SELECT account_naam FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
+	private final String whosTurnAtTurn = "SELECT account_naam, ID FROM `beurt` WHERE `spel_id` = ? AND ID = ?";
 
 	private final String resignQuery = "UPDATE `spel` SET `Toestand_type` = ? WHERE `ID` = ?";
 
@@ -128,11 +129,11 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
+	public Tile[][] checkValidMove(BoardModel oldBoard, Tile[][] newBoard)
 			throws InvalidMoveException {
 
 		Tile[][] oldData = (Tile[][]) oldBoard.getData();
-		Tile[][] newData = (Tile[][]) newBoard.getData();
+		Tile[][] newData = newBoard;
 
 		// First find out which letters where played
 		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
@@ -189,7 +190,7 @@ public class GameModel extends CoreModel {
 				max = letterPos.getX();
 			}
 		}
-
+		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
 
@@ -268,11 +269,9 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public void legWoord(Tile[][] playedLetters, Tile[][] oldBoard,
-			Tile[][] newBoard) {
+	public void playWord(Tile[][] playedLetters, Tile[][] newBoard) {
 		try {
-			// Tile[][]newBoardTiles = (Tile[][]) newBoard.getData();
-			// checkValidMove(oldBoard, newBoard);
+			//Tile[][] playedLetters = checkValidMove(boardModel, newBoard);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
 					playedLetters, newBoard);
@@ -284,20 +283,26 @@ public class GameModel extends CoreModel {
 				teVergelijkenWoordenString.add(tempwoord);
 			}
 			checkWordsInDatabase(teVergelijkenWoordenString);
-			getScore(playedLetters, teVergelijkenWoorden, newBoard);
-			String query = "INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
-					+ "VALUES (?, ?, ?, ?, ?, ?,?);";
+			
+			
+			//int score = getScore(playedLetters, teVergelijkenWoorden, newBoard);
+			
+			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
+				//create een nieuwe beurt in de database;
+			int nextTurn = getNextTurnId();
+			int score = getScore(newBoard, teVergelijkenWoorden, boardModel);
+			Db.run(new Query(createTurn).set((nextTurn)).set(gameId).set(getNextTurnUsername()).set(score));
+			System.out.println("INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES("+nextTurn+", "+gameId+", "+getNextTurnUsername()+", "+10+", 'Word')");
+
+			// leg het woord in de database
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 15; x++) {
 					if (playedLetters[y][x] != null) {
-						// ResultSet rs = Db.run(new
-						// Query("SELECT ID FROM letter WHERE LetterType_karakter = ? AND Spel_ID = 592").set(playedLetters[y][x].getLetter())).get();
-						// rs.first();
 						Db.run(new Query(
 								"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
 										+ "VALUES (?, ?, ?, ?, ?, ?, ?);")
 								.set(playedLetters[y][x].getTileId())
-								.set(gameId).set(currentobserveturn + 1)
+								.set(gameId).set(nextTurn)
 								.set(x + 1).set(y + 1).set("Standard").set(""));
 					}
 				}
@@ -908,6 +913,39 @@ public class GameModel extends CoreModel {
 
 	}
 
+	public int getNextTurnId(){
+		int nextTurn = 0;
+		try {
+			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId)).get();
+			rs.first();
+			nextTurn = rs.getInt(2) + 1;
+		} catch (InterruptedException | ExecutionException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return nextTurn;
+	}
+	
+	public String getNextTurnUsername(){
+		String nextuser = "";
+		try {
+			ResultSet rs = Db.run(new Query(getLastTurnQuery).set(gameId)).get();
+			rs.first();
+			String username = rs.getString(1);
+			
+			if(username.equals(opponent.getUsername())){
+				nextuser = challenger.getUsername();
+			}else if(username.equals(challenger.getUsername())){
+				nextuser = opponent.getUsername();
+			}
+			
+		} catch (InterruptedException | ExecutionException | SQLException e) {
+			e.printStackTrace();
+		}
+		return nextuser;
+	}
+	
 	public boolean yourturn() {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(yourTurnQuery)
