@@ -109,7 +109,7 @@ public class AccountModel extends CoreModel {
 		return 1;
 	}
 
-	public CompetitionModel[] getCompetitions(String username){
+	public CompetitionModel[] getCompetitions(){
 		CompetitionModel[] compDesc = new CompetitionModel[0];
 		int x = 0;
 		try {
@@ -272,20 +272,19 @@ public class AccountModel extends CoreModel {
 	}
 	
 	public CompetitionModel[] getOwnedCompetitions() {
+		ArrayList<CompetitionModel> competitions = null;
 		try {
-			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ?";
+			String query = "SELECT `id` FROM  `competitie` 	WHERE  `Account_naam_eigenaar` =  ? AND `einde` > NOW()";
 			Future<ResultSet> worker = Db.run(new Query(query).set(username));
 			ResultSet result = worker.get();
-			int numRows = Query.getNumRows(result);
-			CompetitionModel[] competitions = new CompetitionModel[numRows];
+			competitions = new ArrayList<CompetitionModel>();
 			while(result.next()){
-				competitions[numRows-1] = new CompetitionModel(result.getInt(1));
-				numRows--;
+				competitions.add(new CompetitionModel(result.getInt(1)));
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		return new CompetitionModel[0];
+		return competitions.toArray(new CompetitionModel[competitions.size()]);
 	}
 	
 }

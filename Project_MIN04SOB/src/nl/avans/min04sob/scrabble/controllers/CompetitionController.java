@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
+import nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.CompetitionModel;
@@ -320,7 +321,12 @@ public class CompetitionController extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String desc = createCompetitionView.getDiscription();
-				competitionModel.checkCompetition(accountModel.getUsername(), desc);
+				try {
+					competitionModel.createCompetition(accountModel, desc);
+				} catch (DuplicateCompetitionException dupE) {
+					System.out.println("Deze moet dus nog worden afgehandeld");
+					dupE.printStackTrace();
+				}
 			}
 		});
 
