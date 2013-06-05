@@ -68,6 +68,7 @@ public class TileTransferHandler extends TransferHandler {
 
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
+		if(data!=null){
 		Tile sourceTile;
 		try {
 			JTable table = (JTable) source;
@@ -89,6 +90,7 @@ public class TileTransferHandler extends TransferHandler {
 		} catch (UnsupportedFlavorException | IOException e) {
 			// TODO Automatisch gegenereerd catch-blok
 			e.printStackTrace();
+		}
 		}
 	}
 
