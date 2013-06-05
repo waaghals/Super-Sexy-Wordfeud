@@ -13,13 +13,13 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import nl.avans.min04sob.scrabble.models.BoardModel;
-import nl.avans.min04sob.scrabble.models.PlayerTileModel;
+
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 
 	private BoardModel boardModel;
-	private PlayerTileModel playerTileModel;
+	
 	private Color red;
 	private Color lightRed;
 	private Color blue;
@@ -35,7 +35,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private String dwURL = "/images/dw.png";
 	private String twURL = "/images/tw.png";
 	private String starURL = "/images/star.png";
-	private Boolean isBoardModelrenderer = true;
+	
 	private static final double BLEND_RATIO = 0.6;
 
 	public ScrabbleTableCellRenderer(BoardModel model) {
@@ -52,12 +52,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		lightBlue = new Color(191, 244, 233);
 		beige = new Color(255, 255, 200);
 	}
-	public ScrabbleTableCellRenderer(PlayerTileModel model) {
-		super();
 	
-		playerTileModel = model;
-		isBoardModelrenderer = false;
-	}
 
 	protected ImageIcon createImageIcon(String path, String description) {
 		URL imgURL = getClass().getResource(path);
@@ -72,7 +67,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
-		if(isBoardModelrenderer){
+		
 		setImages();
 		Component c = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
@@ -137,13 +132,7 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		c.setForeground(foreground);
 		c.setBackground(background);
 		return c;
-		}else{
-			Component c = super.getTableCellRendererComponent(table, value,
-					isSelected, hasFocus, row, col);
-			Tile tile = (Tile) playerTileModel.getValueAt(row, col);
-			c.setBackground(Color.white);
-			return c;
-		}
+		
 	}
 
 	private void setImages() {

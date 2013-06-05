@@ -24,7 +24,7 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.PlayerTileModel;
+
 import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -43,7 +43,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
-	private PlayerTileModel playerTileModel;
+
 	private GameModel currentGame;
 	
 	private CoreWindow swapWindow;
@@ -66,7 +66,7 @@ public class MainController extends CoreController {
 		addModel(account);
 		addModel(new ChallengeModel(account));
 
-		addModel(playerTileModel);
+		
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -347,7 +347,6 @@ public class MainController extends CoreController {
 
 		currGamePanel = new BoardPanel();
 
-		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
@@ -369,7 +368,8 @@ public class MainController extends CoreController {
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-		removeModel(playerTileModel);
+		
+	
 		// chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
 		// frame.remove(currGamePanel);
@@ -382,18 +382,15 @@ public class MainController extends CoreController {
 
 		currGamePanel = new BoardPanel();
 		boardModel = selectedGame.getBoardModel();
-		playerTileModel = selectedGame.getPlayerTileModel();
+		
+		
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
-		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(
-				playerTileModel));
-		currGamePanel.setPlayerTileModel(playerTileModel);
-
+	
 		updatelabels(selectedGame.getCurrentobserveturn());
 
-		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
+		
 		addModel(boardModel);
-		addModel(playerTileModel);
 
 		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();

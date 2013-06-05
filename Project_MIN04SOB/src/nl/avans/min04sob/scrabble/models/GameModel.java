@@ -14,6 +14,7 @@ import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
 import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.misc.MatrixUtils;
+import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
 
@@ -31,6 +32,7 @@ public class GameModel extends CoreModel {
 	private String boardName;
 	private String letterSet;
 	private boolean iamchallenger;
+	private BoardPanel boardpanel;
 
 	private int currentobserveturn;
 
@@ -38,7 +40,7 @@ public class GameModel extends CoreModel {
 
 	// private BoardController boardcontroller;
 	private BoardModel boardModel;
-	private PlayerTileModel playerTileModel;
+
 	@Deprecated
 	private String[][] boardData;
 
@@ -75,11 +77,11 @@ public class GameModel extends CoreModel {
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
 	private final boolean observer;
 
-	public GameModel(int gameId, AccountModel user, BoardModel boardModel,
-			PlayerTileModel playerTileModel, boolean observer) {
+	public GameModel(int gameId, AccountModel user, BoardModel boardModel,BoardPanel boardPanel,
+			 boolean observer) {
 		this.observer = observer;
 		this.boardModel = boardModel;
-		this.playerTileModel = playerTileModel;
+	this.boardpanel = boardPanel;
 		currentUser = user;
 
 		try {
@@ -396,7 +398,7 @@ public class GameModel extends CoreModel {
 
 		}
 
-		playerTileModel.setPlayerTileData(newletters);
+		boardpanel.setPlayerTiles(newletters);
 	}
 
 	private void checkWordsInDatabase(ArrayList<String> words) throws Exception {
@@ -948,7 +950,5 @@ public class GameModel extends CoreModel {
 		}
 		return 0;
 	}
-	public PlayerTileModel getPlayerTileModel(){
-		return this.playerTileModel;
-	}
+	
 }

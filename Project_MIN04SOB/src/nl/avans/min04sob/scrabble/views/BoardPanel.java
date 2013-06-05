@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
@@ -23,7 +25,6 @@ import nl.avans.min04sob.scrabble.misc.TileTable;
 import nl.avans.min04sob.scrabble.misc.TileTranfserHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
-import nl.avans.min04sob.scrabble.models.PlayerTileModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class BoardPanel extends CorePanel {
@@ -58,7 +59,7 @@ public class BoardPanel extends CorePanel {
 	private JLabel playerNameLabel;
 	
 	private JLabel playerScoreLabel;
-
+	DefaultTableModel playerStash;
 
 	public BoardPanel() {
 		setLayout(new MigLayout(
@@ -107,16 +108,19 @@ public class BoardPanel extends CorePanel {
 		opponentScoreLabel = new JLabel("<score>");
 		add(opponentScoreLabel, "cell 6 2");
 
-		playerTilesField = new TileTable();
-		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
-		playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		playerTilesField.getTableHeader().setReorderingAllowed(false);
-		playerTilesField.getTableHeader().setResizingAllowed(false);
-		playerTilesField.setRowHeight(30);
-		playerTilesField.setEnabled(true);
-		playerTilesField.setCellSelectionEnabled(true);
-		playerTilesField.validate();
+		playerStash = new DefaultTableModel(1, 8);
+		playerTilesField = new JTable(playerStash);
+		
+		//playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
+		//playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		//playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//playerTilesField.getTableHeader().setReorderingAllowed(false);
+		//playerTilesField.getTableHeader().setResizingAllowed(false);
+		//playerTilesField.setRowHeight(30);
+		//playerTilesField.setEnabled(true);
+		//playerTilesField.setCellSelectionEnabled(true);
+		//playerTilesField.validate();
+		playerTilesField.setDefaultRenderer(Tile.class, new DefaultTableCellRenderer());
 		
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
@@ -126,9 +130,9 @@ public class BoardPanel extends CorePanel {
 		playBoard.setDropMode(DropMode.USE_SELECTION);
 		playBoard.setTransferHandler(new TileTranfserHandler());
 
-		playerTilesField.setDragEnabled(true);
-		playerTilesField.setDropMode(DropMode.USE_SELECTION);
-		playerTilesField.setTransferHandler(new TileTranfserHandler());
+		//playerTilesField.setDragEnabled(true);
+		//playerTilesField.setDropMode(DropMode.USE_SELECTION);
+		//playerTilesField.setTransferHandler(new TileTranfserHandler());
 
 		play = new JButton();
 		play.addActionListener(new ActionListener() {
@@ -240,9 +244,7 @@ public class BoardPanel extends CorePanel {
 	public void setModel(BoardModel bpm) {
 		playBoard.setModel(bpm);
 	}
-	public void setPlayerTileModel(PlayerTileModel ptm){
-	playerTilesField.setModel(ptm);
-	}
+	
 
 	public void setOpponent(String name) {
 		opponentNameLabel.setText(name);
@@ -253,18 +255,29 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
-		if (!(playerTiles.length == 0)) {
-			for (int y = 0; playerTiles.length > y + 1; y++) {
-				playerTilesField.setValueAt(playerTiles[y], 0, y);
+		if ((playerTiles.length != 0)) {
+			System.out.println(playerTiles.length);
+			
+			for (int y = 0; playerTiles.length > y; y++) {
+				System.out.println(playerTiles[y].getLetter());
+				playerStash.setValueAt(playerTiles[y], 0,y);
+				System.out.println(playerStash.getValueAt(0, y));
+				playerStash.fireTableRowsUpdated(0, 1);
 			}
+			
 		}
+		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
+		playerTilesField.revalidate();
+		playerTilesField.repaint();
 	}
 	public void setRenderer(TableCellRenderer renderer) {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
 	}
+/*
 	public void setPlayerTileRenderer(TableCellRenderer renderer){
 		playerTilesField.setDefaultRenderer(Tile.class, renderer);
 	}
+	*/
 	public void update() {
 
 		this.repaint();
