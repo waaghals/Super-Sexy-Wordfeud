@@ -138,8 +138,8 @@ public class StashModel extends CoreModel {
 			
 			res.first();
 			if(numRows > 0){
-				Random randominteger = new Random();
-				int r = randominteger.nextInt(numRows);		
+				Random randomInteger = new Random();
+				int r = randomInteger.nextInt(numRows);		
 			for (int x = 0; x < r; x++) {
 				res.next();
 			}
