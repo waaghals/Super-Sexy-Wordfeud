@@ -43,7 +43,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
-
+	
 	private GameModel currentGame;
 	
 	private CoreWindow swapWindow;
@@ -380,9 +380,9 @@ public class MainController extends CoreController {
 		System.out.println("test");
 		selectedGame.yourturn();
 
-		currGamePanel = new BoardPanel();
+		currGamePanel = selectedGame.getBoardPanel();
 		boardModel = selectedGame.getBoardModel();
-		
+		addModel(boardModel);
 		
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
@@ -390,7 +390,7 @@ public class MainController extends CoreController {
 		updatelabels(selectedGame.getCurrentobserveturn());
 
 		
-		addModel(boardModel);
+		
 
 		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
@@ -403,7 +403,7 @@ public class MainController extends CoreController {
 		// frame.repaint();
 		// chatPanel.setEnabled(true);
 		openPanels();
-
+		selectedGame.setplayertilesfromdatabase();
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {

@@ -382,7 +382,7 @@ public class GameModel extends CoreModel {
 
 		Tile[] letters = stash.getPlayerTiles(currentUser, this);
 
-		Tile[] newletters = new Tile[7];
+		Tile[] newletters = new Tile[8];
 
 		for (int counter = 0; counter < newletters.length; counter++) {
 			if (!(letters.length > counter)) {
@@ -397,7 +397,7 @@ public class GameModel extends CoreModel {
 			}
 
 		}
-
+		
 		boardpanel.setPlayerTiles(newletters);
 	}
 
@@ -950,5 +950,7 @@ public class GameModel extends CoreModel {
 		}
 		return 0;
 	}
-	
+	public BoardPanel getBoardPanel(){
+		return this.boardpanel;
+	}
 }

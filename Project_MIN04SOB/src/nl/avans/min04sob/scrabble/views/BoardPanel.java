@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Arrays;
 
 import javax.swing.DropMode;
 import javax.swing.JButton;
@@ -59,9 +60,10 @@ public class BoardPanel extends CorePanel {
 	private JLabel playerNameLabel;
 	
 	private JLabel playerScoreLabel;
-	DefaultTableModel playerStash;
+	private DefaultTableModel playerStash;
 
 	public BoardPanel() {
+		playerStash = new DefaultTableModel(1, 8);
 		setLayout(new MigLayout(
 				"",
 				"[75px:75px][75px:75px][100px:100px:100px][100px:100px:100px][100px:100px:100px][125px][100px][]",
@@ -108,18 +110,19 @@ public class BoardPanel extends CorePanel {
 		opponentScoreLabel = new JLabel("<score>");
 		add(opponentScoreLabel, "cell 6 2");
 
-		playerStash = new DefaultTableModel(1, 8);
-		playerTilesField = new JTable(playerStash);
 		
-		//playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
-		//playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		//playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//playerTilesField.getTableHeader().setReorderingAllowed(false);
-		//playerTilesField.getTableHeader().setResizingAllowed(false);
-		//playerTilesField.setRowHeight(30);
-		//playerTilesField.setEnabled(true);
-		//playerTilesField.setCellSelectionEnabled(true);
-		//playerTilesField.validate();
+	
+		playerTilesField = new JTable(playerStash);
+
+		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
+		playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		playerTilesField.getTableHeader().setReorderingAllowed(false);
+		playerTilesField.getTableHeader().setResizingAllowed(false);
+		playerTilesField.setRowHeight(30);
+		playerTilesField.setEnabled(true);
+		playerTilesField.setCellSelectionEnabled(true);
+		playerTilesField.validate();
 		playerTilesField.setDefaultRenderer(Tile.class, new DefaultTableCellRenderer());
 		
 
@@ -130,9 +133,9 @@ public class BoardPanel extends CorePanel {
 		playBoard.setDropMode(DropMode.USE_SELECTION);
 		playBoard.setTransferHandler(new TileTranfserHandler());
 
-		//playerTilesField.setDragEnabled(true);
-		//playerTilesField.setDropMode(DropMode.USE_SELECTION);
-		//playerTilesField.setTransferHandler(new TileTranfserHandler());
+		playerTilesField.setDragEnabled(true);
+		playerTilesField.setDropMode(DropMode.USE_SELECTION);
+		playerTilesField.setTransferHandler(new TileTranfserHandler());
 
 		play = new JButton();
 		play.addActionListener(new ActionListener() {
@@ -187,7 +190,11 @@ public class BoardPanel extends CorePanel {
 
 		add(nextButton, "cell 4 6,grow");
 
-		// }
+		// }\
+	
+	}
+	public void atValue(){
+		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
 	}
 
 	public void addNextActionListener(ActionListener listener) {
@@ -255,20 +262,21 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
-		if ((playerTiles.length != 0)) {
+		System.out.println(Arrays.deepToString(playerTiles));
+		
 			System.out.println(playerTiles.length);
 			
 			for (int y = 0; playerTiles.length > y; y++) {
-				System.out.println(playerTiles[y].getLetter());
-				playerStash.setValueAt(playerTiles[y], 0,y);
-				System.out.println(playerStash.getValueAt(0, y));
-				playerStash.fireTableRowsUpdated(0, 1);
+				
+				
+				playerStash.setValueAt(playerTiles[y], 0 ,y);
+				
+				
 			}
 			
-		}
-		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
-		playerTilesField.revalidate();
-		playerTilesField.repaint();
+		
+		
+	
 	}
 	public void setRenderer(TableCellRenderer renderer) {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
