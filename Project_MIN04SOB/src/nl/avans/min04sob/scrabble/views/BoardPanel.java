@@ -22,6 +22,7 @@ import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.Role;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
+import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.misc.TileTable;
 import nl.avans.min04sob.scrabble.misc.TileTranfserHandler;
 import nl.avans.min04sob.scrabble.models.AccountModel;
@@ -112,8 +113,8 @@ public class BoardPanel extends CorePanel {
 
 		
 	
-		playerTilesField = new JTable(playerStash);
-
+		playerTilesField = new TileTable();
+		playerTilesField.setModel(playerStash);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
 		playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -252,7 +253,6 @@ public class BoardPanel extends CorePanel {
 		playBoard.setModel(bpm);
 	}
 	
-
 	public void setOpponent(String name) {
 		opponentNameLabel.setText(name);
 	}
@@ -262,30 +262,14 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
-		System.out.println(Arrays.deepToString(playerTiles));
-		
-			System.out.println(playerTiles.length);
-			
 			for (int y = 0; playerTiles.length > y; y++) {
-				
-				
 				playerStash.setValueAt(playerTiles[y], 0 ,y);
-				
-				
 			}
-			
-		
-		
-	
 	}
 	public void setRenderer(TableCellRenderer renderer) {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
 	}
-/*
-	public void setPlayerTileRenderer(TableCellRenderer renderer){
-		playerTilesField.setDefaultRenderer(Tile.class, renderer);
-	}
-	*/
+
 	public void update() {
 
 		this.repaint();
