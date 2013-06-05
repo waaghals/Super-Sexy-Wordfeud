@@ -24,7 +24,7 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.ChallengeModel;
 import nl.avans.min04sob.scrabble.models.ChatModel;
 import nl.avans.min04sob.scrabble.models.GameModel;
-import nl.avans.min04sob.scrabble.models.PlayerTileModel;
+
 import nl.avans.min04sob.scrabble.models.StashModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 import nl.avans.min04sob.scrabble.views.BoardPanel;
@@ -43,7 +43,7 @@ public class MainController extends CoreController {
 	private ChatPanel chatPanel;
 	private ChatModel chatModel;
 	private BoardModel boardModel;
-	private PlayerTileModel playerTileModel;
+	
 	private GameModel currentGame;
 	
 	private CoreWindow swapWindow;
@@ -52,7 +52,6 @@ public class MainController extends CoreController {
 	private StashModel stashModel;
 
 	private ResignController resigncontroller;
-	private ArrayList<Tile> selectedTiles;
 
 	public MainController() {
 
@@ -66,7 +65,7 @@ public class MainController extends CoreController {
 		addModel(account);
 		addModel(new ChallengeModel(account));
 
-		addModel(playerTileModel);
+		
 
 		// Add the old messages first.
 		// for (String message : chatModel.getMessages()) {
@@ -136,9 +135,9 @@ public class MainController extends CoreController {
 				// view maken om de letters te selecteren
 				// TODO moest de methode verander waardoor jullie ding niet goed
 				// meer werkte je moet getValueAt gebruiken nu.
-				// Tile [][] letters =
+				Tile [] letters = stashModel.getPlayerTiles(account, currentGame);
 
-				// selectSwap(letters);
+				selectSwap(letters);
 			}
 		});
 	}
@@ -161,7 +160,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openCompetitionView();
+				new CompetitionController(account).openChallengeView();
 				// crtl.toChallenge();
 
 			}
@@ -229,9 +228,6 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 
 				new CompetitionController(account).openDeleteCompetitionView();
-
-				// invController = new InviteController();
-				// invController.setButtonsRemove();
 
 			}
 		});
@@ -347,7 +343,6 @@ public class MainController extends CoreController {
 
 		currGamePanel = new BoardPanel();
 
-		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		chatPanel = new ChatPanel();
@@ -369,7 +364,8 @@ public class MainController extends CoreController {
 		chatModel = new ChatModel(selectedGame, account);
 		addModel(chatModel);
 		removeModel(boardModel);
-		removeModel(playerTileModel);
+		
+	
 		// chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
 		// frame.remove(currGamePanel);
@@ -380,20 +376,17 @@ public class MainController extends CoreController {
 		System.out.println("test");
 		selectedGame.yourturn();
 
-		currGamePanel = new BoardPanel();
+		currGamePanel = selectedGame.getBoardPanel();
 		boardModel = selectedGame.getBoardModel();
-		playerTileModel = selectedGame.getPlayerTileModel();
+		addModel(boardModel);
+		
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
 		currGamePanel.setModel(boardModel);
-		currGamePanel.setPlayerTileRenderer(new ScrabbleTableCellRenderer(
-				playerTileModel));
-		currGamePanel.setPlayerTileModel(playerTileModel);
-
+	
 		updatelabels(selectedGame.getCurrentobserveturn());
 
-		// currGamePanel.setLabelScore(selectedGame.getCurrentValueForThisTurn());
-		addModel(boardModel);
-		addModel(playerTileModel);
+		
+		
 
 		selectedGame.setplayertilesfromdatabase();
 		selectedGame.getBoardFromDatabase();
@@ -406,7 +399,7 @@ public class MainController extends CoreController {
 		// frame.repaint();
 		// chatPanel.setEnabled(true);
 		openPanels();
-
+		selectedGame.setplayertilesfromdatabase();
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -481,7 +474,7 @@ public class MainController extends CoreController {
 	}
 
 	// selectSwap
-	public void selectSwap(Tile[][] letters) {
+	public void selectSwap(Tile[] letters) {
 		swapWindow = new CoreWindow();
 		swapView = new SelectSwapView(letters);
 		swapWindow.add(swapView);
@@ -490,30 +483,21 @@ public class MainController extends CoreController {
 		swapWindow.pack();
 
 
-		selectedTiles = new ArrayList<Tile>();
-
-		swapView.addListListener(new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					selectedTiles.add(swapView.getSelectedTile());
-				}
-			}
-		});
-
 		swapView.addButtonListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int size = 0;
 
-			
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for(Tile tile: selectedTiles){
-					stashModel.addTileToStash(currentGame.getGameId(), tile);
 					
-					// elke tile aan pot toevoegen
-					// zelfde hoeveelheid uit te pot halen
-
+					
+					
+					
+					// elke tile uit hand verwijderen en aan de pot toevoegen
+					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
+					// rij toevoegen aan beurt
 				}
 
 			}

@@ -1,3 +1,4 @@
+
 package nl.avans.min04sob.scrabble.misc;
 
 import java.awt.Point;
@@ -36,12 +37,6 @@ public class TileTranfserHandler extends TransferHandler {
 			TableModel model = table.getModel();
 			int row = table.getSelectedRow();
 			int col = table.getSelectedColumn();
-
-			if (row == -1 || col == -1) {
-				System.out.println("Drop loc. out of bounds");
-				return false;
-			}
-
 			Tile tile = (Tile) model.getValueAt(row, col);
 			
 			if (tile == null) {

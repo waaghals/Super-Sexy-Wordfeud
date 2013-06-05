@@ -2,8 +2,6 @@ package nl.avans.min04sob.scrabble.models;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 
 public class Tile implements Transferable {
 	private String letter;

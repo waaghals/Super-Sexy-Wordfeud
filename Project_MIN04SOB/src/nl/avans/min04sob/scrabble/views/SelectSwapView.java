@@ -16,15 +16,14 @@ import nl.avans.min04sob.scrabble.models.Tile;
 
 public class SelectSwapView extends CorePanel {
 	
-	private Tile[][] letters;
 	private Tile[] lettersArray;
 	private JButton swapButton;
 	private JList<Tile> list;
 		
-	public SelectSwapView(Tile[][] tl) {
+	public SelectSwapView(Tile[] tl) {
 		setLayout(new MigLayout("", "[200.00]", "[30px][150.00px][]"));
 		
-		letters = tl;
+		lettersArray = tl;
 			
 		JLabel lblSelecteerDeLetters = new JLabel("Selecteer de letters die je wilt wisselen");
 		add(lblSelecteerDeLetters, "cell 0 0");
@@ -35,15 +34,10 @@ public class SelectSwapView extends CorePanel {
 		
 		swapButton = new JButton("Wisselen");
 		add(swapButton, "cell 0 2,alignx right");
-		makeArray();
 		fillList();
 		
 		}
-	
-	public void makeArray(){
-		lettersArray = letters[0];
-	}
-	
+
 	public void fillList(){
 		list.setListData(lettersArray);
 	}

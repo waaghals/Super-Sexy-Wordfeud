@@ -7,7 +7,6 @@ import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
