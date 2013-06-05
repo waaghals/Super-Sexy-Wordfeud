@@ -69,23 +69,20 @@ public class TileTranfserHandler extends TransferHandler {
 	@Override
 	protected void exportDone(JComponent source, Transferable data, int action) {
 		Tile sourceTile;
-		try {
-			sourceTile = (Tile) data.getTransferData(tileFlavor);
-			System.out.println("exporting: " + sourceTile);
+	
 			JTable table = (JTable) source;
 			int sourceRow = table.getSelectedRow();
 			int sourceCol = table.getSelectedColumn();
 			TableModel model = table.getModel();
-			
-			if (sourceTile != null && sourceTile.isMutatable()) {
+			//sourceTile = (Tile) data.getTransferData(tileFlavor);
+			//sourceTile = (Tile) model.getValueAt(sourceRow, sourceCol);
+			//if (sourceTile != null && sourceTile.isMutatable()) {
 				System.out.println("Setting value at: R" + sourceRow + " C" + sourceCol + " to null");
 				model.setValueAt(null, sourceRow, sourceCol);
-			}
+			//}
 
 			table.clearSelection();
-		} catch (UnsupportedFlavorException | IOException e) {
-			e.printStackTrace();
-		}
+	
 	}
 
 	@Override
