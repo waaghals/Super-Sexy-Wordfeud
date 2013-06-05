@@ -53,10 +53,13 @@ public class StashModel extends CoreModel {
 			Tile[] tiles = new Tile[numRows];
 			int i = 0;
 			while (res.next()) {
-				String character = res.getString("letter");
-				int charValue = res.getInt("waarde");
-				tiles[i] = new Tile(character, charValue, Tile.MUTATABLE,
-						res.getInt("ID"));
+				
+				String getTileValue =  "Select waarde FROM lettertype WHERE karakter = ? AND LetterSet_code = ?";
+				Future<ResultSet> worker1 = Db.run(new Query(getTileValue).set(res.getString(5)).set("NL"));
+				ResultSet tilewaarde = worker1.get();
+				tilewaarde.next();
+				tiles[i] = new Tile(res.getString(5), tilewaarde.getInt(1), Tile.MUTATABLE,
+						res.getInt(4));
 				i++;
 			}
 
@@ -74,11 +77,11 @@ public class StashModel extends CoreModel {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(q).set(spel_ID));
 			ResultSet res = worker.get();
-			res.first();
+			res.next();
 			int numRows = Query.getNumRows(res);
 			
 			
-			if(numRows > 0){
+			if(numRows > 1){
 				
 			Random randominteger = new Random();
 			int r = randominteger.nextInt(numRows);
@@ -94,7 +97,7 @@ public class StashModel extends CoreModel {
 			String addlettertoplankje = " INSERT INTO `letterbakjeletter` (`Spel_ID` ,`Letter_ID` ,`Beurt_ID`)VALUES (?, ?, ?)";
 			Db.run(new Query(addlettertoplankje).set(spel_ID).set(res.getInt(2)).set(turnid));
 			//addTileToStash(spel_ID, letter);
-			System.out.println("testttttttttttttttttttt");
+		
 			}
 			
 

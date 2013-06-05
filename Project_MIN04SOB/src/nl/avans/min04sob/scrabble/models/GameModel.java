@@ -76,7 +76,7 @@ public class GameModel extends CoreModel {
 
 	private final String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
 
-	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
+	private final String getnumberofturns = "SELECT max(ID) FROM beurt   WHERE Spel_ID = ?";
 	private final boolean observer;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,BoardPanel boardPanel,
