@@ -83,10 +83,6 @@ public class CompetitionController extends CoreController {
 	}
 	
 
-	public void getChallengeAbleUsers(int competition_id) {
-		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));
-	}
-
 
 	@Override
 	public void initialize() {

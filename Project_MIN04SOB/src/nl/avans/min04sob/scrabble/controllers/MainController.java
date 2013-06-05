@@ -54,7 +54,7 @@ public class MainController extends CoreController {
 	private ResignController resigncontroller;
 
 	public MainController() {
-
+		
 		initialize();
 		addListeners();
 		addView(menu);
@@ -75,6 +75,7 @@ public class MainController extends CoreController {
 		frame.setJMenuBar(menu);
 		frame.setPreferredSize(new Dimension(1000, 680));
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		startUp();
 	}
 
@@ -337,7 +338,7 @@ public class MainController extends CoreController {
 		frame = new CoreWindow("Wordfeud", JFrame.EXIT_ON_CLOSE);
 		// changePassPanel = new ChangePassPanel();
 		menu = new MenuView();
-
+		
 		// competitioncontroller = new CompetitionController();
 		account = new AccountModel();
 
