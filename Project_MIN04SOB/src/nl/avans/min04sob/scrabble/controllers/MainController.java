@@ -81,6 +81,13 @@ public class MainController extends CoreController {
 	}
 
 	private void addButtonListeners() {
+		currGamePanel.addRefreshActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		});
+		
 		currGamePanel.addResignActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -234,13 +241,6 @@ public class MainController extends CoreController {
 			}
 		});
 
-		
-		currGamePanel.addRefreshActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				refresh();
-			}
-		});
 		
 		menu.createCompetitionItem(new ActionListener() {
 			@Override
