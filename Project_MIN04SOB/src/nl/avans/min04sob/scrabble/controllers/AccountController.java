@@ -289,7 +289,11 @@ public class AccountController extends CoreController {
 		if (validateUsername() && validatePassword1() && validatePassword2()) {
 			AccountModel.registerAccount(registerPanel.getUsername(),
 					registerPanel.getPassword1(), registerPanel.getRoles());
-			registerToLogin();
+			if(accountModel.isLoggedIn()){
+				frame.dispose();
+			}else{
+				registerToLogin();
+			}
 		}
 
 	}
