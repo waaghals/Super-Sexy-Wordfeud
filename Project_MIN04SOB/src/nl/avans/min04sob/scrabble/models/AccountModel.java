@@ -242,10 +242,6 @@ public class AccountModel extends CoreModel {
 		}
 	}
 	
-	public void refresh()
-	{
-		firePropertyChange(Event.LOGIN, null, this);
-	}
 
 	public void logout() {
 		isLoggedIn = false;

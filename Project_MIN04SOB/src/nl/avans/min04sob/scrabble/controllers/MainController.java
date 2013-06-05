@@ -238,7 +238,7 @@ public class MainController extends CoreController {
 		menu.refreshitem(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				account.refresh();
+				refresh();
 			}});
 		
 		menu.createCompetitionItem(new ActionListener() {
@@ -321,6 +321,10 @@ public class MainController extends CoreController {
 
 	}
 
+	private void refresh() {
+		openGame(currentGame);
+	}
+
 	private void addLoginListener() {
 		menu.addLoginItemActionListener(new ActionListener() {
 			@Override
@@ -367,7 +371,6 @@ public class MainController extends CoreController {
 
 
 	protected void openGame(GameModel selectedGame) {
-		// TODO hij roept dit 2 keer aan bug??
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);

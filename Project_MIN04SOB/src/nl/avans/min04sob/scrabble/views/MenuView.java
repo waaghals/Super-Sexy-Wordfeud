@@ -195,8 +195,8 @@ public class MenuView extends JMenuBar implements CoreView {
 		gameMenu.add(gameMenuOpen);
 		gameMenu.add(gameMenuView);
 
-		refresh = new JMenu("refresh");
-		refreshitem = new JMenuItem("refresh");
+		refresh = new JMenu("Refresh");
+		refreshitem = new JMenuItem("Refresh");
 		refresh.add(refreshitem);
 		 
 		
