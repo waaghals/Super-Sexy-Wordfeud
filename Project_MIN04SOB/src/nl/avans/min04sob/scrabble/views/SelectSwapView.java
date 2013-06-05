@@ -3,16 +3,16 @@ package nl.avans.min04sob.scrabble.views;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.CorePanel;
 import nl.avans.min04sob.scrabble.models.Tile;
-
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JButton;
-import javax.swing.ListSelectionModel;
 
 public class SelectSwapView extends CorePanel {
 	
@@ -60,9 +60,11 @@ public class SelectSwapView extends CorePanel {
 		list.getSelectedIndices();
 	}
 	
-	public Tile getSelectedTile(){
-		return list.getSelectedValue();
+	public List<Tile> getSelectedTiles(){
+		//return list.getSelectedValue();
+		return list.getSelectedValuesList();
 	}
+	
 
 
 	@Override

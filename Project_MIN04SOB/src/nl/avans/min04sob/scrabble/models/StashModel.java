@@ -118,6 +118,16 @@ public class StashModel extends CoreModel {
 		}
 		return (Boolean) null;
 	}
+	
+	public void addTileToStash(int game_id, Tile tile){
+		String q = "INSERT INTO `pot` (`spel_id`,`letter_id`,`karakter`) VALUES (?,?,?)";
+		try {
+			Future<ResultSet> worker = Db.run(new Query(q).set(game_id).set(tile.getTileId()).set(tile.toString()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void update() {

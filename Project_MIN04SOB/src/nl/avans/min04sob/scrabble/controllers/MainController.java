@@ -9,8 +9,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -46,7 +49,7 @@ public class MainController extends CoreController {
 	private InviteController invController;
 	private CoreWindow swapWindow;
 	private SelectSwapView swapView;
-	private ArrayList<Tile> selectedTiles;
+	private StashModel stashModel;
 
 	private Boolean observer;
 	private CompetitionController competitioncontroller;
@@ -343,7 +346,7 @@ public class MainController extends CoreController {
 		account = new AccountModel();
 		
 		currGamePanel = new BoardPanel();
-		
+		stashModel = new StashModel();
 		playerTileModel = new PlayerTileModel();
 		boardModel = new BoardModel();
 		currGamePanel.setRenderer(new ScrabbleTableCellRenderer(boardModel));
@@ -481,25 +484,17 @@ public class MainController extends CoreController {
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
 		
-		selectedTiles = new ArrayList<Tile>();
-		
-		swapView.addListListener(new MouseAdapter(){
-		
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					selectedTiles.add(swapView.getSelectedTile());
-				}
-			}
-		});
-		
 		swapView.addButtonListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for(Tile tile: selectedTiles){
-					// de tile wisselen met pot
+					stashModel.addTileToStash(currentGame.getGameId(), tile);
+					
+					// elke tile aan pot toevoegen
+					// zelfde hoeveelheid uit te pot halen
 				}
-				
 			}
 		});
 	}
