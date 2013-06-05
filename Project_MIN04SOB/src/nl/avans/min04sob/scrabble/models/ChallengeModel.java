@@ -21,6 +21,7 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
+	public static final String STATE_FINISHED = "Finished";
 	private final String selectQuery = "SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
 	private final String checkQuery = "SELECT * FROM `spel`";
 	private final String countQuery = "SELECT COUNT(*) FROM Spel ";
@@ -159,7 +160,7 @@ public class ChallengeModel extends CoreModel {
 
 		else {
 			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
+			Db.run(new Query(query2).set(STATE_FINISHED).set(STATE_REJECTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
 		}
 		resultset.next();
