@@ -21,6 +21,7 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_UNKNOWN = "Unknown";
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
+	public static final String STATE_FINISHED = "Finished";
 	private final String selectQuery = "SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
 	private final String checkQuery = "SELECT * FROM `spel`";
 	private final String countQuery = "SELECT COUNT(*) FROM Spel ";
@@ -159,7 +160,7 @@ public class ChallengeModel extends CoreModel {
 
 		else {
 			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
-			Db.run(new Query(query2).set(STATE_REQUEST).set(STATE_REJECTED)
+			Db.run(new Query(query2).set(STATE_FINISHED).set(STATE_REJECTED)
 					.set(currentdate).set(nameuitdager).set(yourname));
 		}
 		resultset.next();
@@ -205,4 +206,52 @@ public class ChallengeModel extends CoreModel {
 
 	}
 
+	public AccountModel[] getChallengeAblePlayers(int competition_id, String username) {
+		AccountModel[] accounts = new AccountModel[0];
+		int x = 0;
+		try {
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT `account_naam` FROM `deelnemer` WHERE `competitie_id` = ? AND `account_naam` NOT LIKE ? AND `account_naam` NOT IN (SELECT `account_naam_tegenstander` FROM `spel` WHERE `account_naam_uitdager` = ? AND `competitie_id` = ? AND `toestand_type` = ?)")
+							.set(competition_id).set(username).set(username).set(competition_id).set(STATE_REQUEST));
+			ResultSet dbResult = worker.get();
+			accounts = new AccountModel[Query.getNumRows(dbResult)];
+			while (dbResult.next() && x < accounts.length) {
+				accounts[x] = new AccountModel(
+						dbResult.getString("account_naam"));
+				x++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
+			sql.printStackTrace();
+		}
+		return accounts;
+		
+	}
+/*
+ * Future<ResultSet> worker = Db.run(new Query(countQuery));
+			result = worker.get();
+
+			result.next();
+
+			if (result.getInt(1) > 0) {
+				Future<ResultSet> newWorker = Db.run(new Query(checkQuery));
+				try {
+					result = newWorker.get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				while (result.next()) {
+					if ((	result.getString(7).equals(STATE_UNKNOWN)
+							&& result.getString(4).equals(challenger)
+							&& result.getString(5).equals(opponent)
+							&& result.getString(3).equals(STATE_REQUEST) 
+							&& result.getInt(2) == compID)) {
+
+						error = true;
+						break;
+					}
+				}
+			}
+
+ */
 }
