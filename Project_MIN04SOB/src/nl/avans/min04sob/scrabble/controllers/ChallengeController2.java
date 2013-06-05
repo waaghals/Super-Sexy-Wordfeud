@@ -44,18 +44,20 @@ public class ChallengeController2 extends CoreController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				acceptChallenge();
-				frame.dispose();
-				frame = null;
+				challengeView2.clearChallengeList();
+				challengeView2.fillChallengeList(challengeModel.challengeArray());
 			}
 		});
 		challengeView2.addActionListenerDecline(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				declineChallenge();
-				frame.dispose();
-				frame = null;
+				challengeView2.clearChallengeList();
+				challengeView2.fillChallengeList(challengeModel.challengeArray());
 			}
 		});
+	
+		
 		challengeView2.addActionListenerBack(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

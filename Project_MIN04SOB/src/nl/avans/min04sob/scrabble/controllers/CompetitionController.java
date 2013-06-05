@@ -77,6 +77,11 @@ public class CompetitionController extends CoreController {
 		competitionView.fillPlayerList(competitionModel
 				.getUsersFromCompetition(competition_id, accountModel.getUsername()));
 	}
+	
+	public void getChallengeAbleUsers(int competition_id) {
+		competitionView.fillPlayerList(challengeModel.getChallengeAblePlayers(competition_id, accountModel.getUsername()));
+	}
+	
 
 	@Override
 	public void initialize() {
@@ -119,7 +124,7 @@ public class CompetitionController extends CoreController {
 
 	}
 
-	public void openCompetitionView() {
+	public void openChallengeView() {
 		window = new CoreWindow();
 		window.add(competitionView);
 		window.setTitle("Speler uitdagen");
@@ -143,9 +148,8 @@ public class CompetitionController extends CoreController {
 				int id = competitionView.getSelectedCompetition().getCompId();
 				challengeModel.check(accountModel.getUsername(),
 						competitionView.getSelectedPlayer().getUsername(), id);
-				if (challengeModel.isDuplicatedChallenge()) {
-					competitionView.changeActionText();
-				}
+				competitionView.clearPlayerList();
+				getChallengeAbleUsers(id);
 			}
 		});
 
@@ -155,7 +159,7 @@ public class CompetitionController extends CoreController {
 				if (e.getClickCount() == 1) {
 					int id = competitionView.getSelectedCompetition()
 							.getCompId();
-					getParticipants(id);
+					getChallengeAbleUsers(id);
 				}
 			}
 		});

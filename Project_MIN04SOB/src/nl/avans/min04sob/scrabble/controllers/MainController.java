@@ -160,7 +160,7 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CompetitionController(account).openCompetitionView();
+				new CompetitionController(account).openChallengeView();
 				// crtl.toChallenge();
 
 			}
@@ -484,6 +484,7 @@ public class MainController extends CoreController {
 		swapWindow.setResizable(false);
 		swapWindow.setTitle("letters wisselen");
 		swapWindow.pack();
+
 
 		swapView.addButtonListener(new ActionListener() {
 
