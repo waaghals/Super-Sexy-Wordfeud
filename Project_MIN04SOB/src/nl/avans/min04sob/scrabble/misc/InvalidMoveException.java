@@ -8,8 +8,6 @@ public class InvalidMoveException extends Exception {
 	public static final int NOT_CONNECTED = 2;
 	public static final int NOT_ON_START = 3;
 	public static final int NO_LETTERS_PUT = 4;
-
-	@SuppressWarnings("unused")
 	private int errorType;
 
 	public InvalidMoveException(int error) {
@@ -18,6 +16,22 @@ public class InvalidMoveException extends Exception {
 			errorType = error;
 			return;
 		}
-		throw new IllegalArgumentException("Not a valid error value for InvalidMoveException");
+		throw new IllegalArgumentException(
+				"Not a valid error value for InvalidMoveException");
+	}
+
+	public String getMessage() {
+		switch (errorType) {
+		case NOT_ALIGNED:
+			return "De gelegde letters liggen niet op een lijn.";
+		case NOT_CONNECTED:
+			return "Niet alle letters zijn aaneengesloten.";
+		case NOT_ON_START:
+
+			return "Er ligt geen letter op de start positie.";
+		case NO_LETTERS_PUT:
+		default:
+			return "Er zijn geen letters neergelegd.";
+		}
 	}
 }

@@ -13,9 +13,7 @@ import nl.avans.min04sob.scrabble.core.mvc.CoreTableModel;
 import nl.avans.min04sob.scrabble.misc.Column;
 
 public class BoardModel extends CoreTableModel {
-	Tile[][] tileData;
-	Point coordinates;
-	HashMap<Point, String> tilesHM = new HashMap<Point, String>();
+	private HashMap<Point, String> tilesHM = new HashMap<Point, String>();
 
 	public static final int DW = 1;
 	public static final int TW = 2;
@@ -25,7 +23,6 @@ public class BoardModel extends CoreTableModel {
 	public static final int EMPTY = 6;
 
 	public BoardModel() {
-		coordinates = new Point();
 		setBoardToDefault();
 	}
 
@@ -150,4 +147,12 @@ public class BoardModel extends CoreTableModel {
 			}
 		}
 	}
+	
+	public static BoardModel newInstance(BoardModel model){
+		BoardModel returnModel =  new BoardModel();
+		returnModel.data = model.data;
+		returnModel.tilesHM = model.tilesHM;
+		return returnModel;
+	}
+
 }

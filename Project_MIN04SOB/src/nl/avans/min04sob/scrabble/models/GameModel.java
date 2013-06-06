@@ -126,14 +126,14 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public Tile[][] checkValidMove(BoardModel oldBoard, Tile[][] newBoard)
+	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
 
-		Tile[][] oldData = (Tile[][]) oldBoard.getData();
-		Tile[][] newData = newBoard;
+		Object[][] oldData = oldBoard.getData();
+		Object[][] newData = newBoard.getData();
 
 		// First find out which letters where played
-		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
+		Object[][] playedLetters =  MatrixUtils.xor(oldData, newData);
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 
 		if (yourturn()) {
@@ -159,7 +159,7 @@ public class GameModel extends CoreModel {
 			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
 		}
 
-		playedLetters = (Tile[][]) MatrixUtils.crop(playedLetters);
+		playedLetters = MatrixUtils.crop(playedLetters);
 
 		Dimension playedWordSize = MatrixUtils.getDimension(playedLetters);
 		if (!MatrixUtils.isAligned(playedWordSize)) {
@@ -187,7 +187,6 @@ public class GameModel extends CoreModel {
 				max = letterPos.getX();
 			}
 		}
-		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
 
@@ -914,5 +913,107 @@ public class GameModel extends CoreModel {
 
 	public void updatelastturn() {
 		currentobserveturn = getNumberOfTotalTurns();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public static void main(String[] args) {
+		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
+		new GameModel(0, null, null,null,  false).test();
+	}
+	
+	private void test() {
+		Integer[][] matrix = new Integer[][] {
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) } };
+
+		Integer[][] matrix2 = new Integer[][] {
+				{ new Integer(1), new Integer(99), new Integer(99),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(99), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(1) },
+				{ new Integer(1), new Integer(1), new Integer(1),
+						new Integer(1), new Integer(99) } };
+
+		Object[][] newMatrix = MatrixUtils.xor(matrix, matrix2);
+		System.out.println(Arrays.deepToString(newMatrix));
+		System.out.println();
+		newMatrix = MatrixUtils.crop(newMatrix);
+		System.out.println();
+		System.out.println(Arrays.deepToString(newMatrix));
 	}
 }

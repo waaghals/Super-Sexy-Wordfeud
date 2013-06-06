@@ -35,20 +35,20 @@ public class MatrixUtils {
 	/**
 	 * Returns an array of Points where letter is not null
 	 * 
-	 * @param matrix 
+	 * @param matrix
 	 * @return Point[] a list of not null coordinates in the matrix
 	 */
 	public static Point[] getCoordinates(Object[][] matrix) {
-		matrix = crop(matrix);
+		//matrix = crop(matrix);
 		ArrayList<Point> coords = new ArrayList<Point>();
 		for (int col = 0; col < matrix[0].length; col++) {
 			for (int row = 0; row < matrix.length; row++) {
-				if(matrix[row][col] != null){
+				if (matrix[row][col] != null) {
 					coords.add(new Point(row, col));
 				}
 			}
 		}
-		return (Point[]) coords.toArray();
+		return coords.toArray(new Point[coords.size()]);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class MatrixUtils {
 		return new Dimension(width, hight);
 	}
 
-	public static boolean isAligned(Dimension size){
+	public static boolean isAligned(Dimension size) {
 		return size.getHeight() == 1 || size.getWidth() == 1;
 	}
 
@@ -84,8 +84,7 @@ public class MatrixUtils {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * Performs a XOR on both the matrices, <- is that a word?
 	 * 
@@ -93,6 +92,7 @@ public class MatrixUtils {
 	 * @param newMatrix
 	 * @return Object[][] resulted XORed matrix other fields will be null
 	 */
+	@SuppressWarnings("null")
 	public static Object[][] xor(Object[][] oldMatrix, Object[][] newMatrix) {
 		int cols = newMatrix[0].length;
 		int rows = newMatrix.length;
@@ -107,7 +107,10 @@ public class MatrixUtils {
 
 					// Col index exists in both matrices
 					if (col < oldMatrix[0].length && col < newMatrix[0].length) {
-						if (!oldMatrix[row][col].equals(newMatrix[row][col])) {
+						if (oldMatrix[row][col] == null || newMatrix[row][col] == null) {
+							field = newMatrix[row][col];
+							
+						} else if (!oldMatrix[row][col].equals(newMatrix[row][col])) {
 							field = newMatrix[row][col];
 						}
 
