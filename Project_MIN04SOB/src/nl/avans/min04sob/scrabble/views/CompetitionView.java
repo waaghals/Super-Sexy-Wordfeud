@@ -34,7 +34,7 @@ public class CompetitionView extends CorePanel{
 	
 	public CompetitionView(){
 		
-		setLayout(new MigLayout("", "[75px:n][:400px:1000px,growprio 70,grow 250][250px,growprio 30,grow][150px:n][57.00]", "[20px:20px:20px][150px:800px:1000px,grow][25px:25px:25px]"));
+		setLayout(new MigLayout("", "[75px:n][:400px:1000px,growprio 70,grow 250][250px,growprio 30,grow][150px:n][57.00]", "[20px:20px:20px][150px:550px:550px,grow][25px:25px:25px]"));
 		super.setMinimumSize(new Dimension(600, 400));
 		competitionsLabel = new JLabel();
 		add(competitionsLabel, "cell 0 0 2 1,alignx left");
