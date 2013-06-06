@@ -128,22 +128,28 @@ public class GameModel extends CoreModel {
 
 	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
-
+		
 		Object[][] oldData = oldBoard.getData();
+		System.out.println("OLD " + Arrays.deepToString(oldData));
 		Object[][] newData = newBoard.getData();
-
+		System.out.println("NEW " +
+				"" + Arrays.deepToString(newData));
+		
 		// First find out which letters where played
 		Object[][] playedLetters =  MatrixUtils.xor(oldData, newData);
+		System.out.println(Arrays.deepToString(playedLetters));
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 
 		if (yourturn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
+			System.out.println("LetterCount: " + letterPositions.length);
+			System.out.println("Star at: X" + starCoord.x + " Y" + starCoord.y);
 
 			// Coords for all currently played letters
 
 			for (Point letterPos : letterPositions) {
-				if (starCoord.equals(letterPos)) {
+				if (starCoord.x == letterPos.x && starCoord.y == letterPos.y) {
 					onStar = true;
 					break;
 				}

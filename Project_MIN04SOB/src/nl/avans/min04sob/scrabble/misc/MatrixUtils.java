@@ -3,6 +3,7 @@ package nl.avans.min04sob.scrabble.misc;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -39,7 +40,8 @@ public class MatrixUtils {
 	 * @return Point[] a list of not null coordinates in the matrix
 	 */
 	public static Point[] getCoordinates(Object[][] matrix) {
-		//matrix = crop(matrix);
+		System.out.println(Arrays.deepToString(matrix));
+		// matrix = crop(matrix);
 		ArrayList<Point> coords = new ArrayList<Point>();
 		for (int col = 0; col < matrix[0].length; col++) {
 			for (int row = 0; row < matrix.length; row++) {
@@ -92,42 +94,42 @@ public class MatrixUtils {
 	 * @param newMatrix
 	 * @return Object[][] resulted XORed matrix other fields will be null
 	 */
-	@SuppressWarnings("null")
 	public static Object[][] xor(Object[][] oldMatrix, Object[][] newMatrix) {
 		int cols = newMatrix[0].length;
 		int rows = newMatrix.length;
 		Object[][] xorMatrix = new Object[rows][cols];
-		for (int col = 0; col < cols; col++) {
+		try {
+			for (int col = 0; col < cols; col++) {
+				for (int row = 0; row < rows; row++) {
 
-			for (int row = 0; row < rows; row++) {
+					Object field = null;
+					// Row index exists in both matrices
+					if (row < oldMatrix.length && row < newMatrix.length) {
 
-				Object field = null;
-				// Row index exists in both matrices
-				if (row < oldMatrix.length && row < newMatrix.length) {
+						// Col index exists in both matrices
+						if (col < oldMatrix[0].length
+								&& col < newMatrix[0].length) {
+							if (!oldMatrix[row][col]
+									.equals(newMatrix[row][col])) {
+								field = newMatrix[row][col];
+							}
 
-					// Col index exists in both matrices
-					if (col < oldMatrix[0].length && col < newMatrix[0].length) {
-						if (oldMatrix[row][col] == null || newMatrix[row][col] == null) {
+						} else {
 							field = newMatrix[row][col];
-							
-						} else if (!oldMatrix[row][col].equals(newMatrix[row][col])) {
-							field = newMatrix[row][col];
+
 						}
 
-					} else {
+						// X and Y for the new matrix fall in the range
+					} else if (row <= newMatrix.length
+							&& col <= newMatrix[0].length) {
 						field = newMatrix[row][col];
 
 					}
 
-					// X and Y for the new matrix fall in the range
-				} else if (row <= newMatrix.length
-						&& col <= newMatrix[0].length) {
-					field = newMatrix[row][col];
-
+					xorMatrix[row][col] = field;
 				}
-
-				xorMatrix[row][col] = field;
 			}
+		} catch (NullPointerException n) {
 		}
 
 		return xorMatrix;
