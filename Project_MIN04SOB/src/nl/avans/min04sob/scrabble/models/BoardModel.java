@@ -155,4 +155,16 @@ public class BoardModel extends CoreTableModel {
 		return returnModel;
 	}
 
+	public Tile[][] getTileData(){
+		Tile[][] array =  new Tile[15][15];
+		for (int i = 0; i < data[0].length; i++) {
+			for (int j = 0; j < data.length; j++) {
+				if(data[i][j] != null){
+					array[i][j] =  (Tile) data[i][j];
+				} else
+					array[i][j] = null;
+			}
+		}
+		return array;
+	}
 }

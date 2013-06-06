@@ -92,6 +92,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				if (currentGame.getCurrentobserveturn() < currentGame
 						.getNumberOfTotalTurns() + 1) {
+					currGamePanel.enableNextButton();
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() + 1);
 
@@ -103,6 +104,8 @@ public class MainController extends CoreController {
 					currentGame.getBoardModel().update();
 
 					updatelabels(currentGame.getCurrentobserveturn());
+				} else{
+					currGamePanel.disableNextButton();
 				}
 			}
 		});
@@ -146,14 +149,11 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					BoardModel newBoard = BoardModel.newInstance(boardModel);
-					currentGame.getBoardFromDatabase();
-					BoardModel oldBoard = BoardModel.newInstance(boardModel);
-					currentGame.checkValidMove(oldBoard, newBoard);
-				} catch (InvalidMoveException e) {
-					JOptionPane.showMessageDialog(frame, e.getMessage());
-				}
+				/*BoardModel newBoard = BoardModel.newInstance(boardModel);
+				currentGame.getBoardFromDatabase();
+				BoardModel oldBoard = BoardModel.newInstance(boardModel);
+				currentGame.checkValidMove(oldBoard, newBoard);*/
+				currentGame.playWord(boardModel);
 			}
 		});
 	}

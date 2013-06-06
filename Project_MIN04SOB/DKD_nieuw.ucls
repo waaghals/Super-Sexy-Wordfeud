@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.3" icons="true" automaticImage="GIF" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="nl.avans.min04sob.scrabble.controllers.AcceptDeclineController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/AcceptDeclineController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="3021" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="nl.avans.min04sob.scrabble.controllers.AccountController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/AccountController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="2165" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="nl.avans.min04sob.scrabble.controllers.BoardController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/BoardController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="3065" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="nl.avans.min04sob.scrabble.controllers.ChallengeController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/ChallengeController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="4528" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="nl.avans.min04sob.scrabble.controllers.CompetitionController" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/CompetitionController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="1931" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="nl.avans.min04sob.scrabble.controllers.MainController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/MainController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="2574" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="nl.avans.min04sob.scrabble.controllers.ResignController" 
+    project="Project_MIN04SOB" file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/controllers/ResignController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="2787" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="8" language="java" name="nl.avans.min04sob.scrabble.core.Role" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="148" x="2110" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="9" language="java" name="nl.avans.min04sob.scrabble.core.Event" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/Event.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="148" x="987" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="nl.avans.min04sob.scrabble.core.db.DatabasePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/DatabasePool.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="161" x="41" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="nl.avans.min04sob.scrabble.core.db.Db" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Db.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="161" x="754" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="nl.avans.min04sob.scrabble.core.db.Query" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Query.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="161" x="251" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="nl.avans.min04sob.scrabble.core.db.Queries" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/db/Queries.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="161" x="2335" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreController" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="2574" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="3918" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CorePanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CorePanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="726" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CorePool" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CorePool.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreTableModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreTableModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="4318" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="19" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="448" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="nl.avans.min04sob.scrabble.core.mvc.CoreWindow" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/core/mvc/CoreWindow.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="170" x="1546" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="nl.avans.min04sob.scrabble.misc.Column" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/Column.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="150" x="4318" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="nl.avans.min04sob.scrabble.misc.DuplicateCompetitionException" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/DuplicateCompetitionException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="201" x="482" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="nl.avans.min04sob.scrabble.misc.InvalidMoveException" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/InvalidMoveException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="150" x="1432" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="nl.avans.min04sob.scrabble.misc.MatrixUtils" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/MatrixUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="150" x="1208" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/ScrabbleTableCellRenderer.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="179" x="3278" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="nl.avans.min04sob.scrabble.misc.TileTable" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/TileTable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="150" x="1657" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="nl.avans.min04sob.scrabble.misc.TileTransferHandler" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/misc/TileTransferHandler.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="150" x="1883" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="nl.avans.min04sob.scrabble.models.AccountModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/AccountModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3743" y="453"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="nl.avans.min04sob.scrabble.models.BoardModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/BoardModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2982" y="453"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="nl.avans.min04sob.scrabble.models.ChallengeModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/ChallengeModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="160" x="4528" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="nl.avans.min04sob.scrabble.models.ChatModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/ChatModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="160" x="3918" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="nl.avans.min04sob.scrabble.models.CompetitionModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/CompetitionModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3920" y="372"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="nl.avans.min04sob.scrabble.models.GameModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/GameModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3878" y="74"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="nl.avans.min04sob.scrabble.models.ModeratorModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/ModeratorModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="160" x="4118" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="nl.avans.min04sob.scrabble.models.StashModel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/StashModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="160" x="3497" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="nl.avans.min04sob.scrabble.models.Tile" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/models/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="160" x="1352" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="nl.avans.min04sob.scrabble.views.AcceptDeclineView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/AcceptDeclineView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="2614" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="nl.avans.min04sob.scrabble.views.ChallengeView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChallengeView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="2871" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="nl.avans.min04sob.scrabble.views.BoardPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/BoardPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2729" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="nl.avans.min04sob.scrabble.views.ChangePassPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChangePassPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1683" y="402"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="nl.avans.min04sob.scrabble.views.ChangePassPanelAdministrator" 
+    project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChangePassPanelAdministrator.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="206" x="2132" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="nl.avans.min04sob.scrabble.views.ChatPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ChatPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="1971" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="nl.avans.min04sob.scrabble.views.CompetitionScoreView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/CompetitionScoreView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="1158" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="nl.avans.min04sob.scrabble.views.CompetitionView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/CompetitionView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="964" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="nl.avans.min04sob.scrabble.views.CreateCompetitionView" 
+    project="Project_MIN04SOB" file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/CreateCompetitionView.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="158" x="766" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="nl.avans.min04sob.scrabble.views.DateRangePanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/DateRangePanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="488" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="nl.avans.min04sob.scrabble.views.LoginPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/LoginPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="1392" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="nl.avans.min04sob.scrabble.views.MenuView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/MenuView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="1756" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="nl.avans.min04sob.scrabble.views.RegisterPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/RegisterPanel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="2378" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="nl.avans.min04sob.scrabble.views.ResignPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/ResignPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="2399" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="nl.avans.min04sob.scrabble.views.SelectSwapView" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/SelectSwapView.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="1352" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="nl.avans.min04sob.scrabble.views.TotalPanel" project="Project_MIN04SOB" 
+    file="/Project_MIN04SOB/src/nl/avans/min04sob/scrabble/views/TotalPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="154" x="273" y="233"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <association id="53">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="54" name="changepassPaneladmin"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="56">    
+    <bendpoint x="2368" y="233"/>    
+    <bendpoint x="1589" y="180"/>    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <realization id="57">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <generalization id="58">    
+    <bendpoint x="4706" y="406"/>    
+    <bendpoint x="4718" y="233"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <realization id="61">    
+    <bendpoint x="457" y="233"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <generalization id="62">    
+    <bendpoint x="3687" y="233"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="63">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="64" name="loginPanel"/>      
+      <multiplicity id="65" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="66">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="67" name="boardPanel"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="69">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="70" name="boardModel"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="72">    
+    <bendpoint x="1361" y="326"/>    
+    <end type="SOURCE" refId="51" navigable="false">      
+      <attribute id="73" name="lettersArray"/>      
+      <multiplicity id="74" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="75">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="76" name="createCompetitionView"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="78">    
+    <bendpoint x="3181" y="50"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="79" name="gameModel"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="81">    
+    <bendpoint x="2562" y="326"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="82" name="accountModel"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="84">    
+    <bendpoint x="4739" y="233"/>    
+    <bendpoint x="4666" y="386"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="85" name="account"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="88" name="competitionScoreView"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="90">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="91">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="92">    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="93" name="boardModel"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="96" name="resignPanel"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="99" name="accountcontroller"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="102" name="menu"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="104">    
+    <bendpoint x="828" y="376"/>    
+    <bendpoint x="693" y="233"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="105">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="106" name="window2"/>      
+      <multiplicity id="107" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="108">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="109">    
+    <bendpoint x="2833" y="201"/>    
+    <bendpoint x="3292" y="220"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="110" name="stashModel"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="112">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="113" name="adView"/>      
+      <multiplicity id="114" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="116" name="window"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="119" name="frame"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="121">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="122">    
+    <bendpoint x="2874" y="88"/>    
+    <bendpoint x="3380" y="125"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="123" name="chatModel"/>      
+      <multiplicity id="124" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="125">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="126" name="competition"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="128">    
+    <bendpoint x="2333" y="400"/>    
+    <bendpoint x="2116" y="390"/>    
+    <bendpoint x="1870" y="336"/>    
+    <bendpoint x="1257" y="304"/>    
+    <bendpoint x="735" y="233"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="129">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="130">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="131">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="132" name="window1"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="134">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="135" name="challengeModel"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="137">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="138">    
+    <bendpoint x="1940" y="233"/>    
+    <bendpoint x="1889" y="400"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="139" name="accountModel"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <bendpoint x="2583" y="233"/>    
+    <bendpoint x="2593" y="313"/>    
+    <bendpoint x="3124" y="370"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="142" name="account"/>      
+      <multiplicity id="143" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="144">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="145" name="registeredModels"/>      
+      <multiplicity id="146" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="147">    
+    <bendpoint x="1988" y="302"/>    
+    <bendpoint x="1592" y="294"/>    
+    <bendpoint x="1070" y="341"/>    
+    <bendpoint x="714" y="233"/>    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="148">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <association id="149">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="150" name="registerPanel"/>      
+      <multiplicity id="151" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="152">    
+    <bendpoint x="4597" y="369"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="153" name="accountModel"/>      
+      <multiplicity id="154" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="155">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="156" name="columns"/>      
+      <multiplicity id="157" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="158">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="159">    
+    <bendpoint x="3727" y="326"/>    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="160" name="opponent"/>      
+      <multiplicity id="161" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="162">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="163">    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="164">    
+    <bendpoint x="796" y="426"/>    
+    <bendpoint x="672" y="233"/>    
+    <end type="SOURCE" refId="47"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="165">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="166">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="167" name="changepassPanel"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="169">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="170" name="bpm"/>      
+      <multiplicity id="171" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="172">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="173" name="owner"/>      
+      <multiplicity id="174" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="175">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="176" name="challengeModel"/>      
+      <multiplicity id="177" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="178">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="179">    
+    <bendpoint x="3769" y="326"/>    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="180" name="openGames"/>      
+      <multiplicity id="181" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="182">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="183" name="pool"/>      
+      <multiplicity id="184" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="185">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="186">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="187" name="chatPanel"/>      
+      <multiplicity id="188" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="189">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="190">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="191" name="competitionView"/>      
+      <multiplicity id="192" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="193">    
+    <bendpoint x="2840" y="233"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="194" name="currGamePanel"/>      
+      <multiplicity id="195" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="196">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="197" name="challengeView2"/>      
+      <multiplicity id="198" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="199">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="200" name="bpv"/>      
+      <multiplicity id="201" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="202">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="203">    
+    <bendpoint x="3748" y="326"/>    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="204" name="challenger"/>      
+      <multiplicity id="205" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="206">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="207" name="instance"/>      
+      <multiplicity id="208" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="209">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <generalization id="210">    
+    <bendpoint x="2990" y="130"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="211">    
+    <bendpoint x="3172" y="37"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="212" name="currentGame"/>      
+      <multiplicity id="213" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="214">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="215">    
+    <bendpoint x="2798" y="233"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="216" name="boardModel"/>      
+      <multiplicity id="217" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="218">    
+    <bendpoint x="3837" y="326"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="219" name="account"/>      
+      <multiplicity id="220" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="221">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="222">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="223" name="swapView"/>      
+      <multiplicity id="224" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="225">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="226" name="modModel"/>      
+      <multiplicity id="227" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="228">    
+    <bendpoint x="3706" y="326"/>    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="229" name="currentUser"/>      
+      <multiplicity id="230" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="231">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="232" name="swapWindow"/>      
+      <multiplicity id="233" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="234">    
+    <bendpoint x="2819" y="233"/>    
+    <bendpoint x="2890" y="316"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="235" name="competitionModel"/>      
+      <multiplicity id="236" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="237">    
+    <bendpoint x="2379" y="130"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <generalization id="238">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <realization id="239">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <generalization id="240">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="241">    
+    <bendpoint x="242" y="130"/>    
+    <bendpoint x="242" y="233"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="242" name="registeredViews"/>      
+      <multiplicity id="243" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

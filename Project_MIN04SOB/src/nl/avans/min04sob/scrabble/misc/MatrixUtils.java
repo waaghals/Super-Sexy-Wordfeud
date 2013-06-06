@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import nl.avans.min04sob.scrabble.models.Tile;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 public class MatrixUtils {
@@ -94,15 +96,15 @@ public class MatrixUtils {
 	 * @param newMatrix
 	 * @return Object[][] resulted XORed matrix other fields will be null
 	 */
-	public static Object[][] xor(Object[][] oldMatrix, Object[][] newMatrix) {
+	public static Tile[][] xor(Tile[][] oldMatrix, Tile[][] newMatrix) {
 		int cols = newMatrix[0].length;
 		int rows = newMatrix.length;
-		Object[][] xorMatrix = new Object[rows][cols];
+		Tile[][] xorMatrix = new Tile[rows][cols];
 		try {
 			for (int col = 0; col < cols; col++) {
 				for (int row = 0; row < rows; row++) {
 
-					Object field = null;
+					Tile field = null;
 					// Row index exists in both matrices
 					if (row < oldMatrix.length && row < newMatrix.length) {
 
