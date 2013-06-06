@@ -127,37 +127,21 @@ public class StashModel extends CoreModel {
 		return false;
 	}
 	
-	public void addTileToStash(int game_id, Tile tile){
-		String q = "INSERT INTO `pot` (`spel_id`,`letter_id`,`karakter`) VALUES (?,?,?)";
+	public void RemoveTileFromHand(int game_id, Tile tile){
+		int turn_id= 0;
+		String getTurn_id = "SELECT  MAX(`id`) AS `id` FROM `beurt`";
+		String removeTileFromHand = "DELETE FROM `letterbakje` WHERE `spel_id` = ? AND `letter_id` = ? AND `beurt_id` = ?";
 		try {
-			Db.run(new Query(q).set(game_id).set(tile.getTileId()).set(tile.toString()));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void addTilesToPlayerStash(int game_id){
-		String q = "SELECT `letter_ID`,`karakter` FROM `pot` WHERE `Spel_ID` = ?";
-		
-		try {
-			Future<ResultSet> worker = Db.run(new Query(q).set(game_id));
-			ResultSet res = worker.get();
-			int numRows = Query.getNumRows(res);
-			
-			res.first();
-			if(numRows > 0){
-				Random randomInteger = new Random();
-				int r = randomInteger.nextInt(numRows);		
-			for (int x = 0; x < r; x++) {
-				res.next();
-			}
-			//tile uit pot halen in in spelers hand zetten
-			}
-			
+			Future<ResultSet> worker1 = Db.run(new Query(getTurn_id));
+			ResultSet res = worker1.get();
+			if(res.next()){
+				turn_id = res.getInt("id");
+			}		
+			Db.run(new Query(removeTileFromHand).set(game_id).set(tile.getTileId()).set(turn_id));
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-		
+		getRandomLetter(game_id, turn_id);
 	}
 
 	@Override

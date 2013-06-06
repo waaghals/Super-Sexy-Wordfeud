@@ -469,16 +469,15 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int size = 0;
 
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for (Tile tile : selectedTiles) {
-
+					currentGame.doTurn(currentGame.getGameId(), account.getUsername(), 0, "swap");
+					stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
 					// elke tile uit hand verwijderen en aan de pot toevoegen
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
-
 			}
 		});
 	}
