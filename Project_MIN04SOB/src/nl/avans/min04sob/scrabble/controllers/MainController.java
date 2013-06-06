@@ -10,9 +10,11 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import nl.avans.min04sob.scrabble.core.mvc.CoreController;
 import nl.avans.min04sob.scrabble.core.mvc.CoreWindow;
+import nl.avans.min04sob.scrabble.misc.InvalidMoveException;
 import nl.avans.min04sob.scrabble.misc.ScrabbleTableCellRenderer;
 import nl.avans.min04sob.scrabble.models.AccountModel;
 import nl.avans.min04sob.scrabble.models.BoardModel;
@@ -140,6 +142,18 @@ public class MainController extends CoreController {
 						.getPlayerTiles(account, currentGame);
 
 				selectSwap(letters);
+			}
+		});
+
+		currGamePanel.addPlayActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				/*BoardModel newBoard = BoardModel.newInstance(boardModel);
+				currentGame.getBoardFromDatabase();
+				BoardModel oldBoard = BoardModel.newInstance(boardModel);
+				currentGame.checkValidMove(oldBoard, newBoard);*/
+				currentGame.playWord(boardModel);
 			}
 		});
 	}
@@ -371,7 +385,7 @@ public class MainController extends CoreController {
 		removeModel(boardModel);
 
 		chatPanel.getChatFieldSend().setEnabled(true);
-	
+
 		closePanels();
 
 		currGamePanel = selectedGame.getBoardPanel();
@@ -384,7 +398,8 @@ public class MainController extends CoreController {
 
 		updatelabels(selectedGame.getCurrentobserveturn());
 
-		selectedGame.setplayertilesfromdatabase(selectedGame.getCurrentobserveturn());
+		selectedGame.setplayertilesfromdatabase(selectedGame
+				.getCurrentobserveturn());
 
 		selectedGame.getBoardFromDatabase();
 		selectedGame.update();
@@ -392,7 +407,7 @@ public class MainController extends CoreController {
 		addButtonListeners();
 
 		openPanels();
-		
+
 		chatPanel.empty();
 		ArrayList<String> messages = chatModel.getMessages();
 		for (String message : messages) {
@@ -437,7 +452,8 @@ public class MainController extends CoreController {
 			}
 		} else {
 			if (currentGame.yourturn()) {
-				currGamePanel.setLabelPlayerTurn("aan jouw (" + account.getUsername() + ")");
+				currGamePanel.setLabelPlayerTurn("aan jouw ("
+						+ account.getUsername() + ")");
 			} else {
 				currGamePanel.setLabelPlayerTurn(currentGame.getOpponent()
 						.getUsername());

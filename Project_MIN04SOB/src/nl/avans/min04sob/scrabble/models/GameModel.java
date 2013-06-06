@@ -126,24 +126,32 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public Tile[][] checkValidMove(BoardModel oldBoard, Tile[][] newBoard)
+
+	public Object[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
 
-		Tile[][] oldData = (Tile[][]) oldBoard.getData();
-		Tile[][] newData = newBoard;
+		
+		Object[][] oldData = oldBoard.getData();
+		System.out.println("OLD " + Arrays.deepToString(oldData));
+		Object[][] newData = newBoard.getData();
+		System.out.println("NEW " +
+				"" + Arrays.deepToString(newData));
 
 		// First find out which letters where played
-		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
+		Object[][] playedLetters =  MatrixUtils.xor(oldData, newData);
+		System.out.println(Arrays.deepToString(playedLetters));
 		Point[] letterPositions = MatrixUtils.getCoordinates(playedLetters);
 
 		if (yourturn()) {
 			boolean onStar = false;
 			Point starCoord = oldBoard.getStartPoint();
+			System.out.println("LetterCount: " + letterPositions.length);
+			System.out.println("Star at: X" + starCoord.x + " Y" + starCoord.y);
 
 			// Coords for all currently played letters
 
 			for (Point letterPos : letterPositions) {
-				if (starCoord.equals(letterPos)) {
+				if (starCoord.x == letterPos.x && starCoord.y == letterPos.y) {
 					onStar = true;
 					break;
 				}
@@ -159,7 +167,7 @@ public class GameModel extends CoreModel {
 			throw new InvalidMoveException(InvalidMoveException.NO_LETTERS_PUT);
 		}
 
-		playedLetters = (Tile[][]) MatrixUtils.crop(playedLetters);
+		playedLetters = MatrixUtils.crop(playedLetters);
 
 		Dimension playedWordSize = MatrixUtils.getDimension(playedLetters);
 		if (!MatrixUtils.isAligned(playedWordSize)) {
@@ -187,6 +195,7 @@ public class GameModel extends CoreModel {
 				max = letterPos.getX();
 			}
 		}
+		
 		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
@@ -266,12 +275,13 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public void playWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public void playWord(BoardModel newBoard) {
 		try {
-			// Tile[][] playedLetters = checkValidMove(boardModel, newBoard);
+			Tile[][] newBoardData = newBoard.getTileData();
+			Tile[][] playedLetters = (Tile[][]) checkValidMove(boardModel, newBoard);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
-					playedLetters, newBoard);
+					playedLetters, newBoardData);
 			for (ArrayList<Tile> woord : teVergelijkenWoorden) {
 				String tempwoord = "";
 				for (Tile t : woord) {
@@ -287,7 +297,7 @@ public class GameModel extends CoreModel {
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
 			// create een nieuwe beurt in de database;
 			int nextTurn = getNextTurnId();
-			int score = getScore(newBoard, teVergelijkenWoorden, boardModel);
+			int score = getScore(newBoardData, teVergelijkenWoorden, boardModel);
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
 			System.out
@@ -305,14 +315,14 @@ public class GameModel extends CoreModel {
 						Db.run(new Query(
 								"INSERT INTO gelegdeletter(Letter_ID, Spel_ID, Beurt_ID, Tegel_X, Tegel_Y, Tegel_Bord_naam, BlancoLetterKarakter)"
 										+ "VALUES (?, ?, ?, ?, ?, ?, ?);")
-								.set(playedLetters[y][x].getTileId())
+								.set(((Tile) playedLetters[y][x]).getTileId())
 								.set(gameId).set(nextTurn).set(x + 1)
 								.set(y + 1).set("Standard").set(""));
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 
 	}
