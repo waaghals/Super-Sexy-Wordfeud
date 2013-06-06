@@ -92,6 +92,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				if (currentGame.getCurrentobserveturn() < currentGame
 						.getNumberOfTotalTurns() + 1) {
+					currGamePanel.enableNextButton();
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() + 1);
 
@@ -103,6 +104,8 @@ public class MainController extends CoreController {
 					currentGame.getBoardModel().update();
 
 					updatelabels(currentGame.getCurrentobserveturn());
+				} else{
+					currGamePanel.disableNextButton();
 				}
 			}
 		});
@@ -137,7 +140,7 @@ public class MainController extends CoreController {
 				// meer werkte je moet getValueAt gebruiken nu.
 				Tile[] letters = stashModel
 						.getPlayerTiles(account, currentGame);
-
+				
 				selectSwap(letters);
 			}
 		});
@@ -146,14 +149,11 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					BoardModel newBoard = BoardModel.newInstance(boardModel);
-					currentGame.getBoardFromDatabase();
-					BoardModel oldBoard = BoardModel.newInstance(boardModel);
-					currentGame.checkValidMove(oldBoard, newBoard);
-				} catch (InvalidMoveException e) {
-					JOptionPane.showMessageDialog(frame, e.getMessage());
-				}
+				/*BoardModel newBoard = BoardModel.newInstance(boardModel);
+				currentGame.getBoardFromDatabase();
+				BoardModel oldBoard = BoardModel.newInstance(boardModel);
+				currentGame.checkValidMove(oldBoard, newBoard);*/
+				currentGame.playWord(boardModel);
 			}
 		});
 	}
@@ -491,16 +491,15 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int size = 0;
 
 				List<Tile> selectedTiles = swapView.getSelectedTiles();
 				for (Tile tile : selectedTiles) {
-
+					currentGame.doTurn(currentGame.getGameId(), account.getUsername(), 0, "swap");
+					stashModel.RemoveTileFromHand(currentGame.getGameId(), tile);
 					// elke tile uit hand verwijderen en aan de pot toevoegen
 					// zelfde hoeveelheid uit te pot halen en aan hand toevoegen
 					// rij toevoegen aan beurt
 				}
-
 			}
 		});
 	}

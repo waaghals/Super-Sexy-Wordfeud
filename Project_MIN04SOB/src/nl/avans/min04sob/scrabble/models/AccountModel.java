@@ -302,13 +302,13 @@ public class AccountModel extends CoreModel {
 		try {
 			Future<ResultSet> worker = Db
 					.run(new Query(
-							"SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?")
+							"SELECT `account_naam_uitdager`, `competitie_id` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?")
 							.set(username).set(ChallengeModel.STATE_REQUEST)
 							.set(ChallengeModel.STATE_UNKNOWN));
 			ResultSet dbResult = worker.get();
 			challenges = new String[Query.getNumRows(dbResult)];
 			while (dbResult.next()) {
-				challenges[i] = dbResult.getString("account_naam_uitdager");
+				challenges[i] = dbResult.getInt("competitie_id") + " " +  dbResult.getString("account_naam_uitdager");
 				i++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
