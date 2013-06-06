@@ -129,19 +129,21 @@ public class ChallengeModel extends CoreModel {
 		}
 	}
 
-	public void respondChallenge(String nameuitdager, boolean accepted)
-			throws SQLException // uitdgedaagde
+	public void respondChallenge(String[] compIdAccountName, boolean accepted)
+			throws SQLException // uitgedaagde
 
 	{
+		
 		// where
-
+		String compId = compIdAccountName[0];
+		String nameuitdager = compIdAccountName[1];
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String currentdate = dateFormat.format(date);
 
-		String query = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=?";
+		String query = "SELECT * FROM Spel WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? AND `competitie_id` = ?";
 		Future<ResultSet> worker = Db.run(new Query(query).set(yourname).set(
-				yourname)); // / VERANDER
+				yourname).set(compId)); 
 		ResultSet resultset = null;
 		try {
 			resultset = worker.get();
@@ -151,16 +153,16 @@ public class ChallengeModel extends CoreModel {
 		String query2 = "";
 
 		if (accepted == true) {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? AND `competitie_id` = ?";
 			Db.run(new Query(query2).set(STATE_PLAYING).set(STATE_ACCEPTED)
-					.set(currentdate).set(nameuitdager).set(yourname));
+					.set(currentdate).set(nameuitdager).set(yourname).set(compId));
 
 		}
 
 		else {
-			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? ;";
+			query2 = "UPDATE Spel SET `Toestand_type`=? ,  `Reaktie_type`=?,   `moment_reaktie`=?  WHERE `Account_naam_uitdager`=? AND `Account_naam_tegenstander`=? AND `competitie_id` = ?";
 			Db.run(new Query(query2).set(STATE_FINISHED).set(STATE_REJECTED)
-					.set(currentdate).set(nameuitdager).set(yourname));
+					.set(currentdate).set(nameuitdager).set(yourname).set(compId));
 		}
 		resultset.next();
 		for (int index = 0; index < challenge.size(); index++) {
@@ -203,35 +205,4 @@ public class ChallengeModel extends CoreModel {
 		
 	}
 	
-	/**
-	 * 
-	 * Github, het nieuwe notepad....
-	 */
-/*
- * Future<ResultSet> worker = Db.run(new Query(countQuery));
-			result = worker.get();
-
-			result.next();
-
-			if (result.getInt(1) > 0) {
-				Future<ResultSet> newWorker = Db.run(new Query(checkQuery));
-				try {
-					result = newWorker.get();
-				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
-				}
-				while (result.next()) {
-					if ((	result.getString(7).equals(STATE_UNKNOWN)
-							&& result.getString(4).equals(challenger)
-							&& result.getString(5).equals(opponent)
-							&& result.getString(3).equals(STATE_REQUEST) 
-							&& result.getInt(2) == compID)) {
-
-						error = true;
-						break;
-					}
-				}
-			}
-
- */
 }
