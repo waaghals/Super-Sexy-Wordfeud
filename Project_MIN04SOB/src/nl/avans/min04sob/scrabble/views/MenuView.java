@@ -240,6 +240,7 @@ public class MenuView extends JMenuBar implements CoreView {
 		createCompetitionItem.addActionListener(listener);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
@@ -262,11 +263,18 @@ public class MenuView extends JMenuBar implements CoreView {
 
 			break;
 		case Event.NEWCHALLENGE:
-
 			int numChallenge = (int) evt.getNewValue();
 			setChallengeCount(numChallenge);
 			break;
-
+			
+		/*case Event.NEWGAME:
+			ArrayList<GameModel> games = (ArrayList<GameModel>) evt.getNewValue();
+			addGamesToMenu(gameMenuOpen, games);
+			if(games.size() > 0){
+				gameMenuOpen.setEnabled(true);
+				gameMenu.setEnabled(true);
+			}
+		*/	
 		default:
 			break;
 		}

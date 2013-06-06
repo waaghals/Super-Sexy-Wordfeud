@@ -31,7 +31,6 @@ public class TileTransferHandler extends TransferHandler {
 			sourceTile = (Tile) support.getTransferable().getTransferData(
 					tileFlavor);
 			if (sourceTile != null && !sourceTile.isMutatable()) {
-				System.out.println("Source tile not mutable or null");
 				return false;
 			}
 			// support.setShowDropLocation(true);
@@ -42,13 +41,10 @@ public class TileTransferHandler extends TransferHandler {
 			Tile tile = (Tile) model.getValueAt(row, col);
 
 			if (tile == null) {
-				System.out.println("Drop loc. is valid because it is null");
 				return true;
 			}
 
 			if (tile.equals(sourceTile)) {
-				System.out
-						.println("Drop loc. is valid because it is the same as the source dest");
 				return true;
 			}
 		} catch (UnsupportedFlavorException | IOException e) {
@@ -81,8 +77,6 @@ public class TileTransferHandler extends TransferHandler {
 
 			sourceTile = (Tile) data.getTransferData(tileFlavor);
 			if (sourceTile != null && sourceTile.isMutatable()) {
-				System.out.println("Setting value at: R" + sourceRow + " C"
-						+ sourceCol + " to null");
 				model.setValueAt(null, sourceRow, sourceCol);
 			} else {
 				// Put the sourceTile Back
