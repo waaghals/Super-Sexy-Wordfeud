@@ -276,13 +276,14 @@ public class MainController extends CoreController {
 		});
 
 		menu.addOpenGamesListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JMenuItem source = (JMenuItem) e.getSource();
 				GameModel clickedGame = (GameModel) source
 						.getClientProperty("game");
 				openGame(clickedGame);
+				currGamePanel.playerView();
+				chatPanel.playerView();
 			}
 		});
 
@@ -296,6 +297,8 @@ public class MainController extends CoreController {
 
 				// TODO open game as observer
 				openGame(clickedGame);
+				currGamePanel.observerView();
+				chatPanel.observerView();
 			}
 		});
 

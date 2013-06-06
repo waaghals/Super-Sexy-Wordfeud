@@ -126,15 +126,17 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void checkValidMove(BoardModel oldBoard, BoardModel newBoard)
+
+	public Object[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
+
 		
 		Object[][] oldData = oldBoard.getData();
 		System.out.println("OLD " + Arrays.deepToString(oldData));
 		Object[][] newData = newBoard.getData();
 		System.out.println("NEW " +
 				"" + Arrays.deepToString(newData));
-		
+
 		// First find out which letters where played
 		Object[][] playedLetters =  MatrixUtils.xor(oldData, newData);
 		System.out.println(Arrays.deepToString(playedLetters));
@@ -193,6 +195,8 @@ public class GameModel extends CoreModel {
 				max = letterPos.getX();
 			}
 		}
+		
+		return playedLetters;
 		// Everything went better than expected.jpg :)
 	}
 
@@ -271,12 +275,13 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public void playWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public void playWord(BoardModel newBoard) {
 		try {
-			// Tile[][] playedLetters = checkValidMove(boardModel, newBoard);
+			Tile[][] newBoardData = (Tile[][]) newBoard.getData();
+			Tile[][] playedLetters = (Tile[][]) checkValidMove(boardModel, newBoard);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
-					playedLetters, newBoard);
+					playedLetters, newBoardData);
 			for (ArrayList<Tile> woord : teVergelijkenWoorden) {
 				String tempwoord = "";
 				for (Tile t : woord) {
@@ -292,7 +297,7 @@ public class GameModel extends CoreModel {
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
 			// create een nieuwe beurt in de database;
 			int nextTurn = getNextTurnId();
-			int score = getScore(newBoard, teVergelijkenWoorden, boardModel);
+			int score = getScore(newBoardData, teVergelijkenWoorden, boardModel);
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
 			System.out
