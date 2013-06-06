@@ -178,10 +178,13 @@ public class BoardPanel extends CorePanel {
 	public void atValue() {
 		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
 	}
-
+	
+	public void addPlayActionListener(ActionListener listener) {
+		playButton.addActionListener(listener);
+	}
+	
 	public void addNextActionListener(ActionListener listener) {
 		nextButton.addActionListener(listener);
-
 	}
 
 	public void addPreviousActionListener(ActionListener listener) {
