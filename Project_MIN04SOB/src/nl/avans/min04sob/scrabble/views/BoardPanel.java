@@ -123,7 +123,7 @@ public class BoardPanel extends CorePanel {
 
 		playButton = new JButton();
 
-		playButton.setEnabled(false);
+		playButton.setEnabled(true);
 
 		playButton.addActionListener(new ActionListener() {
 			@Override
@@ -216,7 +216,7 @@ public class BoardPanel extends CorePanel {
 			}
 
 			break;
-		case Event.MOVE:
+		/*case Event.MOVE:
 			boolean playerTurn = (boolean) evt.getNewValue();
 			if (playerTurn) {
 				playButton.setEnabled(true);
@@ -227,7 +227,7 @@ public class BoardPanel extends CorePanel {
 				swapButton.setEnabled(false);
 				passButton.setEnabled(false);
 			}
-			break;
+			break;*/
 		}
 
 	}
@@ -279,14 +279,14 @@ public class BoardPanel extends CorePanel {
 		passButton.setEnabled(false);
 		resignButton.setEnabled(false);
 		swapButton.setEnabled(false);
-		playButton.setEnabled(false);
+		//playButton.setEnabled(false);
 	}
 	
 	public void playerView() {
 		passButton.setEnabled(true);
 		resignButton.setEnabled(true);
 		swapButton.setEnabled(true);
-		playButton.setEnabled(false);
+		//playButton.setEnabled(false);
 	}
 
 

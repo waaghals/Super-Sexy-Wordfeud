@@ -146,14 +146,11 @@ public class MainController extends CoreController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					BoardModel newBoard = BoardModel.newInstance(boardModel);
-					currentGame.getBoardFromDatabase();
-					BoardModel oldBoard = BoardModel.newInstance(boardModel);
-					currentGame.checkValidMove(oldBoard, newBoard);
-				} catch (InvalidMoveException e) {
-					JOptionPane.showMessageDialog(frame, e.getMessage());
-				}
+				/*BoardModel newBoard = BoardModel.newInstance(boardModel);
+				currentGame.getBoardFromDatabase();
+				BoardModel oldBoard = BoardModel.newInstance(boardModel);
+				currentGame.checkValidMove(oldBoard, newBoard);*/
+				currentGame.playWord(boardModel);
 			}
 		});
 	}
