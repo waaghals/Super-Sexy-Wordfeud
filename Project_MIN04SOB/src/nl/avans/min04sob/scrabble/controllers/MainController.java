@@ -364,15 +364,9 @@ public class MainController extends CoreController {
 		addModel(chatModel);
 		removeModel(boardModel);
 
-		// chatPanel.setEnabled(true);
 		chatPanel.getChatFieldSend().setEnabled(true);
-		// frame.remove(currGamePanel);
+	
 		closePanels();
-
-		account.getObserverAbleGames();
-
-		System.out.println("test");
-		selectedGame.yourturn();
 
 		currGamePanel = selectedGame.getBoardPanel();
 		boardModel = selectedGame.getBoardModel();
@@ -384,8 +378,6 @@ public class MainController extends CoreController {
 
 		updatelabels(selectedGame.getCurrentobserveturn());
 
-
-		
 		selectedGame.setplayertilesfromdatabase(selectedGame.getCurrentobserveturn());
 
 		selectedGame.getBoardFromDatabase();
