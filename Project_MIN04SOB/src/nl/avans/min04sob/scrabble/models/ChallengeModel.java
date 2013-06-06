@@ -123,6 +123,7 @@ public class ChallengeModel extends CoreModel {
 			String addTurn = "INSERT INTO beurt(ID, spel_id, account_naam, score, aktie_type) VALUES(?, ?, ?, ?, ?)";
 			Db.run(new Query(addTurn).set(1).set(spelId.getInt(1)).set(challenger).set(0).set("Begin"));
 			Db.run(new Query(addTurn).set(2).set(spelId.getInt(1)).set(opponent).set(0).set("Begin"));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 

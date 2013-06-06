@@ -29,7 +29,7 @@ public class GameModel extends CoreModel {
 	private String letterSet;
 	private boolean iamchallenger;
 	private BoardPanel boardPanel;
-
+	private StashModel stash;
 	private int currentobserveturn;
 
 	// private BoardController boardcontroller;
@@ -79,6 +79,7 @@ public class GameModel extends CoreModel {
 		this.boardModel = boardModel;
 		this.boardPanel = boardPanel;
 		currentUser = user;
+		 stash = new StashModel();
 
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getGameQuery)
@@ -391,10 +392,8 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public void setplayertilestodatabase() {
-
-	}
-
+	
+	
 	public void setplayertilesfromdatabase(int turnid) {
 
 		StashModel stash = new StashModel();
