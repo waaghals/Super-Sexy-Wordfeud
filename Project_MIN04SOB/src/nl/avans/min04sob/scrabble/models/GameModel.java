@@ -126,11 +126,11 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	public Tile[][] checkValidMove(BoardModel oldBoard, Tile[][] newBoard)
+	public Tile[][] checkValidMove(BoardModel oldBoard, BoardModel newBoard)
 			throws InvalidMoveException {
 
 		Tile[][] oldData = (Tile[][]) oldBoard.getData();
-		Tile[][] newData = newBoard;
+		Tile[][] newData = (Tile[][]) newBoard.getData();
 
 		// First find out which letters where played
 		Tile[][] playedLetters = (Tile[][]) MatrixUtils.xor(oldData, newData);
@@ -266,12 +266,13 @@ public class GameModel extends CoreModel {
 
 	}
 
-	public void playWord(Tile[][] playedLetters, Tile[][] newBoard) {
+	public void playWord(BoardModel newBoard) {
 		try {
-			// Tile[][] playedLetters = checkValidMove(boardModel, newBoard);
+			Tile[][] newBoardData = (Tile[][]) newBoard.getData();
+			Tile[][] playedLetters = checkValidMove(boardModel, newBoard);
 			ArrayList<String> teVergelijkenWoordenString = new ArrayList<String>();
 			ArrayList<ArrayList<Tile>> teVergelijkenWoorden = checkValidWord(
-					playedLetters, newBoard);
+					playedLetters, newBoardData);
 			for (ArrayList<Tile> woord : teVergelijkenWoorden) {
 				String tempwoord = "";
 				for (Tile t : woord) {
@@ -287,7 +288,7 @@ public class GameModel extends CoreModel {
 			String createTurn = "INSERT INTO beurt(ID, Spel_ID, Account_naam, score ,Aktie_type) VALUES(?, ?, ?, ?, 'Word')";
 			// create een nieuwe beurt in de database;
 			int nextTurn = getNextTurnId();
-			int score = getScore(newBoard, teVergelijkenWoorden, boardModel);
+			int score = getScore(newBoardData, teVergelijkenWoorden, boardModel);
 			Db.run(new Query(createTurn).set((nextTurn)).set(gameId)
 					.set(getNextTurnUsername()).set(score));
 			System.out
