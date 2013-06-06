@@ -47,15 +47,15 @@ public class BoardPanel extends CorePanel {
 	private final JLabel browseText;
 	private final JLabel turnTextLabel;
 	private final JLabel spelersLabel;
-	
+
 	private JLabel turnLabel;
-	
+
 	private JLabel opponentNameLabel;
-	
+
 	private JLabel opponentScoreLabel;
-	
+
 	private JLabel playerNameLabel;
-	
+
 	private JLabel playerScoreLabel;
 	private DefaultTableModel playerStash;
 	private JButton refreshButton;
@@ -108,12 +108,11 @@ public class BoardPanel extends CorePanel {
 		opponentScoreLabel = new JLabel("<score>");
 		add(opponentScoreLabel, "cell 6 2");
 
-		
-	
 		playerTilesField = new TileTable();
 		playerTilesField.setModel(playerStash);
 		playerTilesField.setBorder(new LineBorder(new Color(0, 0, 0)));
-		playerTilesField.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		playerTilesField.setCursor(Cursor
+				.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		playerTilesField.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		playerTilesField.getTableHeader().setReorderingAllowed(false);
 		playerTilesField.getTableHeader().setResizingAllowed(false);
@@ -121,8 +120,8 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setEnabled(true);
 		playerTilesField.setCellSelectionEnabled(true);
 		playerTilesField.validate();
-		playerTilesField.setDefaultRenderer(Tile.class, new DefaultTableCellRenderer());
-		
+		playerTilesField.setDefaultRenderer(Tile.class,
+				new DefaultTableCellRenderer());
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
@@ -136,6 +135,7 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setTransferHandler(new TileTransferHandler());
 
 		play = new JButton();
+		play.setEnabled(false);
 		play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -170,7 +170,7 @@ public class BoardPanel extends CorePanel {
 
 		prevButton = new JButton();
 		prevButton.setFont(new Font("Dialog", Font.PLAIN, 12));
-		
+
 		refreshButton = new JButton("Refresh");
 		add(refreshButton, "cell 1 6,grow");
 
@@ -186,9 +186,10 @@ public class BoardPanel extends CorePanel {
 		add(nextButton, "cell 4 6,grow");
 
 		// }\
-	
+
 	}
-	public void atValue(){
+
+	public void atValue() {
 		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
 	}
 
@@ -201,7 +202,7 @@ public class BoardPanel extends CorePanel {
 		prevButton.addActionListener(listener);
 
 	}
-	
+
 	public void addRefreshActionListener(ActionListener listener) {
 		refreshButton.addActionListener(listener);
 	}
@@ -210,32 +211,40 @@ public class BoardPanel extends CorePanel {
 		resignActionListener = listener;
 		resignButton.addActionListener(resignActionListener);
 	}
-	
-	//swap button
-	public void addSwapActionListener(ActionListener listener){
+
+	// swap button
+	public void addSwapActionListener(ActionListener listener) {
 		swapButton.addActionListener(listener);
 	}
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
+		System.out.println("BoardPanel: " + evt.getPropertyName());
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
 			if (account.isRole(Role.OBSERVER)) {
-				
-			}
-			revalidate();
-			break;
 
+			}
+
+			break;
+		case Event.MOVE:
+			boolean playerTurn = (boolean) evt.getNewValue();
+			if (playerTurn) {
+				play.setEnabled(true);
+			} else {
+				play.setEnabled(false);
+			}
+			break;
 		}
 
 	}
 
-	public void setLabelPlayerTurn(String currTurnPlayerName){
+	public void setLabelPlayerTurn(String currTurnPlayerName) {
 		this.turnLabel.setText(currTurnPlayerName);
 	}
 
-	public void setLabelScore(int currTurnScore){
+	public void setLabelScore(int currTurnScore) {
 		this.playerScoreLabel.setText(Integer.toString(currTurnScore));
 	}
 
@@ -250,7 +259,7 @@ public class BoardPanel extends CorePanel {
 	public void setModel(BoardModel bpm) {
 		playBoard.setModel(bpm);
 	}
-	
+
 	public void setOpponent(String name) {
 		opponentNameLabel.setText(name);
 	}
@@ -260,10 +269,11 @@ public class BoardPanel extends CorePanel {
 	}
 
 	public void setPlayerTiles(Tile[] playerTiles) {
-			for (int y = 0; playerTiles.length > y; y++) {
-				playerStash.setValueAt(playerTiles[y], 0 ,y);
-			}
+		for (int y = 0; playerTiles.length > y; y++) {
+			playerStash.setValueAt(playerTiles[y], 0, y);
+		}
 	}
+
 	public void setRenderer(TableCellRenderer renderer) {
 		playBoard.setDefaultRenderer(Tile.class, renderer);
 	}
@@ -272,7 +282,5 @@ public class BoardPanel extends CorePanel {
 
 		this.repaint();
 	}
-	
-	
 
 }

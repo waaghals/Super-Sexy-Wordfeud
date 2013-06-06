@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
@@ -76,6 +77,7 @@ public class GameModel extends CoreModel {
 
 	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
 	private final boolean observer;
+	private boolean hasTurn = false;
 
 	public GameModel(int gameId, AccountModel user, BoardModel boardModel,BoardPanel boardPanel,
 			 boolean observer) {
@@ -339,11 +341,6 @@ public class GameModel extends CoreModel {
 		}
 	}
 
-	@Deprecated
-	public String[][] getboardData() {
-		return this.boardData;
-	}
-
 	public void getBoardFromDatabase() {
 		try {
 			Future<ResultSet> worker = Db.run(new Query(getBoardQuery)
@@ -410,7 +407,6 @@ public class GameModel extends CoreModel {
 			}
 
 		}
-
 		boardPanel.setPlayerTiles(newletters);
 	}
 
@@ -850,6 +846,12 @@ public class GameModel extends CoreModel {
 	 */
 	@Override
 	public void update() {
+		if(!hasTurn){
+			boolean oldHasTurn = hasTurn;
+			hasTurn = yourturn();
+			firePropertyChange(Event.MOVE, oldHasTurn, hasTurn);
+			System.out.println(hasTurn);
+		}
 		// TODO fire property change for new games and changed game states
 		// TODO also fire property change for a when the player needs to make a
 		// new move,
