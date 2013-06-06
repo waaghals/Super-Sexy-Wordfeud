@@ -137,7 +137,7 @@ public class MainController extends CoreController {
 				// meer werkte je moet getValueAt gebruiken nu.
 				Tile[] letters = stashModel
 						.getPlayerTiles(account, currentGame);
-
+				
 				selectSwap(letters);
 			}
 		});

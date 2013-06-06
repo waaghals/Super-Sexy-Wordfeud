@@ -129,10 +129,10 @@ public class StashModel extends CoreModel {
 	
 	public void RemoveTileFromHand(int game_id, Tile tile){
 		int turn_id= 0;
-		String getTurn_id = "SELECT  MAX(`id`) AS `id` FROM `beurt`";
+		String getTurn_id = "SELECT  MAX(`id`) AS `id` FROM `beurt` WHERE `spel_id` = ?";
 		String removeTileFromHand = "DELETE FROM `letterbakje` WHERE `spel_id` = ? AND `letter_id` = ? AND `beurt_id` = ?";
 		try {
-			Future<ResultSet> worker1 = Db.run(new Query(getTurn_id));
+			Future<ResultSet> worker1 = Db.run(new Query(getTurn_id).set(game_id));
 			ResultSet res = worker1.get();
 			if(res.next()){
 				turn_id = res.getInt("id");
