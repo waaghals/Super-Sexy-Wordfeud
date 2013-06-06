@@ -1,24 +1,14 @@
-SELECT `lb`.`spel_id`              AS `spel_id`
-       , `lb`.`beurt_id`           AS `beurt_id`
-       , `b`.`account_naam`        AS `account_naam`
-       , `l`.`lettertype_karakter` AS `letter`
-       , `lt`.`waarde`             AS `waarde`
-       , `l`.`ID`
-FROM   `letterbakjeletter` `lb`
-       JOIN `letter` `l`
-         ON `lb`.`spel_id` = `l`.`spel_id`
-            AND `lb`.`letter_id` = `l`.`id`
-       JOIN `spel` `s`
-         ON `l`.`spel_id` = `s`.`id`
-       RIGHT JOIN `lettertype` `lt`
-               ON `lt`.`letterset_code` = `s`.`letterset_naam`
-                  AND `l`.`lettertype_karakter` = `lt`.`karakter`
-       JOIN (SELECT Max(`id`) AS `max`
-                    , `account_naam`
-             FROM   `beurt` AS `innerb`
-             WHERE  `innerb`.`account_naam` = ?
-                AND `innerb`.`spel_id` = ?
-                AND `innerb`.`aktie_type` = 'Word') AS `b`
-WHERE  `lt`.`letterset_code` = `s`.`letterset_naam`
-   AND `max` = `lb`.`beurt_id`
-ORDER  BY `lb`.`beurt_id` ASC 
+SELECT lb.Spel_ID, lb.Beurt_ID, b.Account_naam,l.ID, l.LetterType_karakter
+FROM LetterbakjeLetter lb
+JOIN Letter l ON lb.Spel_ID = l.Spel_ID
+AND lb.Letter_ID = l.ID
+JOIN `beurt` `b` ON ( (
+`lb`.`Beurt_ID` = `b`.`ID`
+)
+AND (
+`lb`.`Spel_ID` = `b`.`Spel_ID`
+) )
+
+where b.Account_naam = ? and l.spel_ID = ?
+
+

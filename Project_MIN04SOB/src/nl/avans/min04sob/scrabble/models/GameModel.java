@@ -75,7 +75,7 @@ public class GameModel extends CoreModel {
 
 	private final String getWordFromDatabase = "SELECT * FROM woordenboek WHERE woord = ?;";
 
-	private final String getnumberofturns = "SELECT max(beurt_ID) FROM gelegdeletter JOIN letter ON gelegdeletter.Letter_ID = letter.ID  WHERE gelegdeletter.Spel_ID = ?";
+	private final String getnumberofturns = "SELECT max(ID) FROM beurt   WHERE Spel_ID = ?";
 	private final boolean observer;
 	private boolean hasTurn = false;
 
@@ -96,7 +96,7 @@ public class GameModel extends CoreModel {
 			if (numRows == 1) {
 				dbResult.next();
 				this.gameId = gameId;
-				currentobserveturn = getNumberOfTotalTurns();
+				updatelastturn();
 				competition = new CompetitionModel(
 						dbResult.getInt("competitie_id"));
 				state = dbResult.getString("toestand_type");
@@ -386,7 +386,7 @@ public class GameModel extends CoreModel {
 	public void setplayertilestodatabase(){
 		
 	}
-	public void setplayertilesfromdatabase() {
+	public void setplayertilesfromdatabase(int turnid) {
 
 		StashModel stash = new StashModel();
 
@@ -400,7 +400,7 @@ public class GameModel extends CoreModel {
 				if (stash.letterleft()) {
 
 					newletters[counter] = stash.getRandomLetter(this
-							.getGameId());
+							.getGameId(),turnid);
 				}
 			} else {
 				newletters[counter] = letters[counter];
@@ -1000,6 +1000,9 @@ public class GameModel extends CoreModel {
 	}
 	public BoardPanel getBoardPanel(){
 		return this.boardPanel;
+	}
+	public void updatelastturn(){
+		currentobserveturn = getNumberOfTotalTurns();
 	}
 }
 
