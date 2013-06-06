@@ -31,7 +31,7 @@ public class BoardPanel extends CorePanel {
 	private JButton resignButton;
 	private JButton swapButton;
 	private JButton passButton;
-	private JButton play;
+	private JButton playButton;
 	private JButton nextButton;
 	private JButton prevButton;
 
@@ -123,7 +123,7 @@ public class BoardPanel extends CorePanel {
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
-		// if (!(isObserver)) {
+		
 		playBoard.setDragEnabled(true);
 		playBoard.setDropMode(DropMode.USE_SELECTION);
 		playBoard.setTransferHandler(new TileTransferHandler());
@@ -132,8 +132,8 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setDropMode(DropMode.USE_SELECTION);
 		playerTilesField.setTransferHandler(new TileTransferHandler());
 
-		play = new JButton();
-		play.addActionListener(new ActionListener() {
+		playButton = new JButton();
+		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -144,8 +144,8 @@ public class BoardPanel extends CorePanel {
 
 		turnLabel = new JLabel("<player>");
 		add(turnLabel, "cell 6 4");
-		play.setText("Spelen");
-		add(play, "flowx,cell 0 5 2 1,grow");
+		playButton.setText("Spelen");
+		add(playButton, "flowx,cell 0 5 2 1,grow");
 
 		swapButton = new JButton();
 		swapButton.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -178,12 +178,9 @@ public class BoardPanel extends CorePanel {
 		add(prevButton, "cell 3 6,grow");
 		nextButton.setText("Volgende");
 
-		// } else {
-
 		add(nextButton, "cell 4 6,grow");
 
-		// }\
-	
+		
 	}
 	public void atValue(){
 		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
@@ -268,6 +265,19 @@ public class BoardPanel extends CorePanel {
 	public void update() {
 
 		this.repaint();
+	}
+	public void observerView() {
+		passButton.setEnabled(false);
+		resignButton.setEnabled(false);
+		swapButton.setEnabled(false);
+		playButton.setEnabled(false);
+	}
+	
+	public void playerView() {
+		passButton.setEnabled(true);
+		resignButton.setEnabled(true);
+		swapButton.setEnabled(true);
+		playButton.setEnabled(true);
 	}
 	
 	
