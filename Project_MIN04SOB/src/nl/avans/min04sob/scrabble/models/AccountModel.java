@@ -25,12 +25,14 @@ public class AccountModel extends CoreModel {
 			return false;
 		}
 	}
-	public static void registerAccount(String username, char[] password, Role[] roles) {
+
+	public static void registerAccount(String username, char[] password,
+			Role[] roles) {
 
 		String createAccount = "INSERT INTO `account` (`naam`, `wachtwoord` ) VALUES (?, ?)";
 		String setRole = "INSERT INTO `accountrol` (`account_naam`, `rol_type`) VALUES (?, ?)";
 		try {
-			
+
 			Db.run(new Query(createAccount).set(username).set(password));
 			for (Role role : roles) {
 				Db.run(new Query(setRole).set(username).set(role));
@@ -39,6 +41,7 @@ public class AccountModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
+
 	private String username;
 
 	private boolean isLoggedIn;
@@ -46,11 +49,8 @@ public class AccountModel extends CoreModel {
 	private final String availableCompetitionQuery = "SELECT `Competitie_ID` FROM `deelnemer` WHERE `Competitie_ID` NOT IN (SELECT `Competitie_ID` FROM `deelnemer` WHERE `Account_naam` = ?) GROUP BY `Competitie_ID";
 
 	private ArrayList<GameModel> openGames;
-	
+
 	private int challengeCount;
-	
-	
-	
 
 	public AccountModel() {
 		initialize();
@@ -58,43 +58,46 @@ public class AccountModel extends CoreModel {
 
 	public AccountModel(String username) {
 		initialize();
-		
-			this.username = username;
-		}
+
+		this.username = username;
+	}
 
 	public AccountModel(String username, char[] password) {
 		initialize();
 		login(username, password);
 	}
 
-	public void changePass(String newPass){
+	public void changePass(String newPass) {
 		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
-		try{
+		try {
 			Db.run(new Query(query).set(newPass).set(username));
-		}catch(SQLException sql){
-			sql.printStackTrace();
-		}
-	}
-	public void changeAnotherPlayerPass(String newPass,String selectedplayer){
-		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
-		String[] splitStr = selectedplayer.split("\\s+");
-		System.out.println(splitStr[0]);
-		try{
-			Db.run(new Query(query).set(newPass).set(splitStr[0]));
-		}catch(SQLException sql){
+		} catch (SQLException sql) {
 			sql.printStackTrace();
 		}
 	}
 
-	public CompetitionModel[] getAvailableCompetitions(String username){
+	public void changeAnotherPlayerPass(String newPass, String selectedplayer) {
+		String query = "UPDATE account SET wachtwoord =? WHERE naam=?;";
+		String[] splitStr = selectedplayer.split("\\s+");
+		System.out.println(splitStr[0]);
+		try {
+			Db.run(new Query(query).set(newPass).set(splitStr[0]));
+		} catch (SQLException sql) {
+			sql.printStackTrace();
+		}
+	}
+
+	public CompetitionModel[] getAvailableCompetitions(String username) {
 		CompetitionModel[] comp_desc = new CompetitionModel[0];
 		int x = 0;
 		try {
-			// deze query laat alleen de beschikbare competities zien die al minimaal 1 deelnemer heeft		
-			Future<ResultSet> worker = Db.run(new Query(availableCompetitionQuery).set(username));
+			// deze query laat alleen de beschikbare competities zien die al
+			// minimaal 1 deelnemer heeft
+			Future<ResultSet> worker = Db.run(new Query(
+					availableCompetitionQuery).set(username));
 			ResultSet rs = worker.get();
 			comp_desc = new CompetitionModel[Query.getNumRows(rs)];
-			while(rs.next() && x < comp_desc.length){
+			while (rs.next() && x < comp_desc.length) {
 				comp_desc[x] = new CompetitionModel(rs.getInt("competitie_id"));
 				x++;
 			}
@@ -104,20 +107,19 @@ public class AccountModel extends CoreModel {
 		return comp_desc;
 	}
 
-	public int getChallengeCount() {
-		// TODO Automatisch gegenereerde methodestub
-		return 1;
-	}
-
-	public CompetitionModel[] getCompetitions(){
+	public CompetitionModel[] getCompetitions() {
 		CompetitionModel[] compDesc = new CompetitionModel[0];
 		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query("SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?").set(username));
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT `competitie_id` FROM `deelnemer` WHERE `account_naam` = ?")
+							.set(username));
 			ResultSet dbResult = worker.get();
 			compDesc = new CompetitionModel[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < compDesc.length){
-				compDesc[x] = new CompetitionModel(dbResult.getInt("competitie_id"));
+			while (dbResult.next() && x < compDesc.length) {
+				compDesc[x] = new CompetitionModel(
+						dbResult.getInt("competitie_id"));
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
@@ -125,16 +127,18 @@ public class AccountModel extends CoreModel {
 		}
 		return compDesc;
 	}
-	
-	public String [] getPlayers(){
-		String	[] player = new String[0];
+
+	public String[] getPlayers() {
+		String[] player = new String[0];
 		int x = 0;
 		try {
-			Future<ResultSet> worker = Db.run(new Query("SELECT * FROM `Account`;"));
+			Future<ResultSet> worker = Db.run(new Query(
+					"SELECT * FROM `Account`;"));
 			ResultSet dbResult = worker.get();
 			player = new String[Query.getNumRows(dbResult)];
-			while(dbResult.next() && x < player.length){
-				player[x] = dbResult.getString(1)+"  -   "+dbResult.getString(2);
+			while (dbResult.next() && x < player.length) {
+				player[x] = dbResult.getString(1) + "  -   "
+						+ dbResult.getString(2);
 				x++;
 			}
 		} catch (SQLException | InterruptedException | ExecutionException sql) {
@@ -143,14 +147,16 @@ public class AccountModel extends CoreModel {
 		return player;
 	}
 
-	public ArrayList<GameModel> getObserverAbleGames(){
+	public ArrayList<GameModel> getObserverAbleGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
 		String query = "SELECT DISTINCT `spel_id` FROM `beurt` JOIN `spel` ON `beurt`.`spel_id` = `spel`.`id` WHERE NOT `spel`.`toestand_type` = ?";
 		try {
-			Future<ResultSet> worker = Db.run(new Query(query).set(GameModel.STATE_REQUEST));
+			Future<ResultSet> worker = Db.run(new Query(query)
+					.set(GameModel.STATE_REQUEST));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1),this,new BoardModel(),new BoardPanel(), true));
+				games.add(new GameModel(dbResult.getInt(1), this,
+						new BoardModel(), new BoardPanel(), true));
 				// Add a new game with the gameId for this account
 			}
 
@@ -159,16 +165,17 @@ public class AccountModel extends CoreModel {
 		}
 		return games;
 	}
-	
+
 	public ArrayList<GameModel> getOpenGames() {
 		ArrayList<GameModel> games = new ArrayList<GameModel>();
 		String query = "SELECT `ID` FROM `spel` WHERE ( `Account_naam_uitdager` = ? OR `Account_naam_tegenstander` = ?) AND `Toestand_type` = ?";
 		try {
-			Future<ResultSet> worker = Db.run(new Query(query).set(username).set(username)
-					.set(GameModel.STATE_PLAYING));
+			Future<ResultSet> worker = Db.run(new Query(query).set(username)
+					.set(username).set(GameModel.STATE_PLAYING));
 			ResultSet dbResult = worker.get();
 			while (dbResult.next()) {
-				games.add(new GameModel(dbResult.getInt(1), this, new BoardModel(),new BoardPanel(), false));
+				games.add(new GameModel(dbResult.getInt(1), this,
+						new BoardModel(), new BoardPanel(), false));
 				// Add a new game with the gameId for this account
 			}
 
@@ -178,15 +185,15 @@ public class AccountModel extends CoreModel {
 		return games;
 	}
 
-	public String getpass(){
-		String query="SELECT wachtwoord FROM account WHERE naam=?";
+	public String getpass() {
+		String query = "SELECT wachtwoord FROM account WHERE naam=?";
 		String pass = "";
-		try{
+		try {
 			Future<ResultSet> worker = Db.run(new Query(query).set(username));
 			ResultSet check = worker.get();
 			check.next();
 			pass = check.getString(1);
-		}catch(SQLException | InterruptedException | ExecutionException sql){
+		} catch (SQLException | InterruptedException | ExecutionException sql) {
 			sql.printStackTrace();
 		}
 		return pass;
@@ -195,23 +202,22 @@ public class AccountModel extends CoreModel {
 	public String getUsername() {
 		return username;
 	}
-	
+
 	public void initialize() {
 		username = "Onbekend";
 		isLoggedIn = false;
 	}
-	
+
 	public boolean isLoggedIn() {
 		return isLoggedIn;
 	}
-	
 
 	public boolean isRole(Role role) {
 		String query = "SELECT `Rol_type` FROM `accountrol` WHERE `Account_naam` = ?";
 		try {
 			Future<ResultSet> worker = Db.run(new Query(query).set(username));
-			
-			//Do something else
+
+			// Do something else
 			ResultSet rs = worker.get();
 			while (rs.next()) {
 				if (rs.getString(1).equalsIgnoreCase(role.toString())) {
@@ -224,12 +230,13 @@ public class AccountModel extends CoreModel {
 		}
 		return false;
 	}
+
 	public void login(String user, char[] password) {
 		try {
 			String query = "SELECT `naam` FROM `account` WHERE `naam` = ? AND `wachtwoord` = ?";
-			Future<ResultSet> worker = Db.run(new Query(query).set(user).set(password));
-			
-			
+			Future<ResultSet> worker = Db.run(new Query(query).set(user).set(
+					password));
+
 			ResultSet result = worker.get();
 
 			if (Query.getNumRows(result) == 1) {
@@ -245,33 +252,34 @@ public class AccountModel extends CoreModel {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void logout() {
 		isLoggedIn = false;
 		firePropertyChange(Event.LOGOUT, null, this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return username;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update() {
-		//Check new games
+		// Check new games
 		ArrayList<GameModel> newOpenGames = getOpenGames();
-		
+
 		firePropertyChange(Event.NEWGAME, openGames, newOpenGames);
-		openGames = newOpenGames;
-		
-		//Check new challenges
-		int newChallengeCount = getChallengeCount();
-		
-		firePropertyChange(Event.NEWCHALLENGE, challengeCount, newChallengeCount);
+		openGames = (ArrayList<GameModel>) newOpenGames.clone();
+
+		// Check new challenges
+		int newChallengeCount = getChallenges().length;
+
+		firePropertyChange(Event.NEWCHALLENGE, challengeCount,
+				newChallengeCount);
 		challengeCount = newChallengeCount;
 	}
-	
+
 	public CompetitionModel[] getOwnedCompetitions() {
 		ArrayList<CompetitionModel> competitions = null;
 		try {
@@ -279,7 +287,7 @@ public class AccountModel extends CoreModel {
 			Future<ResultSet> worker = Db.run(new Query(query).set(username));
 			ResultSet result = worker.get();
 			competitions = new ArrayList<CompetitionModel>();
-			while(result.next()){
+			while (result.next()) {
 				competitions.add(new CompetitionModel(result.getInt(1)));
 			}
 		} catch (SQLException | InterruptedException | ExecutionException e) {
@@ -287,5 +295,26 @@ public class AccountModel extends CoreModel {
 		}
 		return competitions.toArray(new CompetitionModel[competitions.size()]);
 	}
-	
+
+	public String[] getChallenges() {
+		String[] challenges = new String[0];
+		int i = 0;
+		try {
+			Future<ResultSet> worker = Db
+					.run(new Query(
+							"SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?")
+							.set(username).set(ChallengeModel.STATE_REQUEST)
+							.set(ChallengeModel.STATE_UNKNOWN));
+			ResultSet dbResult = worker.get();
+			challenges = new String[Query.getNumRows(dbResult)];
+			while (dbResult.next()) {
+				challenges[i] = dbResult.getString("account_naam_uitdager");
+				i++;
+			}
+		} catch (SQLException | InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		return challenges;
+	}
+
 }

@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 @SuppressWarnings("serial")
-public class ChallengeView2 extends CorePanel {
+public class ChallengeView extends CorePanel {
 
 	private JButton acceptButton;
 	private JButton declineButton;
@@ -21,7 +21,7 @@ public class ChallengeView2 extends CorePanel {
 	private JList<String> challengeList;
 	private JScrollPane scrollPane;
 
-	public ChallengeView2() {
+	public ChallengeView() {
 
 		setLayout(new MigLayout("", "[150px:150px:150px,grow][100px:100px:100px,grow]", "[14px][40px:40px:40px,grow][40px:40px:40px,grow][90.00][grow]"));
 		challengeLabel = new JLabel("Uitdagingen");

@@ -3,9 +3,7 @@ package nl.avans.min04sob.scrabble.misc;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -14,6 +12,11 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2880196576871631753L;
 
 	private BoardModel boardModel;
 	
@@ -24,16 +27,6 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 	private Color beige;
 	private Color green;
 	private Color lightGreen;
-	private ImageIcon dlImage;
-	private ImageIcon tlImage;
-	private ImageIcon dwImage;
-	private ImageIcon twImage;
-	private ImageIcon starImage;
-	private String dlURL = "/images/dl.png";
-	private String tlURL = "/images/tl.png";
-	private String dwURL = "/images/dw.png";
-	private String twURL = "/images/tw.png";
-	private String starURL = "/images/star.png";
 	
 	private static final double BLEND_RATIO = 0.6;
 
@@ -53,23 +46,11 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		green = new Color(5, 95, 5);
 		lightGreen = new Color(180, 255, 180);
 	}
-	
-
-	protected ImageIcon createImageIcon(String path, String description) {
-		URL imgURL = getClass().getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL, description);
-		} else {
-			System.err.println("Couldn't find file: " + path);
-			return null;
-		}
-	}
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int col) {
-		
-		setImages();
+
 		Component c = super.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, col);
 
@@ -134,14 +115,6 @@ public class ScrabbleTableCellRenderer extends DefaultTableCellRenderer {
 		c.setBackground(background);
 		return c;
 		
-	}
-
-	private void setImages() {
-		dlImage = createImageIcon(dlURL, "dl");
-		tlImage = createImageIcon(tlURL, "tl");
-		dwImage = createImageIcon(dwURL, "dw");
-		twImage = createImageIcon(twURL, "tw");
-		starImage = createImageIcon(starURL, "star");
 	}
 
 	/**

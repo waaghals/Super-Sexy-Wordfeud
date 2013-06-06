@@ -130,9 +130,8 @@ public class CompetitionController extends CoreController {
 		window = new CoreWindow();
 		window.add(competitionView);
 		window.setTitle("Speler uitdagen");
-		window.setPreferredSize(new Dimension(400,300));
-
-		window.setResizable(false);
+		window.setMinimumSize(new Dimension(550,450));
+		window.setResizable(true);
 		window.pack();
 
 		competitionView.addBackListener(new ActionListener() {
@@ -178,8 +177,8 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		window.setTitle("Competitie verwijderen");
 
-		window.setPreferredSize(new Dimension(400, 320));
-		window.setResizable(false);
+		window.setMinimumSize(new Dimension(550,450));
+		window.setResizable(true);
 		window.pack();
 
 		competitionView.addBackListener(new ActionListener() {
@@ -214,7 +213,7 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		window.setTitle("Verwijderen uit competitie");
 
-		window.setPreferredSize(new Dimension(400, 320));
+		window.setMinimumSize(new Dimension(550,450));
 		window.pack();
 
 		competitionView.addBackListener(new ActionListener() {
@@ -248,8 +247,8 @@ public class CompetitionController extends CoreController {
 		window.add(competitionView);
 		window.setTitle("Competitie deelnemen");
 
-		window.setPreferredSize(new Dimension(400, 320));
-		window.setResizable(false);
+		window.setMinimumSize(new Dimension(550,450));
+		window.setResizable(true);
 		window.pack();
 
 		competitionView.addBackListener(new ActionListener() {

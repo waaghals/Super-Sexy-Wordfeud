@@ -18,6 +18,10 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class ChatPanel extends CorePanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7973394234373751035L;
 	private JTextField chatFieldSend;
 	private JButton chatSendButton;
 	private JTextArea chatField;

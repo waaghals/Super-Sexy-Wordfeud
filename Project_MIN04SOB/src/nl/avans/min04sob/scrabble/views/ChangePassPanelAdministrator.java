@@ -18,6 +18,10 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class ChangePassPanelAdministrator extends CorePanel{
  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7891036503091223344L;
 	private JLabel NamePass;
 	private JTextField Newpass;
 	private JLabel errorLabel;
@@ -27,23 +31,23 @@ public class ChangePassPanelAdministrator extends CorePanel{
 	private JScrollPane scrollPane;
 	
 	public ChangePassPanelAdministrator(){
-		setPreferredSize(new Dimension(460, 220));
-		setLayout(new MigLayout("", "[120px][100.00px][115.00px][100px]", "[30px][30px][30px][30px]"));
+		setPreferredSize(new Dimension(925, 498));
+		setLayout(new MigLayout("", "[120px][::2000px,growprio 50,grow][::2000px,grow][::250px,growprio 70,grow]", "[30px][::2000px,grow][30px][30px]"));
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 1 0 2 12,grow");
+		add(scrollPane, "cell 0 1 4 4,grow");
 		accountList = new JList<String>();
 		accountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(accountList);
-		NamePass = new JLabel("nieuw wachtwoord");
-		add(NamePass, "cell 0 13,alignx right,aligny center");
-		Newpass = new JTextField(11);
-		add(Newpass, "cell 1 13 2 1,grow"); 
 		errorLabel = new JLabel("");
-		add(errorLabel,"cell 1 0,grow");
+		add(errorLabel,"cell 1 5 2 1,grow");
+		NamePass = new JLabel("nieuw wachtwoord");
+		add(NamePass, "cell 0 11,alignx right,aligny center");
+		Newpass = new JTextField(11);
+		add(Newpass, "cell 1 11 3 1,grow"); 
 		back = new JButton("Back");
-		add(back, "cell 1 15,grow");
+		add(back, "cell 1 13,grow");
 		change =new JButton("Change");
-		add(change, "flowy,cell 2 15,grow");
+		add(change, "flowy,cell 3 13,grow");
 		change.setEnabled(false);
 		
 		accountList.addListSelectionListener(new ListSelectionListener(){

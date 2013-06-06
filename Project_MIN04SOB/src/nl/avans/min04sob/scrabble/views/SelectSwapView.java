@@ -16,6 +16,10 @@ import nl.avans.min04sob.scrabble.models.Tile;
 
 public class SelectSwapView extends CorePanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5691727507256724926L;
 	private Tile[] lettersArray;
 	private JButton swapButton;
 	private JList<Tile> list;

@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import nl.avans.min04sob.scrabble.core.Event;
 import nl.avans.min04sob.scrabble.core.db.Db;
 import nl.avans.min04sob.scrabble.core.db.Query;
 import nl.avans.min04sob.scrabble.core.mvc.CoreModel;
@@ -22,7 +21,6 @@ public class ChallengeModel extends CoreModel {
 	public static final String STATE_REQUEST = "Request";
 	public static final String STATE_PLAYING = "Playing";
 	public static final String STATE_FINISHED = "Finished";
-	private final String selectQuery = "SELECT `account_naam_uitdager` FROM `Spel` WHERE `account_naam_tegenstander` = ? AND `toestand_type` = ? AND `reaktie_type` = ?";
 	private final String checkQuery = "SELECT * FROM `spel`";
 	private final String countQuery = "SELECT COUNT(*) FROM Spel ";
 	private ResultSet result;
@@ -30,7 +28,6 @@ public class ChallengeModel extends CoreModel {
 	private ArrayList<String> challenge = new ArrayList<String>();
 	private AccountModel accountModel;
 	private boolean isDuplication = false;
-	private int numChallenge;
 
 	public ChallengeModel(AccountModel user) {
 		accountModel = user;
@@ -174,26 +171,6 @@ public class ChallengeModel extends CoreModel {
 		}
 	}
 
-	public String[] challengeArray() {
-		String[] challenges = new String[0];
-		int x = 0;
-		try {
-			Future<ResultSet> worker = Db.run(new Query(selectQuery)
-					.set(accountModel.getUsername()).set(STATE_REQUEST)
-					.set(STATE_UNKNOWN));
-			ResultSet dbResult = worker.get();
-			challenges = new String[Query.getNumRows(dbResult)];
-			while (dbResult.next() && x < challenges.length) {
-				challenges[x] = new String(
-						dbResult.getString("account_naam_uitdager"));
-				x++;
-			}
-		} catch (SQLException | InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
-		return challenges;
-	}
-
 	@Override
 	public void update() {
 
@@ -201,10 +178,6 @@ public class ChallengeModel extends CoreModel {
 		// /// receive challenge your name = challenged ///// ///// ///// /////
 		// ///// ///// /////
 		// /array list add alleen als challend= yourname;;
-
-		int oldNumChallenge = numChallenge;
-		numChallenge = challengeArray().length;
-		firePropertyChange(Event.NEWCHALLENGE, oldNumChallenge, numChallenge);
 
 	}
 
@@ -229,6 +202,11 @@ public class ChallengeModel extends CoreModel {
 		return accounts;
 		
 	}
+	
+	/**
+	 * 
+	 * Github, het nieuwe notepad....
+	 */
 /*
  * Future<ResultSet> worker = Db.run(new Query(countQuery));
 			result = worker.get();

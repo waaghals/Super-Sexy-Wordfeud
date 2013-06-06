@@ -9,6 +9,11 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePanel;
 
 public class TotalPanel extends CorePanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4725292255883443586L;
+
 	public TotalPanel(){
 		setLayout(new BorderLayout());
 	}

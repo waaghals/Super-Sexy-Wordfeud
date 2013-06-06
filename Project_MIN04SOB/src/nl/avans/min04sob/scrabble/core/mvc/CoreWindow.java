@@ -40,7 +40,7 @@ public class CoreWindow extends JFrame implements CoreView {
 
 	public void initialize() {
 		setVisible(true);
-		getContentPane().setLayout(new MigLayout("", "[50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px]", "[50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px][50px:100px:150px]"));
+		getContentPane().setLayout(new MigLayout("", "[::2000px,grow]", "[::2000px,grow]"));
 	}
 	
 	@Override

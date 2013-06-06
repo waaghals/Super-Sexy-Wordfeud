@@ -8,7 +8,7 @@ import nl.avans.min04sob.scrabble.core.mvc.CorePool;
 
 public class DatabasePool extends CorePool<Connection> {
 
-	private static final String DSN = "jdbc:mysql://databases.aii.avans.nl:3306/tjmbrouw_db2";
+	private static final String DSN = "jdbc:mysql://databases.aii.avans.nl:3306/wordfeud";
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String USER = "tjmbrouw";
 	private static final String PASS = "8THMJ2S4";

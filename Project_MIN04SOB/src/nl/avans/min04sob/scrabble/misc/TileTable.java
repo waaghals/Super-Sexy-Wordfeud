@@ -10,6 +10,10 @@ import nl.avans.min04sob.scrabble.models.BoardModel;
 import nl.avans.min04sob.scrabble.models.Tile;
 
 public class TileTable extends JTable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8289529085270487084L;
 	private StringBuilder toolTip;
 
 	@Override
