@@ -20,11 +20,6 @@ import nl.avans.min04sob.scrabble.views.BoardPanel;
 
 public class GameModel extends CoreModel {
 
-	public static void main2(String[] args) {
-		System.out.println("Yo sjaak, je runned de verkeerde main ;)");
-		new GameModel(0, null, null,null,  false).test();
-	}
-
 	private CompetitionModel competition;
 	private AccountModel opponent;
 	private AccountModel challenger;
@@ -351,10 +346,10 @@ public class GameModel extends CoreModel {
 				int x = rs.getInt(4) - 1;// x
 				int y = rs.getInt(5) - 1;// y
 				if (x > -1 && y > -1) {
-					if (rs.getString(3).equals("?")) {
+					if (rs.getString("LetterType_karakter").equals("?")) {
 
 						Future<ResultSet> worker2 = Db.run(new Query(
-								getTileValue).set(rs.getString(6)).set(
+								getTileValue).set(rs.getString("BlancoLetterKarakter")).set(
 								letterSet));
 						ResultSet tilewaarde = worker2.get();
 						tilewaarde.next();
@@ -729,90 +724,6 @@ public class GameModel extends CoreModel {
 	 * sql.printStackTrace(); } }
 	 */
 
-	private void test() {
-		Integer[][] matrix = new Integer[][] {
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) } };
-
-		Integer[][] matrix2 = new Integer[][] {
-				{ new Integer(1), new Integer(99), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(99), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(1) },
-				{ new Integer(1), new Integer(1), new Integer(1),
-						new Integer(1), new Integer(99) } };
-
-		Object[][] newMatrix = MatrixUtils.xor(matrix, matrix2);
-		System.out.println(Arrays.deepToString(newMatrix));
-		System.out.println();
-		newMatrix = MatrixUtils.crop(newMatrix);
-		System.out.println();
-		System.out.println(Arrays.deepToString(newMatrix));
-	}
 
 	@Override
 	public String toString() {
