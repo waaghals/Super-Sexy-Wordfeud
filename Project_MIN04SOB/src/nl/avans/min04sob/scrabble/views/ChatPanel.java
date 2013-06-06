@@ -59,6 +59,14 @@ public class ChatPanel extends CorePanel {
 		chatField.append(message);
 		chatField.setCaretPosition(chatField.getDocument().getLength());
 	}
+	
+	public void observerView() {
+		chatSendButton.setEnabled(false);
+	}
+	
+	public void playerView() {
+		chatSendButton.setEnabled(true);
+	}
 
 	public void empty() {
 		chatField.setText("");

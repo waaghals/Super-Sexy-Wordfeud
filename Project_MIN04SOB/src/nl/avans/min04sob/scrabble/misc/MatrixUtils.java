@@ -3,6 +3,7 @@ package nl.avans.min04sob.scrabble.misc;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -35,20 +36,21 @@ public class MatrixUtils {
 	/**
 	 * Returns an array of Points where letter is not null
 	 * 
-	 * @param matrix 
+	 * @param matrix
 	 * @return Point[] a list of not null coordinates in the matrix
 	 */
 	public static Point[] getCoordinates(Object[][] matrix) {
-		matrix = crop(matrix);
+		System.out.println(Arrays.deepToString(matrix));
+		// matrix = crop(matrix);
 		ArrayList<Point> coords = new ArrayList<Point>();
 		for (int col = 0; col < matrix[0].length; col++) {
 			for (int row = 0; row < matrix.length; row++) {
-				if(matrix[row][col] != null){
+				if (matrix[row][col] != null) {
 					coords.add(new Point(row, col));
 				}
 			}
 		}
-		return (Point[]) coords.toArray();
+		return coords.toArray(new Point[coords.size()]);
 	}
 
 	/**
@@ -66,7 +68,7 @@ public class MatrixUtils {
 		return new Dimension(width, hight);
 	}
 
-	public static boolean isAligned(Dimension size){
+	public static boolean isAligned(Dimension size) {
 		return size.getHeight() == 1 || size.getWidth() == 1;
 	}
 
@@ -84,8 +86,7 @@ public class MatrixUtils {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * Performs a XOR on both the matrices, <- is that a word?
 	 * 
@@ -97,34 +98,38 @@ public class MatrixUtils {
 		int cols = newMatrix[0].length;
 		int rows = newMatrix.length;
 		Object[][] xorMatrix = new Object[rows][cols];
-		for (int col = 0; col < cols; col++) {
+		try {
+			for (int col = 0; col < cols; col++) {
+				for (int row = 0; row < rows; row++) {
 
-			for (int row = 0; row < rows; row++) {
+					Object field = null;
+					// Row index exists in both matrices
+					if (row < oldMatrix.length && row < newMatrix.length) {
 
-				Object field = null;
-				// Row index exists in both matrices
-				if (row < oldMatrix.length && row < newMatrix.length) {
+						// Col index exists in both matrices
+						if (col < oldMatrix[0].length
+								&& col < newMatrix[0].length) {
+							if (!oldMatrix[row][col]
+									.equals(newMatrix[row][col])) {
+								field = newMatrix[row][col];
+							}
 
-					// Col index exists in both matrices
-					if (col < oldMatrix[0].length && col < newMatrix[0].length) {
-						if (!oldMatrix[row][col].equals(newMatrix[row][col])) {
+						} else {
 							field = newMatrix[row][col];
+
 						}
 
-					} else {
+						// X and Y for the new matrix fall in the range
+					} else if (row <= newMatrix.length
+							&& col <= newMatrix[0].length) {
 						field = newMatrix[row][col];
 
 					}
 
-					// X and Y for the new matrix fall in the range
-				} else if (row <= newMatrix.length
-						&& col <= newMatrix[0].length) {
-					field = newMatrix[row][col];
-
+					xorMatrix[row][col] = field;
 				}
-
-				xorMatrix[row][col] = field;
 			}
+		} catch (NullPointerException n) {
 		}
 
 		return xorMatrix;

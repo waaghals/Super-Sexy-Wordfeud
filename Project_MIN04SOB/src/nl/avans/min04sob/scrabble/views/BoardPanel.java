@@ -112,7 +112,7 @@ public class BoardPanel extends CorePanel {
 
 		add(playerTilesField, "cell 0 4 5 1,growx,aligny top");
 
-		// if (!(isObserver)) {
+		
 		playBoard.setDragEnabled(true);
 		playBoard.setDropMode(DropMode.USE_SELECTION);
 		playBoard.setTransferHandler(new TileTransferHandler());
@@ -122,7 +122,9 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setTransferHandler(new TileTransferHandler());
 
 		playButton = new JButton();
+
 		playButton.setEnabled(false);
+
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -168,21 +170,21 @@ public class BoardPanel extends CorePanel {
 		add(prevButton, "cell 3 6,grow");
 		nextButton.setText("Volgende");
 
-		// } else {
-
 		add(nextButton, "cell 4 6,grow");
 
-		// }\
 
 	}
 
 	public void atValue() {
 		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);
 	}
-
+	
+	public void addPlayActionListener(ActionListener listener) {
+		playButton.addActionListener(listener);
+	}
+	
 	public void addNextActionListener(ActionListener listener) {
 		nextButton.addActionListener(listener);
-
 	}
 
 	public void addPreviousActionListener(ActionListener listener) {
@@ -272,5 +274,20 @@ public class BoardPanel extends CorePanel {
 
 		this.repaint();
 	}
+
+	public void observerView() {
+		passButton.setEnabled(false);
+		resignButton.setEnabled(false);
+		swapButton.setEnabled(false);
+		playButton.setEnabled(false);
+	}
+	
+	public void playerView() {
+		passButton.setEnabled(true);
+		resignButton.setEnabled(true);
+		swapButton.setEnabled(true);
+		playButton.setEnabled(false);
+	}
+
 
 }
