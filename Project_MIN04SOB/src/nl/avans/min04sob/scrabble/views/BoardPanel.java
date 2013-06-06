@@ -174,6 +174,15 @@ public class BoardPanel extends CorePanel {
 
 
 	}
+	//enable nextButton
+	public void enableNextButton(){
+		nextButton.setEnabled(true);
+	}
+	
+	//disable nextButton
+	public void disableNextButton(){
+		nextButton.setEnabled(false);
+	}
 
 	public void atValue() {
 		playerStash.setValueAt(new Tile("A", 12, Tile.MUTATABLE, 45), 0, 2);

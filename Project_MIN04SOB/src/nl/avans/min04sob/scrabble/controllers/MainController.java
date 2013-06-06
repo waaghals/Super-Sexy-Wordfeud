@@ -90,6 +90,7 @@ public class MainController extends CoreController {
 			public void actionPerformed(ActionEvent e) {
 				if (currentGame.getCurrentobserveturn() < currentGame
 						.getNumberOfTotalTurns() + 1) {
+					currGamePanel.enableNextButton();
 					currentGame.setCurrentobserveturn(currentGame
 							.getCurrentobserveturn() + 1);
 
@@ -101,6 +102,8 @@ public class MainController extends CoreController {
 					currentGame.getBoardModel().update();
 
 					updatelabels(currentGame.getCurrentobserveturn());
+				} else{
+					currGamePanel.disableNextButton();
 				}
 			}
 		});
