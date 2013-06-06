@@ -35,7 +35,7 @@ public class BoardPanel extends CorePanel {
 	private JButton resignButton;
 	private JButton swapButton;
 	private JButton passButton;
-	private JButton play;
+	private JButton playButton;
 	private JButton nextButton;
 	private JButton prevButton;
 
@@ -49,14 +49,11 @@ public class BoardPanel extends CorePanel {
 	private final JLabel spelersLabel;
 
 	private JLabel turnLabel;
-
 	private JLabel opponentNameLabel;
-
 	private JLabel opponentScoreLabel;
-
 	private JLabel playerNameLabel;
-
 	private JLabel playerScoreLabel;
+	
 	private DefaultTableModel playerStash;
 	private JButton refreshButton;
 
@@ -85,16 +82,6 @@ public class BoardPanel extends CorePanel {
 		add(spelersLabel, "cell 5 0,alignx left");
 
 		add(playBoard, "cell 0 0 5 4");
-
-		/**
-		 * 
-		 * Set the basic stuff such as layout
-		 */
-
-		/**
-		 * 
-		 * Player letter rack
-		 */
 
 		playerNameLabel = new JLabel("<player>");
 		add(playerNameLabel, "cell 5 1,alignx right");
@@ -134,9 +121,9 @@ public class BoardPanel extends CorePanel {
 		playerTilesField.setDropMode(DropMode.USE_SELECTION);
 		playerTilesField.setTransferHandler(new TileTransferHandler());
 
-		play = new JButton();
-		play.setEnabled(false);
-		play.addActionListener(new ActionListener() {
+		playButton = new JButton();
+		playButton.setEnabled(false);
+		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -147,8 +134,8 @@ public class BoardPanel extends CorePanel {
 
 		turnLabel = new JLabel("<player>");
 		add(turnLabel, "cell 6 4");
-		play.setText("Spelen");
-		add(play, "flowx,cell 0 5 2 1,grow");
+		playButton.setText("Spelen");
+		add(playButton, "flowx,cell 0 5 2 1,grow");
 
 		swapButton = new JButton();
 		swapButton.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -219,7 +206,6 @@ public class BoardPanel extends CorePanel {
 
 	@Override
 	public void modelPropertyChange(PropertyChangeEvent evt) {
-		System.out.println("BoardPanel: " + evt.getPropertyName());
 		switch (evt.getPropertyName()) {
 		case Event.LOGIN:
 			AccountModel account = (AccountModel) evt.getNewValue();
@@ -231,9 +217,13 @@ public class BoardPanel extends CorePanel {
 		case Event.MOVE:
 			boolean playerTurn = (boolean) evt.getNewValue();
 			if (playerTurn) {
-				play.setEnabled(true);
+				playButton.setEnabled(true);
+				swapButton.setEnabled(true);
+				passButton.setEnabled(true);
 			} else {
-				play.setEnabled(false);
+				playButton.setEnabled(false);
+				swapButton.setEnabled(false);
+				passButton.setEnabled(false);
 			}
 			break;
 		}

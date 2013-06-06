@@ -263,13 +263,14 @@ public class AccountModel extends CoreModel {
 		return username;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update() {
 		// Check new games
 		ArrayList<GameModel> newOpenGames = getOpenGames();
 
 		firePropertyChange(Event.NEWGAME, openGames, newOpenGames);
-		openGames = newOpenGames;
+		openGames = (ArrayList<GameModel>) newOpenGames.clone();
 
 		// Check new challenges
 		int newChallengeCount = getChallenges().length;
