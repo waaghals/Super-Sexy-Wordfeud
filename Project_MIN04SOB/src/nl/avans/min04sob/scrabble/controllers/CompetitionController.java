@@ -113,7 +113,7 @@ public class CompetitionController extends CoreController {
 				if (e.getClickCount() == 1) {
 					CompetitionModel selectedComp = competitionScoreView
 							.getSelectedCompetition();
-					ArrayList<Object[]> rankingData = selectedComp.getRanking();
+					ArrayList<Object[]> rankingData = selectedComp.getRanking(selectedComp.getCompId());
 					competitionScoreView.emptyTable();
 					for (Object[] row : rankingData) {
 						competitionScoreView.addRow(row);

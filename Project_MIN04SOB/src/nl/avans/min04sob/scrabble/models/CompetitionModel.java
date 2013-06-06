@@ -404,27 +404,32 @@ public class CompetitionModel extends CoreModel {
 
 	}
 
-	public ArrayList<Object[]> getRanking() {
+	public ArrayList<Object[]> getRanking(int selectedComp) {
 		Object[] row = new Object[6];
 		ArrayList<Object[]> data = new ArrayList<>();
+		String accountName;
 		try {
 			Future<ResultSet> worker = Db.run(new Query(
 					"SELECT * FROM `ranking`"));
 			ResultSet rs = worker.get();
-
-			while (rs.next()) {
-				int compId = rs.getInt("competitie_id");
-				String accountName = rs.getString("account_naam");
-
-				row[0] = accountName;
-				row[1] = totalPlayedGames(compId, accountName);
-				row[2] = totalPoints(compId, accountName);
-				row[3] = averagePoints(compId, accountName);
-				row[4] = amountWon(compId, accountName) + " / "
-						+ amountLost(compId, accountName);
-				row[5] = rs.getString("bayesian_rating");
-				data.add(row);
+			if(rs.next()) {
+				while (rs.next()) {
+					int compId = rs.getInt("competitie_id");
+					 accountName= rs.getString("account_naam");
+					if (compId == selectedComp) {
+						row[0] = accountName;
+						row[1] = totalPlayedGames(compId, accountName);
+						row[2] = totalPoints(compId, accountName);
+						row[3] = averagePoints(compId, accountName);
+						row[4] = amountWon(compId, accountName) + " / "
+								+ amountLost(compId, accountName);
+						row[5] = rs.getString("bayesian_rating");
+						data.add(row);
+					}
+				}
 			}
+		
+			
 		} catch (SQLException | InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}

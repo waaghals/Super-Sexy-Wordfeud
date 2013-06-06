@@ -55,7 +55,7 @@ public class Tile implements Transferable {
 
 	public void setEmpty(boolean empty) {
 		if (empty) {
-			letter = null;
+			letter = "";
 		}
 	}
 
@@ -65,7 +65,7 @@ public class Tile implements Transferable {
 
 	@Override
 	public String toString() {
-		return letter.toUpperCase();
+		return letter;
 	}
 
 	@Override
