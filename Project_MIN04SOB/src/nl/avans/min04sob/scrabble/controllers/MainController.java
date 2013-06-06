@@ -360,10 +360,8 @@ public class MainController extends CoreController {
 		frame.repaint();
 	}
 
-	
-
-
 	protected void openGame(GameModel selectedGame) {
+		addModel(selectedGame);
 		removeModel(chatModel);
 		setCurrentGame(selectedGame);
 		chatModel = new ChatModel(selectedGame, account);
